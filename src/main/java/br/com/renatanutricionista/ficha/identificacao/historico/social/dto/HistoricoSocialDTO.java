@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.model.PatologiaPaciente;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
-import br.com.renatanutricionista.utils.ConversaoUtlis;
+import br.com.renatanutricionista.utils.ConversaoUtils;
 import br.com.renatanutricionista.utils.enums.SexoUtils;
 import lombok.Getter;
 
@@ -57,10 +57,10 @@ public class HistoricoSocialDTO {
 			menopausa = historicoSocial.getMenopausa().getDescricao();
 			
 			if (Objects.nonNull(inicioMenopausa))
-				inicioMenopausa = ConversaoUtlis.converterLocalDateParaString(historicoSocial.getInicioMenopausa());
+				inicioMenopausa = ConversaoUtils.converterLocalDateParaString(historicoSocial.getInicioMenopausa());
 		}
 		
-		dataUltimaAtualizacaoDadosDoHistoricoSocial = ConversaoUtlis.converterLocalDateTimeParaString(historicoSocial.getDataUltimaAtualizacaoDadosDoHistoricoSocial());
+		dataUltimaAtualizacaoDadosDoHistoricoSocial = ConversaoUtils.converterLocalDateTimeParaString(historicoSocial.getDataUltimaAtualizacaoDadosDoHistoricoSocial());
 	}
 	
 	

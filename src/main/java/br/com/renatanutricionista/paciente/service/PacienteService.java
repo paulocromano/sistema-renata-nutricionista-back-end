@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.form.AtividadeFisicaFORM;
+import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.repository.AtividadeFisicaRepository;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.model.PatologiaPaciente;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.repository.PatologiaPacienteRepository;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.form.HistoricoSocialFORM;
@@ -25,7 +27,7 @@ import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.repository.PacienteRepository;
 import br.com.renatanutricionista.patologia.model.Patologia;
 import br.com.renatanutricionista.patologia.repository.PatologiaRepository;
-import br.com.renatanutricionista.utils.Verificacao;
+import br.com.renatanutricionista.utils.VerificacaoUtils;
 
 
 @Service
@@ -45,6 +47,9 @@ public class PacienteService {
 	
 	@Autowired
 	private MedicamentoRepository medicamentoRepository;
+
+	@Autowired
+	private AtividadeFisicaRepository atividadeFisicaRepository;
 	
 //	@Autowired
 //	private HistoricoAlimentarRepository historicoAlimentarRepository;
@@ -62,18 +67,18 @@ public class PacienteService {
 	}
 	
 	
-	public ResponseEntity<PacienteDTO> atualizarPacienteEndereco(Long idPaciente, AtualizacaoPacienteFORM atualizacaoPaciente) {
-		Paciente paciente = verificarSePacienteExiste(idPaciente);
+	public ResponseEntity<Void> atualizarPacienteEndereco(Long idPaciente, AtualizacaoPacienteFORM atualizacaoPaciente) {
+		Paciente paciente = VerificacaoUtils.verificarSePacienteExiste(idPaciente, pacienteRepository);
 		
 		atualizacaoPaciente.atualizarPacienteEndereco(paciente);
 		atualizarDataHoraUltimaAlteracaoNosDadosDoPaciente(paciente);
 		
-		return ResponseEntity.ok().body(new PacienteDTO(paciente));
+		return ResponseEntity.ok().build();
 	}
 	
 	
 	public ResponseEntity<Void> cadastrarHistoricoSocialDoPaciente(Long idPaciente, HistoricoSocialFORM historicoSocialFORM) {
-		Paciente paciente = verificarSePacienteExiste(idPaciente);	
+		Paciente paciente = VerificacaoUtils.verificarSePacienteExiste(idPaciente, pacienteRepository);
 		
 		HistoricoSocial historicoSocial = historicoSocialRepository.save(historicoSocialFORM.converterParaHistoricoSocial(paciente));
 		validarSalvarListaPatologiasDoPaciente(historicoSocialFORM, historicoSocial);
@@ -98,6 +103,16 @@ public class PacienteService {
 			
 			patologiaPacienteRepository.saveAll(patologiasPaciente);
 		}
+	}
+	
+	
+	public ResponseEntity<Void> cadastrarAtividadeFisicaDoPaciente(Long idPaciente, AtividadeFisicaFORM atividadeFisicaFORM) {
+		Paciente paciente = VerificacaoUtils.verificarSePacienteExiste(idPaciente, pacienteRepository);
+		atividadeFisicaRepository.save(atividadeFisicaFORM.converterParaAtividadeFisica(paciente));
+		
+		atualizarDataHoraUltimaAlteracaoNosDadosDoPaciente(paciente);
+		
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	
 	
@@ -127,19 +142,10 @@ public class PacienteService {
 	
 	
 	public ResponseEntity<Void> removerPaciente(Long idPaciente) {
-		Paciente paciente = verificarSePacienteExiste(idPaciente);
+		Paciente paciente = VerificacaoUtils.verificarSePacienteExiste(idPaciente, pacienteRepository);
 		pacienteRepository.delete(paciente);
 		
 		return ResponseEntity.noContent().build();
-	}
-	
-	
-	private Paciente verificarSePacienteExiste(Long idPaciente) {
-		if (Objects.isNull(idPaciente))
-			throw new NullPointerException("O ID do Paciente está nulo!");
-			
-		return (Paciente) Verificacao.verificarSeEntidadeExiste(Paciente.class.getSimpleName(), 
-				pacienteRepository, idPaciente);
 	}
 	
 	

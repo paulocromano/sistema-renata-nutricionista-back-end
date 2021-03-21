@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.form.AtividadeFisicaFORM;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.form.HistoricoSocialFORM;
 import br.com.renatanutricionista.paciente.dto.PacienteDTO;
 import br.com.renatanutricionista.paciente.form.AtualizacaoPacienteFORM;
@@ -46,7 +47,7 @@ public class PacienteResource {
 	
 	@PutMapping("/endereco/{idPaciente}")
 	@Transactional
-	public ResponseEntity<PacienteDTO> atualizarPacienteEndereco(@PathVariable Long idPaciente, 
+	public ResponseEntity<Void> atualizarPacienteEndereco(@PathVariable Long idPaciente, 
 			@RequestBody @Valid AtualizacaoPacienteFORM atualizacaoPaciente) {
 		
 		return pacienteService.atualizarPacienteEndereco(idPaciente, atualizacaoPaciente);
@@ -69,6 +70,15 @@ public class PacienteResource {
 //		
 //		return pacienteService.cadastrarHistoricoAlimentarDoPaciente(idPaciente, historicoAlimentarFORM);
 //	}
+	
+	
+	@PostMapping("/atividade-fisica/{idPaciente}")
+	@Transactional
+	public ResponseEntity<Void> cadastrarAtividadeFisicaDoPaciente(@PathVariable Long idPaciente, 
+			@RequestBody @Valid AtividadeFisicaFORM atividadeFisicaFORM) {
+		
+		return pacienteService.cadastrarAtividadeFisicaDoPaciente(idPaciente, atividadeFisicaFORM);
+	}
 	
 	
 	@DeleteMapping("/{idPaciente}")

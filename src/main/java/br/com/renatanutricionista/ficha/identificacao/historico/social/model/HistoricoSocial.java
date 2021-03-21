@@ -126,7 +126,7 @@ public class HistoricoSocial {
 	private Paciente paciente;
 	
 	
-	public HistoricoSocial(String profissao, EstadoCivil estadoCivil, String composicaoFamiliar, String localRefeicoes,
+	private HistoricoSocial(String profissao, EstadoCivil estadoCivil, String composicaoFamiliar, String localRefeicoes,
 			UsoBebidasAlcoolicas frequenciaUsoBebidasAlcoolicas,UsoCigarro usoCigarro, Integer quantidadeCigarrosPorDia,
 			HabitoIntestinal habitoIntestinal, ConsistenciaFezes consistenciaFezes, FrequenciaDiurese frequenciaDiurese,
 			ColoracaoDiurese coloracaoDiurese, Integer horasSono, MenstruacaoNormal menstruacaoNormal, 
@@ -153,10 +153,7 @@ public class HistoricoSocial {
 		this.dataUltimaAtualizacaoDadosDoHistoricoSocial = dataUltimaAtualizacaoDadosDoHistoricoSocial;
 	}
 
-
-
-
-
+	
 	public static class HistoricoSocialBuilder {
 		
 		private String profissao;

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.medicamento.model.Medicamento;
-import br.com.renatanutricionista.utils.FormatacaoUtlis;
+import br.com.renatanutricionista.utils.FormatacaoUtils;
 import lombok.Getter;
 
 
@@ -15,7 +15,7 @@ public class MedicamentoDTO implements Comparable<MedicamentoDTO> {
 	private Integer id;
 	private String nome;
 	
-	private static final Collator COLLATOR = FormatacaoUtlis.COLLATOR;
+	private static final Collator COLLATOR = FormatacaoUtils.COLLATOR;
 	
 	public MedicamentoDTO(Medicamento medicamento) {
 		id = medicamento.getId();

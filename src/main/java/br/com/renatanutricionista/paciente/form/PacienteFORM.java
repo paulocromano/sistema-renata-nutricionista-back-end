@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 import br.com.renatanutricionista.endereco.form.EnderecoFORM;
 import br.com.renatanutricionista.paciente.enums.EtniaConversao;
 import br.com.renatanutricionista.paciente.model.Paciente;
-import br.com.renatanutricionista.utils.ConversaoUtlis;
+import br.com.renatanutricionista.utils.ConversaoUtils;
 import br.com.renatanutricionista.utils.enums.SexoUtlisConversao;
 import lombok.Getter;
 import lombok.Setter;
@@ -51,7 +51,7 @@ public class PacienteFORM {
 	public Paciente converterParaPaciente() {
 		return new Paciente.PacienteBuilder()
 				.nome(nome)
-				.dataNascimento(ConversaoUtlis.converterStringParaLocalDate(dataNascimento))
+				.dataNascimento(ConversaoUtils.converterStringParaLocalDate(dataNascimento))
 				.sexo(new SexoUtlisConversao().convertToEntityAttribute(sexo))
 				.etnia(new EtniaConversao().convertToEntityAttribute(etnia))
 				.telefone(telefone)

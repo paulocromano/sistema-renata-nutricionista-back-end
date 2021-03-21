@@ -24,8 +24,8 @@ import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.uso
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial.HistoricoSocialBuilder;
 import br.com.renatanutricionista.paciente.model.Paciente;
-import br.com.renatanutricionista.utils.ConversaoUtlis;
-import br.com.renatanutricionista.utils.FormatacaoUtlis;
+import br.com.renatanutricionista.utils.ConversaoUtils;
+import br.com.renatanutricionista.utils.FormatacaoUtils;
 import br.com.renatanutricionista.utils.enums.SexoUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -119,7 +119,7 @@ public class HistoricoSocialFORM {
 					.menopausa(new MenopausaConversao().convertToEntityAttribute(codigoMenopausa));
 			
 			if (Objects.nonNull(inicioMenopausa)) 
-				historicoSocialBuilder.inicioMenopausa(ConversaoUtlis.converterStringParaLocalDate(inicioMenopausa, FormatacaoUtlis.FORMATADOR_MES_ANO));
+				historicoSocialBuilder.inicioMenopausa(ConversaoUtils.converterStringParaLocalDate(inicioMenopausa, FormatacaoUtils.FORMATADOR_MES_ANO));
 		}
 		
 		return historicoSocialBuilder.criarHistoricoSocial();

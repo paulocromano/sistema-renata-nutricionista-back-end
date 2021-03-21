@@ -23,6 +23,7 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import br.com.renatanutricionista.endereco.model.Endereco;
+import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.model.AtividadeFisica;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.paciente.enums.Etnia;
 import br.com.renatanutricionista.utils.enums.SexoUtils;
@@ -77,9 +78,9 @@ public class Paciente {
 //	
 //	@OneToMany(mappedBy = "paciente")
 //	private List<HistoricoAlimentar> historicoAlimentar;
-//	
-//	@OneToMany(mappedBy = "paciente")
-//	private List<AtividadeFisica> atividadeFisica;
+	
+	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	private List<AtividadeFisica> atividadeFisica;
 	
 	@Column(name = "data_ultima_atualizacao_dados_paciente")
 	@NotNull(message = "A Data da Última Atualização dos Dados do Paciente não pode estar nula!")
