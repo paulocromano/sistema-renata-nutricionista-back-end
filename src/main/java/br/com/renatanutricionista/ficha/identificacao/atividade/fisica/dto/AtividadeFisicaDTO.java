@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.model.AtividadeFisica;
+import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
 
 
@@ -14,6 +15,7 @@ public class AtividadeFisicaDTO {
 	private String atividadePraticada;
 	private String frequencia;
 	private String duracao;
+	private String dataUltimaAtualizacaoDadosDaAtividadeFisica;
 	
 	
 	public AtividadeFisicaDTO(AtividadeFisica atividadeFisica) {
@@ -21,6 +23,7 @@ public class AtividadeFisicaDTO {
 		atividadePraticada = atividadeFisica.getAtividadePraticada();
 		frequencia = atividadeFisica.getFrequencia().getDescricao();
 		duracao = atividadeFisica.getDuracao();
+		dataUltimaAtualizacaoDadosDaAtividadeFisica = ConversaoUtils.converterLocalDateTimeParaString(atividadeFisica.getDataUltimaAtualizacaoDadosDaAtividadeFisica());
 	}
 	
 	

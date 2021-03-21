@@ -1,4 +1,4 @@
-package br.com.renatanutricionista.ficha.identificacao.historico.social.enums.uso.cigarro;
+package br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.cigarro;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public enum UsoCigarro {
+public enum ConsumoCigarro {
 
 	FUMA("0", "Fuma"),
 	FUMOU("1", "Fumou"),

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.endereco.dto.EnderecoDTO;
 import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.dto.AtividadeFisicaDTO;
+import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.dto.HistoricoAlimentarDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.dto.HistoricoSocialDTO;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.utils.ConversaoUtils;
@@ -23,7 +24,7 @@ public class PacienteDTO {
 	private String telefoneRecado;
 	private EnderecoDTO endereco;
 	private List<HistoricoSocialDTO> historicoSocial;
-	//private List<HistoricoAlimentarDTO> historicoAlimentar;
+	private List<HistoricoAlimentarDTO> historicoAlimentar;
 	private List<AtividadeFisicaDTO> atividadeFisica;
 	private String dataUltimaAtualizacaoDadosDoPaciente;
 	
@@ -37,8 +38,7 @@ public class PacienteDTO {
 		telefone = paciente.getTelefone();
 		telefoneRecado = paciente.getTelefoneRecado();
 		endereco = new EnderecoDTO(paciente.getEndereco());
-		historicoSocial = HistoricoSocialDTO.converterParaListaHistoricoSocialDTO(paciente.getHistoricoSocial());
-//		historicoAlimentar = HistoricoAlimentarDTO.converterParaListaHistoricoAlimentarDTO(paciente.getHistoricoAlimentar());
+		historicoAlimentar = HistoricoAlimentarDTO.converterParaListaHistoricoAlimentarDTO(paciente.getHistoricoAlimentar());
 		atividadeFisica = AtividadeFisicaDTO.converterParaListaAtividadeFisicaDTO(paciente.getAtividadeFisica());
 		dataUltimaAtualizacaoDadosDoPaciente = ConversaoUtils.converterLocalDateTimeParaString(paciente.getDataUltimaAtualizacaoDadosDoPaciente());
 	}

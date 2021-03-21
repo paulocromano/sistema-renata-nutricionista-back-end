@@ -1,7 +1,6 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.social.dto;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.model.PatologiaPaciente;
@@ -19,8 +18,8 @@ public class HistoricoSocialDTO {
 	private String estadoCivil;
 	private String composicaoFamiliar;
 	private String localRefeicoes;
-	private String frequenciaUsoBebidasAlcoolicas;
-	private String usoCigarro;
+	private String frequenciaConsumoBebidasAlcoolicas;
+	private String consumoCigarro;
 	private Integer quantidadeCigarrosPorDia;
 	private String habitoIntestinal;
 	private String consistenciaFezes;
@@ -31,7 +30,7 @@ public class HistoricoSocialDTO {
 	private String menstruacaoNormal;
 	private String motivoAnormalidadeMenstruacao;
 	private String menopausa;
-	private String inicioMenopausa;
+	private Integer quantosAnosEstaNaMenopausa;
 	private String dataUltimaAtualizacaoDadosDoHistoricoSocial;
 	
 	
@@ -41,8 +40,8 @@ public class HistoricoSocialDTO {
 		estadoCivil = historicoSocial.getEstadoCivil().getDescricao();
 		composicaoFamiliar = historicoSocial.getComposicaoFamiliar();
 		localRefeicoes = historicoSocial.getLocalRefeicoes();
-		frequenciaUsoBebidasAlcoolicas = historicoSocial.getFrequenciaUsoBebidasAlcoolicas().getDescricao();
-		usoCigarro = historicoSocial.getUsoCigarro().getDescricao();
+		frequenciaConsumoBebidasAlcoolicas = historicoSocial.getFrequenciaConsumoBebidasAlcoolicas().getDescricao();
+		consumoCigarro = historicoSocial.getConsumoCigarro().getDescricao();
 		quantidadeCigarrosPorDia = historicoSocial.getQuantidadeCigarrosPorDia();
 		habitoIntestinal = historicoSocial.getHabitoIntestinal().getDescricao();
 		consistenciaFezes = historicoSocial.getConsistenciaFezes().getDescricao();
@@ -55,9 +54,7 @@ public class HistoricoSocialDTO {
 			menstruacaoNormal = historicoSocial.getMenstruacaoNormal().getDescricao();
 			motivoAnormalidadeMenstruacao = historicoSocial.getMotivoAnormalidadeMenstruacao();
 			menopausa = historicoSocial.getMenopausa().getDescricao();
-			
-			if (Objects.nonNull(inicioMenopausa))
-				inicioMenopausa = ConversaoUtils.converterLocalDateParaString(historicoSocial.getInicioMenopausa());
+			quantosAnosEstaNaMenopausa = historicoSocial.getQuantosAnosEstaNaMenopausa();
 		}
 		
 		dataUltimaAtualizacaoDadosDoHistoricoSocial = ConversaoUtils.converterLocalDateTimeParaString(historicoSocial.getDataUltimaAtualizacaoDadosDoHistoricoSocial());

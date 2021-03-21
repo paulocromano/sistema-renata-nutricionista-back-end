@@ -1,6 +1,5 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.social.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,14 +23,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.model.PatologiaPaciente;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consistencia.fezes.ConsistenciaFezes;
+import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.bebidas.alcoolicas.ConsumoBebidasAlcoolicas;
+import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.cigarro.ConsumoCigarro;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.diurese.coloracao.ColoracaoDiurese;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.diurese.frequencia.FrequenciaDiurese;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.estado.civil.EstadoCivil;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.habito.intestinal.HabitoIntestinal;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.mulher.menopausa.Menopausa;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.mulher.menstruacao.normal.MenstruacaoNormal;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.uso.bebidas.alcoolicas.UsoBebidasAlcoolicas;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.uso.cigarro.UsoCigarro;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -69,12 +68,12 @@ public class HistoricoSocial {
 	private String localRefeicoes;
 	
 	@Column(name = "frequencia_uso_bebidas_alcoolicas")
-	@NotNull(message = "O campo Uso de Bebidas Alcoólicas não pode ser nulo!")
-	private UsoBebidasAlcoolicas frequenciaUsoBebidasAlcoolicas;
+	@NotNull(message = "O campo Consumo de Bebidas Alcoólicas não pode ser nulo!")
+	private ConsumoBebidasAlcoolicas frequenciaConsumoBebidasAlcoolicas;
 	
 	@Column(name = "uso_cigarro")
-	@NotNull(message = "O campo Uso de Cigarro não pode ser nulo!")
-	private UsoCigarro usoCigarro;
+	@NotNull(message = "O campo Consumo de Cigarro não pode ser nulo!")
+	private ConsumoCigarro consumoCigarro;
 	
 	@Column(name = "quantidade_cigarros_por_dia")
 	private Integer quantidadeCigarrosPorDia;
@@ -111,9 +110,8 @@ public class HistoricoSocial {
 	
 	private Menopausa menopausa;
 	
-	@Column(name = "inicio_menopausa")
-	@DateTimeFormat(pattern = "MM/yyyy")
-	private LocalDate inicioMenopausa;
+	@Column(name = "quantos_anos_menopausa")
+	private Integer quantosAnosEstaNaMenopausa;
 	
 	@Column(name = "data_ultima_atualizacao_dados_historico_social")
 	@NotNull(message = "A Data da Última Atualização dos Dados do Histórico Social não pode estar nula!")
@@ -127,18 +125,18 @@ public class HistoricoSocial {
 	
 	
 	private HistoricoSocial(String profissao, EstadoCivil estadoCivil, String composicaoFamiliar, String localRefeicoes,
-			UsoBebidasAlcoolicas frequenciaUsoBebidasAlcoolicas,UsoCigarro usoCigarro, Integer quantidadeCigarrosPorDia,
+			ConsumoBebidasAlcoolicas frequenciaConsumoBebidasAlcoolicas,ConsumoCigarro consumoCigarro, Integer quantidadeCigarrosPorDia,
 			HabitoIntestinal habitoIntestinal, ConsistenciaFezes consistenciaFezes, FrequenciaDiurese frequenciaDiurese,
 			ColoracaoDiurese coloracaoDiurese, Integer horasSono, MenstruacaoNormal menstruacaoNormal, 
-			String motivoAnormalidadeMenstruacao, Menopausa menopausa, LocalDate inicioMenopausa, 
+			String motivoAnormalidadeMenstruacao, Menopausa menopausa, Integer quantosAnosEstaNaMenopausa, 
 			LocalDateTime dataUltimaAtualizacaoDadosDoHistoricoSocial, Paciente paciente) {
 		
 		this.profissao = profissao;
 		this.estadoCivil = estadoCivil;
 		this.composicaoFamiliar = composicaoFamiliar;
 		this.localRefeicoes = localRefeicoes;
-		this.frequenciaUsoBebidasAlcoolicas = frequenciaUsoBebidasAlcoolicas;
-		this.usoCigarro = usoCigarro;
+		this.frequenciaConsumoBebidasAlcoolicas = frequenciaConsumoBebidasAlcoolicas;
+		this.consumoCigarro = consumoCigarro;
 		this.quantidadeCigarrosPorDia = quantidadeCigarrosPorDia;
 		this.habitoIntestinal = habitoIntestinal;
 		this.consistenciaFezes = consistenciaFezes;
@@ -148,7 +146,7 @@ public class HistoricoSocial {
 		this.menstruacaoNormal = menstruacaoNormal;
 		this.motivoAnormalidadeMenstruacao = motivoAnormalidadeMenstruacao;
 		this.menopausa = menopausa;
-		this.inicioMenopausa = inicioMenopausa;
+		this.quantosAnosEstaNaMenopausa = quantosAnosEstaNaMenopausa;
 		this.paciente = paciente;
 		this.dataUltimaAtualizacaoDadosDoHistoricoSocial = dataUltimaAtualizacaoDadosDoHistoricoSocial;
 	}
@@ -160,8 +158,8 @@ public class HistoricoSocial {
 		private EstadoCivil estadoCivil;
 		private String composicaoFamiliar;
 		private String localRefeicoes;
-		private UsoBebidasAlcoolicas frequenciaUsoBebidasAlcoolicas;
-		private UsoCigarro usoCigarro;
+		private ConsumoBebidasAlcoolicas frequenciaConsumoBebidasAlcoolicas;
+		private ConsumoCigarro consumoCigarro;
 		private Integer quantidadeCigarrosPorDia;
 		private HabitoIntestinal habitoIntestinal;
 		private ConsistenciaFezes consistenciaFezes;
@@ -171,7 +169,7 @@ public class HistoricoSocial {
 		private MenstruacaoNormal menstruacaoNormal;
 		private String motivoAnormalidadeMenstruacao;
 		private Menopausa menopausa;
-		private LocalDate inicioMenopausa;
+		private Integer quantosAnosEstaNaMenopausa;
 		private LocalDateTime dataUltimaAtualizacaoDadosDoHistoricoSocial;
 		private Paciente paciente;
 		
@@ -196,13 +194,13 @@ public class HistoricoSocial {
 			return this;
 		}
 		
-		public HistoricoSocialBuilder frequenciaUsoBebidasAlcoolicas(UsoBebidasAlcoolicas frequenciaUsoBebidasAlcoolicas) {
-			this.frequenciaUsoBebidasAlcoolicas = frequenciaUsoBebidasAlcoolicas;
+		public HistoricoSocialBuilder frequenciaConsumoBebidasAlcoolicas(ConsumoBebidasAlcoolicas frequenciaConsumoBebidasAlcoolicas) {
+			this.frequenciaConsumoBebidasAlcoolicas = frequenciaConsumoBebidasAlcoolicas;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder usoCigarro(UsoCigarro usoCigarro) {
-			this.usoCigarro = usoCigarro;
+		public HistoricoSocialBuilder consumoCigarro(ConsumoCigarro consumoCigarro) {
+			this.consumoCigarro = consumoCigarro;
 			return this;
 		}
 		
@@ -251,8 +249,8 @@ public class HistoricoSocial {
 			return this;
 		}
 		
-		public HistoricoSocialBuilder inicioMenopausa(LocalDate inicioMenopausa) {
-			this.inicioMenopausa = inicioMenopausa;
+		public HistoricoSocialBuilder quantosAnosEstaNaMenopausa(Integer quantosAnosEstaNaMenopausa) {
+			this.quantosAnosEstaNaMenopausa = quantosAnosEstaNaMenopausa;
 			return this;
 		}
 		
@@ -269,9 +267,9 @@ public class HistoricoSocial {
 		
 		public HistoricoSocial criarHistoricoSocial() {
 			return new HistoricoSocial(profissao, estadoCivil, composicaoFamiliar, localRefeicoes, 
-					frequenciaUsoBebidasAlcoolicas, usoCigarro, quantidadeCigarrosPorDia, habitoIntestinal, 
+					frequenciaConsumoBebidasAlcoolicas, consumoCigarro, quantidadeCigarrosPorDia, habitoIntestinal, 
 					consistenciaFezes, frequenciaDiurese, coloracaoDiurese, horasSono, menstruacaoNormal, 
-					motivoAnormalidadeMenstruacao, menopausa, inicioMenopausa, 
+					motivoAnormalidadeMenstruacao, menopausa, quantosAnosEstaNaMenopausa, 
 					dataUltimaAtualizacaoDadosDoHistoricoSocial, paciente);
 		}
 	}

@@ -13,7 +13,7 @@ public enum FrequenciaAtividadeFisica {
 	FREQUENTE("F", "Frequente"),
 	AS_VEZES("A", "Às vezes"),
 	QUASE_NUNCA("Q", "Quase nunca"),
-	NAO("N", "Não");
+	NAO_PRATICA("N", "Não pratica");
 	
 	
 	private String codigo;

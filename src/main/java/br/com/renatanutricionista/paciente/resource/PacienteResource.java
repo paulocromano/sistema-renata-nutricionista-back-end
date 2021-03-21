@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.form.AtividadeFisicaFORM;
+import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.form.HistoricoAlimentarFORM;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.form.HistoricoSocialFORM;
 import br.com.renatanutricionista.paciente.dto.PacienteDTO;
 import br.com.renatanutricionista.paciente.form.AtualizacaoPacienteFORM;
@@ -63,13 +64,13 @@ public class PacienteResource {
 	}
 	
 	
-//	@PostMapping("/historico-alimentar/{idPaciente}")
-//	@Transactional
-//	public ResponseEntity<Void> cadastrarHistoricoAlimentarDoPaciente(@PathVariable Long idPaciente, 
-//			@RequestBody @Valid HistoricoAlimentarFORM historicoAlimentarFORM) {
-//		
-//		return pacienteService.cadastrarHistoricoAlimentarDoPaciente(idPaciente, historicoAlimentarFORM);
-//	}
+	@PostMapping("/historico-alimentar/{idPaciente}")
+	@Transactional
+	public ResponseEntity<Void> cadastrarHistoricoAlimentarDoPaciente(@PathVariable Long idPaciente, 
+			@RequestBody @Valid HistoricoAlimentarFORM historicoAlimentarFORM) {
+		
+		return pacienteService.cadastrarHistoricoAlimentarDoPaciente(idPaciente, historicoAlimentarFORM);
+	}
 	
 	
 	@PostMapping("/atividade-fisica/{idPaciente}")

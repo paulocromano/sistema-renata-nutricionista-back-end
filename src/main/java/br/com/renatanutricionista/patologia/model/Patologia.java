@@ -1,5 +1,6 @@
 package br.com.renatanutricionista.patologia.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +22,7 @@ public class Patologia {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@Column(unique = true)
 	@NotEmpty(message = "O campo Descrição não pode estar nulo/vazio!")
 	@Size(max = 100, message = "O campo Descrição deve ter no máximo {max} caracteres!")
 	private String descricao;

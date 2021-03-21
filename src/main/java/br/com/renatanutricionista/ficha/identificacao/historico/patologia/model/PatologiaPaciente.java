@@ -32,7 +32,7 @@ public class PatologiaPaciente {
 	private Long id;
 	
 	@Column(name = "quantos_anos_possui_patologia")
-	@NotNull(message = "O campo de Quantos Anos o Paciente possui a Patologia não pode estar nulo!")
+	@NotNull(message = "O campo de Quantos Anos que o Paciente possui a Patologia não pode estar nulo!")
 	private Integer quantosAnosPosssuiPatologia;
 	
 	@ManyToOne

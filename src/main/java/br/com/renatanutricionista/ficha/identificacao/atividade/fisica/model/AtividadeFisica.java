@@ -40,7 +40,7 @@ public class AtividadeFisica {
 	private Long id;
 	
 	@Column(name = "atividade_praticada")
-	@Size(max = 100, message = "O campo Atividades Praticadas deve ter no máximo {150} caracteres!")
+	@Size(max = 100, message = "O campo Atividades Praticadas deve ter no máximo {max} caracteres!")
 	private String atividadePraticada;
 	
 	@NotNull(message = "O campo Frequência de Atividade Física não pode estar nulo!")
@@ -54,7 +54,7 @@ public class AtividadeFisica {
 	@NotNull(message = "O objeto Paciente não pode estar nulo!")
 	private Paciente paciente;
 	
-	@Column(name = "data_ultima_atualizacao_dados_paciente")
+	@Column(name = "data_ultima_atualizacao_dados_atividade_fisica")
 	@NotNull(message = "A Data da Última Atualização dos Dados da Atividade Física não pode estar nula!")
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime dataUltimaAtualizacaoDadosDaAtividadeFisica;

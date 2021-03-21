@@ -24,6 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import br.com.renatanutricionista.endereco.model.Endereco;
 import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.model.AtividadeFisica;
+import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.model.HistoricoAlimentar;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.paciente.enums.Etnia;
 import br.com.renatanutricionista.utils.enums.SexoUtils;
@@ -75,9 +76,9 @@ public class Paciente {
 	
 	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private List<HistoricoSocial> historicoSocial;
-//	
-//	@OneToMany(mappedBy = "paciente")
-//	private List<HistoricoAlimentar> historicoAlimentar;
+	
+	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	private List<HistoricoAlimentar> historicoAlimentar;
 	
 	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private List<AtividadeFisica> atividadeFisica;

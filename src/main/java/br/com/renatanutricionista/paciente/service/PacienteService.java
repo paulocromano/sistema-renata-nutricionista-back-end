@@ -1,9 +1,7 @@
 package br.com.renatanutricionista.paciente.service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +11,13 @@ import org.springframework.stereotype.Service;
 
 import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.form.AtividadeFisicaFORM;
 import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.repository.AtividadeFisicaRepository;
+import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.form.HistoricoAlimentarFORM;
+import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.repository.HistoricoAlimentarRepository;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.model.PatologiaPaciente;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.repository.PatologiaPacienteRepository;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.form.HistoricoSocialFORM;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.repository.HistoricoSocialRepository;
-import br.com.renatanutricionista.medicamento.model.Medicamento;
-import br.com.renatanutricionista.medicamento.repository.MedicamentoRepository;
 import br.com.renatanutricionista.paciente.dto.PacienteDTO;
 import br.com.renatanutricionista.paciente.form.AtualizacaoPacienteFORM;
 import br.com.renatanutricionista.paciente.form.PacienteFORM;
@@ -44,15 +42,12 @@ public class PacienteService {
 	
 	@Autowired
 	private PatologiaRepository patologiaRepository;
-	
-	@Autowired
-	private MedicamentoRepository medicamentoRepository;
 
 	@Autowired
 	private AtividadeFisicaRepository atividadeFisicaRepository;
 	
-//	@Autowired
-//	private HistoricoAlimentarRepository historicoAlimentarRepository;
+	@Autowired
+	private HistoricoAlimentarRepository historicoAlimentarRepository;
 	
 	
 	public ResponseEntity<List<PacienteDTO>> listarTodosPacientes() {	
@@ -116,28 +111,11 @@ public class PacienteService {
 	}
 	
 	
-//	public ResponseEntity<Void> cadastrarHistoricoAlimentarDoPaciente(Long idPaciente, HistoricoAlimentarFORM historicoAlimentarFORM) {
-//		Paciente paciente = verificarSePacienteExiste(idPaciente);
-//		List<Medicamento> medicamentos = validarListaMedicamentosDoPaciente(historicoAlimentarFORM.getIdMedicamentos());
-//		HistoricoAlimentar historicoAlimentar = historicoAlimentarFORM.converterParaHistoricoAlimentar(medicamentos, paciente);
-//		
-//		//historicoAlimentarRepository.save(historicoAlimentar);
-//		
-//		return ResponseEntity.status(HttpStatus.CREATED).build();
-//	}
-	
-	
-	private List<Medicamento> validarListaMedicamentosDoPaciente(List<Integer> idMedicamentos) {
-		if (!idMedicamentos.isEmpty()) {
-			List<Medicamento> medicamentosEncontrados = medicamentoRepository.findByIdIn(idMedicamentos);
-			
-			if (idMedicamentos.size() != medicamentosEncontrados.size())
-				throw new IllegalArgumentException("Existe(m) ID(s) inválido(s) na lista de Medicamentos informada pelo Usuário!");
-			
-			return medicamentosEncontrados;
-		}
+	public ResponseEntity<Void> cadastrarHistoricoAlimentarDoPaciente(Long idPaciente, HistoricoAlimentarFORM historicoAlimentarFORM) {
+		Paciente paciente = VerificacaoUtils.verificarSePacienteExiste(idPaciente, pacienteRepository);
+		historicoAlimentarRepository.save(historicoAlimentarFORM.converterParaHistoricoAlimentar(paciente));
 		
-		return new ArrayList<>();
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	
 	
