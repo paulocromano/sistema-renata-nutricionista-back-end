@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import br.com.renatanutricionista.exception.custom.IntegrityConstraintViolationException;
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.exception.custom.PacienteException;
 import br.com.renatanutricionista.exception.model.PadraoErro;
@@ -47,6 +48,12 @@ public class ExceptionHandle {
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<PadraoErro> notFound(ObjectNotFoundException exception, HttpServletRequest request) {
 		return erroPadronizado(HttpStatus.NOT_FOUND, "Objeto não encontrado!", exception, request);
+	}
+	
+	
+	@ExceptionHandler(IntegrityConstraintViolationException.class)
+	public ResponseEntity<PadraoErro> integrityConstraintViolation(IntegrityConstraintViolationException exception, HttpServletRequest request) {
+		return erroPadronizado(HttpStatus.NOT_FOUND, "Erro de Integridade dos Dados!", exception, request);
 	}
 	
 	

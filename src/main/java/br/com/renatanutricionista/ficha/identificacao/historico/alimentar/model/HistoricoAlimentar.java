@@ -88,7 +88,6 @@ public class HistoricoAlimentar {
 		private String alimentosPacienteNaoGosta;
 		private String alteracoesGastrointestinal;
 		private String consumoAgua;
-		private List<SuplementoPaciente> suplementosPaciente;
 		private String medicamentos;
 		private Paciente paciente;
 		private LocalDateTime dataUltimaAtualizacaoDadosDoHistoricoAlimentar;
@@ -118,11 +117,6 @@ public class HistoricoAlimentar {
 			this.consumoAgua = consumoAgua;
 			return this;
 		}
-
-		public HistoricoAlimentarBuilder suplementosPaciente(List<SuplementoPaciente> suplementosPaciente) {
-			this.suplementosPaciente = suplementosPaciente;
-			return this;
-		}
 		
 		public HistoricoAlimentarBuilder medicamentos(String medicamentos) {
 			this.medicamentos = medicamentos;
@@ -134,7 +128,7 @@ public class HistoricoAlimentar {
 			return this;
 		}
 		
-		public HistoricoAlimentarBuilder pacidataUltimaAtualizacaoDadosDoHistoricoAlimentarente(LocalDateTime dataUltimaAtualizacaoDadosDoHistoricoAlimentar) {
+		public HistoricoAlimentarBuilder dataUltimaAtualizacaoDadosDoHistoricoAlimentarente(LocalDateTime dataUltimaAtualizacaoDadosDoHistoricoAlimentar) {
 			this.dataUltimaAtualizacaoDadosDoHistoricoAlimentar = dataUltimaAtualizacaoDadosDoHistoricoAlimentar;
 			return this;
 		}
@@ -142,7 +136,7 @@ public class HistoricoAlimentar {
 		
 		public HistoricoAlimentar criarHistoricoAlimentar() {
 			return new HistoricoAlimentar(null, intoleranciaAlergiaAlimentosPaciente, preferenciaAlimentarPaciente, 
-					alimentosPacienteNaoGosta, alteracoesGastrointestinal, consumoAgua, suplementosPaciente, 
+					alimentosPacienteNaoGosta, alteracoesGastrointestinal, consumoAgua, null, 
 					medicamentos, paciente, dataUltimaAtualizacaoDadosDoHistoricoAlimentar);
 		}
 	}

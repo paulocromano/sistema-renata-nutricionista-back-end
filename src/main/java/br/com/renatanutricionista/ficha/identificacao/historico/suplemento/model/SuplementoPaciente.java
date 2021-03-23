@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.model.HistoricoAlimentar;
 import br.com.renatanutricionista.suplemento.model.Suplemento;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -23,6 +24,7 @@ import lombok.Setter;
 @Table(name = "suplemento_paciente", schema = "sistema_nutricionista")
 @Getter
 @Setter
+@NoArgsConstructor
 @JsonIgnoreProperties(value = "historicoAlimentar")
 public class SuplementoPaciente {
 
@@ -44,4 +46,14 @@ public class SuplementoPaciente {
 	@JoinColumn(name = "suplemento_id")
 	@NotNull(message = "O objeto Suplemento não pode estar nulo!")
 	private Suplemento suplemento;
+	
+
+	public SuplementoPaciente(String dose, String formaPreparo, HistoricoAlimentar historicoAlimentar, Integer idSuplemento) {
+		this.dose = dose;
+		this.formaPreparo = formaPreparo;
+		this.historicoAlimentar = historicoAlimentar;
+		
+		suplemento = new Suplemento();
+		suplemento.setId(idSuplemento);
+	}
 }

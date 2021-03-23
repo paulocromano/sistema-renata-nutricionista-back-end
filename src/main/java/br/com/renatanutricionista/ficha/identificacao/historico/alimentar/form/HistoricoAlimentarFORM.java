@@ -1,9 +1,16 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.alimentar.form;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.model.HistoricoAlimentar;
+import br.com.renatanutricionista.ficha.identificacao.historico.suplemento.form.SuplementoPacienteFORM;
+import br.com.renatanutricionista.ficha.identificacao.historico.suplemento.model.SuplementoPaciente;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,6 +39,9 @@ public class HistoricoAlimentarFORM {
 	@Size(max = 500, message = "O campo Medicamentos deve ter no máximo {max} caracteres!")
 	private String medicamentos;
 	
+	@Valid
+	private List<SuplementoPacienteFORM> suplementosPaciente;
+	
 	
 	public HistoricoAlimentar converterParaHistoricoAlimentar(Paciente paciente) {
 		return new HistoricoAlimentar.HistoricoAlimentarBuilder()
@@ -42,6 +52,15 @@ public class HistoricoAlimentarFORM {
 				.consumoAgua(consumoAgua)
 				.medicamentos(medicamentos)
 				.paciente(paciente)
+				.dataUltimaAtualizacaoDadosDoHistoricoAlimentarente(LocalDateTime.now())
 				.criarHistoricoAlimentar();
+	}
+	
+	
+	public List<SuplementoPaciente> gerarListaSuplementosPaciente(HistoricoAlimentar historicoAlimentar) {
+		return suplementosPaciente.stream().map(suplementoPaciente -> new SuplementoPaciente(suplementoPaciente.getDose(), 
+				suplementoPaciente.getFormaPreparo(), historicoAlimentar, suplementoPaciente.getIdSuplemento()))
+				
+				.collect(Collectors.toList());
 	}
 }
