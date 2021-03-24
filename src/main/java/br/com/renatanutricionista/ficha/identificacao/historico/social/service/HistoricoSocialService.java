@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.renatanutricionista.exception.custom.IntegrityConstraintViolationException;
-import br.com.renatanutricionista.ficha.identificacao.historico.patologia.repository.PatologiaPacienteRepository;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.repository.PatologiaPacienteRepository;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.form.HistoricoSocialFORM;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.repository.HistoricoSocialRepository;

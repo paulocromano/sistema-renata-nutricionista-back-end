@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
 
 import br.com.renatanutricionista.tabelas.parametro.atividade.fisica.enums.TipoPessoaAtividadeFisica;
 import br.com.renatanutricionista.utils.enums.SexoUtils;
@@ -26,7 +25,6 @@ public class AtividadeFisicaParametro {
 	private Integer id;
 	
 	@Column(name = "tipo_pessoa")
-	@NotNull(message = "O Tipo da Pessoa não pode estar vazio!")
 	private TipoPessoaAtividadeFisica tipoPessoa;
 	
 	private String observacao;

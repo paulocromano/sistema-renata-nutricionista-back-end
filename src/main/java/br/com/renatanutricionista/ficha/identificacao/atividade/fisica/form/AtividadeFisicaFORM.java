@@ -41,7 +41,7 @@ public class AtividadeFisicaFORM {
 				.frequencia(frequenciaAtividadeFisica)
 				.duracao(duracao)
 				.paciente(paciente)
-				.dataUltimaAtualizacaoDadosDaAtividadeFisica(LocalDateTime.now())
+				.dataHoraUltimaAtualizacaoDadosDaAtividadeFisica(LocalDateTime.now())
 				.criarAtividadeFisica();
 	}
 	

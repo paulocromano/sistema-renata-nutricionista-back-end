@@ -25,6 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import br.com.renatanutricionista.endereco.model.Endereco;
 import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.model.AtividadeFisica;
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.model.HistoricoAlimentar;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.por.data.model.HistoricoPatologiaFamiliaresPorData;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.paciente.enums.Etnia;
 import br.com.renatanutricionista.utils.enums.SexoUtils;
@@ -83,14 +84,17 @@ public class Paciente {
 	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private List<AtividadeFisica> atividadeFisica;
 	
-	@Column(name = "data_ultima_atualizacao_dados_paciente")
-	@NotNull(message = "A Data da Última Atualização dos Dados do Paciente não pode estar nula!")
+	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	private List<HistoricoPatologiaFamiliaresPorData> historicoPatologiaFamiliaresPorData;
+	
+	@Column(name = "data_hora_ultima_atualizacao_dados_paciente")
+	@NotNull(message = "A Data e Hora da Última Atualização dos Dados do Paciente não pode estar nula!")
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-	private LocalDateTime dataUltimaAtualizacaoDadosDoPaciente;
+	private LocalDateTime dataHoraUltimaAtualizacaoDadosDoPaciente;
 	
 	
 	private Paciente(String nome, LocalDate dataNascimento, SexoUtils sexo, Etnia etnia, String telefone, 
-			String telefoneRecado, Endereco endereco, LocalDateTime dataUltimaAtualizacaoDadosDoPaciente) {
+			String telefoneRecado, Endereco endereco, LocalDateTime dataHoraUltimaAtualizacaoDadosDoPaciente) {
 		
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
@@ -99,7 +103,7 @@ public class Paciente {
 		this.telefone = telefone;
 		this.telefoneRecado = telefoneRecado;
 		this.endereco = endereco;
-		this.dataUltimaAtualizacaoDadosDoPaciente = dataUltimaAtualizacaoDadosDoPaciente;
+		this.dataHoraUltimaAtualizacaoDadosDoPaciente = dataHoraUltimaAtualizacaoDadosDoPaciente;
 	}
 
 
@@ -111,7 +115,7 @@ public class Paciente {
 		private String telefone;
 		private String telefoneRecado;
 		private Endereco endereco;
-		private LocalDateTime dataUltimaAtualizacaoDadosDoPaciente;
+		private LocalDateTime dataHoraUltimaAtualizacaoDadosDoPaciente;
 		
 		
 		public PacienteBuilder nome(String nome) {
@@ -149,14 +153,14 @@ public class Paciente {
 			return this;
 		}
 		
-		public PacienteBuilder dataUltimaAtualizacaoDadosDoPaciente(LocalDateTime dataUltimaAtualizacaoDadosDoPaciente) {
-			this.dataUltimaAtualizacaoDadosDoPaciente = dataUltimaAtualizacaoDadosDoPaciente;
+		public PacienteBuilder dataHoraUltimaAtualizacaoDadosDoPaciente(LocalDateTime dataHoraUltimaAtualizacaoDadosDoPaciente) {
+			this.dataHoraUltimaAtualizacaoDadosDoPaciente = dataHoraUltimaAtualizacaoDadosDoPaciente;
 			return this;
 		}
 		
 		
 		public Paciente criarPaciente() {
-			return new Paciente(nome, dataNascimento, sexo, etnia, telefone, telefoneRecado, endereco, dataUltimaAtualizacaoDadosDoPaciente);
+			return new Paciente(nome, dataNascimento, sexo, etnia, telefone, telefoneRecado, endereco, dataHoraUltimaAtualizacaoDadosDoPaciente);
 		}
 	}
 }

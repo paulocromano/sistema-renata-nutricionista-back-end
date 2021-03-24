@@ -1,9 +1,9 @@
-package br.com.renatanutricionista.ficha.identificacao.historico.patologia.dto;
+package br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.dto;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import br.com.renatanutricionista.ficha.identificacao.historico.patologia.model.PatologiaPaciente;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.model.PatologiaPaciente;
 import br.com.renatanutricionista.patologia.dto.PatologiaDTO;
 import lombok.Getter;
 

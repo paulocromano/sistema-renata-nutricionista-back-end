@@ -21,7 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import br.com.renatanutricionista.ficha.identificacao.historico.patologia.model.PatologiaPaciente;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.model.PatologiaPaciente;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consistencia.fezes.ConsistenciaFezes;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.bebidas.alcoolicas.ConsumoBebidasAlcoolicas;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.cigarro.ConsumoCigarro;
@@ -113,10 +113,10 @@ public class HistoricoSocial {
 	@Column(name = "quantos_anos_menopausa")
 	private Integer quantosAnosEstaNaMenopausa;
 	
-	@Column(name = "data_ultima_atualizacao_dados_historico_social")
+	@Column(name = "data_hora_ultima_atualizacao_dados_historico_social")
 	@NotNull(message = "A Data da Última Atualização dos Dados do Histórico Social não pode estar nula!")
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-	private LocalDateTime dataUltimaAtualizacaoDadosDoHistoricoSocial;
+	private LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoSocial;
 	
 	@ManyToOne
 	@JoinColumn(name = "paciente_id")
@@ -129,7 +129,7 @@ public class HistoricoSocial {
 			HabitoIntestinal habitoIntestinal, ConsistenciaFezes consistenciaFezes, FrequenciaDiurese frequenciaDiurese,
 			ColoracaoDiurese coloracaoDiurese, Integer horasSono, MenstruacaoNormal menstruacaoNormal, 
 			String motivoAnormalidadeMenstruacao, Menopausa menopausa, Integer quantosAnosEstaNaMenopausa, 
-			LocalDateTime dataUltimaAtualizacaoDadosDoHistoricoSocial, Paciente paciente) {
+			LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoSocial, Paciente paciente) {
 		
 		this.profissao = profissao;
 		this.estadoCivil = estadoCivil;
@@ -148,7 +148,7 @@ public class HistoricoSocial {
 		this.menopausa = menopausa;
 		this.quantosAnosEstaNaMenopausa = quantosAnosEstaNaMenopausa;
 		this.paciente = paciente;
-		this.dataUltimaAtualizacaoDadosDoHistoricoSocial = dataUltimaAtualizacaoDadosDoHistoricoSocial;
+		this.dataHoraUltimaAtualizacaoDadosDoHistoricoSocial = dataHoraUltimaAtualizacaoDadosDoHistoricoSocial;
 	}
 
 	
@@ -170,7 +170,7 @@ public class HistoricoSocial {
 		private String motivoAnormalidadeMenstruacao;
 		private Menopausa menopausa;
 		private Integer quantosAnosEstaNaMenopausa;
-		private LocalDateTime dataUltimaAtualizacaoDadosDoHistoricoSocial;
+		private LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoSocial;
 		private Paciente paciente;
 		
 		
@@ -254,8 +254,8 @@ public class HistoricoSocial {
 			return this;
 		}
 		
-		public HistoricoSocialBuilder dataUltimaAtualizacaoDadosDoHistoricoSocial(LocalDateTime dataUltimaAtualizacaoDadosDoHistoricoSocial) {
-			this.dataUltimaAtualizacaoDadosDoHistoricoSocial = dataUltimaAtualizacaoDadosDoHistoricoSocial;
+		public HistoricoSocialBuilder dataHoraUltimaAtualizacaoDadosDoHistoricoSocial(LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoSocial) {
+			this.dataHoraUltimaAtualizacaoDadosDoHistoricoSocial = dataHoraUltimaAtualizacaoDadosDoHistoricoSocial;
 			return this;
 		}
 		
@@ -270,7 +270,7 @@ public class HistoricoSocial {
 					frequenciaConsumoBebidasAlcoolicas, consumoCigarro, quantidadeCigarrosPorDia, habitoIntestinal, 
 					consistenciaFezes, frequenciaDiurese, coloracaoDiurese, horasSono, menstruacaoNormal, 
 					motivoAnormalidadeMenstruacao, menopausa, quantosAnosEstaNaMenopausa, 
-					dataUltimaAtualizacaoDadosDoHistoricoSocial, paciente);
+					dataHoraUltimaAtualizacaoDadosDoHistoricoSocial, paciente);
 		}
 	}
 }

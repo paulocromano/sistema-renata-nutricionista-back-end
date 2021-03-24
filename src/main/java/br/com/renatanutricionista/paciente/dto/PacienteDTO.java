@@ -26,7 +26,7 @@ public class PacienteDTO {
 	private List<HistoricoSocialDTO> historicoSocial;
 	private List<HistoricoAlimentarDTO> historicoAlimentar;
 	private List<AtividadeFisicaDTO> atividadeFisica;
-	private String dataUltimaAtualizacaoDadosDoPaciente;
+	private String dataHoraUltimaAtualizacaoDadosDoPaciente;
 	
 	
 	public PacienteDTO(Paciente paciente) {
@@ -41,7 +41,7 @@ public class PacienteDTO {
 		historicoSocial = HistoricoSocialDTO.converterParaListaHistoricoSocialDTO(paciente.getHistoricoSocial());
 		historicoAlimentar = HistoricoAlimentarDTO.converterParaListaHistoricoAlimentarDTO(paciente.getHistoricoAlimentar());
 		atividadeFisica = AtividadeFisicaDTO.converterParaListaAtividadeFisicaDTO(paciente.getAtividadeFisica());
-		dataUltimaAtualizacaoDadosDoPaciente = ConversaoUtils.converterLocalDateTimeParaString(paciente.getDataUltimaAtualizacaoDadosDoPaciente());
+		dataHoraUltimaAtualizacaoDadosDoPaciente = ConversaoUtils.converterLocalDateTimeParaString(paciente.getDataHoraUltimaAtualizacaoDadosDoPaciente());
 	}
 	
 	

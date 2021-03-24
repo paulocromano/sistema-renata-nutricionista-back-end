@@ -12,8 +12,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.com.renatanutricionista.exception.custom.PacienteException;
-import br.com.renatanutricionista.ficha.identificacao.historico.patologia.form.PatologiaPacienteFORM;
-import br.com.renatanutricionista.ficha.identificacao.historico.patologia.model.PatologiaPaciente;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.form.PatologiaPacienteFORM;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.model.PatologiaPaciente;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consistencia.fezes.ConsistenciaFezesConversao;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.bebidas.alcoolicas.ConsumoBebidasAlcoolicasConversao;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.cigarro.ConsumoCigarro;
@@ -114,7 +114,7 @@ public class HistoricoSocialFORM {
 				.frequenciaDiurese(new FrequenciaDiureseConversao().convertToEntityAttribute(codigoFrequenciaDiurese))
 				.coloracaoDiurese(new ColoracaoDiureseConversao().convertToEntityAttribute(codigoColoracaoDiurese))
 				.horasSono(horasSono)
-				.dataUltimaAtualizacaoDadosDoHistoricoSocial(LocalDateTime.now())
+				.dataHoraUltimaAtualizacaoDadosDoHistoricoSocial(LocalDateTime.now())
 				.paciente(paciente);
 		
 		if (paciente.getSexo().equals(SexoUtils.FEMININO)) {

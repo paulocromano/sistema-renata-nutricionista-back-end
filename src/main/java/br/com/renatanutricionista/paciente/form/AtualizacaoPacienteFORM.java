@@ -1,5 +1,7 @@
 package br.com.renatanutricionista.paciente.form;
 
+import java.time.LocalDateTime;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -34,5 +36,6 @@ public class AtualizacaoPacienteFORM {
 		paciente.setTelefone(telefone);
 		paciente.setTelefoneRecado(telefoneRecado);
 		paciente.setEndereco(endereco.converterParaEndereco());
+		paciente.setDataHoraUltimaAtualizacaoDadosDoPaciente(LocalDateTime.now());
 	}
 }

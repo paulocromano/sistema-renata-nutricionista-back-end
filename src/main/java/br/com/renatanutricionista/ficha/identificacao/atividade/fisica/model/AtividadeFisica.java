@@ -54,10 +54,10 @@ public class AtividadeFisica {
 	@NotNull(message = "O objeto Paciente não pode estar nulo!")
 	private Paciente paciente;
 	
-	@Column(name = "data_ultima_atualizacao_dados_atividade_fisica")
-	@NotNull(message = "A Data da Última Atualização dos Dados da Atividade Física não pode estar nula!")
+	@Column(name = "data_hora_ultima_atualizacao_dados_atividade_fisica")
+	@NotNull(message = "A Data e Hora da Última Atualização dos Dados da Atividade Física não pode estar nula!")
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-	private LocalDateTime dataUltimaAtualizacaoDadosDaAtividadeFisica;
+	private LocalDateTime dataHoraUltimaAtualizacaoDadosDaAtividadeFisica;
 
 	
 	public static class AtividadeFisicaBuilder {
@@ -66,7 +66,7 @@ public class AtividadeFisica {
 		private FrequenciaAtividadeFisica frequencia;
 		private String duracao;
 		private Paciente paciente;
-		private LocalDateTime dataUltimaAtualizacaoDadosDaAtividadeFisica;
+		private LocalDateTime dataHoraUltimaAtualizacaoDadosDaAtividadeFisica;
 		
 		
 		public AtividadeFisicaBuilder atividadePraticada(String atividadePraticada) {
@@ -89,15 +89,15 @@ public class AtividadeFisica {
 			return this;
 		}
 		
-		public AtividadeFisicaBuilder dataUltimaAtualizacaoDadosDaAtividadeFisica(LocalDateTime dataUltimaAtualizacaoDadosDaAtividadeFisica) {
-			this.dataUltimaAtualizacaoDadosDaAtividadeFisica = dataUltimaAtualizacaoDadosDaAtividadeFisica;
+		public AtividadeFisicaBuilder dataHoraUltimaAtualizacaoDadosDaAtividadeFisica(LocalDateTime dataHoraUltimaAtualizacaoDadosDaAtividadeFisica) {
+			this.dataHoraUltimaAtualizacaoDadosDaAtividadeFisica = dataHoraUltimaAtualizacaoDadosDaAtividadeFisica;
 			return this;
 		}
 		
 		
 		public AtividadeFisica criarAtividadeFisica() {
 			return new AtividadeFisica(null, atividadePraticada, frequencia, duracao, paciente, 
-					dataUltimaAtualizacaoDadosDaAtividadeFisica);
+					dataHoraUltimaAtualizacaoDadosDaAtividadeFisica);
 		}
 	}
 }

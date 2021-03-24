@@ -1,4 +1,4 @@
-package br.com.renatanutricionista.ficha.identificacao.historico.patologia.form;
+package br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.form;
 
 import javax.validation.constraints.NotNull;
 

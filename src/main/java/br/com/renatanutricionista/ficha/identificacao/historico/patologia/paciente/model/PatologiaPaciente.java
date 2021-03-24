@@ -1,4 +1,4 @@
-package br.com.renatanutricionista.ficha.identificacao.historico.patologia.model;
+package br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

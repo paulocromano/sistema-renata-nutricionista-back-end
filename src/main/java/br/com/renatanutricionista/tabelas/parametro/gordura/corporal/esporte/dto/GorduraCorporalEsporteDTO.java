@@ -11,7 +11,7 @@ import lombok.Getter;
 public class GorduraCorporalEsporteDTO {
 
 	private Integer id;
-	private String modalidade;
+	private String modalidadeEsporte;
 	private String sexo;
 	private Integer percentualMinimo;
 	private Integer percentualMaximo;
@@ -19,7 +19,7 @@ public class GorduraCorporalEsporteDTO {
 	
 	public GorduraCorporalEsporteDTO(GorduraCorporalEsporte gorduraCorporalEsporte) {
 		id = gorduraCorporalEsporte.getId();
-		modalidade = gorduraCorporalEsporte.getModalidade();
+		modalidadeEsporte = gorduraCorporalEsporte.getModalidadeEsporte().getDescricao();
 		sexo = gorduraCorporalEsporte.getSexo().getDescricao();
 		percentualMinimo = gorduraCorporalEsporte.getPercentualMinimo();
 		percentualMaximo = gorduraCorporalEsporte.getPercentualMaximo();

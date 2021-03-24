@@ -57,7 +57,7 @@ public class PacienteFORM {
 				.telefone(telefone)
 				.telefoneRecado(telefoneRecado)
 				.endereco(endereco.converterParaEndereco())
-				.dataUltimaAtualizacaoDadosDoPaciente(LocalDateTime.now())
+				.dataHoraUltimaAtualizacaoDadosDoPaciente(LocalDateTime.now())
 				.criarPaciente();
 	}
 }

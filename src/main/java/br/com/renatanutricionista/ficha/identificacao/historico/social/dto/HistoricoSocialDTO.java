@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import br.com.renatanutricionista.ficha.identificacao.historico.patologia.dto.PatologiaPacienteDTO;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.dto.PatologiaPacienteDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import br.com.renatanutricionista.utils.enums.SexoUtils;
@@ -32,7 +32,7 @@ public class HistoricoSocialDTO {
 	private String motivoAnormalidadeMenstruacao;
 	private String menopausa;
 	private Integer quantosAnosEstaNaMenopausa;
-	private String dataUltimaAtualizacaoDadosDoHistoricoSocial;
+	private String dataHoraUltimaAtualizacaoDadosDoHistoricoSocial;
 	
 	
 	public HistoricoSocialDTO(HistoricoSocial historicoSocial) {
@@ -58,7 +58,7 @@ public class HistoricoSocialDTO {
 			quantosAnosEstaNaMenopausa = historicoSocial.getQuantosAnosEstaNaMenopausa();
 		}
 		
-		dataUltimaAtualizacaoDadosDoHistoricoSocial = ConversaoUtils.converterLocalDateTimeParaString(historicoSocial.getDataUltimaAtualizacaoDadosDoHistoricoSocial());
+		dataHoraUltimaAtualizacaoDadosDoHistoricoSocial = ConversaoUtils.converterLocalDateTimeParaString(historicoSocial.getDataHoraUltimaAtualizacaoDadosDoHistoricoSocial());
 	}
 	
 	

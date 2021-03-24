@@ -15,7 +15,7 @@ public class AtividadeFisicaDTO {
 	private String atividadePraticada;
 	private String frequencia;
 	private String duracao;
-	private String dataUltimaAtualizacaoDadosDaAtividadeFisica;
+	private String dataHoraUltimaAtualizacaoDadosDaAtividadeFisica;
 	
 	
 	public AtividadeFisicaDTO(AtividadeFisica atividadeFisica) {
@@ -23,7 +23,7 @@ public class AtividadeFisicaDTO {
 		atividadePraticada = atividadeFisica.getAtividadePraticada();
 		frequencia = atividadeFisica.getFrequencia().getDescricao();
 		duracao = atividadeFisica.getDuracao();
-		dataUltimaAtualizacaoDadosDaAtividadeFisica = ConversaoUtils.converterLocalDateTimeParaString(atividadeFisica.getDataUltimaAtualizacaoDadosDaAtividadeFisica());
+		dataHoraUltimaAtualizacaoDadosDaAtividadeFisica = ConversaoUtils.converterLocalDateTimeParaString(atividadeFisica.getDataHoraUltimaAtualizacaoDadosDaAtividadeFisica());
 	}
 	
 	

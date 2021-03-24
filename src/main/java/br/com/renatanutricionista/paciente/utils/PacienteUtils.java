@@ -17,7 +17,7 @@ public final class PacienteUtils {
 	
 
 	public final void atualizarDataHoraUltimaAlteracaoNosDadosDoPaciente(Paciente paciente) {
-		paciente.setDataUltimaAtualizacaoDadosDoPaciente(LocalDateTime.now());
+		paciente.setDataHoraUltimaAtualizacaoDadosDoPaciente(LocalDateTime.now());
 		pacienteRepository.saveAndFlush(paciente);
 	}
 }

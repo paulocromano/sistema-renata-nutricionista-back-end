@@ -12,15 +12,15 @@ public class GorduraCorporalClassificacaoDTO {
 
 	private Integer id;
 	private String classificacaoGorduraCorporal;
-	private String sexo;
-	private String percentualGordura;
+	private String homem;
+	private String mulher;
 	
 	
 	public GorduraCorporalClassificacaoDTO(GorduraCorporalClassificacao gorduraCorporalClassificacao) {
 		id = gorduraCorporalClassificacao.getId();
 		classificacaoGorduraCorporal = gorduraCorporalClassificacao.getClassificacaoGorduraCorporal().getDescricao();
-		sexo = gorduraCorporalClassificacao.getSexo().getDescricao();
-		percentualGordura = gorduraCorporalClassificacao.getPercentualGordura();
+		homem = gorduraCorporalClassificacao.getHomem();
+		mulher = gorduraCorporalClassificacao.getMulher();
 	}
 	
 	

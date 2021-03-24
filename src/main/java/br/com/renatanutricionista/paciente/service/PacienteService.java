@@ -12,7 +12,6 @@ import br.com.renatanutricionista.paciente.form.AtualizacaoPacienteFORM;
 import br.com.renatanutricionista.paciente.form.PacienteFORM;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.repository.PacienteRepository;
-import br.com.renatanutricionista.paciente.utils.PacienteUtils;
 import br.com.renatanutricionista.utils.VerificacaoUtils;
 
 
@@ -21,9 +20,6 @@ public class PacienteService {
 
 	@Autowired
 	private PacienteRepository pacienteRepository;
-	
-	@Autowired
-	private PacienteUtils pacienteUtils;
 	
 	
 	public ResponseEntity<List<PacienteDTO>> listarTodosPacientes() {	
@@ -42,7 +38,6 @@ public class PacienteService {
 		Paciente paciente = VerificacaoUtils.verificarSePacienteExiste(idPaciente, pacienteRepository);
 		
 		atualizacaoPaciente.atualizarPacienteEndereco(paciente);
-		pacienteUtils.atualizarDataHoraUltimaAlteracaoNosDadosDoPaciente(paciente);
 		
 		return ResponseEntity.ok().build();
 	}
