@@ -12,7 +12,7 @@ import lombok.Getter;
 
 
 @Entity
-@Table(name = "equacao_generalizada_jackson_pollock", schema = "sistema_nutricionista")
+@Table(name = "equacao_generalizada_jackson_pollock", schema = "sistema_nutricionista_parametro")
 @Getter
 public class EquacaoPollock {
 

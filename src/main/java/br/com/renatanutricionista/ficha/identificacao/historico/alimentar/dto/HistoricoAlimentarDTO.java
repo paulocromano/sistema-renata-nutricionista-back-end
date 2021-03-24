@@ -1,10 +1,12 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.alimentar.dto;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.model.HistoricoAlimentar;
 import br.com.renatanutricionista.ficha.identificacao.historico.suplemento.dto.SuplementoPacienteDTO;
+import br.com.renatanutricionista.medicamento.model.Medicamento;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
 
@@ -19,7 +21,7 @@ public class HistoricoAlimentarDTO {
 	private String alteracoesGastrointestinal;
 	private String consumoAgua;
 	private List<SuplementoPacienteDTO> suplementosPaciente;
-	private String medicamentos;
+	private Set<Medicamento> medicamentosPaciente;
 	private String dataUltimaAtualizacaoDadosDoHistoricoAlimentar;
 	
 	
@@ -31,7 +33,7 @@ public class HistoricoAlimentarDTO {
 		alteracoesGastrointestinal = historicoAlimentar.getAlteracoesGastrointestinal();
 		consumoAgua = historicoAlimentar.getConsumoAgua();
 		suplementosPaciente = SuplementoPacienteDTO.converterParaListaSuplementoPacienteDTO(historicoAlimentar.getSuplementosPaciente());
-		medicamentos = historicoAlimentar.getMedicamentos();
+		medicamentosPaciente = historicoAlimentar.getMedicamentos();
 		dataUltimaAtualizacaoDadosDoHistoricoAlimentar = ConversaoUtils.converterLocalDateTimeParaString(
 				historicoAlimentar.getDataUltimaAtualizacaoDadosDoHistoricoAlimentar());
 	}

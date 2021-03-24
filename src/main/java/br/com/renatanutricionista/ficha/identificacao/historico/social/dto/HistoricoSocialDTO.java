@@ -1,9 +1,10 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.social.dto;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import br.com.renatanutricionista.ficha.identificacao.historico.patologia.model.PatologiaPaciente;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.dto.PatologiaPacienteDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import br.com.renatanutricionista.utils.enums.SexoUtils;
@@ -25,7 +26,7 @@ public class HistoricoSocialDTO {
 	private String consistenciaFezes;
 	private String frequenciaDiurese;
 	private String coloracaoDiurese;
-	private List<PatologiaPaciente> patologiasPaciente;
+	private Set<PatologiaPacienteDTO> patologiasPaciente;
 	private Integer horasSono;
 	private String menstruacaoNormal;
 	private String motivoAnormalidadeMenstruacao;
@@ -47,7 +48,7 @@ public class HistoricoSocialDTO {
 		consistenciaFezes = historicoSocial.getConsistenciaFezes().getDescricao();
 		frequenciaDiurese = historicoSocial.getFrequenciaDiurese().getDescricao();
 		coloracaoDiurese = historicoSocial.getColoracaoDiurese().getDescricao();
-		patologiasPaciente = historicoSocial.getPatologiasPaciente();
+		patologiasPaciente = PatologiaPacienteDTO.converterParaSetPatologiaPacienteDTO(historicoSocial.getPatologiasPaciente());
 		horasSono = historicoSocial.getHorasSono();
 		
 		if (historicoSocial.getPaciente().getSexo().equals(SexoUtils.FEMININO)) {

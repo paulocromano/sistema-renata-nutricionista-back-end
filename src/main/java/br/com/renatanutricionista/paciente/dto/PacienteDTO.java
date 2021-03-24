@@ -38,6 +38,7 @@ public class PacienteDTO {
 		telefone = paciente.getTelefone();
 		telefoneRecado = paciente.getTelefoneRecado();
 		endereco = new EnderecoDTO(paciente.getEndereco());
+		historicoSocial = HistoricoSocialDTO.converterParaListaHistoricoSocialDTO(paciente.getHistoricoSocial());
 		historicoAlimentar = HistoricoAlimentarDTO.converterParaListaHistoricoAlimentarDTO(paciente.getHistoricoAlimentar());
 		atividadeFisica = AtividadeFisicaDTO.converterParaListaAtividadeFisicaDTO(paciente.getAtividadeFisica());
 		dataUltimaAtualizacaoDadosDoPaciente = ConversaoUtils.converterLocalDateTimeParaString(paciente.getDataUltimaAtualizacaoDadosDoPaciente());

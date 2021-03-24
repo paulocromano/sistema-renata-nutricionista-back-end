@@ -2,6 +2,7 @@ package br.com.renatanutricionista.ficha.identificacao.historico.alimentar.form;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -11,6 +12,7 @@ import javax.validation.constraints.Size;
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.model.HistoricoAlimentar;
 import br.com.renatanutricionista.ficha.identificacao.historico.suplemento.form.SuplementoPacienteFORM;
 import br.com.renatanutricionista.ficha.identificacao.historico.suplemento.model.SuplementoPaciente;
+import br.com.renatanutricionista.medicamento.model.Medicamento;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,23 +38,22 @@ public class HistoricoAlimentarFORM {
 	@Size(message = "O campo Consumo de Água deve ter no máximo {max} caracteres!")
 	private String consumoAgua;
 	
-	@Size(max = 500, message = "O campo Medicamentos deve ter no máximo {max} caracteres!")
-	private String medicamentos;
+	private Set<Integer> idMedicamentos;
 	
 	@Valid
 	private List<SuplementoPacienteFORM> suplementosPaciente;
 	
 	
-	public HistoricoAlimentar converterParaHistoricoAlimentar(Paciente paciente) {
+	public HistoricoAlimentar converterParaHistoricoAlimentar(Paciente paciente, Set<Medicamento> medicamentosPaciente) {
 		return new HistoricoAlimentar.HistoricoAlimentarBuilder()
 				.intoleranciaAlergiaAlimentosPaciente(intoleranciaAlergiaAlimentosPaciente)
 				.preferenciaAlimentarPaciente(preferenciaAlimentarPaciente)
 				.alimentosPacienteNaoGosta(alimentosPacienteNaoGosta)
 				.alteracoesGastrointestinal(alteracoesGastrointestinal)
 				.consumoAgua(consumoAgua)
-				.medicamentos(medicamentos)
+				.medicamentos(medicamentosPaciente)
 				.paciente(paciente)
-				.dataUltimaAtualizacaoDadosDoHistoricoAlimentarente(LocalDateTime.now())
+				.dataUltimaAtualizacaoDadosDoHistoricoAlimentar(LocalDateTime.now())
 				.criarHistoricoAlimentar();
 	}
 	

@@ -2,6 +2,7 @@ package br.com.renatanutricionista.ficha.identificacao.historico.alimentar.model
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -17,11 +20,14 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.suplemento.model.SuplementoPaciente;
+import br.com.renatanutricionista.medicamento.model.Medicamento;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -67,8 +73,12 @@ public class HistoricoAlimentar {
 	@OneToMany(mappedBy = "historicoAlimentar", cascade = CascadeType.REMOVE)
 	private List<SuplementoPaciente> suplementosPaciente;
 	
-	@Size(max = 500, message = "O campo Medicamentos deve ter no máximo {max} caracteres!")
-	private String medicamentos;
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JoinTable(name = "historico_alimentar_has_medicamento", 
+		joinColumns = @JoinColumn(name = "historico_alimentar_id"), 
+		inverseJoinColumns = @JoinColumn(name = "medicamento_id"))
+	private Set<Medicamento> medicamentos;
 	
 	@ManyToOne
 	@JoinColumn(name = "paciente_id", referencedColumnName = "id")
@@ -88,7 +98,7 @@ public class HistoricoAlimentar {
 		private String alimentosPacienteNaoGosta;
 		private String alteracoesGastrointestinal;
 		private String consumoAgua;
-		private String medicamentos;
+		private Set<Medicamento> medicamentos;
 		private Paciente paciente;
 		private LocalDateTime dataUltimaAtualizacaoDadosDoHistoricoAlimentar;
 		
@@ -118,7 +128,7 @@ public class HistoricoAlimentar {
 			return this;
 		}
 		
-		public HistoricoAlimentarBuilder medicamentos(String medicamentos) {
+		public HistoricoAlimentarBuilder medicamentos(Set<Medicamento> medicamentos) {
 			this.medicamentos = medicamentos;
 			return this;
 		}
@@ -128,7 +138,7 @@ public class HistoricoAlimentar {
 			return this;
 		}
 		
-		public HistoricoAlimentarBuilder dataUltimaAtualizacaoDadosDoHistoricoAlimentarente(LocalDateTime dataUltimaAtualizacaoDadosDoHistoricoAlimentar) {
+		public HistoricoAlimentarBuilder dataUltimaAtualizacaoDadosDoHistoricoAlimentar(LocalDateTime dataUltimaAtualizacaoDadosDoHistoricoAlimentar) {
 			this.dataUltimaAtualizacaoDadosDoHistoricoAlimentar = dataUltimaAtualizacaoDadosDoHistoricoAlimentar;
 			return this;
 		}

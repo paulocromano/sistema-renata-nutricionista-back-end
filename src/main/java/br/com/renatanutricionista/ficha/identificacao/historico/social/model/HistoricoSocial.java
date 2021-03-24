@@ -1,7 +1,7 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.social.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -95,7 +95,7 @@ public class HistoricoSocial {
 	private ColoracaoDiurese coloracaoDiurese;
 	
 	@OneToMany(mappedBy = "historicoSocial", cascade = CascadeType.REMOVE)
-	private List<PatologiaPaciente> patologiasPaciente;
+	private Set<PatologiaPaciente> patologiasPaciente;
 	
 	@Column(name = "horas_sono")
 	@NotNull(message = "O campo Horas de Sono não pode ser nulo!")

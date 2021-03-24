@@ -3,6 +3,7 @@ package br.com.renatanutricionista.ficha.identificacao.historico.social.form;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -80,7 +81,7 @@ public class HistoricoSocialFORM {
 	private String codigoColoracaoDiurese;
 	
 	@Valid
-	private List<PatologiaPacienteFORM> patologiasPaciente;
+	private Set<PatologiaPacienteFORM> patologiasPaciente;
 	
 	@NotNull(message = "O campo Horas de Sono não pode ser nulo!")
 	private Integer horasSono;
