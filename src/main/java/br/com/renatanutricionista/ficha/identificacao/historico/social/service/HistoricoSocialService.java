@@ -11,9 +11,7 @@ import br.com.renatanutricionista.ficha.identificacao.historico.social.form.Hist
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.repository.HistoricoSocialRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
-import br.com.renatanutricionista.paciente.repository.PacienteRepository;
 import br.com.renatanutricionista.paciente.utils.PacienteUtils;
-import br.com.renatanutricionista.utils.VerificacaoUtils;
 
 
 @Service
@@ -26,14 +24,11 @@ public class HistoricoSocialService {
 	private PatologiaPacienteRepository patologiaPacienteRepository;
 	
 	@Autowired
-	private PacienteRepository pacienteRepository;
-	
-	@Autowired
 	private PacienteUtils pacienteUtils;
 	
 	
 	public ResponseEntity<Void> cadastrarHistoricoSocialDoPaciente(Long idPaciente, HistoricoSocialFORM historicoSocialFORM) {
-		Paciente paciente = VerificacaoUtils.verificarSePacienteExiste(idPaciente, pacienteRepository);
+		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
 		
 		HistoricoSocial historicoSocial = historicoSocialRepository.save(historicoSocialFORM.converterParaHistoricoSocial(paciente));
 		

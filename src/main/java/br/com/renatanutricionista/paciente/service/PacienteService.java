@@ -12,7 +12,7 @@ import br.com.renatanutricionista.paciente.form.AtualizacaoPacienteFORM;
 import br.com.renatanutricionista.paciente.form.PacienteFORM;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.repository.PacienteRepository;
-import br.com.renatanutricionista.utils.VerificacaoUtils;
+import br.com.renatanutricionista.paciente.utils.PacienteUtils;
 
 
 @Service
@@ -20,6 +20,9 @@ public class PacienteService {
 
 	@Autowired
 	private PacienteRepository pacienteRepository;
+	
+	@Autowired
+	private PacienteUtils pacienteUtils;
 	
 	
 	public ResponseEntity<List<PacienteDTO>> listarTodosPacientes() {	
@@ -35,7 +38,7 @@ public class PacienteService {
 	
 	
 	public ResponseEntity<Void> atualizarPacienteEndereco(Long idPaciente, AtualizacaoPacienteFORM atualizacaoPaciente) {
-		Paciente paciente = VerificacaoUtils.verificarSePacienteExiste(idPaciente, pacienteRepository);
+		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
 		
 		atualizacaoPaciente.atualizarPacienteEndereco(paciente);
 		
@@ -44,7 +47,7 @@ public class PacienteService {
 	
 	
 	public ResponseEntity<Void> removerPaciente(Long idPaciente) {
-		Paciente paciente = VerificacaoUtils.verificarSePacienteExiste(idPaciente, pacienteRepository);
+		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
 		pacienteRepository.delete(paciente);
 		
 		return ResponseEntity.noContent().build();

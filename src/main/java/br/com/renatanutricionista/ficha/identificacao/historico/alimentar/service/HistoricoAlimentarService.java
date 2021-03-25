@@ -16,9 +16,7 @@ import br.com.renatanutricionista.ficha.identificacao.historico.suplemento.repos
 import br.com.renatanutricionista.medicamento.model.Medicamento;
 import br.com.renatanutricionista.medicamento.repository.MedicamentoRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
-import br.com.renatanutricionista.paciente.repository.PacienteRepository;
 import br.com.renatanutricionista.paciente.utils.PacienteUtils;
-import br.com.renatanutricionista.utils.VerificacaoUtils;
 
 
 @Service
@@ -34,14 +32,11 @@ public class HistoricoAlimentarService {
 	private MedicamentoRepository medicamentoRepository;
 	
 	@Autowired
-	private PacienteRepository pacienteRepository;
-	
-	@Autowired
 	private PacienteUtils pacienteUtils;
 	
 	
 	public ResponseEntity<Void> cadastrarHistoricoAlimentarDoPaciente(Long idPaciente, HistoricoAlimentarFORM historicoAlimentarFORM) {
-		Paciente paciente = VerificacaoUtils.verificarSePacienteExiste(idPaciente, pacienteRepository);
+		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
 		
 		Set<Medicamento> medicamentosPaciente = validarListaMedicamentosPaciente(historicoAlimentarFORM.getIdMedicamentos());
 		HistoricoAlimentar historicoAlimentar = historicoAlimentarFORM.converterParaHistoricoAlimentar(paciente, medicamentosPaciente);

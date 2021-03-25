@@ -1,7 +1,7 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.por.data.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,13 +21,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.model.HistoricoPatologiaFamiliares;
 import br.com.renatanutricionista.paciente.model.Paciente;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "historico_patologia_familiares_por_data", schema = "sistema_nutricionista")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @JsonIgnoreProperties(value = "paciente")
 public class HistoricoPatologiaFamiliaresPorData {
 
@@ -42,10 +47,43 @@ public class HistoricoPatologiaFamiliaresPorData {
 	@NotNull(message = "O campo Data e Hora do Cadastro das Patologias dos Familiares não pode estar nulo!")
 	private LocalDateTime dataHoraCadastroPatologiasFamiliares;
 	
-	@OneToMany(mappedBy = "historicoPatologiaFamiliaresPorData", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-	private List<HistoricoPatologiaFamiliares> patologiasFamiliares;
+	@OneToMany(mappedBy = "historicoPatologiaFamiliaresPorData", 
+			cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, 
+			fetch = FetchType.EAGER)
+	private Set<HistoricoPatologiaFamiliares> patologiasFamiliares;
 	
 	@ManyToOne
 	@JoinColumn(name = "paciente_id")
+	@NotNull(message = "O objeto Paciente não pode estar nulo!")
 	private Paciente paciente;
+	
+	
+	public static class HistoricoPatologiaFamiliaresPorDataBuilder {
+		
+		private String observacao;
+		private LocalDateTime dataHoraCadastroPatologiasFamiliares;
+		private Paciente paciente;
+		
+		
+		public HistoricoPatologiaFamiliaresPorDataBuilder observacao(String observacao) {
+			this.observacao = observacao;
+			return this;
+		}
+		
+		public HistoricoPatologiaFamiliaresPorDataBuilder dataHoraCadastroPatologiasFamiliares(LocalDateTime dataHoraCadastroPatologiasFamiliares) {
+			this.dataHoraCadastroPatologiasFamiliares = dataHoraCadastroPatologiasFamiliares;
+			return this;
+		}
+		
+		
+		public HistoricoPatologiaFamiliaresPorDataBuilder paciente(Paciente paciente) {
+			this.paciente = paciente;
+			return this;
+		}
+		
+		
+		public HistoricoPatologiaFamiliaresPorData criarHistoricoPatologiaFamiliaresPorData() {
+			return new HistoricoPatologiaFamiliaresPorData(null, observacao, dataHoraCadastroPatologiasFamiliares, null, paciente);
+		}
+	}
 }
