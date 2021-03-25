@@ -21,7 +21,7 @@ public class PacienteEnderecoDTO extends PacienteDTO {
 		telefone = paciente.getTelefone();
 		telefoneRecado = paciente.getTelefoneRecado();
 		endereco = new EnderecoDTO(paciente.getEndereco());
-		dataHoraUltimaAtualizacaoDadosDoPaciente = ConversaoUtils.converterLocalDateTimeParaString(paciente.getDataHoraUltimaAtualizacaoDadosDoPaciente());
+		dataHoraUltimaAtualizacaoDadosDoPaciente = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(paciente.getDataHoraUltimaAtualizacaoDadosDoPaciente());
 	}
 
 	

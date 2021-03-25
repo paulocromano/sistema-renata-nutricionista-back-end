@@ -115,7 +115,7 @@ public class HistoricoSocial {
 	
 	@Column(name = "data_hora_ultima_atualizacao_dados_historico_social")
 	@NotNull(message = "A Data da Última Atualização dos Dados do Histórico Social não pode estar nula!")
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoSocial;
 	
 	@ManyToOne

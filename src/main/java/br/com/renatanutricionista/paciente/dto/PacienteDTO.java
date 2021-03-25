@@ -4,10 +4,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import br.com.renatanutricionista.consultas.retornos.consulta.dto.ConsultaDTO;
 import br.com.renatanutricionista.endereco.dto.EnderecoDTO;
 import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.dto.AtividadeFisicaDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.dto.HistoricoAlimentarDTO;
-import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.por.data.dto.HistoricoPatologiaFamiliaresPorDataDTO;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.dto.HistoricoPatologiaFamiliaresPorDataDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.dto.HistoricoSocialDTO;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.utils.ConversaoUtils;
@@ -31,6 +32,7 @@ public class PacienteDTO {
 	private List<HistoricoAlimentarDTO> historicoAlimentar;
 	private List<AtividadeFisicaDTO> atividadeFisica;
 	private Set<HistoricoPatologiaFamiliaresPorDataDTO> historicoPatologiaFamiliaresPorData;
+	private List<ConsultaDTO> consultas;
 	protected String dataHoraUltimaAtualizacaoDadosDoPaciente;
 	
 	
@@ -50,7 +52,9 @@ public class PacienteDTO {
 		historicoPatologiaFamiliaresPorData = HistoricoPatologiaFamiliaresPorDataDTO.converterParaSetHistoricoPatologiaFamiliaresPorDataDTO(
 				paciente.getHistoricoPatologiaFamiliaresPorData());
 		
-		dataHoraUltimaAtualizacaoDadosDoPaciente = ConversaoUtils.converterLocalDateTimeParaString(paciente.getDataHoraUltimaAtualizacaoDadosDoPaciente());
+		consultas = ConsultaDTO.converterParaListaConsultaDTO(paciente.getConsultas());
+		
+		dataHoraUltimaAtualizacaoDadosDoPaciente = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(paciente.getDataHoraUltimaAtualizacaoDadosDoPaciente());
 	}
 	
 	

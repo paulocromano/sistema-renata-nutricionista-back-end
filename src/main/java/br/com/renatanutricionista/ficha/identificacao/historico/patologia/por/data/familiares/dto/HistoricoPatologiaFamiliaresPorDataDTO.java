@@ -1,10 +1,10 @@
-package br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.por.data.dto;
+package br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.dto;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.dto.HistoricoPatologiaFamiliaresDTO;
-import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.por.data.model.HistoricoPatologiaFamiliaresPorData;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.model.HistoricoPatologiaFamiliaresPorData;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
 
@@ -22,7 +22,7 @@ public class HistoricoPatologiaFamiliaresPorDataDTO {
 		id = historicoPatologiaFamiliaresPorData.getId();
 		observacao= historicoPatologiaFamiliaresPorData.getObservacao();
 		
-		dataHoraCadastroPatologiasFamiliares = ConversaoUtils.converterLocalDateTimeParaString(
+		dataHoraCadastroPatologiasFamiliares = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(
 				historicoPatologiaFamiliaresPorData.getDataHoraCadastroPatologiasFamiliares());
 		
 		patologiasFamiliares = HistoricoPatologiaFamiliaresDTO.converterParaListaHistoricoPatologiaFamiliaresDTO(

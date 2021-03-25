@@ -1,4 +1,4 @@
-package br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.por.data.resource;
+package br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.resource;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.por.data.form.HistoricoPatologiaFamiliaresPorDataFORM;
-import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.por.data.service.HistoricoPatologiaFamiliaresPorDataService;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.form.HistoricoPatologiaFamiliaresPorDataFORM;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.service.HistoricoPatologiaFamiliaresPorDataService;
 
 
 @RestController

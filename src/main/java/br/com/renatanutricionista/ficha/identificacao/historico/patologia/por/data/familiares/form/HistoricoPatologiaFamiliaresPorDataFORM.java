@@ -1,4 +1,4 @@
-package br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.por.data.form;
+package br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.form;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -11,7 +11,7 @@ import br.com.renatanutricionista.exception.custom.PacienteException;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.enums.PatologiaFamiliares;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.form.HistoricoPatologiaFamiliaresFORM;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.model.HistoricoPatologiaFamiliares;
-import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.por.data.model.HistoricoPatologiaFamiliaresPorData;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.model.HistoricoPatologiaFamiliaresPorData;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import lombok.Getter;
 import lombok.Setter;

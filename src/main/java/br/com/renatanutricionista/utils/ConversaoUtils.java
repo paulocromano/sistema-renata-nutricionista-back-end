@@ -20,6 +20,16 @@ public final class ConversaoUtils {
 	}
 	
 	
+	public static final String converterLocalDateTimeParaStringDataHoraMinuto(LocalDateTime localDateTime) {
+		try {
+			return localDateTime.format(FormatacaoUtils.FORMATADOR_DATA_HORA_MINUTO);
+		}
+		catch (DateTimeException e) {
+			throw new DateTimeException("Formato de Data e/ou Hora inválido para conversão em String!");
+		}
+	}
+	
+	
 	public static final String converterLocalDateParaString(LocalDate localDate) {
 		try {
 			return localDate.format(FormatacaoUtils.FORMATADOR_DATA);

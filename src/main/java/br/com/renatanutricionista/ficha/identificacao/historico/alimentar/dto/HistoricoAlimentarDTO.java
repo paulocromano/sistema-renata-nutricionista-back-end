@@ -34,7 +34,7 @@ public class HistoricoAlimentarDTO {
 		consumoAgua = historicoAlimentar.getConsumoAgua();
 		suplementosPaciente = SuplementoPacienteDTO.converterParaListaSuplementoPacienteDTO(historicoAlimentar.getSuplementosPaciente());
 		medicamentosPaciente = historicoAlimentar.getMedicamentos();
-		dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar = ConversaoUtils.converterLocalDateTimeParaString(
+		dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(
 				historicoAlimentar.getDataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar());
 	}
 	

@@ -23,7 +23,7 @@ public class AtividadeFisicaDTO {
 		atividadePraticada = atividadeFisica.getAtividadePraticada();
 		frequencia = atividadeFisica.getFrequencia().getDescricao();
 		duracao = atividadeFisica.getDuracao();
-		dataHoraUltimaAtualizacaoDadosDaAtividadeFisica = ConversaoUtils.converterLocalDateTimeParaString(atividadeFisica.getDataHoraUltimaAtualizacaoDadosDaAtividadeFisica());
+		dataHoraUltimaAtualizacaoDadosDaAtividadeFisica = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(atividadeFisica.getDataHoraUltimaAtualizacaoDadosDaAtividadeFisica());
 	}
 	
 	

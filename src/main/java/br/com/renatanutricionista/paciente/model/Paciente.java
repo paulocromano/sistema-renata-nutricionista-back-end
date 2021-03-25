@@ -23,10 +23,11 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import br.com.renatanutricionista.consultas.retornos.consulta.model.Consulta;
 import br.com.renatanutricionista.endereco.model.Endereco;
 import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.model.AtividadeFisica;
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.model.HistoricoAlimentar;
-import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.por.data.model.HistoricoPatologiaFamiliaresPorData;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.model.HistoricoPatologiaFamiliaresPorData;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.paciente.enums.Etnia;
 import br.com.renatanutricionista.utils.enums.SexoUtils;
@@ -88,9 +89,12 @@ public class Paciente {
 	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private Set<HistoricoPatologiaFamiliaresPorData> historicoPatologiaFamiliaresPorData;
 	
+	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	private List<Consulta> consultas;
+	
 	@Column(name = "data_hora_ultima_atualizacao_dados_paciente")
 	@NotNull(message = "A Data e Hora da Última Atualização dos Dados do Paciente não pode estar nula!")
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime dataHoraUltimaAtualizacaoDadosDoPaciente;
 	
 	

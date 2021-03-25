@@ -1,4 +1,4 @@
-package br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.por.data.model;
+package br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.model;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -45,6 +47,7 @@ public class HistoricoPatologiaFamiliaresPorData {
 	
 	@Column(name = "data_hora_cadastro_patologias_familiares")
 	@NotNull(message = "O campo Data e Hora do Cadastro das Patologias dos Familiares não pode estar nulo!")
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime dataHoraCadastroPatologiasFamiliares;
 	
 	@OneToMany(mappedBy = "historicoPatologiaFamiliaresPorData", 

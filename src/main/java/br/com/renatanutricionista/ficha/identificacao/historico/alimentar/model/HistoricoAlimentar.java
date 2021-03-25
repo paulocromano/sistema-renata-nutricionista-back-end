@@ -87,7 +87,7 @@ public class HistoricoAlimentar {
 	
 	@Column(name = "data_hora_ultima_atualizacao_dados_historico_alimentar")
 	@NotNull(message = "A Data e Hora da Última Atualização dos Dados do Histórico Alimentar não pode estar nula!")
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar;
 	
 	

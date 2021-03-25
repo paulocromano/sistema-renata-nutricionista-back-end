@@ -56,7 +56,7 @@ public class AtividadeFisica {
 	
 	@Column(name = "data_hora_ultima_atualizacao_dados_atividade_fisica")
 	@NotNull(message = "A Data e Hora da Última Atualização dos Dados da Atividade Física não pode estar nula!")
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime dataHoraUltimaAtualizacaoDadosDaAtividadeFisica;
 
 	
