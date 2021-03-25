@@ -49,7 +49,7 @@ public class HistoricoPatologiaFamiliaresPorData {
 	
 	@OneToMany(mappedBy = "historicoPatologiaFamiliaresPorData", 
 			cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, 
-			fetch = FetchType.EAGER)
+			fetch = FetchType.LAZY)
 	private Set<HistoricoPatologiaFamiliares> patologiasFamiliares;
 	
 	@ManyToOne

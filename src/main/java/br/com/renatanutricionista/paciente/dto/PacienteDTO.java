@@ -1,6 +1,7 @@
 package br.com.renatanutricionista.paciente.dto;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.endereco.dto.EnderecoDTO;
@@ -29,7 +30,7 @@ public class PacienteDTO {
 	private List<HistoricoSocialDTO> historicoSocial;
 	private List<HistoricoAlimentarDTO> historicoAlimentar;
 	private List<AtividadeFisicaDTO> atividadeFisica;
-	private List<HistoricoPatologiaFamiliaresPorDataDTO> historicoPatologiaFamiliaresPorData;
+	private Set<HistoricoPatologiaFamiliaresPorDataDTO> historicoPatologiaFamiliaresPorData;
 	protected String dataHoraUltimaAtualizacaoDadosDoPaciente;
 	
 	
@@ -46,7 +47,7 @@ public class PacienteDTO {
 		historicoAlimentar = HistoricoAlimentarDTO.converterParaListaHistoricoAlimentarDTO(paciente.getHistoricoAlimentar());
 		atividadeFisica = AtividadeFisicaDTO.converterParaListaAtividadeFisicaDTO(paciente.getAtividadeFisica());
 		
-		historicoPatologiaFamiliaresPorData = HistoricoPatologiaFamiliaresPorDataDTO.converterParaListaHistoricoPatologiaFamiliaresPorDataDTO(
+		historicoPatologiaFamiliaresPorData = HistoricoPatologiaFamiliaresPorDataDTO.converterParaSetHistoricoPatologiaFamiliaresPorDataDTO(
 				paciente.getHistoricoPatologiaFamiliaresPorData());
 		
 		dataHoraUltimaAtualizacaoDadosDoPaciente = ConversaoUtils.converterLocalDateTimeParaString(paciente.getDataHoraUltimaAtualizacaoDadosDoPaciente());

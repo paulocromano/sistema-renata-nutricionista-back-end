@@ -43,7 +43,7 @@ public class HistoricoPatologiaFamiliaresPorDataFORM {
 		int tamanhoSetPatologiaFamiliares = PatologiaFamiliares.values().length;
 		
 		if (patologiasFamiliares.size() != tamanhoSetPatologiaFamiliares)
-			throw new PacienteException("A Lista deve contar os " + tamanhoSetPatologiaFamiliares 
+			throw new PacienteException("A Lista deve conter os " + tamanhoSetPatologiaFamiliares 
 					+ " tipos de Patologias dos Familiares!");
 	}
 	

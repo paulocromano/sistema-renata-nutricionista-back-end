@@ -3,6 +3,7 @@ package br.com.renatanutricionista.paciente.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -85,7 +86,7 @@ public class Paciente {
 	private List<AtividadeFisica> atividadeFisica;
 	
 	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-	private List<HistoricoPatologiaFamiliaresPorData> historicoPatologiaFamiliaresPorData;
+	private Set<HistoricoPatologiaFamiliaresPorData> historicoPatologiaFamiliaresPorData;
 	
 	@Column(name = "data_hora_ultima_atualizacao_dados_paciente")
 	@NotNull(message = "A Data e Hora da Última Atualização dos Dados do Paciente não pode estar nula!")

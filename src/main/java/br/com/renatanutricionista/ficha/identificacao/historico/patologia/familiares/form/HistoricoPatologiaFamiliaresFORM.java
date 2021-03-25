@@ -7,12 +7,14 @@ import br.com.renatanutricionista.ficha.identificacao.historico.patologia.famili
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.enums.PatologiaFamiliaresConversao;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.model.HistoricoPatologiaFamiliares;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.por.data.model.HistoricoPatologiaFamiliaresPorData;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Getter
 @Setter
+@EqualsAndHashCode(of = "patologiaFamiliares")
 public class HistoricoPatologiaFamiliaresFORM {
 
 	@NotEmpty(message = "O campo Patologia dos Familiares não pode estar nulo/vazio!")

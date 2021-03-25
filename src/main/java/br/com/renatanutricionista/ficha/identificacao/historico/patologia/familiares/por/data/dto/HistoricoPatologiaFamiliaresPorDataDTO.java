@@ -1,6 +1,5 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.por.data.dto;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,15 +30,9 @@ public class HistoricoPatologiaFamiliaresPorDataDTO {
 	}
 	
 	
-	public static Set<HistoricoPatologiaFamiliaresPorDataDTO> converterParaSetaHistoricoPatologiaFamiliaresPorDataDTO(
+	public static Set<HistoricoPatologiaFamiliaresPorDataDTO> converterParaSetHistoricoPatologiaFamiliaresPorDataDTO(
 			Set<HistoricoPatologiaFamiliaresPorData> historicoPatologiaFamiliaresPorDatas) {
 		
 		return historicoPatologiaFamiliaresPorDatas.stream().map(HistoricoPatologiaFamiliaresPorDataDTO::new).collect(Collectors.toSet());
-	}
-	
-	public static List<HistoricoPatologiaFamiliaresPorDataDTO> converterParaListaHistoricoPatologiaFamiliaresPorDataDTO(
-			List<HistoricoPatologiaFamiliaresPorData> historicoPatologiaFamiliaresPorDatas) {
-		
-		return historicoPatologiaFamiliaresPorDatas.stream().map(HistoricoPatologiaFamiliaresPorDataDTO::new).collect(Collectors.toList());
 	}
 }
