@@ -55,6 +55,6 @@ public class AtividadeFisicaFORM {
 			throw new PacienteException("O campo da  Atividade Praticada não pode estar nulo/vazio!");
 			
 		if (Objects.nonNull(duracao))
-			ConversaoUtils.converterStringParaLocalTime(duracao);
+			ConversaoUtils.converterStringParaLocalTimeHoraMinuto(duracao);
 	}
 }

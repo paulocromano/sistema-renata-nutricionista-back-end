@@ -3,6 +3,7 @@ package br.com.renatanutricionista.calendario.agendamento.paciente.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import br.com.renatanutricionista.calendario.agendamento.paciente.enums.PeriodoDisponivel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +22,7 @@ import lombok.Setter;
 @Table(name = "calendario_agendamento_paciente", schema = "sistema_nutricionista")
 @Setter
 @Getter
-public class CalendarioAgendamento {
+public class CalendarioAgendamentoPaciente {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,4 +35,8 @@ public class CalendarioAgendamento {
 	@NotNull(message = "O campo de Hora não pode estar nulo!")
 	@DateTimeFormat(pattern = "HH:mm")
 	private LocalTime horario;
+	
+	@Column(name = "periodo_disponivel")
+	@NotNull(message = "O campo Período Disponível não pode estar nulo!")
+	private PeriodoDisponivel periodoDisponivel;
 }

@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
@@ -14,11 +15,12 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import br.com.renatanutricionista.calendario.agendamento.paciente.model.CalendarioAgendamento;
+import br.com.renatanutricionista.calendario.agendamento.paciente.model.CalendarioAgendamentoPaciente;
 import br.com.renatanutricionista.consultas.retornos.consulta.enums.FormaPagamento;
 import br.com.renatanutricionista.consultas.retornos.consulta.enums.SituacaoConsulta;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -26,6 +28,7 @@ import lombok.Setter;
 @Table(name = "consulta_paciente", schema = "sistema_nutricionista")
 @Setter
 @Getter
+@NoArgsConstructor
 @JsonIgnoreProperties(value = "paciente")
 public class Consulta {
 
@@ -51,6 +54,7 @@ public class Consulta {
 	@Size(max = 250, message = "O campo Motivo da Consulta deve ter no máximo {max} caracteres!")
 	private String motivoConsulta;
 	
+	@ManyToOne
 	@JoinColumn(name = "paciente_id")
 	@NotNull(message = "O objeto Paciente não pode estar nulo!")
 	private Paciente paciente;
@@ -58,5 +62,50 @@ public class Consulta {
 	@OneToOne
 	@JoinColumn(name = "calendario_agendamento_paciente_id")
 	@NotNull(message = "O objeto Período de Agendamento da Consulta não pode estar nulo!")
-	private CalendarioAgendamento periodoAgendamentoConsulta;
+	private CalendarioAgendamentoPaciente periodoAgendamentoConsulta;
+
+	
+	private Consulta(SituacaoConsulta situacaoConsulta, String motivoConsulta,
+			Paciente paciente, CalendarioAgendamentoPaciente periodoAgendamentoConsulta) {
+		
+		this.situacaoConsulta = situacaoConsulta;
+		this.motivoConsulta = motivoConsulta;
+		this.paciente = paciente;
+		this.periodoAgendamentoConsulta = periodoAgendamentoConsulta;
+	}
+	
+	
+	public static class ConsultaBuilder {
+		
+		private SituacaoConsulta situacaoConsulta;
+		private String motivoConsulta;
+		private Paciente paciente;
+		private CalendarioAgendamentoPaciente periodoAgendamentoConsulta;
+		
+		
+		public ConsultaBuilder situacaoConsulta(SituacaoConsulta situacaoConsulta) {
+			this.situacaoConsulta = situacaoConsulta;
+			return this;
+		}
+		
+		public ConsultaBuilder motivoConsulta(String motivoConsulta) {
+			this.motivoConsulta = motivoConsulta;
+			return this;
+		}
+		
+		public ConsultaBuilder paciente(Paciente paciente) {
+			this.paciente = paciente;
+			return this;
+		}
+		
+		public ConsultaBuilder periodoAgendamentoConsulta(CalendarioAgendamentoPaciente periodoAgendamentoConsulta) {
+			this.periodoAgendamentoConsulta = periodoAgendamentoConsulta;
+			return this;
+		}
+		
+		
+		public Consulta criarConsulta() {
+			return new Consulta(situacaoConsulta, motivoConsulta, paciente, periodoAgendamentoConsulta);
+		}
+	}
 }

@@ -1,8 +1,10 @@
 package br.com.renatanutricionista.consultas.retornos.consulta.dto;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
+import br.com.renatanutricionista.calendario.agendamento.paciente.dto.CalendarioAgendamentoPacienteDTO;
 import br.com.renatanutricionista.consultas.retornos.consulta.model.Consulta;
 import lombok.Getter;
 
@@ -16,15 +18,20 @@ public class ConsultaDTO {
 	private Integer numeroParcelas;
 	private Integer porcentagemDesconto;
 	private String motivoConsulta;
+	private CalendarioAgendamentoPacienteDTO periodoAgendamentoConsulta;
 	
 	
 	public ConsultaDTO(Consulta consulta) {
 		id = consulta.getId();
 		situacaoConsulta = consulta.getSituacaoConsulta().getDescricao();
-		formaPagamento = consulta.getFormaPagamento().getDescricao();
+	
+		if (Objects.nonNull(consulta.getFormaPagamento()))
+			formaPagamento = consulta.getFormaPagamento().getDescricao();
+		
 		numeroParcelas = consulta.getNumeroParcelas();
 		porcentagemDesconto = consulta.getPorcentagemDesconto();
 		motivoConsulta = consulta.getMotivoConsulta();
+		periodoAgendamentoConsulta = new CalendarioAgendamentoPacienteDTO(consulta.getPeriodoAgendamentoConsulta());
 	}
 	
 	

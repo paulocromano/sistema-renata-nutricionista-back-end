@@ -6,7 +6,7 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 
-@Converter(autoApply = true)
+@Converter
 public class FormaPagamentoConversao implements AttributeConverter<FormaPagamento, String> {
 
 	@Override
@@ -17,7 +17,7 @@ public class FormaPagamentoConversao implements AttributeConverter<FormaPagament
 	@Override
 	public FormaPagamento convertToEntityAttribute(String dbData) {
 		if (Objects.isNull(dbData)) 
-			throw new NullPointerException("O código da Forma de Pagamento não pode estar nulo!");
+			return null;
 		
 		for (FormaPagamento formaPagamento : FormaPagamento.values()) 
 			if (dbData.equals(formaPagamento.getCodigo())) 

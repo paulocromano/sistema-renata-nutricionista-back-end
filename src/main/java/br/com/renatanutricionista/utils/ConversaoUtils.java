@@ -68,6 +68,19 @@ public final class ConversaoUtils {
 	
 	public static final LocalTime converterStringParaLocalTime(String hora) {
 		try {
+			return LocalTime.parse(hora, FormatacaoUtils.FORMATADOR_HORA);
+		}
+		catch (DateTimeParseException e) {
+			throw new DateTimeException("Formato de Hora inválido para conversão em LocalTime!");
+		}
+		catch (NullPointerException e) {
+			throw new NullPointerException("A Hora está nula!");
+		}
+	}
+	
+	
+	public static final LocalTime converterStringParaLocalTimeHoraMinuto(String hora) {
+		try {
 			return LocalTime.parse(hora, FormatacaoUtils.FORMATADOR_HORA_MINUTO);
 		}
 		catch (DateTimeParseException e) {
@@ -75,6 +88,16 @@ public final class ConversaoUtils {
 		}
 		catch (NullPointerException e) {
 			throw new NullPointerException("A Hora está nula!");
+		}
+	}
+	
+	
+	public static final String converterLocalTimeParaString(LocalTime hora) {
+		try {
+			return FormatacaoUtils.FORMATADOR_HORA_MINUTO.format(hora);
+		}
+		catch (DateTimeException e) {
+			throw new DateTimeException("Formato de Hora inválido para conversão em String!");
 		}
 	}
 }

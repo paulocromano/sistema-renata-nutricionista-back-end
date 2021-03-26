@@ -10,10 +10,9 @@ import lombok.Getter;
 public enum SituacaoConsulta {
 
 	AGUARDANDO_CONFIRMACAO("0", "Aguardando confirmação"),
-	CONSULTA_CANCELADA("1", "Consulta cancelada"),
-	AGUARDANDO_ATENDIMENTO("2", "aguardando atendimento"),
-	CONSULTA_INICIADA("3", "Consulta iniciada"),
-	CONSULTA_FINALIZADA("4", "Consulta finalizada");
+	AGUARDANDO_ATENDIMENTO("1", "aguardando atendimento"),
+	CONSULTA_INICIADA("2", "Consulta iniciada"),
+	CONSULTA_FINALIZADA("3", "Consulta finalizada");
 	
 	
 	private String codigo;
