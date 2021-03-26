@@ -1,4 +1,4 @@
-package br.com.renatanutricionista.calendario.agendamento.paciente.utils;
+package br.com.renatanutricionista.calendario.agendamento.paciente.service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,13 +16,13 @@ import br.com.renatanutricionista.utils.ConversaoUtils;
 
 
 @Service
-public final class CalendarioAgendamentoUtils {
+public class CalendarioAgendamentoPacienteService {
 
 	@Autowired
 	private CalendarioAgendamentoPacienteRepository calendarioAgendamentoRepository;
 	
 	
-	public final CalendarioAgendamentoPaciente verificarPossibilidadeDeAgendarConsulta(String data, String horario) {
+	public CalendarioAgendamentoPaciente verificarPossibilidadeDeAgendarConsulta(String data, String horario) {
 		LocalDate dataAgendamento = ConversaoUtils.converterStringParaLocalDate(data);
 		LocalTime horarioAgendamento = ConversaoUtils.converterStringParaLocalTime(horario + ":00");
 		
@@ -46,14 +46,14 @@ public final class CalendarioAgendamentoUtils {
 	}
 	
 	
-	private final void verificarDisponibilidadeNoCalendario(CalendarioAgendamentoPaciente periodo) {
+	private void verificarDisponibilidadeNoCalendario(CalendarioAgendamentoPaciente periodo) {
 		if (periodo.getPeriodoDisponivel().equals(PeriodoDisponivel.NAO))
 			throw new PacienteException("O Período escolhido não está disponível para Agendamento "
 					+ "de Consulta ou Retorno!");
 	}
 	
 	
-	public final CalendarioAgendamentoPaciente verificarSeCalendarioAgendamentoPacienteExiste(Long idCalendarioAgendamento) {
+	public CalendarioAgendamentoPaciente verificarSeCalendarioAgendamentoPacienteExiste(Long idCalendarioAgendamento) {
 		Optional<CalendarioAgendamentoPaciente> calendarioAgendamento = 
 				calendarioAgendamentoRepository.findById(idCalendarioAgendamento);
 		
@@ -65,7 +65,7 @@ public final class CalendarioAgendamentoUtils {
 	}
 	
 	
-	public final void alterarPeriodoDoCalendarioParaDisponivel(Long idCalendarioAgendamento) {
+	public void alterarPeriodoDoCalendarioParaDisponivel(Long idCalendarioAgendamento) {
 		CalendarioAgendamentoPaciente periodoAgendamento = verificarSeCalendarioAgendamentoPacienteExiste(idCalendarioAgendamento);
 		
 		periodoAgendamento.setPeriodoDisponivel(PeriodoDisponivel.SIM);

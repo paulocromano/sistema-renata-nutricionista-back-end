@@ -33,6 +33,15 @@ public class ConsultaResource {
 	}
 	
 	
+	@PostMapping("/remarcar/{idPaciente}/{idConsulta}")
+	@Transactional
+	public ResponseEntity<Void> remarcarConsulta(@PathVariable Long idPaciente, @PathVariable Long idConsulta, 
+			@RequestBody @Valid AgendamentoConsultaFORM remarcacaoConsulta) {
+		
+		return consultaService.remarcarConsulta(idPaciente, idConsulta, remarcacaoConsulta);
+	}
+	
+	
 	@DeleteMapping("/{idConsulta}")
 	@Transactional
 	public ResponseEntity<Void> cancelarConsulta(@PathVariable Long idConsulta) {

@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.calendario.agendamento.paciente.dto.CalendarioAgendamentoPacienteDTO;
+import br.com.renatanutricionista.consultas.retornos.avaliacao.consumo.habitual.dto.AvaliacaoConsumoHabitualDTO;
 import br.com.renatanutricionista.consultas.retornos.consulta.model.Consulta;
 import lombok.Getter;
 
@@ -19,6 +20,7 @@ public class ConsultaDTO {
 	private Integer porcentagemDesconto;
 	private String motivoConsulta;
 	private CalendarioAgendamentoPacienteDTO periodoAgendamentoConsulta;
+	private AvaliacaoConsumoHabitualDTO avaliacaoConsumoHabitual;
 	
 	
 	public ConsultaDTO(Consulta consulta) {
@@ -32,6 +34,7 @@ public class ConsultaDTO {
 		porcentagemDesconto = consulta.getPorcentagemDesconto();
 		motivoConsulta = consulta.getMotivoConsulta();
 		periodoAgendamentoConsulta = new CalendarioAgendamentoPacienteDTO(consulta.getPeriodoAgendamentoConsulta());
+		avaliacaoConsumoHabitual = new AvaliacaoConsumoHabitualDTO(consulta.getAvaliacaoConsumoHabitual());
 	}
 	
 	

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import br.com.renatanutricionista.calendario.agendamento.paciente.enums.PeriodoDisponivel;
 import br.com.renatanutricionista.calendario.agendamento.paciente.model.CalendarioAgendamentoPaciente;
 import br.com.renatanutricionista.calendario.agendamento.paciente.repository.CalendarioAgendamentoPacienteRepository;
-import br.com.renatanutricionista.calendario.agendamento.paciente.utils.CalendarioAgendamentoUtils;
+import br.com.renatanutricionista.calendario.agendamento.paciente.service.CalendarioAgendamentoPacienteService;
 import br.com.renatanutricionista.consultas.retornos.consulta.enums.SituacaoConsulta;
 import br.com.renatanutricionista.consultas.retornos.consulta.form.AgendamentoConsultaFORM;
 import br.com.renatanutricionista.consultas.retornos.consulta.model.Consulta;
@@ -34,21 +34,46 @@ public class ConsultaService {
 	private PacienteUtils pacienteUtils;
 	
 	@Autowired
-	private CalendarioAgendamentoUtils calendarioAgendamentoUtils;
+	private CalendarioAgendamentoPacienteService calendarioAgendamentoService;
 	
 	
 	public ResponseEntity<Void> agendarConsulta(Long idPaciente, AgendamentoConsultaFORM agendamentoConsulta) {
 		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
 		
-		CalendarioAgendamentoPaciente periodoAgendamento = calendarioAgendamentoUtils
+		CalendarioAgendamentoPaciente periodoAgendamento = calendarioAgendamentoService
 				.verificarPossibilidadeDeAgendarConsulta(agendamentoConsulta.getData(), agendamentoConsulta.getHorario());
 		
+		periodoAgendamento.setPeriodoDisponivel(PeriodoDisponivel.NAO);
 		consultaRepository.save(agendamentoConsulta.converterParaConsulta(paciente, periodoAgendamento));
 		
-		periodoAgendamento.setPeriodoDisponivel(PeriodoDisponivel.NAO);
-		calendarioAgendamentoPacienteRepository.save(periodoAgendamento);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	
+	public ResponseEntity<Void> remarcarConsulta(Long idPaciente, Long idConsulta, AgendamentoConsultaFORM remarcacaoConsulta) {
+		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
+		
+		CalendarioAgendamentoPaciente periodoConsultaRemarcada = calendarioAgendamentoService
+				.verificarPossibilidadeDeAgendarConsulta(remarcacaoConsulta.getData(), remarcacaoConsulta.getHorario());
+		
+		Consulta consultaPacienteQueSeraCancelada = verificarSeConsultaExiste(idConsulta);
+		verificarSeConsultaPertenceAoPaciente(paciente, consultaPacienteQueSeraCancelada);
+		
+		periodoConsultaRemarcada.setPeriodoDisponivel(PeriodoDisponivel.NAO);
+		consultaRepository.save(remarcacaoConsulta.converterParaConsulta(paciente, periodoConsultaRemarcada));
+		
+		consultaPacienteQueSeraCancelada.getPeriodoAgendamentoConsulta().setPeriodoDisponivel(PeriodoDisponivel.SIM);
+		calendarioAgendamentoPacienteRepository.saveAndFlush(consultaPacienteQueSeraCancelada.getPeriodoAgendamentoConsulta());
+		consultaRepository.delete(consultaPacienteQueSeraCancelada);
+		
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	
+	private void verificarSeConsultaPertenceAoPaciente(Paciente paciente, Consulta consultaPaciente) {
+		if (!paciente.getId().equals(consultaPaciente.getPaciente().getId()))
+			throw new IllegalArgumentException("A Consulta selecionada não pertence ao Paciente!");
 	}
 	
 	
@@ -59,7 +84,7 @@ public class ConsultaService {
 			throw new PacienteException("Não é possível cancelar uma Consulta Finalizada!");
 		
 		consultaRepository.delete(consulta);
-		calendarioAgendamentoUtils.alterarPeriodoDoCalendarioParaDisponivel(consulta.getPeriodoAgendamentoConsulta().getId());
+		calendarioAgendamentoService.alterarPeriodoDoCalendarioParaDisponivel(consulta.getPeriodoAgendamentoConsulta().getId());
 		
 		return ResponseEntity.noContent().build();
 	}

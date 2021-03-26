@@ -1,7 +1,9 @@
 package br.com.renatanutricionista.consultas.retornos.consulta.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +18,7 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.renatanutricionista.calendario.agendamento.paciente.model.CalendarioAgendamentoPaciente;
+import br.com.renatanutricionista.consultas.retornos.avaliacao.consumo.habitual.model.AvaliacaoConsumoHabitual;
 import br.com.renatanutricionista.consultas.retornos.consulta.enums.FormaPagamento;
 import br.com.renatanutricionista.consultas.retornos.consulta.enums.SituacaoConsulta;
 import br.com.renatanutricionista.paciente.model.Paciente;
@@ -59,10 +62,14 @@ public class Consulta {
 	@NotNull(message = "O objeto Paciente não pode estar nulo!")
 	private Paciente paciente;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "calendario_agendamento_paciente_id")
 	@NotNull(message = "O objeto Período de Agendamento da Consulta não pode estar nulo!")
 	private CalendarioAgendamentoPaciente periodoAgendamentoConsulta;
+	
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "avaliacao_consumo_habitual_id")
+	private AvaliacaoConsumoHabitual avaliacaoConsumoHabitual;
 
 	
 	private Consulta(SituacaoConsulta situacaoConsulta, String motivoConsulta,
