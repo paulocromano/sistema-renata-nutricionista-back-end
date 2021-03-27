@@ -14,6 +14,8 @@ import br.com.renatanutricionista.calendario.agendamento.paciente.service.Calend
 import br.com.renatanutricionista.consultas.retornos.avaliacao.consumo.habitual.form.AvaliacaoConsumoHabitualFORM;
 import br.com.renatanutricionista.consultas.retornos.consulta.enums.SituacaoConsulta;
 import br.com.renatanutricionista.consultas.retornos.consulta.form.AgendamentoConsultaFORM;
+import br.com.renatanutricionista.consultas.retornos.consulta.form.ConfirmacaoConsultaFORM;
+import br.com.renatanutricionista.consultas.retornos.consulta.form.ReagendamentoConsultaFORM;
 import br.com.renatanutricionista.consultas.retornos.consulta.model.Consulta;
 import br.com.renatanutricionista.consultas.retornos.consulta.respository.ConsultaRepository;
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
@@ -49,23 +51,37 @@ public class ConsultaService {
 	}
 	
 	
-	public ResponseEntity<Void> remarcarConsulta(Long idPaciente, Long idConsulta, AgendamentoConsultaFORM remarcacaoConsulta) {
+	public ResponseEntity<Void> reagendarConsulta(Long idPaciente, Long idConsulta, ReagendamentoConsultaFORM reagendamentoConsulta) {
 		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
 		
 		CalendarioAgendamentoPaciente periodoConsultaRemarcada = calendarioAgendamentoService
-				.verificarPossibilidadeDeAgendarConsulta(remarcacaoConsulta.getData(), remarcacaoConsulta.getHorario());
+				.verificarPossibilidadeDeAgendarConsulta(reagendamentoConsulta.getData(), reagendamentoConsulta.getHorario());
 		
 		Consulta consultaPacienteQueSeraCancelada = verificarSeConsultaExiste(idConsulta);
 		verificarSeConsultaPertenceAoPaciente(paciente, consultaPacienteQueSeraCancelada);
-		verificarSeConsultaParaRemarcarNaoEstaFinalizada(consultaPacienteQueSeraCancelada);
+		verificarSeConsultaParaRemarcarEstaAguardandoConfirmacao(consultaPacienteQueSeraCancelada);
 		
 		periodoConsultaRemarcada.setPeriodoDisponivel(PeriodoDisponivel.NAO);
-		consultaRepository.save(remarcacaoConsulta.converterParaConsulta(paciente, periodoConsultaRemarcada));
+		consultaRepository.save(reagendamentoConsulta.converterParaConsulta(paciente, periodoConsultaRemarcada,
+				consultaPacienteQueSeraCancelada));
 		
 		consultaPacienteQueSeraCancelada.getPeriodoAgendamentoConsulta().setPeriodoDisponivel(PeriodoDisponivel.SIM);
 		consultaRepository.delete(consultaPacienteQueSeraCancelada);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	
+	public ResponseEntity<Void> confirmarConsulta(Long idPaciente, Long idConsulta, ConfirmacaoConsultaFORM confirmacaoConsulta) {
+		Consulta consulta = verificarPacienteConsulta(idPaciente, idConsulta);
+		
+		if (!consulta.getSituacaoConsulta().equals(SituacaoConsulta.AGUARDANDO_CONFIRMACAO))
+			throw new PacienteException("Só é possível Confirmar uma Consulta quando a Situação for "
+					+ SituacaoConsulta.AGUARDANDO_CONFIRMACAO);
+		
+		confirmacaoConsulta.atualizarInformacoesConsulta(consulta);
+		
+		return ResponseEntity.ok().build();
 	}
 	
 	
@@ -75,6 +91,7 @@ public class ConsultaService {
 		if (consulta.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_FINALIZADA))
 			throw new PacienteException("Não é possível cancelar uma Consulta Finalizada!");
 		
+		//disponibilizar periodo no calendario de novo
 		consultaRepository.delete(consulta);
 		calendarioAgendamentoService.alterarPeriodoDoCalendarioParaDisponivel(consulta.getPeriodoAgendamentoConsulta().getId());
 		
@@ -133,9 +150,10 @@ public class ConsultaService {
 	}
 	
 	
-	private void verificarSeConsultaParaRemarcarNaoEstaFinalizada(Consulta consultaPacienteQueSeraCancelada) {
-		if (consultaPacienteQueSeraCancelada.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_FINALIZADA))
-			throw new PacienteException("Não é possível remarcar uma Consulta que já foi Finalizada!");
+	private void verificarSeConsultaParaRemarcarEstaAguardandoConfirmacao(Consulta consultaPacienteQueSeraCancelada) {
+		if (!consultaPacienteQueSeraCancelada.getSituacaoConsulta().equals(SituacaoConsulta.AGUARDANDO_CONFIRMACAO))
+			throw new PacienteException("Não é possível remarcar uma Consulta que não esteja com a Situação de "
+					+ SituacaoConsulta.AGUARDANDO_CONFIRMACAO.getDescricao() + "!");
 	}
 	
 	

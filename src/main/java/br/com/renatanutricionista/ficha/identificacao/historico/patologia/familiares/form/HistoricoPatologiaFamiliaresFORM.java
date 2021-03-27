@@ -1,10 +1,11 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.form;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.enums.FamiliarTemPatologiaConversao;
-import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.enums.PatologiaFamiliaresConversao;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.enums.PatologiaFamiliares;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.model.HistoricoPatologiaFamiliares;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.model.HistoricoPatologiaFamiliaresPorData;
 import lombok.EqualsAndHashCode;
@@ -17,9 +18,8 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "patologiaFamiliares")
 public class HistoricoPatologiaFamiliaresFORM {
 
-	@NotEmpty(message = "O campo Patologia dos Familiares não pode estar nulo/vazio!")
-	@Size(max = 20, message = "O campo Patologia Familiares deve ter no máximo {max} caracteres")
-	private String patologiaFamiliares;
+	@NotNull(message = "O campo da Patologia dos Familiares não pode ser nulo!")
+	private PatologiaFamiliares patologiaFamiliares;
 	
 	@NotEmpty(message = "O campo Pai não pode estar nulo/vazio!")
 	@Size(max = 1, message = "O campo Pai deve ter no máximo {max} caracter")
@@ -50,7 +50,7 @@ public class HistoricoPatologiaFamiliaresFORM {
 		FamiliarTemPatologiaConversao familiarTemPatologia = new FamiliarTemPatologiaConversao();
 		
 		return new HistoricoPatologiaFamiliares.HistoricoPatologiaFamiliaresBuilder()
-				.patologiaFamiliares(new PatologiaFamiliaresConversao().converterParaEnumComBaseNaDescricao(patologiaFamiliares))
+				.patologiaFamiliares(patologiaFamiliares)
 				.pai(familiarTemPatologia.convertToEntityAttribute(pai))
 				.mae(familiarTemPatologia.convertToEntityAttribute(mae))
 				.avosMasculinos(familiarTemPatologia.convertToEntityAttribute(avosMasculinos))

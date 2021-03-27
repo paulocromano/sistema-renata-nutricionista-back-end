@@ -37,115 +37,115 @@ public class AvaliacaoConsumoHabitual {
 	private Long id;
 	
 	@Column(name = "energia_kcal")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Energia Kcal deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Energia Kcal não pode estar nulo!")
 	private BigDecimal energiaKcal;
 	
 	@Column(name = "proteina_total_g")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Proteína Total em Gramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Proteína Total em Gramas não pode estar nulo!")
 	private BigDecimal proteinaTotalGramas;
 	
 	@Column(name = "proteina_avb_g")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Proteína AVB em Gramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Proteína AVB em Gramas não pode estar nulo!")
 	private BigDecimal proteinaAVBGramas;
 	
 	@Column(name = "carboidrato_g")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Carboidrato em Gramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Carboidrato em Gramas não pode estar nulo!")
 	private BigDecimal carboidratoGramas;
 	
 	@Column(name = "lipideo_total_g")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Lipídeo Total em Gramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Lipídeo Total em Gramas não pode estar nulo!")
 	private BigDecimal lipideoTotalGramas;
 	
 	@Column(name = "lipideo_saturado_g")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Lipídeo Saturado em Gramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Lipídeo Saturado em Gramas não pode estar nulo!")
 	private BigDecimal lipideoSaturadoGramas;
 	
 	@Column(name = "lipideo_poliinsaturado_g")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Lipídeo Poliinsaturado em Gramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Lipídeo Poliinsaturado em Gramas não pode estar nulo!")
 	private BigDecimal lipideoPoliinsaturadoGramas;
 	
 	@Column(name = "lipideo_monoinsaturado_g")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Lipídeo Monoinsaturado em Gramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Lipídeo Monoinsaturado em Gramas não pode estar nulo!")
 	private BigDecimal lipideoMonoinsaturadoGramas;
 	
 	@Column(name = "colesterol_mg")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Colesterol em Miligramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Colesterol em Miligramas não pode estar nulo!")
 	private BigDecimal colesterolMiligramas;
 	
 	@Column(name = "fibra_g")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Fibra em Gramas  deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Fibra em Gramas não pode estar nulo!")
 	private BigDecimal fibraGramas;
 	
 	@Column(name = "calcio_g")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Lipídeo Monoinsaturado em Gramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Lipídeo Monoinsaturado em Gramas não pode estar nulo!")
 	private BigDecimal calcioGramas;
 	
 	@Column(name = "fosforo_g")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Fósforo em Gramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Fósforo em Gramas não pode estar nulo!")
 	private BigDecimal fosforoGramas;
 	
 	@Column(name = "ferro_mg")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Ferro em Miligramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Ferro em Miligramas não pode estar nulo!")
 	private BigDecimal ferroMiligramas;
 	
 	@Column(name = "zinco_mg")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Zinco em Miligramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Zinco em Miligramas não pode estar nulo!")
 	private BigDecimal zincoMiligramas;
 	
 	@Column(name = "magnesio_mg")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Magnésio em Miligramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Magnésio em Miligramas não pode estar nulo!")
 	private BigDecimal magnesioMiligramas;
 	
 	@Column(name = "potassio_mg")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Potássio em Miligramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Potássio em Miligramas não pode estar nulo!")
 	private BigDecimal potassioMiligramas;
 	
 	@Column(name = "vitamina_b6_mg")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Vitamina B6 em Miligramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Vitamina B6 em Miligramas não pode estar nulo!")
 	private BigDecimal vitaminaB6Miligramas;
 	
 	@Column(name = "vitamina_c_mg")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Vitamina C em Miligramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Vitamina C em Miligramas não pode estar nulo!")
 	private BigDecimal vitaminaCMiligramas;
 	
 	@Column(name = "leucina_mg")
-	@Digits(integer = 6, fraction = 2)
+	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Leucina em Miligramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Leucina em Miligramas não pode estar nulo!")
 	private BigDecimal leucinaMiligramas;

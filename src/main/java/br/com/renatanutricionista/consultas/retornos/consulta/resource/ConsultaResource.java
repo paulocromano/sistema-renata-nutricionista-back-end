@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.renatanutricionista.consultas.retornos.avaliacao.consumo.habitual.form.AvaliacaoConsumoHabitualFORM;
 import br.com.renatanutricionista.consultas.retornos.consulta.form.AgendamentoConsultaFORM;
+import br.com.renatanutricionista.consultas.retornos.consulta.form.ConfirmacaoConsultaFORM;
+import br.com.renatanutricionista.consultas.retornos.consulta.form.ReagendamentoConsultaFORM;
 import br.com.renatanutricionista.consultas.retornos.consulta.service.ConsultaService;
 
 
@@ -35,12 +37,21 @@ public class ConsultaResource {
 	}
 	
 	
-	@PostMapping("/remarcar/{idPaciente}/{idConsulta}")
+	@PostMapping("/reagendar/{idPaciente}/{idConsulta}")
 	@Transactional
-	public ResponseEntity<Void> remarcarConsulta(@PathVariable Long idPaciente, @PathVariable Long idConsulta, 
-			@RequestBody @Valid AgendamentoConsultaFORM remarcacaoConsulta) {
+	public ResponseEntity<Void> reagendarConsulta(@PathVariable Long idPaciente, @PathVariable Long idConsulta, 
+			@RequestBody @Valid ReagendamentoConsultaFORM reagendamentoConsulta) {
 		
-		return consultaService.remarcarConsulta(idPaciente, idConsulta, remarcacaoConsulta);
+		return consultaService.reagendarConsulta(idPaciente, idConsulta, reagendamentoConsulta);
+	}
+	
+	
+	@PutMapping("/confirmar/{idPaciente}/{idConsulta}")
+	@Transactional
+	public ResponseEntity<Void> confirmarConsulta(@PathVariable Long idPaciente, @PathVariable Long idConsulta, 
+			@RequestBody @Valid ConfirmacaoConsultaFORM confirmacaoConsulta) {
+		
+		return consultaService.confirmarConsulta(idPaciente, idConsulta, confirmacaoConsulta);
 	}
 	
 	

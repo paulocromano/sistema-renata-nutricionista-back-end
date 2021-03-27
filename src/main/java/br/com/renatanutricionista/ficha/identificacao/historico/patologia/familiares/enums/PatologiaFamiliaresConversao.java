@@ -25,16 +25,4 @@ public class PatologiaFamiliaresConversao implements AttributeConverter<Patologi
 
 		throw new IllegalArgumentException("O código da Patologia dos Familiares é inválido!");
 	}
-	
-	
-	public PatologiaFamiliares converterParaEnumComBaseNaDescricao(String descricao) {
-		if (Objects.isNull(descricao)) 
-			throw new NullPointerException("A Descrição da Patologia dos Familiares não estar nulo!");
-		
-		for (PatologiaFamiliares patologiaFamiliares : PatologiaFamiliares.values()) 
-			if (descricao.equals(patologiaFamiliares.getDescricao())) 
-				return patologiaFamiliares;
-
-		throw new IllegalArgumentException("A Descrição da Patologia dos Familiares é inválido!");
-	}
 }

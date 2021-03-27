@@ -1,5 +1,7 @@
 package br.com.renatanutricionista.consultas.retornos.consulta.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -49,8 +53,10 @@ public class Consulta {
 	@Column(name = "numero_parcelas")
 	private Integer numeroParcelas;
 	
-	@Column(name = "porcentagem_desconto")
-	private Integer porcentagemDesconto;
+	@Column(name = "valor")
+	@Digits(integer = 7, fraction = 2)
+	@DecimalMin(value = "0.0", message = "O campo Valor da Consulta deve ter o valor mínimo {value}")
+	private BigDecimal valorConsulta;
 	
 	@Column(name = "motivo")
 	@NotEmpty(message = "O campo Motivo da Consulta não pode estar nulo/vazio!")

@@ -14,18 +14,15 @@ import javax.validation.constraints.Size;
 import br.com.renatanutricionista.exception.custom.PacienteException;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.form.PatologiaPacienteFORM;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.model.PatologiaPaciente;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consistencia.fezes.ConsistenciaFezesConversao;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.bebidas.alcoolicas.ConsumoBebidasAlcoolicasConversao;
+import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consistencia.fezes.ConsistenciaFezes;
+import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.bebidas.alcoolicas.ConsumoBebidasAlcoolicas;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.cigarro.ConsumoCigarro;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.cigarro.ConsumoCigarroConversao;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.diurese.coloracao.ColoracaoDiureseConversao;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.diurese.frequencia.FrequenciaDiureseConversao;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.estado.civil.EstadoCivilConversao;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.habito.intestinal.HabitoIntestinalConversao;
+import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.diurese.coloracao.ColoracaoDiurese;
+import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.diurese.frequencia.FrequenciaDiurese;
+import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.estado.civil.EstadoCivil;
+import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.habito.intestinal.HabitoIntestinal;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.mulher.menopausa.Menopausa;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.mulher.menopausa.MenopausaConversao;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.mulher.menstruacao.normal.MenstruacaoNormal;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.mulher.menstruacao.normal.MenstruacaoNormalConversao;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial.HistoricoSocialBuilder;
 import br.com.renatanutricionista.paciente.model.Paciente;
@@ -42,9 +39,8 @@ public class HistoricoSocialFORM {
 	@Size(max = 60, message = "O campo Profissão deve ter no máximo {max} caracteres!")
 	private String profissao;
 	
-	@NotEmpty(message = "O campo Estado Civil não pode ser nulo/vazio!")
-	@Size(max = 1, message = "O campo Código do Estado Civil deve ter somente {max} caracter!")
-	private String codigoEstadoCivil;
+	@NotNull(message = "O campo do Estado Civil não pode ser nulo!")
+	private EstadoCivil estadoCivil;
 	
 	@NotEmpty(message = "O campo Composição Familiar não pode estar nulo/vazio!")
 	@Size(max = 100, message = "O campo Composição Familiar deve ter no máximo {max} caracteres!")
@@ -54,31 +50,25 @@ public class HistoricoSocialFORM {
 	@Size(max = 100, message = "O campo Local Refeições deve ter no máximo {max} caracteres!")
 	private String localRefeicoes;
 	
-	@NotEmpty(message = "O campo Consumo de Bebidas Alcoólicas não pode ser nulo/vazio!")
-	@Size(max = 1, message = "O campo Código da Frequência de Consumo de Bebidas Alcoólicas deve ter somente {max} caracter!")
-	private String codigoFrequenciaConsumoBebidasAlcoolicas;
+	@NotNull(message = "O campo de Frequência de Consumo de Bebidas Alcoólicas não pode ser nulo!")
+	private ConsumoBebidasAlcoolicas frequenciaConsumoBebidasAlcoolicas;
 	
-	@NotEmpty(message = "O campo Consumo de Cigarro não pode ser nulo/vazio!")
-	@Size(max = 1, message = "O campo Código de Consumo de Cigarros deve ter somente {max} caracter!")
-	private String codigoConsumoCigarro;
+	@NotNull(message = "O campo de Consumo de Cigarro não pode ser nulo!")
+	private ConsumoCigarro consumoCigarro;
 	
 	private Integer quantidadeCigarrosPorDia;
 	
-	@NotEmpty(message = "O campo Hábito Intestinal não pode ser nulo/vazio!")
-	@Size(max = 1, message = "O campo Código do Hábito Intestinal deve ter somente {max} caracter!")
-	private String codigoHabitoIntestinal;
+	@NotNull(message = "O campo do Hábito Intestinal não pode ser nulo!")
+	private HabitoIntestinal habitoIntestinal;
 	
-	@NotEmpty(message = "O campo Consistência das Fezes não pode ser nulo/vazio!")
-	@Size(max = 1, message = "O campo Código da Consistência das Fezes deve ter somente {max} caracter!")
-	private String codigoConsistenciaFezes;
+	@NotNull(message = "O campo da Consistência das Fezes não pode ser nulo!")
+	private ConsistenciaFezes consistenciaFezes;
 	
-	@NotEmpty(message = "O campo Frequência da Diurese não pode ser nulo/vazio!")
-	@Size(max = 1, message = "O campo Código da Frequência da Diurese deve ter somente {max} caracter!")
-	private String codigoFrequenciaDiurese;
+	@NotNull(message = "O campo da Frequência da Diurese não pode ser nulo!")
+	private FrequenciaDiurese frequenciaDiurese;
 	
-	@NotEmpty(message = "O campo Coloração da Diurese não pode ser nulo/vazio!")
-	@Size(max = 2, message = "O campo Código da Coloração da Diurese deve ter no máximo {max} caracteres!")
-	private String codigoColoracaoDiurese;
+	@NotNull(message = "O campo da Coloração da Diurese não pode ser nulo!")
+	private ColoracaoDiurese coloracaoDiurese;
 	
 	@Valid
 	private Set<PatologiaPacienteFORM> patologiasPaciente;
@@ -86,14 +76,12 @@ public class HistoricoSocialFORM {
 	@NotNull(message = "O campo Horas de Sono não pode ser nulo!")
 	private Integer horasSono;
 	
-	@Size(max = 1, message = "O campo Código da Menstruação Normal deve ter somente {max} caracter!")
-	private String codigoMenstruacaoNormal;
+	private MenstruacaoNormal menstruacaoNormal;
 	
 	@Size(max = 200, message = "O campo Motivo Anormalidade da Menstruação deve ter no máximo {max} caracteres!")
 	private String motivoAnormalidadeMenstruacao;
 
-	@Size(max = 1, message = "O campo Código da Menopausa deve ter somente {max} caracter!")
-	private String codigoMenopausa;
+	private Menopausa menopausa;
 	
 	private Integer quantosAnosEstaNaMenopausa;
 	
@@ -103,24 +91,24 @@ public class HistoricoSocialFORM {
 		
 		HistoricoSocialBuilder historicoSocialBuilder =  new HistoricoSocial.HistoricoSocialBuilder()
 				.profissao(profissao)
-				.estadoCivil(new EstadoCivilConversao().convertToEntityAttribute(codigoEstadoCivil))
+				.estadoCivil(estadoCivil)
 				.composicaoFamiliar(composicaoFamiliar)
 				.localRefeicoes(localRefeicoes)
-				.frequenciaConsumoBebidasAlcoolicas(new ConsumoBebidasAlcoolicasConversao().convertToEntityAttribute(codigoFrequenciaConsumoBebidasAlcoolicas))
-				.consumoCigarro(new ConsumoCigarroConversao().convertToEntityAttribute(codigoConsumoCigarro))
+				.frequenciaConsumoBebidasAlcoolicas(frequenciaConsumoBebidasAlcoolicas)
+				.consumoCigarro(consumoCigarro)
 				.quantidadeCigarrosPorDia(quantidadeCigarrosPorDia)
-				.habitoIntestinal(new HabitoIntestinalConversao().convertToEntityAttribute(codigoHabitoIntestinal))
-				.consistenciaFezes(new ConsistenciaFezesConversao().convertToEntityAttribute(codigoConsistenciaFezes))
-				.frequenciaDiurese(new FrequenciaDiureseConversao().convertToEntityAttribute(codigoFrequenciaDiurese))
-				.coloracaoDiurese(new ColoracaoDiureseConversao().convertToEntityAttribute(codigoColoracaoDiurese))
+				.habitoIntestinal(habitoIntestinal)
+				.consistenciaFezes(consistenciaFezes)
+				.frequenciaDiurese(frequenciaDiurese)
+				.coloracaoDiurese(coloracaoDiurese)
 				.horasSono(horasSono)
 				.dataHoraUltimaAtualizacaoDadosDoHistoricoSocial(LocalDateTime.now())
 				.paciente(paciente);
 		
 		if (paciente.getSexo().equals(SexoUtils.FEMININO)) {
-			historicoSocialBuilder.menstruacaoNormal(new MenstruacaoNormalConversao().convertToEntityAttribute(codigoMenstruacaoNormal))
+			historicoSocialBuilder.menstruacaoNormal(menstruacaoNormal)
 					.motivoAnormalidadeMenstruacao(motivoAnormalidadeMenstruacao)
-					.menopausa(new MenopausaConversao().convertToEntityAttribute(codigoMenopausa))
+					.menopausa(menopausa)
 					.quantosAnosEstaNaMenopausa(quantosAnosEstaNaMenopausa);
 		}
 		
@@ -146,17 +134,17 @@ public class HistoricoSocialFORM {
 	}
 	
 	private void validarQuantidadeConsumoCigarrosPorDia() {
-		if (!codigoConsumoCigarro.equals(ConsumoCigarro.NUNCA_FUMOU.getCodigo()) && Objects.isNull(quantidadeCigarrosPorDia))
+		if (!consumoCigarro.equals(ConsumoCigarro.NUNCA_FUMOU) && Objects.isNull(quantidadeCigarrosPorDia))
 			throw new PacienteException("A quantidade de Cigarros consumidos por dia não pode estar nula!");
 	}
 	
 	private void validarMotivoMenstruacaoAnormal() {
-		if (codigoMenstruacaoNormal.equals(MenstruacaoNormal.NAO.getCodigo()) && Objects.isNull(motivoAnormalidadeMenstruacao))
+		if (menstruacaoNormal.equals(MenstruacaoNormal.NAO) && Objects.isNull(motivoAnormalidadeMenstruacao))
 			throw new PacienteException("O Motivo da Anormalidade da Menstruação não pode estar nula!");
 	}
 	
 	private void validarTempoPacienteEstaNaMenopausa() {
-		if (codigoMenopausa.equals(Menopausa.SIM.getCodigo()) && Objects.isNull(quantosAnosEstaNaMenopausa))
+		if (menopausa.equals(Menopausa.SIM) && Objects.isNull(quantosAnosEstaNaMenopausa))
 			throw new PacienteException("O campo de Quantos Anos a Paciente está na Menopausa não "
 					+ "não pode estar nulo!");
 	}

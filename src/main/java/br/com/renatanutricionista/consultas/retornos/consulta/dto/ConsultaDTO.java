@@ -1,5 +1,6 @@
 package br.com.renatanutricionista.consultas.retornos.consulta.dto;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ public class ConsultaDTO {
 	private String situacaoConsulta;
 	private String formaPagamento;
 	private Integer numeroParcelas;
-	private Integer porcentagemDesconto;
+	private BigDecimal valorConsulta;
 	private String motivoConsulta;
 	private CalendarioAgendamentoPacienteDTO periodoAgendamentoConsulta;
 	private AvaliacaoConsumoHabitualDTO avaliacaoConsumoHabitual;
@@ -31,7 +32,7 @@ public class ConsultaDTO {
 			formaPagamento = consulta.getFormaPagamento().getDescricao();
 		
 		numeroParcelas = consulta.getNumeroParcelas();
-		porcentagemDesconto = consulta.getPorcentagemDesconto();
+		valorConsulta = consulta.getValorConsulta();
 		motivoConsulta = consulta.getMotivoConsulta();
 		periodoAgendamentoConsulta = new CalendarioAgendamentoPacienteDTO(consulta.getPeriodoAgendamentoConsulta());
 		
