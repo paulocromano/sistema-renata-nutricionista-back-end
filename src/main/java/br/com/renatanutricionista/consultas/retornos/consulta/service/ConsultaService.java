@@ -1,5 +1,6 @@
 package br.com.renatanutricionista.consultas.retornos.consulta.service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.renatanutricionista.calendario.agendamento.paciente.enums.PeriodoDisponivel;
 import br.com.renatanutricionista.calendario.agendamento.paciente.model.CalendarioAgendamentoPaciente;
-import br.com.renatanutricionista.calendario.agendamento.paciente.repository.CalendarioAgendamentoPacienteRepository;
 import br.com.renatanutricionista.calendario.agendamento.paciente.service.CalendarioAgendamentoPacienteService;
+import br.com.renatanutricionista.consultas.retornos.avaliacao.consumo.habitual.form.AvaliacaoConsumoHabitualFORM;
 import br.com.renatanutricionista.consultas.retornos.consulta.enums.SituacaoConsulta;
 import br.com.renatanutricionista.consultas.retornos.consulta.form.AgendamentoConsultaFORM;
 import br.com.renatanutricionista.consultas.retornos.consulta.model.Consulta;
@@ -28,9 +29,6 @@ public class ConsultaService {
 	private ConsultaRepository consultaRepository;
 	
 	@Autowired
-	private CalendarioAgendamentoPacienteRepository calendarioAgendamentoPacienteRepository;
-	
-	@Autowired
 	private PacienteUtils pacienteUtils;
 	
 	@Autowired
@@ -39,6 +37,7 @@ public class ConsultaService {
 	
 	public ResponseEntity<Void> agendarConsulta(Long idPaciente, AgendamentoConsultaFORM agendamentoConsulta) {
 		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
+		verificarSeExisteConsultaEmAberto(paciente);
 		
 		CalendarioAgendamentoPaciente periodoAgendamento = calendarioAgendamentoService
 				.verificarPossibilidadeDeAgendarConsulta(agendamentoConsulta.getData(), agendamentoConsulta.getHorario());
@@ -58,28 +57,21 @@ public class ConsultaService {
 		
 		Consulta consultaPacienteQueSeraCancelada = verificarSeConsultaExiste(idConsulta);
 		verificarSeConsultaPertenceAoPaciente(paciente, consultaPacienteQueSeraCancelada);
+		verificarSeConsultaParaRemarcarNaoEstaFinalizada(consultaPacienteQueSeraCancelada);
 		
 		periodoConsultaRemarcada.setPeriodoDisponivel(PeriodoDisponivel.NAO);
 		consultaRepository.save(remarcacaoConsulta.converterParaConsulta(paciente, periodoConsultaRemarcada));
 		
 		consultaPacienteQueSeraCancelada.getPeriodoAgendamentoConsulta().setPeriodoDisponivel(PeriodoDisponivel.SIM);
-		calendarioAgendamentoPacienteRepository.saveAndFlush(consultaPacienteQueSeraCancelada.getPeriodoAgendamentoConsulta());
 		consultaRepository.delete(consultaPacienteQueSeraCancelada);
-		
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	
 	
-	private void verificarSeConsultaPertenceAoPaciente(Paciente paciente, Consulta consultaPaciente) {
-		if (!paciente.getId().equals(consultaPaciente.getPaciente().getId()))
-			throw new IllegalArgumentException("A Consulta selecionada não pertence ao Paciente!");
-	}
-	
-	
-	public ResponseEntity<Void> cancelarConsulta(Long idConsulta) {
-		Consulta consulta = verificarSeConsultaExiste(idConsulta);
-		
+	public ResponseEntity<Void> cancelarConsulta(Long idPaciente, Long idConsulta) {
+		Consulta consulta = verificarPacienteConsulta(idPaciente, idConsulta);
+
 		if (consulta.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_FINALIZADA))
 			throw new PacienteException("Não é possível cancelar uma Consulta Finalizada!");
 		
@@ -90,12 +82,79 @@ public class ConsultaService {
 	}
 	
 	
+	public ResponseEntity<Void> iniciarConsulta(Long idPaciente, Long idConsulta) {
+		Consulta consulta = verificarPacienteConsulta(idPaciente, idConsulta);	
+		
+		if (!consulta.getSituacaoConsulta().equals(SituacaoConsulta.AGUARDANDO_ATENDIMENTO))
+			throw new PacienteException("Só é possível iniciar uma Consulta que esteja com a Situação de " 
+					+ SituacaoConsulta.AGUARDANDO_ATENDIMENTO.getDescricao() + "!");
+		
+		consulta.setSituacaoConsulta(SituacaoConsulta.CONSULTA_INICIADA);
+		
+		return ResponseEntity.ok().build();
+	}
+	
+	
+	private Consulta verificarPacienteConsulta(Long idPaciente, Long idConsulta) {
+		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
+		Consulta consulta = verificarSeConsultaExiste(idConsulta);
+		verificarSeConsultaPertenceAoPaciente(paciente, consulta);
+		
+		return consulta;
+	}
+	
+	
+	private void verificarSeConsultaPertenceAoPaciente(Paciente paciente, Consulta consultaPaciente) {
+		if (!paciente.getId().equals(consultaPaciente.getPaciente().getId()))
+			throw new IllegalArgumentException("A Consulta selecionada não pertence ao Paciente!");
+	}
+	
+	
 	private Consulta verificarSeConsultaExiste(Long idConsulta) {
+		if (Objects.isNull(idConsulta))
+			throw new NullPointerException("O ID da Consulta está nulo!");
+			
 		Optional<Consulta> consulta = consultaRepository.findById(idConsulta);
 		
 		if (consulta.isEmpty())
 			throw new ObjectNotFoundException("Consulta não encontrada!");
 		
 		return consulta.get();
+	}
+	
+	
+	private void verificarSeExisteConsultaEmAberto(Paciente paciente) {
+		Optional<Consulta> consulta = consultaRepository.findByPacienteAndSituacaoConsultaNot(
+				paciente, SituacaoConsulta.CONSULTA_FINALIZADA);
+		
+		if (consulta.isPresent())
+			throw new PacienteException("Não é possível Agendar Consulta quando existe "
+					+ "outra Consulta em aberto!");
+	}
+	
+	
+	private void verificarSeConsultaParaRemarcarNaoEstaFinalizada(Consulta consultaPacienteQueSeraCancelada) {
+		if (consultaPacienteQueSeraCancelada.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_FINALIZADA))
+			throw new PacienteException("Não é possível remarcar uma Consulta que já foi Finalizada!");
+	}
+	
+	
+	private void validarSituacaoConsultaParaCadastroDeInformacoes(Consulta consulta) {
+		if (!consulta.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_INICIADA))
+			throw new PacienteException("Só é possível cadastrar informações em uma "
+					+ "Consulta caso ela não tenha sido iniciada!");
+	}
+	
+	
+	public ResponseEntity<Void> cadastrarAvaliacaoConsumoHabitual(Long idPaciente, Long idConsulta,
+			AvaliacaoConsumoHabitualFORM avaliacaoConsumoHabitual) {
+
+		Consulta consulta = verificarPacienteConsulta(idPaciente, idConsulta);	
+		validarSituacaoConsultaParaCadastroDeInformacoes(consulta);
+		
+		consulta.setAvaliacaoConsumoHabitual(avaliacaoConsumoHabitual.criarAvaliacaoConsumoHabitual());
+		consultaRepository.save(consulta);
+		
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 }

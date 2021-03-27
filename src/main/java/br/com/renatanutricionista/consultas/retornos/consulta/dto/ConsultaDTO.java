@@ -34,7 +34,9 @@ public class ConsultaDTO {
 		porcentagemDesconto = consulta.getPorcentagemDesconto();
 		motivoConsulta = consulta.getMotivoConsulta();
 		periodoAgendamentoConsulta = new CalendarioAgendamentoPacienteDTO(consulta.getPeriodoAgendamentoConsulta());
-		avaliacaoConsumoHabitual = new AvaliacaoConsumoHabitualDTO(consulta.getAvaliacaoConsumoHabitual());
+		
+		if (Objects.nonNull(consulta.getAvaliacaoConsumoHabitual()))
+			avaliacaoConsumoHabitual = new AvaliacaoConsumoHabitualDTO(consulta.getAvaliacaoConsumoHabitual());
 	}
 	
 	

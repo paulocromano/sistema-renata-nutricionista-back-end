@@ -67,8 +67,6 @@ public class CalendarioAgendamentoPacienteService {
 	
 	public void alterarPeriodoDoCalendarioParaDisponivel(Long idCalendarioAgendamento) {
 		CalendarioAgendamentoPaciente periodoAgendamento = verificarSeCalendarioAgendamentoPacienteExiste(idCalendarioAgendamento);
-		
 		periodoAgendamento.setPeriodoDisponivel(PeriodoDisponivel.SIM);
-		calendarioAgendamentoRepository.saveAndFlush(periodoAgendamento);
 	}
 }

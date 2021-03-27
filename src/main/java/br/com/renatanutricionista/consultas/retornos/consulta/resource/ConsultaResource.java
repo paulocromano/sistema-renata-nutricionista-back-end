@@ -8,10 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.renatanutricionista.consultas.retornos.avaliacao.consumo.habitual.form.AvaliacaoConsumoHabitualFORM;
 import br.com.renatanutricionista.consultas.retornos.consulta.form.AgendamentoConsultaFORM;
 import br.com.renatanutricionista.consultas.retornos.consulta.service.ConsultaService;
 
@@ -42,9 +44,26 @@ public class ConsultaResource {
 	}
 	
 	
-	@DeleteMapping("/{idConsulta}")
+	@DeleteMapping("/cancelar/{idPaciente}/{idConsulta}")
 	@Transactional
-	public ResponseEntity<Void> cancelarConsulta(@PathVariable Long idConsulta) {
-		return consultaService.cancelarConsulta(idConsulta);
+	public ResponseEntity<Void> cancelarConsulta(@PathVariable Long idPaciente, @PathVariable Long idConsulta) {
+		return consultaService.cancelarConsulta(idPaciente, idConsulta);
+	}
+	
+	
+	@PutMapping("/iniciar-consulta/{idPaciente}/{idConsulta}")
+	@Transactional
+	public ResponseEntity<Void> iniciarConsulta(@PathVariable Long idPaciente, @PathVariable Long idConsulta) { 
+		return consultaService.iniciarConsulta(idPaciente, idConsulta);
+	}
+	
+	
+	@PutMapping("/cadastrar-avaliacao-consumo-habitual/{idPaciente}/{idConsulta}")
+	@Transactional
+	public ResponseEntity<Void> cadastrarAvaliacaoConsumoHabitual(@PathVariable Long idPaciente, 
+			@PathVariable Long idConsulta,
+			@RequestBody @Valid AvaliacaoConsumoHabitualFORM avaliacaoConsumoHabitual) {
+		
+		return consultaService.cadastrarAvaliacaoConsumoHabitual(idPaciente, idConsulta, avaliacaoConsumoHabitual);
 	}
 }
