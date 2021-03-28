@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.renatanutricionista.consultas.retornos.avaliacao.composicao.corporal.form.AvaliacaoComposicaoCorporalFORM;
 import br.com.renatanutricionista.consultas.retornos.avaliacao.consumo.habitual.form.AvaliacaoConsumoHabitualFORM;
+import br.com.renatanutricionista.consultas.retornos.avaliacao.massa.muscular.corporea.antropometrica.form.AvaliacaoMassaMuscularCorporeaFORM;
 import br.com.renatanutricionista.consultas.retornos.consulta.form.AgendamentoConsultaFORM;
 import br.com.renatanutricionista.consultas.retornos.consulta.form.ConfirmacaoConsultaFORM;
 import br.com.renatanutricionista.consultas.retornos.consulta.form.ReagendamentoConsultaFORM;
@@ -70,7 +71,7 @@ public class ConsultaResource {
 	}
 	
 	
-	@PutMapping("/cadastrar-avaliacao-consumo-habitual/{idPaciente}/{idConsulta}")
+	@PostMapping("/cadastrar-avaliacao-consumo-habitual/{idPaciente}/{idConsulta}")
 	@Transactional
 	public ResponseEntity<Void> cadastrarAvaliacaoConsumoHabitual(@PathVariable Long idPaciente, 
 			@PathVariable Long idConsulta,
@@ -80,12 +81,23 @@ public class ConsultaResource {
 	}
 	
 	
-	@PutMapping("/cadastrar-avaliacao-composicao-corporal/{idPaciente}/{idConsulta}")
+	@PostMapping("/cadastrar-avaliacao-composicao-corporal/{idPaciente}/{idConsulta}")
 	@Transactional
 	public ResponseEntity<Void> cadastrarAvaliacaoComposicaoCorporal(@PathVariable Long idPaciente, 
 			@PathVariable Long idConsulta,
 			@RequestBody @Valid AvaliacaoComposicaoCorporalFORM avaliacaoComposicaoCorporal) {
 		
 		return consultaService.cadastrarAvaliacaoComposicaoCorporal(idPaciente, idConsulta, avaliacaoComposicaoCorporal);
+	}
+	
+	
+	@PostMapping("/cadastrar-avaliacao-massa-muscular-corporea/{idPaciente}/{idConsulta}")
+	@Transactional
+	public ResponseEntity<Void> cadastrarAvaliacaoMassaMuscularCorporeaMedidaAntropometrica(@PathVariable Long idPaciente, 
+			@PathVariable Long idConsulta, 
+			@RequestBody @Valid AvaliacaoMassaMuscularCorporeaFORM avaliacaoMassaMuscularCorporea) {
+		
+		return consultaService.cadastrarAvaliacaoMassaMuscularCorporeaMedidaAntropometrica(idPaciente, 
+				idConsulta, avaliacaoMassaMuscularCorporea);
 	}
 }

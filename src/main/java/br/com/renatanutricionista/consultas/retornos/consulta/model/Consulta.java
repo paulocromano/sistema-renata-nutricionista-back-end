@@ -25,6 +25,7 @@ import br.com.renatanutricionista.calendario.agendamento.paciente.model.Calendar
 import br.com.renatanutricionista.consultas.retornos.avaliacao.composicao.corporal.model.AvaliacaoComposicaoCorporal;
 import br.com.renatanutricionista.consultas.retornos.avaliacao.consumo.habitual.model.AvaliacaoConsumoHabitual;
 import br.com.renatanutricionista.consultas.retornos.avaliacao.massa.muscular.corporea.antropometrica.model.AvaliacaoMassaMuscularCorporea;
+import br.com.renatanutricionista.consultas.retornos.conduta.nutricional.model.CondutaNutricional;
 import br.com.renatanutricionista.consultas.retornos.consulta.enums.FormaPagamento;
 import br.com.renatanutricionista.consultas.retornos.consulta.enums.SituacaoConsulta;
 import br.com.renatanutricionista.paciente.model.Paciente;
@@ -84,8 +85,12 @@ public class Consulta {
 	private AvaliacaoComposicaoCorporal avaliacaoComposicaoCorporal;
 	
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
-	@JoinColumn(name = "avaliacao_massa_muscular_corporea_medida_antropometrica_id")
+	@JoinColumn(name = "avaliacao_massa_muscular_corporea_id")
 	private AvaliacaoMassaMuscularCorporea avaliacaoMassaMuscularCorporeaAntropometrica;
+	
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "conduta_nutricional_id")
+	private CondutaNutricional condutaNutricional;
 
 	
 	private Consulta(SituacaoConsulta situacaoConsulta, String motivoConsulta,

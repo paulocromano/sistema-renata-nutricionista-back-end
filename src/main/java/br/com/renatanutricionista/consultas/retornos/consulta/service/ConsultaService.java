@@ -13,6 +13,7 @@ import br.com.renatanutricionista.calendario.agendamento.paciente.model.Calendar
 import br.com.renatanutricionista.calendario.agendamento.paciente.service.CalendarioAgendamentoPacienteService;
 import br.com.renatanutricionista.consultas.retornos.avaliacao.composicao.corporal.form.AvaliacaoComposicaoCorporalFORM;
 import br.com.renatanutricionista.consultas.retornos.avaliacao.consumo.habitual.form.AvaliacaoConsumoHabitualFORM;
+import br.com.renatanutricionista.consultas.retornos.avaliacao.massa.muscular.corporea.antropometrica.form.AvaliacaoMassaMuscularCorporeaFORM;
 import br.com.renatanutricionista.consultas.retornos.consulta.enums.SituacaoConsulta;
 import br.com.renatanutricionista.consultas.retornos.consulta.form.AgendamentoConsultaFORM;
 import br.com.renatanutricionista.consultas.retornos.consulta.form.ConfirmacaoConsultaFORM;
@@ -161,7 +162,7 @@ public class ConsultaService {
 	private void validarSituacaoConsultaParaCadastroDeInformacoes(Consulta consulta) {
 		if (!consulta.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_INICIADA))
 			throw new PacienteException("Só é possível cadastrar informações em uma "
-					+ "Consulta caso ela não tenha sido iniciada!");
+					+ "Consulta caso ela tenha sido iniciada!");
 	}
 	
 	
@@ -186,6 +187,18 @@ public class ConsultaService {
 		SexoUtils sexoPaciente = consulta.getPaciente().getSexo();
 		
 		consulta.setAvaliacaoComposicaoCorporal(avaliacaoComposicaoCorporal.criarAvaliacaoComposicaoCorporal(sexoPaciente));
+		
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	
+	public ResponseEntity<Void> cadastrarAvaliacaoMassaMuscularCorporeaMedidaAntropometrica(Long idPaciente, 
+			Long idConsulta, AvaliacaoMassaMuscularCorporeaFORM avaliacaoMassaMuscularCorporea) {
+		
+		Consulta consulta = verificarPacienteConsulta(idPaciente, idConsulta);	
+		validarSituacaoConsultaParaCadastroDeInformacoes(consulta);
+		
+		consulta.setAvaliacaoMassaMuscularCorporeaAntropometrica(avaliacaoMassaMuscularCorporea.criarAvaliacaoMassaMuscularCorporea());
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
