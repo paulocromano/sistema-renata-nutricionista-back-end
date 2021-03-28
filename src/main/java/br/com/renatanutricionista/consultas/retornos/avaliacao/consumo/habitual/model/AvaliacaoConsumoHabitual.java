@@ -154,7 +154,7 @@ public class AvaliacaoConsumoHabitual {
 	private Consulta consulta;
 	
 	
-	public static class AvaliacaoConsumoHabitualBuilder {
+	public static class Builder {
 		
 		private BigDecimal energiaKcal;
 		private BigDecimal proteinaTotalGramas;
@@ -177,103 +177,103 @@ public class AvaliacaoConsumoHabitual {
 		private BigDecimal leucinaMiligramas;
 		
 		
-		public AvaliacaoConsumoHabitualBuilder energiaKcal(BigDecimal energiaKcal) {
+		public Builder energiaKcal(BigDecimal energiaKcal) {
 			this.energiaKcal = energiaKcal;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder proteinaTotalGramas(BigDecimal proteinaTotalGramas) {
+		public Builder proteinaTotalGramas(BigDecimal proteinaTotalGramas) {
 			this.proteinaTotalGramas = proteinaTotalGramas;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder proteinaAVBGramas(BigDecimal proteinaAVBGramas) {
+		public Builder proteinaAVBGramas(BigDecimal proteinaAVBGramas) {
 			this.proteinaAVBGramas = proteinaAVBGramas;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder carboidratoGramas(BigDecimal carboidratoGramas) {
+		public Builder carboidratoGramas(BigDecimal carboidratoGramas) {
 			this.carboidratoGramas = carboidratoGramas;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder lipideoTotalGramas(BigDecimal lipideoTotalGramas) {
+		public Builder lipideoTotalGramas(BigDecimal lipideoTotalGramas) {
 			this.lipideoTotalGramas = lipideoTotalGramas;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder lipideoSaturadoGramas(BigDecimal lipideoSaturadoGramas) {
+		public Builder lipideoSaturadoGramas(BigDecimal lipideoSaturadoGramas) {
 			this.lipideoSaturadoGramas = lipideoSaturadoGramas;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder lipideoPoliinsaturadoGramas(BigDecimal lipideoPoliinsaturadoGramas) {
+		public Builder lipideoPoliinsaturadoGramas(BigDecimal lipideoPoliinsaturadoGramas) {
 			this.lipideoPoliinsaturadoGramas = lipideoPoliinsaturadoGramas;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder lipideoMonoinsaturadoGramas(BigDecimal lipideoMonoinsaturadoGramas) {
+		public Builder lipideoMonoinsaturadoGramas(BigDecimal lipideoMonoinsaturadoGramas) {
 			this.lipideoMonoinsaturadoGramas = lipideoMonoinsaturadoGramas;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder colesterolMiligramas(BigDecimal colesterolMiligramas) {
+		public Builder colesterolMiligramas(BigDecimal colesterolMiligramas) {
 			this.colesterolMiligramas = colesterolMiligramas;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder fibraGramas(BigDecimal fibraGramas) {
+		public Builder fibraGramas(BigDecimal fibraGramas) {
 			this.fibraGramas = fibraGramas;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder calcioGramas(BigDecimal calcioGramas) {
+		public Builder calcioGramas(BigDecimal calcioGramas) {
 			this.calcioGramas = calcioGramas;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder fosforoGramas(BigDecimal fosforoGramas) {
+		public Builder fosforoGramas(BigDecimal fosforoGramas) {
 			this.fosforoGramas = fosforoGramas;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder ferroMiligramas(BigDecimal ferroMiligramas) {
+		public Builder ferroMiligramas(BigDecimal ferroMiligramas) {
 			this.ferroMiligramas = ferroMiligramas;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder zincoMiligramas(BigDecimal zincoMiligramas) {
+		public Builder zincoMiligramas(BigDecimal zincoMiligramas) {
 			this.zincoMiligramas = zincoMiligramas;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder magnesioMiligramas(BigDecimal magnesioMiligramas) {
+		public Builder magnesioMiligramas(BigDecimal magnesioMiligramas) {
 			this.magnesioMiligramas = magnesioMiligramas;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder potassioMiligramas(BigDecimal potassioMiligramas) {
+		public Builder potassioMiligramas(BigDecimal potassioMiligramas) {
 			this.potassioMiligramas = potassioMiligramas;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder vitaminaB6Miligramas(BigDecimal vitaminaB6Miligramas) {
+		public Builder vitaminaB6Miligramas(BigDecimal vitaminaB6Miligramas) {
 			this.vitaminaB6Miligramas = vitaminaB6Miligramas;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder vitaminaCMiligramas(BigDecimal vitaminaCMiligramas) {
+		public Builder vitaminaCMiligramas(BigDecimal vitaminaCMiligramas) {
 			this.vitaminaCMiligramas = vitaminaCMiligramas;
 			return this;
 		}
 		
-		public AvaliacaoConsumoHabitualBuilder leucinaMiligramas(BigDecimal leucinaMiligramas) {
+		public Builder leucinaMiligramas(BigDecimal leucinaMiligramas) {
 			this.leucinaMiligramas = leucinaMiligramas;
 			return this;
 		}
 		
 		
-		public AvaliacaoConsumoHabitual criarAvaliacaoConsumoHabitual() {
+		public AvaliacaoConsumoHabitual build() {
 			return new AvaliacaoConsumoHabitual(null, energiaKcal, proteinaTotalGramas, proteinaAVBGramas, carboidratoGramas, 
 					lipideoTotalGramas, lipideoSaturadoGramas, lipideoPoliinsaturadoGramas, lipideoMonoinsaturadoGramas, 
 					colesterolMiligramas, fibraGramas, calcioGramas, fosforoGramas, ferroMiligramas, zincoMiligramas, 

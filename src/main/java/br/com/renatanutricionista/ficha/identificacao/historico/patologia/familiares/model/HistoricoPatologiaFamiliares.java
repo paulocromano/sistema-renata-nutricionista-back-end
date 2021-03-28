@@ -64,7 +64,7 @@ public class HistoricoPatologiaFamiliares {
 	private HistoricoPatologiaFamiliaresPorData historicoPatologiaFamiliaresPorData;
 
 
-	public static class HistoricoPatologiaFamiliaresBuilder {
+	public static class Builder {
 		
 		private PatologiaFamiliares patologiaFamiliares;
 		private FamiliarTemPatologia pai;
@@ -76,48 +76,48 @@ public class HistoricoPatologiaFamiliares {
 		private HistoricoPatologiaFamiliaresPorData historicoPatologiaFamiliaresPorData;
 		
 		
-		public HistoricoPatologiaFamiliaresBuilder patologiaFamiliares(PatologiaFamiliares patologiaFamiliares) {
+		public Builder patologiaFamiliares(PatologiaFamiliares patologiaFamiliares) {
 			this.patologiaFamiliares = patologiaFamiliares;
 			return this;
 		}
 		
-		public HistoricoPatologiaFamiliaresBuilder pai(FamiliarTemPatologia pai) {
+		public Builder pai(FamiliarTemPatologia pai) {
 			this.pai = pai;
 			return this;
 		}
 		
-		public HistoricoPatologiaFamiliaresBuilder mae(FamiliarTemPatologia mae) {
+		public Builder mae(FamiliarTemPatologia mae) {
 			this.mae = mae;
 			return this;
 		}
 		
-		public HistoricoPatologiaFamiliaresBuilder avosMasculinos(FamiliarTemPatologia avosMasculinos) {
+		public Builder avosMasculinos(FamiliarTemPatologia avosMasculinos) {
 			this.avosMasculinos = avosMasculinos;
 			return this;
 		}
 		
-		public HistoricoPatologiaFamiliaresBuilder avosFemininos(FamiliarTemPatologia avosFemininos) {
+		public Builder avosFemininos(FamiliarTemPatologia avosFemininos) {
 			this.avosFemininos = avosFemininos;
 			return this;
 		}
 		
-		public HistoricoPatologiaFamiliaresBuilder tios(FamiliarTemPatologia tios) {
+		public Builder tios(FamiliarTemPatologia tios) {
 			this.tios = tios;
 			return this;
 		}
 		
-		public HistoricoPatologiaFamiliaresBuilder tias(FamiliarTemPatologia tias) {
+		public Builder tias(FamiliarTemPatologia tias) {
 			this.tias = tias;
 			return this;
 		}
 		
-		public HistoricoPatologiaFamiliaresBuilder historicoPatologiaFamiliaresPorData(HistoricoPatologiaFamiliaresPorData historicoPatologiaFamiliaresPorData) {
+		public Builder historicoPatologiaFamiliaresPorData(HistoricoPatologiaFamiliaresPorData historicoPatologiaFamiliaresPorData) {
 			this.historicoPatologiaFamiliaresPorData = historicoPatologiaFamiliaresPorData;
 			return this;
 		}
 		
 		
-		public HistoricoPatologiaFamiliares criarHistoricoPatologiaFamiliares() {
+		public HistoricoPatologiaFamiliares build() {
 			return new HistoricoPatologiaFamiliares(null, patologiaFamiliares, pai, mae, avosMasculinos, 
 					avosFemininos, tios, tias, historicoPatologiaFamiliaresPorData);
 		}

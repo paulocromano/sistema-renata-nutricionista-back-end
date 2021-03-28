@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import br.com.renatanutricionista.calendario.agendamento.paciente.enums.PeriodoDisponivel;
 import br.com.renatanutricionista.calendario.agendamento.paciente.model.CalendarioAgendamentoPaciente;
 import br.com.renatanutricionista.calendario.agendamento.paciente.service.CalendarioAgendamentoPacienteService;
+import br.com.renatanutricionista.consultas.retornos.avaliacao.composicao.corporal.form.AvaliacaoComposicaoCorporalFORM;
 import br.com.renatanutricionista.consultas.retornos.avaliacao.consumo.habitual.form.AvaliacaoConsumoHabitualFORM;
 import br.com.renatanutricionista.consultas.retornos.consulta.enums.SituacaoConsulta;
 import br.com.renatanutricionista.consultas.retornos.consulta.form.AgendamentoConsultaFORM;
@@ -22,6 +23,7 @@ import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.exception.custom.PacienteException;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.utils.PacienteUtils;
+import br.com.renatanutricionista.utils.enums.SexoUtils;
 
 
 @Service
@@ -65,7 +67,7 @@ public class ConsultaService {
 		consultaRepository.save(reagendamentoConsulta.converterParaConsulta(paciente, periodoConsultaRemarcada,
 				consultaPacienteQueSeraCancelada));
 		
-		consultaPacienteQueSeraCancelada.getPeriodoAgendamentoConsulta().setPeriodoDisponivel(PeriodoDisponivel.SIM);
+		consultaPacienteQueSeraCancelada.getPeriodoConsulta().setPeriodoDisponivel(PeriodoDisponivel.SIM);
 		consultaRepository.delete(consultaPacienteQueSeraCancelada);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -77,7 +79,7 @@ public class ConsultaService {
 		
 		if (!consulta.getSituacaoConsulta().equals(SituacaoConsulta.AGUARDANDO_CONFIRMACAO))
 			throw new PacienteException("Só é possível Confirmar uma Consulta quando a Situação for "
-					+ SituacaoConsulta.AGUARDANDO_CONFIRMACAO);
+					+ SituacaoConsulta.AGUARDANDO_CONFIRMACAO.getDescricao() + "!");
 		
 		confirmacaoConsulta.atualizarInformacoesConsulta(consulta);
 		
@@ -91,9 +93,8 @@ public class ConsultaService {
 		if (consulta.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_FINALIZADA))
 			throw new PacienteException("Não é possível cancelar uma Consulta Finalizada!");
 		
-		//disponibilizar periodo no calendario de novo
 		consultaRepository.delete(consulta);
-		calendarioAgendamentoService.alterarPeriodoDoCalendarioParaDisponivel(consulta.getPeriodoAgendamentoConsulta().getId());
+		calendarioAgendamentoService.alterarPeriodoDoCalendarioParaDisponivel(consulta.getPeriodoConsulta().getId());
 		
 		return ResponseEntity.noContent().build();
 	}
@@ -171,7 +172,20 @@ public class ConsultaService {
 		validarSituacaoConsultaParaCadastroDeInformacoes(consulta);
 		
 		consulta.setAvaliacaoConsumoHabitual(avaliacaoConsumoHabitual.criarAvaliacaoConsumoHabitual());
-		consultaRepository.save(consulta);
+		
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	
+	public ResponseEntity<Void> cadastrarAvaliacaoComposicaoCorporal(Long idPaciente, Long idConsulta,
+			AvaliacaoComposicaoCorporalFORM avaliacaoComposicaoCorporal) {
+		
+		Consulta consulta = verificarPacienteConsulta(idPaciente, idConsulta);	
+		validarSituacaoConsultaParaCadastroDeInformacoes(consulta);
+		
+		SexoUtils sexoPaciente = consulta.getPaciente().getSexo();
+		
+		consulta.setAvaliacaoComposicaoCorporal(avaliacaoComposicaoCorporal.criarAvaliacaoComposicaoCorporal(sexoPaciente));
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}

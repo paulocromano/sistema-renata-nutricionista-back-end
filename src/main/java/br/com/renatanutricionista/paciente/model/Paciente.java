@@ -55,7 +55,6 @@ public class Paciente {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataNascimento;
 	
-	@Column(name = "sexo")
 	@NotNull(message = "O campo Sexo não pode estar nulo!")
 	private SexoUtils sexo;
 	
@@ -112,7 +111,7 @@ public class Paciente {
 	}
 
 
-	public static class PacienteBuilder {
+	public static class Builder {
 		private String nome;
 		private LocalDate dataNascimento;
 		private SexoUtils sexo;
@@ -123,48 +122,48 @@ public class Paciente {
 		private LocalDateTime dataHoraUltimaAtualizacaoDadosDoPaciente;
 		
 		
-		public PacienteBuilder nome(String nome) {
+		public Builder nome(String nome) {
 			this.nome = nome;
 			return this;
 		}
 		
-		public PacienteBuilder dataNascimento(LocalDate dataNascimento) {
+		public Builder dataNascimento(LocalDate dataNascimento) {
 			this.dataNascimento = dataNascimento;
 			return this;
 		}
 		
-		public PacienteBuilder sexo(SexoUtils sexo) {
+		public Builder sexo(SexoUtils sexo) {
 			this.sexo = sexo;
 			return this;
 		}
 		
-		public PacienteBuilder etnia(Etnia etnia) {
+		public Builder etnia(Etnia etnia) {
 			this.etnia = etnia;
 			return this;
 		}
 		
-		public PacienteBuilder telefone(String telefone) {
+		public Builder telefone(String telefone) {
 			this.telefone = telefone;
 			return this;
 		}
 		
-		public PacienteBuilder telefoneRecado(String telefoneRecado) {
+		public Builder telefoneRecado(String telefoneRecado) {
 			this.telefoneRecado = telefoneRecado;
 			return this;
 		}
 		
-		public PacienteBuilder endereco(Endereco endereco) {
+		public Builder endereco(Endereco endereco) {
 			this.endereco = endereco;
 			return this;
 		}
 		
-		public PacienteBuilder dataHoraUltimaAtualizacaoDadosDoPaciente(LocalDateTime dataHoraUltimaAtualizacaoDadosDoPaciente) {
+		public Builder dataHoraUltimaAtualizacaoDadosDoPaciente(LocalDateTime dataHoraUltimaAtualizacaoDadosDoPaciente) {
 			this.dataHoraUltimaAtualizacaoDadosDoPaciente = dataHoraUltimaAtualizacaoDadosDoPaciente;
 			return this;
 		}
 		
 		
-		public Paciente criarPaciente() {
+		public Paciente build() {
 			return new Paciente(nome, dataNascimento, sexo, etnia, telefone, telefoneRecado, endereco, dataHoraUltimaAtualizacaoDadosDoPaciente);
 		}
 	}

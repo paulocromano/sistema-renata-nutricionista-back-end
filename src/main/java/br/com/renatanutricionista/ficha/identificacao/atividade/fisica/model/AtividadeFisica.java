@@ -60,7 +60,7 @@ public class AtividadeFisica {
 	private LocalDateTime dataHoraUltimaAtualizacaoDadosDaAtividadeFisica;
 
 	
-	public static class AtividadeFisicaBuilder {
+	public static class Builder {
 		
 		private String atividadePraticada;
 		private FrequenciaAtividadeFisica frequencia;
@@ -69,33 +69,33 @@ public class AtividadeFisica {
 		private LocalDateTime dataHoraUltimaAtualizacaoDadosDaAtividadeFisica;
 		
 		
-		public AtividadeFisicaBuilder atividadePraticada(String atividadePraticada) {
+		public Builder atividadePraticada(String atividadePraticada) {
 			this.atividadePraticada = atividadePraticada;
 			return this;
 		}
 		
-		public AtividadeFisicaBuilder frequencia(FrequenciaAtividadeFisica frequencia) {
+		public Builder frequencia(FrequenciaAtividadeFisica frequencia) {
 			this.frequencia = frequencia;
 			return this;
 		}
 		
-		public AtividadeFisicaBuilder duracao(String duracao) {
+		public Builder duracao(String duracao) {
 			this.duracao = duracao;
 			return this;
 		}
 		
-		public AtividadeFisicaBuilder paciente(Paciente paciente) {
+		public Builder paciente(Paciente paciente) {
 			this.paciente = paciente;
 			return this;
 		}
 		
-		public AtividadeFisicaBuilder dataHoraUltimaAtualizacaoDadosDaAtividadeFisica(LocalDateTime dataHoraUltimaAtualizacaoDadosDaAtividadeFisica) {
+		public Builder dataHoraUltimaAtualizacaoDadosDaAtividadeFisica(LocalDateTime dataHoraUltimaAtualizacaoDadosDaAtividadeFisica) {
 			this.dataHoraUltimaAtualizacaoDadosDaAtividadeFisica = dataHoraUltimaAtualizacaoDadosDaAtividadeFisica;
 			return this;
 		}
 		
 		
-		public AtividadeFisica criarAtividadeFisica() {
+		public AtividadeFisica build() {
 			return new AtividadeFisica(null, atividadePraticada, frequencia, duracao, paciente, 
 					dataHoraUltimaAtualizacaoDadosDaAtividadeFisica);
 		}

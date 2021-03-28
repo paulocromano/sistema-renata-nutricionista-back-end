@@ -29,11 +29,11 @@ public class AgendamentoConsultaFORM {
 	
 	
 	public Consulta converterParaConsulta(Paciente paciente, CalendarioAgendamentoPaciente periodoAgendamento) {
-		return new Consulta.ConsultaBuilder()
+		return new Consulta.Builder()
 				.situacaoConsulta(SituacaoConsulta.AGUARDANDO_CONFIRMACAO)
 				.motivoConsulta(motivoConsulta)
 				.paciente(paciente)
-				.periodoAgendamentoConsulta(periodoAgendamento)
-				.criarConsulta();
+				.periodoConsulta(periodoAgendamento)
+				.build();
 	}
 }

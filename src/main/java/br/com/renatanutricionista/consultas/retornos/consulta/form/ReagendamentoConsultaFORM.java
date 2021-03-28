@@ -27,11 +27,11 @@ public class ReagendamentoConsultaFORM {
 	public Consulta converterParaConsulta(Paciente paciente, CalendarioAgendamentoPaciente periodoAgendamento,
 			Consulta consultaPacienteQueSeraCancelada) {
 		
-		return new Consulta.ConsultaBuilder()
+		return new Consulta.Builder()
 				.situacaoConsulta(SituacaoConsulta.AGUARDANDO_CONFIRMACAO)
 				.motivoConsulta(consultaPacienteQueSeraCancelada.getMotivoConsulta())
 				.paciente(paciente)
-				.periodoAgendamentoConsulta(periodoAgendamento)
-				.criarConsulta();
+				.periodoConsulta(periodoAgendamento)
+				.build();
 	}
 }

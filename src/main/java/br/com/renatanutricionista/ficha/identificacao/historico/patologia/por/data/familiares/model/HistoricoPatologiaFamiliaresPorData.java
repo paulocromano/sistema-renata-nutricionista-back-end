@@ -61,31 +61,31 @@ public class HistoricoPatologiaFamiliaresPorData {
 	private Paciente paciente;
 	
 	
-	public static class HistoricoPatologiaFamiliaresPorDataBuilder {
+	public static class Builder {
 		
 		private String observacao;
 		private LocalDateTime dataHoraCadastroPatologiasFamiliares;
 		private Paciente paciente;
 		
 		
-		public HistoricoPatologiaFamiliaresPorDataBuilder observacao(String observacao) {
+		public Builder observacao(String observacao) {
 			this.observacao = observacao;
 			return this;
 		}
 		
-		public HistoricoPatologiaFamiliaresPorDataBuilder dataHoraCadastroPatologiasFamiliares(LocalDateTime dataHoraCadastroPatologiasFamiliares) {
+		public Builder dataHoraCadastroPatologiasFamiliares(LocalDateTime dataHoraCadastroPatologiasFamiliares) {
 			this.dataHoraCadastroPatologiasFamiliares = dataHoraCadastroPatologiasFamiliares;
 			return this;
 		}
 		
 		
-		public HistoricoPatologiaFamiliaresPorDataBuilder paciente(Paciente paciente) {
+		public Builder paciente(Paciente paciente) {
 			this.paciente = paciente;
 			return this;
 		}
 		
 		
-		public HistoricoPatologiaFamiliaresPorData criarHistoricoPatologiaFamiliaresPorData() {
+		public HistoricoPatologiaFamiliaresPorData build() {
 			return new HistoricoPatologiaFamiliaresPorData(null, observacao, dataHoraCadastroPatologiasFamiliares, null, paciente);
 		}
 	}

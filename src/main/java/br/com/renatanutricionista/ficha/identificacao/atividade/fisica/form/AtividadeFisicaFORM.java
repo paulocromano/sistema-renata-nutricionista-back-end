@@ -32,13 +32,13 @@ public class AtividadeFisicaFORM {
 	public AtividadeFisica converterParaAtividadeFisica(Paciente paciente) {
 		validarCamposParaSalvarAtividadeFisica();
 
-		return new AtividadeFisica.AtividadeFisicaBuilder()
+		return new AtividadeFisica.Builder()
 				.atividadePraticada(atividadePraticada)
 				.frequencia(frequenciaAtividadeFisica)
 				.duracao(duracao)
 				.paciente(paciente)
 				.dataHoraUltimaAtualizacaoDadosDaAtividadeFisica(LocalDateTime.now())
-				.criarAtividadeFisica();
+				.build();
 	}
 	
 	

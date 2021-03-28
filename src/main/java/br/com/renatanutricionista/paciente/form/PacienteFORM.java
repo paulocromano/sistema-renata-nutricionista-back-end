@@ -49,7 +49,7 @@ public class PacienteFORM {
 	
 	
 	public Paciente converterParaPaciente() {
-		return new Paciente.PacienteBuilder()
+		return new Paciente.Builder()
 				.nome(nome)
 				.dataNascimento(ConversaoUtils.converterStringParaLocalDate(dataNascimento))
 				.sexo(new SexoUtlisConversao().convertToEntityAttribute(sexo))
@@ -58,6 +58,6 @@ public class PacienteFORM {
 				.telefoneRecado(telefoneRecado)
 				.endereco(endereco.converterParaEndereco())
 				.dataHoraUltimaAtualizacaoDadosDoPaciente(LocalDateTime.now())
-				.criarPaciente();
+				.build();
 	}
 }

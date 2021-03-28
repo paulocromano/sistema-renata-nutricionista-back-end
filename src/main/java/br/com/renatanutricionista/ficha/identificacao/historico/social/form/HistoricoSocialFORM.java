@@ -24,7 +24,7 @@ import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.hab
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.mulher.menopausa.Menopausa;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.mulher.menstruacao.normal.MenstruacaoNormal;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial.HistoricoSocialBuilder;
+import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial.Builder;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.utils.enums.SexoUtils;
 import lombok.Getter;
@@ -89,7 +89,7 @@ public class HistoricoSocialFORM {
 	public HistoricoSocial converterParaHistoricoSocial(Paciente paciente) {
 		validarCamposDoFormulario(paciente);
 		
-		HistoricoSocialBuilder historicoSocialBuilder =  new HistoricoSocial.HistoricoSocialBuilder()
+		Builder historicoSocialBuilder =  new HistoricoSocial.Builder()
 				.profissao(profissao)
 				.estadoCivil(estadoCivil)
 				.composicaoFamiliar(composicaoFamiliar)
@@ -112,7 +112,7 @@ public class HistoricoSocialFORM {
 					.quantosAnosEstaNaMenopausa(quantosAnosEstaNaMenopausa);
 		}
 		
-		return historicoSocialBuilder.criarHistoricoSocial();
+		return historicoSocialBuilder.build();
 	}
 	
 	

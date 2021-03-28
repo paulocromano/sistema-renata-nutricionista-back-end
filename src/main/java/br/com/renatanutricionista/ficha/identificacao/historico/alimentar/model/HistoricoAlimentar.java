@@ -91,7 +91,7 @@ public class HistoricoAlimentar {
 	private LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar;
 	
 	
-	public static class HistoricoAlimentarBuilder {
+	public static class Builder {
 		
 		private String intoleranciaAlergiaAlimentosPaciente;
 		private String preferenciaAlimentarPaciente;
@@ -103,48 +103,48 @@ public class HistoricoAlimentar {
 		private LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar;
 		
 		
-		public HistoricoAlimentarBuilder intoleranciaAlergiaAlimentosPaciente(String intoleranciaAlergiaAlimentosPaciente) {
+		public Builder intoleranciaAlergiaAlimentosPaciente(String intoleranciaAlergiaAlimentosPaciente) {
 			this.intoleranciaAlergiaAlimentosPaciente = intoleranciaAlergiaAlimentosPaciente;
 			return this;
 		}
 		
-		public HistoricoAlimentarBuilder preferenciaAlimentarPaciente(String preferenciaAlimentarPaciente) {
+		public Builder preferenciaAlimentarPaciente(String preferenciaAlimentarPaciente) {
 			this.preferenciaAlimentarPaciente = preferenciaAlimentarPaciente;
 			return this;
 		}
 		
-		public HistoricoAlimentarBuilder alimentosPacienteNaoGosta(String alimentosPacienteNaoGosta) {
+		public Builder alimentosPacienteNaoGosta(String alimentosPacienteNaoGosta) {
 			this.alimentosPacienteNaoGosta = alimentosPacienteNaoGosta;
 			return this;
 		}
 		
-		public HistoricoAlimentarBuilder alteracoesGastrointestinal(String alteracoesGastrointestinal) {
+		public Builder alteracoesGastrointestinal(String alteracoesGastrointestinal) {
 			this.alteracoesGastrointestinal = alteracoesGastrointestinal;
 			return this;
 		}
 		
-		public HistoricoAlimentarBuilder consumoAgua(String consumoAgua) {
+		public Builder consumoAgua(String consumoAgua) {
 			this.consumoAgua = consumoAgua;
 			return this;
 		}
 		
-		public HistoricoAlimentarBuilder medicamentos(Set<Medicamento> medicamentos) {
+		public Builder medicamentos(Set<Medicamento> medicamentos) {
 			this.medicamentos = medicamentos;
 			return this;
 		}
 		
-		public HistoricoAlimentarBuilder paciente(Paciente paciente) {
+		public Builder paciente(Paciente paciente) {
 			this.paciente = paciente;
 			return this;
 		}
 		
-		public HistoricoAlimentarBuilder dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar(LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar) {
+		public Builder dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar(LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar) {
 			this.dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar = dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar;
 			return this;
 		}
 		
 		
-		public HistoricoAlimentar criarHistoricoAlimentar() {
+		public HistoricoAlimentar build() {
 			return new HistoricoAlimentar(null, intoleranciaAlergiaAlimentosPaciente, preferenciaAlimentarPaciente, 
 					alimentosPacienteNaoGosta, alteracoesGastrointestinal, consumoAgua, null, 
 					medicamentos, paciente, dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar);

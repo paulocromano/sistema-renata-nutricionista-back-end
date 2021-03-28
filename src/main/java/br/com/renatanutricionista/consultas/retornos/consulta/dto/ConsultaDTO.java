@@ -6,7 +6,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.calendario.agendamento.paciente.dto.CalendarioAgendamentoPacienteDTO;
+import br.com.renatanutricionista.consultas.retornos.avaliacao.composicao.corporal.dto.AvaliacaoComposicaoCorporalDTO;
 import br.com.renatanutricionista.consultas.retornos.avaliacao.consumo.habitual.dto.AvaliacaoConsumoHabitualDTO;
+import br.com.renatanutricionista.consultas.retornos.avaliacao.massa.muscular.corporea.antropometrica.dto.AvaliacaoMassaMuscularCorporeaDTO;
 import br.com.renatanutricionista.consultas.retornos.consulta.model.Consulta;
 import lombok.Getter;
 
@@ -20,8 +22,10 @@ public class ConsultaDTO {
 	private Integer numeroParcelas;
 	private BigDecimal valorConsulta;
 	private String motivoConsulta;
-	private CalendarioAgendamentoPacienteDTO periodoAgendamentoConsulta;
+	private CalendarioAgendamentoPacienteDTO periodoConsulta;
 	private AvaliacaoConsumoHabitualDTO avaliacaoConsumoHabitual;
+	private AvaliacaoComposicaoCorporalDTO avaliacaoComposicaoCorporal;
+	private AvaliacaoMassaMuscularCorporeaDTO avaliacaoMassaMuscularCorporea;
 	
 	
 	public ConsultaDTO(Consulta consulta) {
@@ -34,10 +38,18 @@ public class ConsultaDTO {
 		numeroParcelas = consulta.getNumeroParcelas();
 		valorConsulta = consulta.getValorConsulta();
 		motivoConsulta = consulta.getMotivoConsulta();
-		periodoAgendamentoConsulta = new CalendarioAgendamentoPacienteDTO(consulta.getPeriodoAgendamentoConsulta());
+		periodoConsulta = new CalendarioAgendamentoPacienteDTO(consulta.getPeriodoConsulta());
 		
 		if (Objects.nonNull(consulta.getAvaliacaoConsumoHabitual()))
 			avaliacaoConsumoHabitual = new AvaliacaoConsumoHabitualDTO(consulta.getAvaliacaoConsumoHabitual());
+		
+		if (Objects.nonNull(consulta.getAvaliacaoComposicaoCorporal()))
+			avaliacaoComposicaoCorporal = new AvaliacaoComposicaoCorporalDTO(consulta.getAvaliacaoComposicaoCorporal());
+		
+		if (Objects.nonNull(consulta.getAvaliacaoMassaMuscularCorporeaAntropometrica()))
+			avaliacaoMassaMuscularCorporea = new AvaliacaoMassaMuscularCorporeaDTO(
+					consulta.getAvaliacaoMassaMuscularCorporeaAntropometrica());
+
 	}
 	
 	

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.renatanutricionista.consultas.retornos.avaliacao.composicao.corporal.form.AvaliacaoComposicaoCorporalFORM;
 import br.com.renatanutricionista.consultas.retornos.avaliacao.consumo.habitual.form.AvaliacaoConsumoHabitualFORM;
 import br.com.renatanutricionista.consultas.retornos.consulta.form.AgendamentoConsultaFORM;
 import br.com.renatanutricionista.consultas.retornos.consulta.form.ConfirmacaoConsultaFORM;
@@ -76,5 +77,15 @@ public class ConsultaResource {
 			@RequestBody @Valid AvaliacaoConsumoHabitualFORM avaliacaoConsumoHabitual) {
 		
 		return consultaService.cadastrarAvaliacaoConsumoHabitual(idPaciente, idConsulta, avaliacaoConsumoHabitual);
+	}
+	
+	
+	@PutMapping("/cadastrar-avaliacao-composicao-corporal/{idPaciente}/{idConsulta}")
+	@Transactional
+	public ResponseEntity<Void> cadastrarAvaliacaoComposicaoCorporal(@PathVariable Long idPaciente, 
+			@PathVariable Long idConsulta,
+			@RequestBody @Valid AvaliacaoComposicaoCorporalFORM avaliacaoComposicaoCorporal) {
+		
+		return consultaService.cadastrarAvaliacaoComposicaoCorporal(idPaciente, idConsulta, avaliacaoComposicaoCorporal);
 	}
 }

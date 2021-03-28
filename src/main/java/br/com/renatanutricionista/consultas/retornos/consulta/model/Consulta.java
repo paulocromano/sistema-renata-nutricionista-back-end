@@ -22,7 +22,9 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.renatanutricionista.calendario.agendamento.paciente.model.CalendarioAgendamentoPaciente;
+import br.com.renatanutricionista.consultas.retornos.avaliacao.composicao.corporal.model.AvaliacaoComposicaoCorporal;
 import br.com.renatanutricionista.consultas.retornos.avaliacao.consumo.habitual.model.AvaliacaoConsumoHabitual;
+import br.com.renatanutricionista.consultas.retornos.avaliacao.massa.muscular.corporea.antropometrica.model.AvaliacaoMassaMuscularCorporea;
 import br.com.renatanutricionista.consultas.retornos.consulta.enums.FormaPagamento;
 import br.com.renatanutricionista.consultas.retornos.consulta.enums.SituacaoConsulta;
 import br.com.renatanutricionista.paciente.model.Paciente;
@@ -71,54 +73,62 @@ public class Consulta {
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "calendario_agendamento_paciente_id")
 	@NotNull(message = "O objeto Período de Agendamento da Consulta não pode estar nulo!")
-	private CalendarioAgendamentoPaciente periodoAgendamentoConsulta;
+	private CalendarioAgendamentoPaciente periodoConsulta;
 	
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "avaliacao_consumo_habitual_id")
 	private AvaliacaoConsumoHabitual avaliacaoConsumoHabitual;
+	
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "avaliacao_composicao_corporal_id")
+	private AvaliacaoComposicaoCorporal avaliacaoComposicaoCorporal;
+	
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "avaliacao_massa_muscular_corporea_medida_antropometrica_id")
+	private AvaliacaoMassaMuscularCorporea avaliacaoMassaMuscularCorporeaAntropometrica;
 
 	
 	private Consulta(SituacaoConsulta situacaoConsulta, String motivoConsulta,
-			Paciente paciente, CalendarioAgendamentoPaciente periodoAgendamentoConsulta) {
+			Paciente paciente, CalendarioAgendamentoPaciente periodoConsulta) {
 		
 		this.situacaoConsulta = situacaoConsulta;
 		this.motivoConsulta = motivoConsulta;
 		this.paciente = paciente;
-		this.periodoAgendamentoConsulta = periodoAgendamentoConsulta;
+		this.periodoConsulta = periodoConsulta;
 	}
 	
 	
-	public static class ConsultaBuilder {
+	public static class Builder {
 		
 		private SituacaoConsulta situacaoConsulta;
 		private String motivoConsulta;
 		private Paciente paciente;
-		private CalendarioAgendamentoPaciente periodoAgendamentoConsulta;
+		private CalendarioAgendamentoPaciente periodoConsulta;
 		
 		
-		public ConsultaBuilder situacaoConsulta(SituacaoConsulta situacaoConsulta) {
+		public Builder situacaoConsulta(SituacaoConsulta situacaoConsulta) {
 			this.situacaoConsulta = situacaoConsulta;
 			return this;
 		}
 		
-		public ConsultaBuilder motivoConsulta(String motivoConsulta) {
+		public Builder motivoConsulta(String motivoConsulta) {
 			this.motivoConsulta = motivoConsulta;
 			return this;
 		}
 		
-		public ConsultaBuilder paciente(Paciente paciente) {
+		public Builder paciente(Paciente paciente) {
 			this.paciente = paciente;
 			return this;
 		}
 		
-		public ConsultaBuilder periodoAgendamentoConsulta(CalendarioAgendamentoPaciente periodoAgendamentoConsulta) {
-			this.periodoAgendamentoConsulta = periodoAgendamentoConsulta;
+		public Builder periodoConsulta(CalendarioAgendamentoPaciente periodoConsulta) {
+			this.periodoConsulta = periodoConsulta;
 			return this;
 		}
 		
 		
-		public Consulta criarConsulta() {
-			return new Consulta(situacaoConsulta, motivoConsulta, paciente, periodoAgendamentoConsulta);
+		public Consulta build() {
+			return new Consulta(situacaoConsulta, motivoConsulta, paciente, periodoConsulta);
 		}
 	}
 }

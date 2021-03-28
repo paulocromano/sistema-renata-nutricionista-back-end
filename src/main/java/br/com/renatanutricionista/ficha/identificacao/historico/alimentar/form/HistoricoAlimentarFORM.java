@@ -45,7 +45,7 @@ public class HistoricoAlimentarFORM {
 	
 	
 	public HistoricoAlimentar converterParaHistoricoAlimentar(Paciente paciente, Set<Medicamento> medicamentosPaciente) {
-		return new HistoricoAlimentar.HistoricoAlimentarBuilder()
+		return new HistoricoAlimentar.Builder()
 				.intoleranciaAlergiaAlimentosPaciente(intoleranciaAlergiaAlimentosPaciente)
 				.preferenciaAlimentarPaciente(preferenciaAlimentarPaciente)
 				.alimentosPacienteNaoGosta(alimentosPacienteNaoGosta)
@@ -54,7 +54,7 @@ public class HistoricoAlimentarFORM {
 				.medicamentos(medicamentosPaciente)
 				.paciente(paciente)
 				.dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar(LocalDateTime.now())
-				.criarHistoricoAlimentar();
+				.build();
 	}
 	
 	

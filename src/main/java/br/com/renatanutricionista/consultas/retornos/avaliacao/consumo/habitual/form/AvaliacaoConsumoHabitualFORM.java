@@ -112,7 +112,7 @@ public class AvaliacaoConsumoHabitualFORM {
 	
 	
 	public AvaliacaoConsumoHabitual criarAvaliacaoConsumoHabitual() {
-		return new AvaliacaoConsumoHabitual.AvaliacaoConsumoHabitualBuilder()
+		return new AvaliacaoConsumoHabitual.Builder()
 				.energiaKcal(energiaKcal)
 				.proteinaTotalGramas(proteinaTotalGramas)
 				.proteinaAVBGramas(proteinaAVBGramas)
@@ -132,6 +132,6 @@ public class AvaliacaoConsumoHabitualFORM {
 				.vitaminaB6Miligramas(vitaminaB6Miligramas)
 				.vitaminaCMiligramas(vitaminaCMiligramas)
 				.leucinaMiligramas(leucinaMiligramas)
-				.criarAvaliacaoConsumoHabitual();
+				.build();
 	}
 }

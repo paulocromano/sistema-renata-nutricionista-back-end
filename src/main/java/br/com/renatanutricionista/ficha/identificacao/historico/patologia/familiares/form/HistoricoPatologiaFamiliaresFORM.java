@@ -49,7 +49,7 @@ public class HistoricoPatologiaFamiliaresFORM {
 	public HistoricoPatologiaFamiliares converterParaHistoricoPatologiaFamiliares(HistoricoPatologiaFamiliaresPorData historicoPatologiaFamiliaresPorData) {
 		FamiliarTemPatologiaConversao familiarTemPatologia = new FamiliarTemPatologiaConversao();
 		
-		return new HistoricoPatologiaFamiliares.HistoricoPatologiaFamiliaresBuilder()
+		return new HistoricoPatologiaFamiliares.Builder()
 				.patologiaFamiliares(patologiaFamiliares)
 				.pai(familiarTemPatologia.convertToEntityAttribute(pai))
 				.mae(familiarTemPatologia.convertToEntityAttribute(mae))
@@ -58,6 +58,6 @@ public class HistoricoPatologiaFamiliaresFORM {
 				.tios(familiarTemPatologia.convertToEntityAttribute(tios))
 				.tias(familiarTemPatologia.convertToEntityAttribute(tias))
 				.historicoPatologiaFamiliaresPorData(historicoPatologiaFamiliaresPorData)
-				.criarHistoricoPatologiaFamiliares();
+				.build();
 	}
 }

@@ -31,11 +31,11 @@ public class HistoricoPatologiaFamiliaresPorDataFORM {
 	public HistoricoPatologiaFamiliaresPorData converterParaHistoricoPatologiaFamiliaresPorData(Paciente paciente) {
 		validarSetPatologiasDosFamiliares();
 		
-		return new HistoricoPatologiaFamiliaresPorData.HistoricoPatologiaFamiliaresPorDataBuilder()
+		return new HistoricoPatologiaFamiliaresPorData.Builder()
 				.observacao(observacao)
 				.dataHoraCadastroPatologiasFamiliares(LocalDateTime.now())
 				.paciente(paciente)
-				.criarHistoricoPatologiaFamiliaresPorData();
+				.build();
 	}
 	
 	

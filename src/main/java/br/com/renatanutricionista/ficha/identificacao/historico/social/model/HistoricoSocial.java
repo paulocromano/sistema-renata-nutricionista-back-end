@@ -152,7 +152,7 @@ public class HistoricoSocial {
 	}
 
 	
-	public static class HistoricoSocialBuilder {
+	public static class Builder {
 		
 		private String profissao;
 		private EstadoCivil estadoCivil;
@@ -174,98 +174,98 @@ public class HistoricoSocial {
 		private Paciente paciente;
 		
 		
-		public HistoricoSocialBuilder profissao(String profissao) {
+		public Builder profissao(String profissao) {
 			this.profissao = profissao;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder estadoCivil(EstadoCivil estadoCivil) {
+		public Builder estadoCivil(EstadoCivil estadoCivil) {
 			this.estadoCivil = estadoCivil;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder composicaoFamiliar(String composicaoFamiliar) {
+		public Builder composicaoFamiliar(String composicaoFamiliar) {
 			this.composicaoFamiliar = composicaoFamiliar;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder localRefeicoes(String localRefeicoes) {
+		public Builder localRefeicoes(String localRefeicoes) {
 			this.localRefeicoes = localRefeicoes;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder frequenciaConsumoBebidasAlcoolicas(ConsumoBebidasAlcoolicas frequenciaConsumoBebidasAlcoolicas) {
+		public Builder frequenciaConsumoBebidasAlcoolicas(ConsumoBebidasAlcoolicas frequenciaConsumoBebidasAlcoolicas) {
 			this.frequenciaConsumoBebidasAlcoolicas = frequenciaConsumoBebidasAlcoolicas;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder consumoCigarro(ConsumoCigarro consumoCigarro) {
+		public Builder consumoCigarro(ConsumoCigarro consumoCigarro) {
 			this.consumoCigarro = consumoCigarro;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder quantidadeCigarrosPorDia(Integer quantidadeCigarrosPorDia) {
+		public Builder quantidadeCigarrosPorDia(Integer quantidadeCigarrosPorDia) {
 			this.quantidadeCigarrosPorDia = quantidadeCigarrosPorDia;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder habitoIntestinal(HabitoIntestinal habitoIntestinal) {
+		public Builder habitoIntestinal(HabitoIntestinal habitoIntestinal) {
 			this.habitoIntestinal = habitoIntestinal;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder consistenciaFezes(ConsistenciaFezes consistenciaFezes) {
+		public Builder consistenciaFezes(ConsistenciaFezes consistenciaFezes) {
 			this.consistenciaFezes = consistenciaFezes;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder frequenciaDiurese(FrequenciaDiurese frequenciaDiurese) {
+		public Builder frequenciaDiurese(FrequenciaDiurese frequenciaDiurese) {
 			this.frequenciaDiurese = frequenciaDiurese;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder coloracaoDiurese(ColoracaoDiurese coloracaoDiurese) {
+		public Builder coloracaoDiurese(ColoracaoDiurese coloracaoDiurese) {
 			this.coloracaoDiurese = coloracaoDiurese;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder horasSono(Integer horasSono) {
+		public Builder horasSono(Integer horasSono) {
 			this.horasSono = horasSono;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder menstruacaoNormal(MenstruacaoNormal menstruacaoNormal) {
+		public Builder menstruacaoNormal(MenstruacaoNormal menstruacaoNormal) {
 			this.menstruacaoNormal = menstruacaoNormal;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder motivoAnormalidadeMenstruacao(String motivoAnormalidadeMenstruacao) {
+		public Builder motivoAnormalidadeMenstruacao(String motivoAnormalidadeMenstruacao) {
 			this.motivoAnormalidadeMenstruacao = motivoAnormalidadeMenstruacao;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder menopausa(Menopausa menopausa) {
+		public Builder menopausa(Menopausa menopausa) {
 			this.menopausa = menopausa;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder quantosAnosEstaNaMenopausa(Integer quantosAnosEstaNaMenopausa) {
+		public Builder quantosAnosEstaNaMenopausa(Integer quantosAnosEstaNaMenopausa) {
 			this.quantosAnosEstaNaMenopausa = quantosAnosEstaNaMenopausa;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder dataHoraUltimaAtualizacaoDadosDoHistoricoSocial(LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoSocial) {
+		public Builder dataHoraUltimaAtualizacaoDadosDoHistoricoSocial(LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoSocial) {
 			this.dataHoraUltimaAtualizacaoDadosDoHistoricoSocial = dataHoraUltimaAtualizacaoDadosDoHistoricoSocial;
 			return this;
 		}
 		
-		public HistoricoSocialBuilder paciente(Paciente paciente) {
+		public Builder paciente(Paciente paciente) {
 			this.paciente = paciente;
 			return this;
 		}
 		
 		
-		public HistoricoSocial criarHistoricoSocial() {
+		public HistoricoSocial build() {
 			return new HistoricoSocial(profissao, estadoCivil, composicaoFamiliar, localRefeicoes, 
 					frequenciaConsumoBebidasAlcoolicas, consumoCigarro, quantidadeCigarrosPorDia, habitoIntestinal, 
 					consistenciaFezes, frequenciaDiurese, coloracaoDiurese, horasSono, menstruacaoNormal, 
