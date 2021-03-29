@@ -1,4 +1,4 @@
-package br.com.renatanutricionista.calendario.agendamento.paciente.enums;
+package br.com.renatanutricionista.calendario.atendimento.paciente.enums;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

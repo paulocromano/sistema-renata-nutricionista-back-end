@@ -1,4 +1,4 @@
-package br.com.renatanutricionista.calendario.agendamento.paciente.model;
+package br.com.renatanutricionista.calendario.atendimento.paciente.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -13,16 +13,16 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import br.com.renatanutricionista.calendario.agendamento.paciente.enums.PeriodoDisponivel;
+import br.com.renatanutricionista.calendario.atendimento.paciente.enums.PeriodoDisponivel;
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Entity
-@Table(name = "calendario_agendamento_paciente", schema = "sistema_nutricionista")
+@Table(name = "calendario_atendimento_paciente", schema = "sistema_nutricionista")
 @Setter
 @Getter
-public class CalendarioAgendamentoPaciente {
+public class CalendarioAtendimentoPaciente {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

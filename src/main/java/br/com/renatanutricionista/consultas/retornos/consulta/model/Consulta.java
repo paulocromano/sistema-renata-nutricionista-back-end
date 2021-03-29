@@ -21,13 +21,14 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import br.com.renatanutricionista.calendario.agendamento.paciente.model.CalendarioAgendamentoPaciente;
+import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import br.com.renatanutricionista.consultas.retornos.avaliacao.composicao.corporal.model.AvaliacaoComposicaoCorporal;
 import br.com.renatanutricionista.consultas.retornos.avaliacao.consumo.habitual.model.AvaliacaoConsumoHabitual;
 import br.com.renatanutricionista.consultas.retornos.avaliacao.massa.muscular.corporea.antropometrica.model.AvaliacaoMassaMuscularCorporea;
 import br.com.renatanutricionista.consultas.retornos.conduta.nutricional.model.CondutaNutricional;
 import br.com.renatanutricionista.consultas.retornos.consulta.enums.FormaPagamento;
 import br.com.renatanutricionista.consultas.retornos.consulta.enums.SituacaoConsulta;
+import br.com.renatanutricionista.consultas.retornos.retorno.model.RetornoConsulta;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -72,9 +73,9 @@ public class Consulta {
 	private Paciente paciente;
 	
 	@OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "calendario_agendamento_paciente_id")
+	@JoinColumn(name = "calendario_atendimento_consulta_id")
 	@NotNull(message = "O objeto Período de Agendamento da Consulta não pode estar nulo!")
-	private CalendarioAgendamentoPaciente periodoConsulta;
+	private CalendarioAtendimentoPaciente periodoConsulta;
 	
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "avaliacao_consumo_habitual_id")
@@ -91,10 +92,14 @@ public class Consulta {
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "conduta_nutricional_id")
 	private CondutaNutricional condutaNutricional;
+	
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@JoinColumn(name = "retorno_consulta_id")
+	private RetornoConsulta retornoConsulta;
 
 	
 	private Consulta(SituacaoConsulta situacaoConsulta, String motivoConsulta,
-			Paciente paciente, CalendarioAgendamentoPaciente periodoConsulta) {
+			Paciente paciente, CalendarioAtendimentoPaciente periodoConsulta) {
 		
 		this.situacaoConsulta = situacaoConsulta;
 		this.motivoConsulta = motivoConsulta;
@@ -108,7 +113,7 @@ public class Consulta {
 		private SituacaoConsulta situacaoConsulta;
 		private String motivoConsulta;
 		private Paciente paciente;
-		private CalendarioAgendamentoPaciente periodoConsulta;
+		private CalendarioAtendimentoPaciente periodoConsulta;
 		
 		
 		public Builder situacaoConsulta(SituacaoConsulta situacaoConsulta) {
@@ -126,7 +131,7 @@ public class Consulta {
 			return this;
 		}
 		
-		public Builder periodoConsulta(CalendarioAgendamentoPaciente periodoConsulta) {
+		public Builder periodoConsulta(CalendarioAtendimentoPaciente periodoConsulta) {
 			this.periodoConsulta = periodoConsulta;
 			return this;
 		}

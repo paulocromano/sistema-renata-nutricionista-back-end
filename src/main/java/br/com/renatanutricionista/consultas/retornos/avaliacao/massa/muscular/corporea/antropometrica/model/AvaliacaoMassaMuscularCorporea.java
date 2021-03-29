@@ -16,8 +16,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.renatanutricionista.consultas.retornos.consulta.model.Consulta;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import br.com.renatanutricionista.consultas.retornos.retorno.model.RetornoConsulta;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,8 +26,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@JsonIgnoreProperties(value = "consulta")
+@JsonIgnoreProperties(value = { "consulta", "retornoConsulta" })
 public class AvaliacaoMassaMuscularCorporea {
 
 	@Id
@@ -86,7 +84,25 @@ public class AvaliacaoMassaMuscularCorporea {
 	@OneToOne(mappedBy = "avaliacaoMassaMuscularCorporeaAntropometrica")
 	private Consulta consulta;
 	
+	@OneToOne(mappedBy = "avaliacaoMassaMuscularCorporeaAntropometrica")
+	private RetornoConsulta retornoConsulta;
 	
+
+	private AvaliacaoMassaMuscularCorporea(BigDecimal circunferenciaCinturaCentimetros, BigDecimal circunferenciaBracoCentimentros,
+			BigDecimal circunferenciaCoxaCentimetros, BigDecimal circunferenciaPanturrilhaCentimetros, BigDecimal circunferenciaPunhoCentrimetros,
+			BigDecimal massaMuscularKg, BigDecimal massaMuscularPorcentagem, BigDecimal indiceMassaMuscularKgMetroQuadrado) {
+		
+		this.circunferenciaCinturaCentimetros = circunferenciaCinturaCentimetros;
+		this.circunferenciaBracoCentimentros = circunferenciaBracoCentimentros;
+		this.circunferenciaCoxaCentimetros = circunferenciaCoxaCentimetros;
+		this.circunferenciaPanturrilhaCentimetros = circunferenciaPanturrilhaCentimetros;
+		this.circunferenciaPunhoCentrimetros = circunferenciaPunhoCentrimetros;
+		this.massaMuscularKg = massaMuscularKg;
+		this.massaMuscularPorcentagem = massaMuscularPorcentagem;
+		this.indiceMassaMuscularKgMetroQuadrado = indiceMassaMuscularKgMetroQuadrado;
+	}
+
+
 	public static class Builder {
 		
 		private BigDecimal circunferenciaCinturaCentimetros;
@@ -141,9 +157,9 @@ public class AvaliacaoMassaMuscularCorporea {
 		
 		
 		public AvaliacaoMassaMuscularCorporea build() {
-			return new AvaliacaoMassaMuscularCorporea(null, circunferenciaCinturaCentimetros, circunferenciaBracoCentimentros, 
+			return new AvaliacaoMassaMuscularCorporea(circunferenciaCinturaCentimetros, circunferenciaBracoCentimentros, 
 					circunferenciaCoxaCentimetros, circunferenciaPanturrilhaCentimetros, circunferenciaPunhoCentrimetros, 
-					massaMuscularKg, massaMuscularPorcentagem, indiceMassaMuscularKgMetroQuadrado, null);
+					massaMuscularKg, massaMuscularPorcentagem, indiceMassaMuscularKgMetroQuadrado);
 		}
 	}
 }

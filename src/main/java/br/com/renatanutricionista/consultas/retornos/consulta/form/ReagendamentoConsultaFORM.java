@@ -3,7 +3,7 @@ package br.com.renatanutricionista.consultas.retornos.consulta.form;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import br.com.renatanutricionista.calendario.agendamento.paciente.model.CalendarioAgendamentoPaciente;
+import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import br.com.renatanutricionista.consultas.retornos.consulta.enums.SituacaoConsulta;
 import br.com.renatanutricionista.consultas.retornos.consulta.model.Consulta;
 import br.com.renatanutricionista.paciente.model.Paciente;
@@ -24,7 +24,7 @@ public class ReagendamentoConsultaFORM {
 	private String horario;
 	
 	
-	public Consulta converterParaConsulta(Paciente paciente, CalendarioAgendamentoPaciente periodoAgendamento,
+	public Consulta converterParaConsulta(Paciente paciente, CalendarioAtendimentoPaciente periodoAgendamento,
 			Consulta consultaPacienteQueSeraCancelada) {
 		
 		return new Consulta.Builder()

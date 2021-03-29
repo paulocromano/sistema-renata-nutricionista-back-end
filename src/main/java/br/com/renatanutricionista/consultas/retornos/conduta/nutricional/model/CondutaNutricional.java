@@ -16,8 +16,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.renatanutricionista.consultas.retornos.consulta.model.Consulta;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import br.com.renatanutricionista.consultas.retornos.retorno.model.RetornoConsulta;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,8 +27,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@JsonIgnoreProperties(value = "paciente")
+@JsonIgnoreProperties(value = { "consulta", "retornoConsulta" })
 public class CondutaNutricional {
 
 	@Id
@@ -109,9 +107,32 @@ public class CondutaNutricional {
 	private BigDecimal relacaoLipideoInsaturadoSaturado;
 	
 	@OneToOne(mappedBy = "condutaNutricional")
-	private Consulta paciente;
+	private Consulta consulta;
+	
+	@OneToOne(mappedBy = "condutaNutricional")
+	private RetornoConsulta retornoConsulta;
 	
 	
+	private CondutaNutricional(BigDecimal energiaKcalTotal, BigDecimal carboidratroTotalGramas, BigDecimal carboidratoGramasKgPeso,
+			BigDecimal carboidratoGramasKgMassaMagra, BigDecimal proteinaTotalGramas, BigDecimal proteinaAVBGramas,
+			BigDecimal proteinaAVBGramasKgPeso, BigDecimal lipideoTotal, BigDecimal lipideoSaturado, BigDecimal lipideoPoiinsaturado,
+			BigDecimal lipideoMonoinsaturado, BigDecimal relacaoLipideoInsaturadoSaturado) {
+		
+		this.energiaKcalTotal = energiaKcalTotal;
+		this.carboidratroTotalGramas = carboidratroTotalGramas;
+		this.carboidratoGramasKgPeso = carboidratoGramasKgPeso;
+		this.carboidratoGramasKgMassaMagra = carboidratoGramasKgMassaMagra;
+		this.proteinaTotalGramas = proteinaTotalGramas;
+		this.proteinaAVBGramas = proteinaAVBGramas;
+		this.proteinaAVBGramasKgPeso = proteinaAVBGramasKgPeso;
+		this.lipideoTotal = lipideoTotal;
+		this.lipideoSaturado = lipideoSaturado;
+		this.lipideoPoiinsaturado = lipideoPoiinsaturado;
+		this.lipideoMonoinsaturado = lipideoMonoinsaturado;
+		this.relacaoLipideoInsaturadoSaturado = relacaoLipideoInsaturadoSaturado;
+	}
+
+
 	public static class Builder {
 		
 		private BigDecimal energiaKcalTotal;
@@ -190,10 +211,10 @@ public class CondutaNutricional {
 		
 		
 		public CondutaNutricional build() {
-			return new CondutaNutricional(null, energiaKcalTotal, carboidratroTotalGramas, carboidratoGramasKgPeso, 
+			return new CondutaNutricional(energiaKcalTotal, carboidratroTotalGramas, carboidratoGramasKgPeso, 
 					carboidratoGramasKgMassaMagra, proteinaTotalGramas, proteinaAVBGramas, proteinaAVBGramasKgPeso, 
 					lipideoTotal, lipideoSaturado, lipideoPoiinsaturado, lipideoMonoinsaturado, 
-					relacaoLipideoInsaturadoSaturado, null);
+					relacaoLipideoInsaturadoSaturado);
 		}
 	}
 }

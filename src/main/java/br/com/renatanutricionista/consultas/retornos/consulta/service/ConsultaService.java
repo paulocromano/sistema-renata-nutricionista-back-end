@@ -8,9 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import br.com.renatanutricionista.calendario.agendamento.paciente.enums.PeriodoDisponivel;
-import br.com.renatanutricionista.calendario.agendamento.paciente.model.CalendarioAgendamentoPaciente;
-import br.com.renatanutricionista.calendario.agendamento.paciente.service.CalendarioAgendamentoPacienteService;
+import br.com.renatanutricionista.calendario.atendimento.paciente.enums.PeriodoDisponivel;
+import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
+import br.com.renatanutricionista.calendario.atendimento.paciente.service.CalendarioAtendimentoPacienteService;
 import br.com.renatanutricionista.consultas.retornos.avaliacao.composicao.corporal.form.AvaliacaoComposicaoCorporalFORM;
 import br.com.renatanutricionista.consultas.retornos.avaliacao.consumo.habitual.form.AvaliacaoConsumoHabitualFORM;
 import br.com.renatanutricionista.consultas.retornos.avaliacao.massa.muscular.corporea.antropometrica.form.AvaliacaoMassaMuscularCorporeaFORM;
@@ -37,14 +37,14 @@ public class ConsultaService {
 	private PacienteUtils pacienteUtils;
 	
 	@Autowired
-	private CalendarioAgendamentoPacienteService calendarioAgendamentoService;
+	private CalendarioAtendimentoPacienteService calendarioAtendimentoService;
 	
 	
 	public ResponseEntity<Void> agendarConsulta(Long idPaciente, AgendamentoConsultaFORM agendamentoConsulta) {
 		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
 		verificarSeExisteConsultaEmAberto(paciente);
 		
-		CalendarioAgendamentoPaciente periodoAgendamento = calendarioAgendamentoService
+		CalendarioAtendimentoPaciente periodoAgendamento = calendarioAtendimentoService
 				.verificarPossibilidadeDeAgendarConsulta(agendamentoConsulta.getData(), agendamentoConsulta.getHorario());
 		
 		periodoAgendamento.setPeriodoDisponivel(PeriodoDisponivel.NAO);
@@ -57,7 +57,7 @@ public class ConsultaService {
 	public ResponseEntity<Void> reagendarConsulta(Long idPaciente, Long idConsulta, ReagendamentoConsultaFORM reagendamentoConsulta) {
 		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
 		
-		CalendarioAgendamentoPaciente periodoConsultaRemarcada = calendarioAgendamentoService
+		CalendarioAtendimentoPaciente periodoConsultaRemarcada = calendarioAtendimentoService
 				.verificarPossibilidadeDeAgendarConsulta(reagendamentoConsulta.getData(), reagendamentoConsulta.getHorario());
 		
 		Consulta consultaPacienteQueSeraCancelada = verificarSeConsultaExiste(idConsulta);
@@ -95,7 +95,7 @@ public class ConsultaService {
 			throw new PacienteException("Não é possível cancelar uma Consulta Finalizada!");
 		
 		consultaRepository.delete(consulta);
-		calendarioAgendamentoService.alterarPeriodoDoCalendarioParaDisponivel(consulta.getPeriodoConsulta().getId());
+		calendarioAtendimentoService.alterarPeriodoDoCalendarioParaDisponivel(consulta.getPeriodoConsulta().getId());
 		
 		return ResponseEntity.noContent().build();
 	}

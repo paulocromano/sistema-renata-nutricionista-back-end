@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.renatanutricionista.consultas.retornos.consulta.model.Consulta;
+import br.com.renatanutricionista.consultas.retornos.retorno.model.RetornoConsulta;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,7 +27,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-@JsonIgnoreProperties(value = "consulta")
+@JsonIgnoreProperties(value = { "consulta", "retornoConsulta" })
 public class AvaliacaoComposicaoCorporal {
 
 	@Id
@@ -95,6 +96,9 @@ public class AvaliacaoComposicaoCorporal {
 	
 	@OneToOne(mappedBy = "avaliacaoComposicaoCorporal")
 	private Consulta consulta;
+	
+	@OneToOne(mappedBy = "avaliacaoComposicaoCorporal")
+	private RetornoConsulta retornoConsulta;
 
 
 	private AvaliacaoComposicaoCorporal(BigDecimal pesoAtualKg, BigDecimal estaturaMetros, BigDecimal indiceMassaCorporalKgMetrosQuadrado,

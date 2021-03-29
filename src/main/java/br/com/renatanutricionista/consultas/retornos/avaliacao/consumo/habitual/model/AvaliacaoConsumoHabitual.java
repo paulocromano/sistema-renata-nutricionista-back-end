@@ -16,8 +16,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.renatanutricionista.consultas.retornos.consulta.model.Consulta;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import br.com.renatanutricionista.consultas.retornos.retorno.model.RetornoConsulta;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,8 +27,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@JsonIgnoreProperties(value = "consulta")
+@JsonIgnoreProperties(value = { "consulta", "retornoConsulta" })
 public class AvaliacaoConsumoHabitual {
 
 	@Id
@@ -153,7 +151,39 @@ public class AvaliacaoConsumoHabitual {
 	@OneToOne(mappedBy = "avaliacaoConsumoHabitual")
 	private Consulta consulta;
 	
+	@OneToOne(mappedBy = "avaliacaoConsumoHabitual")
+	private RetornoConsulta retornoConsulta;
 	
+
+	private AvaliacaoConsumoHabitual(BigDecimal energiaKcal, BigDecimal proteinaTotalGramas, BigDecimal proteinaAVBGramas, 
+			BigDecimal carboidratoGramas, BigDecimal lipideoTotalGramas, BigDecimal lipideoSaturadoGramas, 
+			BigDecimal lipideoPoliinsaturadoGramas, BigDecimal lipideoMonoinsaturadoGramas, BigDecimal colesterolMiligramas, 
+			BigDecimal fibraGramas, BigDecimal calcioGramas, BigDecimal fosforoGramas, BigDecimal ferroMiligramas, 
+			BigDecimal zincoMiligramas, BigDecimal magnesioMiligramas, BigDecimal potassioMiligramas, BigDecimal vitaminaB6Miligramas, 
+			BigDecimal vitaminaCMiligramas, BigDecimal leucinaMiligramas) {
+		
+		this.energiaKcal = energiaKcal;
+		this.proteinaTotalGramas = proteinaTotalGramas;
+		this.proteinaAVBGramas = proteinaAVBGramas;
+		this.carboidratoGramas = carboidratoGramas;
+		this.lipideoTotalGramas = lipideoTotalGramas;
+		this.lipideoSaturadoGramas = lipideoSaturadoGramas;
+		this.lipideoPoliinsaturadoGramas = lipideoPoliinsaturadoGramas;
+		this.lipideoMonoinsaturadoGramas = lipideoMonoinsaturadoGramas;
+		this.colesterolMiligramas = colesterolMiligramas;
+		this.fibraGramas = fibraGramas;
+		this.calcioGramas = calcioGramas;
+		this.fosforoGramas = fosforoGramas;
+		this.ferroMiligramas = ferroMiligramas;
+		this.zincoMiligramas = zincoMiligramas;
+		this.magnesioMiligramas = magnesioMiligramas;
+		this.potassioMiligramas = potassioMiligramas;
+		this.vitaminaB6Miligramas = vitaminaB6Miligramas;
+		this.vitaminaCMiligramas = vitaminaCMiligramas;
+		this.leucinaMiligramas = leucinaMiligramas;
+	}
+
+
 	public static class Builder {
 		
 		private BigDecimal energiaKcal;
@@ -274,10 +304,10 @@ public class AvaliacaoConsumoHabitual {
 		
 		
 		public AvaliacaoConsumoHabitual build() {
-			return new AvaliacaoConsumoHabitual(null, energiaKcal, proteinaTotalGramas, proteinaAVBGramas, carboidratoGramas, 
+			return new AvaliacaoConsumoHabitual(energiaKcal, proteinaTotalGramas, proteinaAVBGramas, carboidratoGramas, 
 					lipideoTotalGramas, lipideoSaturadoGramas, lipideoPoliinsaturadoGramas, lipideoMonoinsaturadoGramas, 
 					colesterolMiligramas, fibraGramas, calcioGramas, fosforoGramas, ferroMiligramas, zincoMiligramas, 
-					magnesioMiligramas, potassioMiligramas, vitaminaB6Miligramas, vitaminaCMiligramas, leucinaMiligramas, null);
+					magnesioMiligramas, potassioMiligramas, vitaminaB6Miligramas, vitaminaCMiligramas, leucinaMiligramas);
 		}
 	}
 }
