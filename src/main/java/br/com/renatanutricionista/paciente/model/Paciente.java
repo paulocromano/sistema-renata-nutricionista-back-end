@@ -23,7 +23,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import br.com.renatanutricionista.consultas.retornos.consulta.model.Consulta;
+import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.endereco.model.Endereco;
 import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.model.AtividadeFisica;
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.model.HistoricoAlimentar;

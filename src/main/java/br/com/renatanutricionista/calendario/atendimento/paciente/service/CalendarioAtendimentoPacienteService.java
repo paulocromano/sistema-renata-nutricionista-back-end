@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import br.com.renatanutricionista.calendario.atendimento.paciente.enums.PeriodoDisponivel;
 import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import br.com.renatanutricionista.calendario.atendimento.paciente.repository.CalendarioAtendimentoPacienteRepository;
+import br.com.renatanutricionista.exception.custom.AtendimentoException;
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
-import br.com.renatanutricionista.exception.custom.PacienteException;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 
 
@@ -22,7 +22,7 @@ public class CalendarioAtendimentoPacienteService {
 	private CalendarioAtendimentoPacienteRepository calendarioAgendamentoRepository;
 	
 	
-	public CalendarioAtendimentoPaciente verificarPossibilidadeDeAgendarConsulta(String data, String horario) {
+	public CalendarioAtendimentoPaciente verificarPossibilidadeDeAgendarConsultaRetorno(String data, String horario) {
 		LocalDate dataAgendamento = ConversaoUtils.converterStringParaLocalDate(data);
 		LocalTime horarioAgendamento = ConversaoUtils.converterStringParaLocalTime(horario + ":00");
 		
@@ -48,7 +48,7 @@ public class CalendarioAtendimentoPacienteService {
 	
 	private void verificarDisponibilidadeNoCalendario(CalendarioAtendimentoPaciente periodo) {
 		if (periodo.getPeriodoDisponivel().equals(PeriodoDisponivel.NAO))
-			throw new PacienteException("O Período escolhido não está disponível para Agendamento "
+			throw new AtendimentoException("O Período escolhido não está disponível para Agendamento "
 					+ "de Consulta ou Retorno!");
 	}
 	
@@ -58,7 +58,7 @@ public class CalendarioAtendimentoPacienteService {
 				calendarioAgendamentoRepository.findById(idCalendarioAgendamento);
 		
 		if (calendarioAgendamento.isEmpty())
-			throw new ObjectNotFoundException("O Período no Calendário de Agendamento do Paciente "
+			throw new ObjectNotFoundException("O Período no Calendário de Atendimento do Paciente "
 					+ "não foi encontrado!");
 		
 		return calendarioAgendamento.get();

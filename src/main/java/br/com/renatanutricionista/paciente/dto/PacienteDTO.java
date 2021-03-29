@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import br.com.renatanutricionista.consultas.retornos.consulta.dto.ConsultaDTO;
+import br.com.renatanutricionista.atendimento.paciente.consulta.dto.ConsultaDTO;
 import br.com.renatanutricionista.endereco.dto.EnderecoDTO;
 import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.dto.AtividadeFisicaDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.dto.HistoricoAlimentarDTO;
