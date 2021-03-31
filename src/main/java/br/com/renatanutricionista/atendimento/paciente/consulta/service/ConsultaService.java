@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.composicao.corporal.form.AvaliacaoComposicaoCorporalFORM;
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.consumo.habitual.form.AvaliacaoConsumoHabitualFORM;
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.massa.muscular.corporea.antropometrica.form.AvaliacaoMassaMuscularCorporeaFORM;
+import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.form.CondutaNutricionalFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.enums.SituacaoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.AgendamentoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.ConfirmacaoConsultaFORM;
@@ -111,27 +112,16 @@ public class ConsultaService {
 	}
 	
 	
-	private void verificarSeExisteConsultaEmAberto(Paciente paciente) {
-		Optional<Consulta> consulta = consultaRepository.findByPacienteAndSituacaoConsultaNot(
-				paciente, SituacaoConsulta.CONSULTA_FINALIZADA);
+	public ResponseEntity<Void> finalizarConsulta(Long idPaciente, Long idConsulta) {
+		Consulta consulta = atendimentoUtils.verificarPacienteConsulta(idPaciente, idConsulta);	
 		
-		if (consulta.isPresent())
-			throw new AtendimentoException("Não é possível Agendar Consulta quando existe "
-					+ "outra Consulta em aberto!");
-	}
-	
-	
-	private void verificarSeConsultaParaRemarcarEstaAguardandoConfirmacao(Consulta consultaPacienteQueSeraCancelada) {
-		if (!consultaPacienteQueSeraCancelada.getSituacaoConsulta().equals(SituacaoConsulta.AGUARDANDO_CONFIRMACAO))
-			throw new AtendimentoException("Não é possível remarcar uma Consulta que não esteja com a Situação de "
-					+ SituacaoConsulta.AGUARDANDO_CONFIRMACAO.getDescricao() + "!");
-	}
-	
-	
-	private void validarSituacaoConsultaParaCadastroDeInformacoes(Consulta consulta) {
-		if (!consulta.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_INICIADA))
-			throw new AtendimentoException("Só é possível cadastrar informações em uma "
-					+ "Consulta caso ela tenha sido iniciada!");
+		if (!consulta.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_FINALIZADA))
+			throw new AtendimentoException("Só é possível finalizar uma Consulta que esteja com a Situação de " 
+					+ SituacaoConsulta.CONSULTA_FINALIZADA.getDescricao() + "!");
+		
+		consulta.setSituacaoConsulta(SituacaoConsulta.CONSULTA_FINALIZADA);
+		
+		return ResponseEntity.ok().build();
 	}
 	
 	
@@ -170,5 +160,41 @@ public class ConsultaService {
 		consulta.setAvaliacaoMassaMuscularCorporeaAntropometrica(avaliacaoMassaMuscularCorporea.criarAvaliacaoMassaMuscularCorporea());
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	
+	public ResponseEntity<Void> cadastrarCondutaNutricional(Long idPaciente, Long idConsulta,
+			CondutaNutricionalFORM condutaNutricional) {
+		
+		Consulta consulta = atendimentoUtils.verificarPacienteConsulta(idPaciente, idConsulta);	
+		validarSituacaoConsultaParaCadastroDeInformacoes(consulta);
+		
+		consulta.setCondutaNutricional(condutaNutricional.converterParaCondutaNutricional());
+		
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	
+	private void verificarSeExisteConsultaEmAberto(Paciente paciente) {
+		Optional<Consulta> consulta = consultaRepository.findByPacienteAndSituacaoConsultaNot(
+				paciente, SituacaoConsulta.CONSULTA_FINALIZADA);
+		
+		if (consulta.isPresent())
+			throw new AtendimentoException("Não é possível Agendar Consulta quando existe "
+					+ "outra Consulta em aberto!");
+	}
+	
+	
+	private void verificarSeConsultaParaRemarcarEstaAguardandoConfirmacao(Consulta consultaPacienteQueSeraCancelada) {
+		if (!consultaPacienteQueSeraCancelada.getSituacaoConsulta().equals(SituacaoConsulta.AGUARDANDO_CONFIRMACAO))
+			throw new AtendimentoException("Não é possível remarcar uma Consulta que não esteja com a Situação de "
+					+ SituacaoConsulta.AGUARDANDO_CONFIRMACAO.getDescricao() + "!");
+	}
+	
+	
+	private void validarSituacaoConsultaParaCadastroDeInformacoes(Consulta consulta) {
+		if (!consulta.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_INICIADA))
+			throw new AtendimentoException("Só é possível cadastrar informações em uma "
+					+ "Consulta caso ela tenha sido iniciada!");
 	}
 }

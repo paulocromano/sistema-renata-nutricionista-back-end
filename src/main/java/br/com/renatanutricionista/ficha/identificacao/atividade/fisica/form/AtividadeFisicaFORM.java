@@ -6,7 +6,7 @@ import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import br.com.renatanutricionista.exception.custom.AtendimentoException;
+import br.com.renatanutricionista.exception.custom.PacienteException;
 import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.enums.FrequenciaAtividadeFisica;
 import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.model.AtividadeFisica;
 import br.com.renatanutricionista.paciente.model.Paciente;
@@ -45,10 +45,10 @@ public class AtividadeFisicaFORM {
 	private void validarCamposParaSalvarAtividadeFisica() {
 		
 		if (Objects.nonNull(atividadePraticada) && Objects.isNull(duracao))
-			throw new AtendimentoException("O campo Duração não pode estar nulo/vazio!");
+			throw new PacienteException("O campo Duração não pode estar nulo/vazio!");
 		
 		if (Objects.isNull(atividadePraticada) && Objects.nonNull(duracao))
-			throw new AtendimentoException("O campo da  Atividade Praticada não pode estar nulo/vazio!");
+			throw new PacienteException("O campo da  Atividade Praticada não pode estar nulo/vazio!");
 			
 		if (Objects.nonNull(duracao))
 			ConversaoUtils.converterStringParaLocalTimeHoraMinuto(duracao);

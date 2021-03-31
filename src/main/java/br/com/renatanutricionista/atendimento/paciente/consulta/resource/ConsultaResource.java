@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.composicao.corporal.form.AvaliacaoComposicaoCorporalFORM;
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.consumo.habitual.form.AvaliacaoConsumoHabitualFORM;
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.massa.muscular.corporea.antropometrica.form.AvaliacaoMassaMuscularCorporeaFORM;
+import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.form.CondutaNutricionalFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.AgendamentoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.ConfirmacaoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.ReagendamentoConsultaFORM;
@@ -64,10 +65,17 @@ public class ConsultaResource {
 	}
 	
 	
-	@PutMapping("/iniciar-consulta/{idPaciente}/{idConsulta}")
+	@PutMapping("/iniciar/{idPaciente}/{idConsulta}")
 	@Transactional
 	public ResponseEntity<Void> iniciarConsulta(@PathVariable Long idPaciente, @PathVariable Long idConsulta) { 
 		return consultaService.iniciarConsulta(idPaciente, idConsulta);
+	}
+	
+	
+	@PutMapping("/finalizar/{idPaciente}/{idConsulta}")
+	@Transactional
+	public ResponseEntity<Void> finalizarConsulta(@PathVariable Long idPaciente, @PathVariable Long idConsulta) {
+		return consultaService.finalizarConsulta(idPaciente, idConsulta);
 	}
 	
 	
@@ -99,5 +107,14 @@ public class ConsultaResource {
 		
 		return consultaService.cadastrarAvaliacaoMassaMuscularCorporeaMedidaAntropometrica(idPaciente, 
 				idConsulta, avaliacaoMassaMuscularCorporea);
+	}
+	
+	
+	@PostMapping("/cadastrar-conduta-nutricional/{idPaciente}/{idConsulta}")
+	@Transactional
+	public ResponseEntity<Void> cadastrarCondutaNutricional(@PathVariable Long idPaciente, @PathVariable Long idConsulta,
+			@RequestBody @Valid CondutaNutricionalFORM condutaNutricional) {
+		
+		return consultaService.cadastrarCondutaNutricional(idPaciente, idConsulta, condutaNutricional);
 	}
 }

@@ -8,6 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import br.com.renatanutricionista.atendimento.paciente.avaliacao.composicao.corporal.form.AvaliacaoComposicaoCorporalFORM;
+import br.com.renatanutricionista.atendimento.paciente.avaliacao.consumo.habitual.form.AvaliacaoConsumoHabitualFORM;
+import br.com.renatanutricionista.atendimento.paciente.avaliacao.massa.muscular.corporea.antropometrica.form.AvaliacaoMassaMuscularCorporeaFORM;
+import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.form.CondutaNutricionalFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.enums.SituacaoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.retorno.enums.SituacaoRetorno;
@@ -23,6 +27,7 @@ import br.com.renatanutricionista.exception.custom.AtendimentoException;
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.utils.PacienteUtils;
+import br.com.renatanutricionista.utils.enums.SexoUtils;
 
 
 @Service
@@ -48,6 +53,8 @@ public class RetornoConsultaService {
 		CalendarioAtendimentoPaciente periodoAgendamento = calendarioAtendimentoService
 				.verificarPossibilidadeDeAgendarConsultaRetorno(agendamentoRetorno.getData(), agendamentoRetorno.getHorario());
 		
+		verificarSePeriodoRetornoConsultaProcedePeriodoConsulta(consulta, periodoAgendamento);
+		
 		periodoAgendamento.setPeriodoDisponivel(PeriodoDisponivel.NAO);
 		consulta.setRetornoConsulta(agendamentoRetorno.converterParaRetornoConsulta(periodoAgendamento));
 		
@@ -55,25 +62,137 @@ public class RetornoConsultaService {
 	}
 	
 	
-	public ResponseEntity<Void> reagendarRetorno(Long idPaciente, Long idRetorno, ReagendamentoRetornoFORM reagendamentoRetorno) {
-		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
-		
-		RetornoConsulta retornoPaciente = verificarSeRetornoConsultaExiste(idRetorno);
-		verificarSeRetornoConsultaPertenceAoPaciente(paciente, retornoPaciente);
-		verificarSeRetornoConsultaParaRemarcarEstaAgurdandoConfirmacao(retornoPaciente);
+	public ResponseEntity<Void> reagendarRetorno(Long idPaciente, Long idRetornoConsulta, ReagendamentoRetornoFORM reagendamentoRetorno) {
+		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaPertenceAoPaciente(idPaciente, idRetornoConsulta);
+		verificarSeRetornoConsultaEstaAguardandoConfirmacao(retornoConsulta);
 		
 		CalendarioAtendimentoPaciente periodoRetornoRemarcado = calendarioAtendimentoService
 				.verificarPossibilidadeDeAgendarConsultaRetorno(reagendamentoRetorno.getData(), reagendamentoRetorno.getHorario());
-			
-		reagendamentoRetorno.atualizarInformacoesRetornoPaciente(retornoPaciente, periodoRetornoRemarcado);
+		
+		verificarSePeriodoRetornoConsultaProcedePeriodoConsulta(retornoConsulta.getConsulta(), periodoRetornoRemarcado);
+		reagendamentoRetorno.atualizarInformacoesRetornoPaciente(retornoConsulta, periodoRetornoRemarcado);
 		
 		return ResponseEntity.ok().build();
 	}
 	
 	
-	private void verificarSeRetornoConsultaParaRemarcarEstaAgurdandoConfirmacao(RetornoConsulta retornoPacienteQueSeraCancelado) {
-		if (!retornoPacienteQueSeraCancelado.getSituacaoRetorno().equals(SituacaoRetorno.AGUARDANDO_CONFIRMACAO))
-			throw new AtendimentoException("Não é possível remarcar um Retorno que não esteja com a Situação de " 
+	public ResponseEntity<Void> confirmarRetornoConsulta(Long idPaciente, Long idRetornoConsulta) {
+		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaPertenceAoPaciente(idPaciente, idRetornoConsulta);
+		verificarSeRetornoConsultaEstaAguardandoConfirmacao(retornoConsulta);
+		
+		retornoConsulta.setSituacaoRetorno(SituacaoRetorno.AGUARDANDO_ATENDIMENTO);
+		
+		return ResponseEntity.ok().build();
+	}
+	
+	
+	public ResponseEntity<Void> cancelarRetornoConsulta(Long idPaciente, Long idRetornoConsulta) {
+		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaPertenceAoPaciente(idPaciente, idRetornoConsulta);
+		
+		if (retornoConsulta.getSituacaoRetorno().equals(SituacaoRetorno.RETORNO_FINALIZADO))
+			throw new AtendimentoException("Não é possível cancelar um Retorno Finalizado!");
+		
+		calendarioAtendimentoService.alterarPeriodoDoCalendarioParaDisponivel(retornoConsulta.getPeriodoRetorno().getId());
+		retornoConsultaRepository.delete(retornoConsulta);
+		
+		return ResponseEntity.noContent().build();
+	}
+	
+	
+	public ResponseEntity<Void> iniciarRetornoConsulta(Long idPaciente, Long idRetornoConsulta) {
+		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaPertenceAoPaciente(idPaciente, idRetornoConsulta);
+		
+		if (!retornoConsulta.getSituacaoRetorno().equals(SituacaoRetorno.AGUARDANDO_ATENDIMENTO))
+			throw new AtendimentoException("Só é possível iniciar o Retorno da Consulta que esteja com a Situação de " 
+					+ SituacaoRetorno.AGUARDANDO_ATENDIMENTO.getDescricao() + "!");
+		
+		retornoConsulta.setSituacaoRetorno(SituacaoRetorno.RETORNO_INICIADO);
+		
+		return ResponseEntity.ok().build();
+	}
+	
+	
+	public ResponseEntity<Void> finalizarRetornoConsulta(Long idPaciente, Long idRetornoConsulta) {
+		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaPertenceAoPaciente(idPaciente, idRetornoConsulta);
+		
+		if (!retornoConsulta.getSituacaoRetorno().equals(SituacaoRetorno.RETORNO_INICIADO))
+			throw new AtendimentoException("Só é possível finalizar o Retorno da Consulta que esteja com a Situação de " 
+					+ SituacaoRetorno.RETORNO_INICIADO.getDescricao() + "!");
+		
+		retornoConsulta.setSituacaoRetorno(SituacaoRetorno.RETORNO_FINALIZADO);
+		
+		return ResponseEntity.ok().build();
+	}
+	
+	
+	public ResponseEntity<Void> cadastrarAvaliacaoConsumoHabitual(Long idPaciente, Long idRetornoConsulta,
+			AvaliacaoConsumoHabitualFORM avaliacaoConsumoHabitual) {
+		
+		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaPertenceAoPaciente(idPaciente, idRetornoConsulta);
+		validarSituacaoConsultaParaCadastroDeInformacoes(retornoConsulta);
+		
+		retornoConsulta.setAvaliacaoConsumoHabitual(avaliacaoConsumoHabitual.criarAvaliacaoConsumoHabitual());
+		
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	
+	public ResponseEntity<Void> cadastrarAvaliacaoComposicaoCorporal(Long idPaciente, Long idRetornoConsulta,
+			AvaliacaoComposicaoCorporalFORM avaliacaoComposicaoCorporal) {
+		
+		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaPertenceAoPaciente(idPaciente, idRetornoConsulta);
+		validarSituacaoConsultaParaCadastroDeInformacoes(retornoConsulta);
+		
+		SexoUtils sexoPaciente = retornoConsulta.getConsulta().getPaciente().getSexo();
+		retornoConsulta.setAvaliacaoComposicaoCorporal(avaliacaoComposicaoCorporal.criarAvaliacaoComposicaoCorporal(sexoPaciente));
+		
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	
+	public ResponseEntity<Void> cadastrarAvaliacaoMassaMuscularCorporeaMedidaAntropometrica(Long idPaciente, 
+			Long idRetornoConsulta, AvaliacaoMassaMuscularCorporeaFORM avaliacaoMassaMuscularCorporea) {
+		
+		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaPertenceAoPaciente(idPaciente, idRetornoConsulta);
+		validarSituacaoConsultaParaCadastroDeInformacoes(retornoConsulta);
+		
+		retornoConsulta.setAvaliacaoMassaMuscularCorporeaAntropometrica(avaliacaoMassaMuscularCorporea.criarAvaliacaoMassaMuscularCorporea());
+		
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	
+	public ResponseEntity<Void> cadastrarCondutaNutricional(Long idPaciente, Long idRetornoConsulta,
+			CondutaNutricionalFORM condutaNutricional) {
+		
+		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaPertenceAoPaciente(idPaciente, idRetornoConsulta);
+		validarSituacaoConsultaParaCadastroDeInformacoes(retornoConsulta);
+		
+		retornoConsulta.setCondutaNutricional(condutaNutricional.converterParaCondutaNutricional());
+		
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	
+	private void validarSituacaoConsultaParaCadastroDeInformacoes(RetornoConsulta retornoConsulta) {
+		if (!retornoConsulta.getSituacaoRetorno().equals(SituacaoRetorno.RETORNO_INICIADO))
+			throw new AtendimentoException("Só é possível cadastrar informações em um "
+					+ "Retorno de Consulta caso ele tenha sido iniciado!");
+	}
+	
+	
+	private void verificarSePeriodoRetornoConsultaProcedePeriodoConsulta(Consulta consulta,
+			CalendarioAtendimentoPaciente periodoAgendamento) {
+			
+		if (!periodoAgendamento.getData().isAfter(consulta.getPeriodoConsulta().getData()))
+			throw new AtendimentoException("A data do Retorno deve ser marcada pelo menos "
+					+ "um dia após a Consulta!");
+	}
+	
+	
+	private void verificarSeRetornoConsultaEstaAguardandoConfirmacao(RetornoConsulta retornoConsulta) {
+		if (!retornoConsulta.getSituacaoRetorno().equals(SituacaoRetorno.AGUARDANDO_CONFIRMACAO))
+			throw new AtendimentoException("Não é possível Remarcar/Confirmar um Retorno que não esteja com a Situação de " 
 										+ SituacaoRetorno.AGUARDANDO_CONFIRMACAO.getDescricao() + "!");
 	}
 	
@@ -91,9 +210,14 @@ public class RetornoConsultaService {
 	}
 	
 	
-	private void verificarSeRetornoConsultaPertenceAoPaciente(Paciente paciente, RetornoConsulta retornoPacienteQueSeraCancelado) {
-		if (!retornoPacienteQueSeraCancelado.getConsulta().getPaciente().getId().equals(paciente.getId()))
+	private RetornoConsulta verificarSeRetornoConsultaPertenceAoPaciente(Long idPaciente, Long idRetornoConsulta) {
+		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);	
+		RetornoConsulta retornoConsultaPaciente = verificarSeRetornoConsultaExiste(idRetornoConsulta);
+		
+		if (!retornoConsultaPaciente.getConsulta().getPaciente().getId().equals(paciente.getId()))
 			throw new IllegalArgumentException("Retorno de Consulta não pertence ao Paciente!");
+		
+		return retornoConsultaPaciente;
 	}
 	
 	

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import br.com.renatanutricionista.exception.custom.IntegrityConstraintViolationException;
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
+import br.com.renatanutricionista.exception.custom.PacienteException;
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
 import br.com.renatanutricionista.exception.model.PadraoErro;
 import br.com.renatanutricionista.exception.model.ValidationError;
@@ -57,8 +58,14 @@ public class ExceptionHandle {
 	}
 	
 	
+	@ExceptionHandler(PacienteException.class)
+	public ResponseEntity<PadraoErro> paciente(PacienteException exception, HttpServletRequest request) {
+		return erroPadronizado(HttpStatus.BAD_REQUEST, "Exceção da Regra de Negócio de Paciente!", exception, request);
+	}
+	
+	
 	@ExceptionHandler(AtendimentoException.class)
-	public ResponseEntity<PadraoErro> paciente(AtendimentoException exception, HttpServletRequest request) {
+	public ResponseEntity<PadraoErro> atendimento(AtendimentoException exception, HttpServletRequest request) {
 		return erroPadronizado(HttpStatus.BAD_REQUEST, "Exceção da Regra de Negócio de Atendimento!", exception, request);
 	}
 	

@@ -66,7 +66,7 @@ public class CondutaNutricional {
 	
 	@Column(name = "proteina_avb_g")
 	@Digits(integer = 10, fraction = 2)
-	@DecimalMin(value = "0.0", message = "O campo Proteína Total AVB em Gramas deve ter o valor mínimo {value}")
+	@DecimalMin(value = "0.0", message = "O campo Proteína AVB em Gramas deve ter o valor mínimo {value}")
 	@NotNull(message = "O campo Proteína Total AVB em Gramas não pode estar nulo!")
 	private BigDecimal proteinaAVBGramas;
 	

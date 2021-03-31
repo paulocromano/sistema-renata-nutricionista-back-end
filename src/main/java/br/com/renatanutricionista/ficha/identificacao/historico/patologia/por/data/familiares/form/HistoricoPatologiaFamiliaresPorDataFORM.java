@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
-import br.com.renatanutricionista.exception.custom.AtendimentoException;
+import br.com.renatanutricionista.exception.custom.PacienteException;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.enums.PatologiaFamiliares;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.form.HistoricoPatologiaFamiliaresFORM;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.model.HistoricoPatologiaFamiliares;
@@ -43,7 +43,7 @@ public class HistoricoPatologiaFamiliaresPorDataFORM {
 		int tamanhoSetPatologiaFamiliares = PatologiaFamiliares.values().length;
 		
 		if (patologiasFamiliares.size() != tamanhoSetPatologiaFamiliares)
-			throw new AtendimentoException("A Lista deve conter os " + tamanhoSetPatologiaFamiliares 
+			throw new PacienteException("A Lista deve conter os " + tamanhoSetPatologiaFamiliares 
 					+ " tipos de Patologias dos Familiares!");
 	}
 	

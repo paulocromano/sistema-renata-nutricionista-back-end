@@ -11,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import br.com.renatanutricionista.exception.custom.AtendimentoException;
+import br.com.renatanutricionista.exception.custom.PacienteException;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.form.PatologiaPacienteFORM;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.model.PatologiaPaciente;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consistencia.fezes.ConsistenciaFezes;
@@ -135,17 +135,17 @@ public class HistoricoSocialFORM {
 	
 	private void validarQuantidadeConsumoCigarrosPorDia() {
 		if (!consumoCigarro.equals(ConsumoCigarro.NUNCA_FUMOU) && Objects.isNull(quantidadeCigarrosPorDia))
-			throw new AtendimentoException("A quantidade de Cigarros consumidos por dia não pode estar nula!");
+			throw new PacienteException("A quantidade de Cigarros consumidos por dia não pode estar nula!");
 	}
 	
 	private void validarMotivoMenstruacaoAnormal() {
 		if (menstruacaoNormal.equals(MenstruacaoNormal.NAO) && Objects.isNull(motivoAnormalidadeMenstruacao))
-			throw new AtendimentoException("O Motivo da Anormalidade da Menstruação não pode estar nula!");
+			throw new PacienteException("O Motivo da Anormalidade da Menstruação não pode estar nula!");
 	}
 	
 	private void validarTempoPacienteEstaNaMenopausa() {
 		if (menopausa.equals(Menopausa.SIM) && Objects.isNull(quantosAnosEstaNaMenopausa))
-			throw new AtendimentoException("O campo de Quantos Anos a Paciente está na Menopausa não "
+			throw new PacienteException("O campo de Quantos Anos a Paciente está na Menopausa não "
 					+ "não pode estar nulo!");
 	}
 }

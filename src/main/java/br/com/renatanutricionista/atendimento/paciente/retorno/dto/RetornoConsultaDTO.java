@@ -34,6 +34,7 @@ public class RetornoConsultaDTO {
 		alteracoesSintomas = retornoConsulta.getAlteracoesSintomas();
 		alteracoesQueimacoes = retornoConsulta.getAlteracoesQueimacoes();
 		alteracoesMedicamentos = retornoConsulta.getAlteracoesMedicamentos();
+		periodoRetorno = new CalendarioAtendimentoPacienteDTO(retornoConsulta.getPeriodoRetorno());
 		
 		if (Objects.nonNull(retornoConsulta.getAvaliacaoConsumoHabitual()))
 			avaliacaoConsumoHabitual = new AvaliacaoConsumoHabitualDTO(retornoConsulta.getAvaliacaoConsumoHabitual());
