@@ -2,6 +2,8 @@ package br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.ques
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -9,6 +11,11 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.consumo.AlimentoTipoModoConsumo;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.consumo.ConsumoCarneVermelha;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.consumo.ConsumoFrango;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.consumo.ConsumoPeixe;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.consumo.ConsumoTipoBebida;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.consumo.ConsumoTipoLeite;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.frequencia.consumo.FrequenciaConsumoAlimento;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.form.FrequenciaAlimentarFORM;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.model.FrequenciaAlimentar;
@@ -23,7 +30,7 @@ public class QuestionarioFrequenciaAlimentarFORM {
 
 	@Valid
 	@NotNull(message = "A lista da Frequência Alimentar não poser ser nula!")
-	private List<FrequenciaAlimentarFORM> frequenciaConsumoAlimentos;
+	private Set<FrequenciaAlimentarFORM> frequenciaConsumoAlimentos;
 	
 	@Size(max = 1, message = "O campo Código do Consumo do Tipo de Bebida dever conter somente {max} caracter!")
 	@Pattern(regexp = "[NDQ]{1};", message = "Formato dos códigos do Consumo do Tipo de Bebida inválidos!")
@@ -52,6 +59,13 @@ public class QuestionarioFrequenciaAlimentarFORM {
 	}
 	
 	
+	private Set<FrequenciaAlimentar> gerarListaFrequenciaAlimentar() {
+		return frequenciaConsumoAlimentos.stream().map(frequencia -> 
+				new FrequenciaAlimentar(frequencia.getIdAlimentoFrequenciaAlimentar(), frequencia.getFrequenciaConsumoAlimento()))
+				.collect(Collectors.toSet());
+	}
+	
+	
 	private void verificarConsumoTipoBebida(List<FrequenciaAlimentar> frequenciaAlimentar) {
 		FrequenciaAlimentar sucoArtificial = null;
 		FrequenciaAlimentar refrigerante = null;
@@ -66,12 +80,56 @@ public class QuestionarioFrequenciaAlimentarFORM {
 				refrigerante = alimento;
 		}
 		
-		if ((Objects.nonNull(sucoArtificial) && !sucoArtificial.getFrequenciaConsumoAlimento().equals(FrequenciaConsumoAlimento.NUNCA))
-				|| (Objects.isNull(sucoArtificial) && Objects.nonNull(refrigerante) && 
-						!refrigerante.getFrequenciaConsumoAlimento().equals(FrequenciaConsumoAlimento.NUNCA))) {
+		if (Objects.isNull(sucoArtificial) || Objects.isNull(refrigerante))
+			throw new NullPointerException("O(s) alimento(s) Suco Artificial e/ou Refrigerante não pode(m) estar vazio(s)!");
+		
+		if (!sucoArtificial.getFrequenciaConsumoAlimento().equals(FrequenciaConsumoAlimento.NUNCA)
+				|| !refrigerante.getFrequenciaConsumoAlimento().equals(FrequenciaConsumoAlimento.NUNCA))
 			
-		}
+			codigoConsumoTipoBebida = ConsumoTipoBebida.validarCodigo(codigoConsumoTipoBebida);
 		
 		else codigoConsumoTipoBebida = null;
+	}
+	
+	
+	private void verificarConsumoTipoLeite(List<FrequenciaAlimentar> frequenciaAlimentar) {
+		FrequenciaAlimentar leite = verificarSeAlimentoExiste(frequenciaAlimentar, AlimentoTipoModoConsumo.LEITE);
+		
+		if (!leite.getFrequenciaConsumoAlimento().equals(FrequenciaConsumoAlimento.NUNCA))
+			ConsumoTipoLeite.validarCodigo(codigosConsumoTipoLeite);
+		
+		else codigosConsumoTipoLeite = null;
+	}
+	
+	
+	private void verificarConsumoCarneVermelha(List<FrequenciaAlimentar> frequenciaAlimentar) {
+		verificarSeAlimentoExiste(frequenciaAlimentar, AlimentoTipoModoConsumo.CARNE_VERMELHA);
+		ConsumoCarneVermelha.validarCodigo(codigosConsumoCarneVermelha);
+	}
+	
+	
+	private void verificarConsumoFrango(List<FrequenciaAlimentar> frequenciaAlimentar) {
+		verificarSeAlimentoExiste(frequenciaAlimentar, AlimentoTipoModoConsumo.FRANGO);
+		ConsumoFrango.validarCodigo(codigosConsumoFrango);
+	}
+	
+	
+	private void validarConsumoPeixe(List<FrequenciaAlimentar> frequenciaAlimentar) {
+		verificarSeAlimentoExiste(frequenciaAlimentar, AlimentoTipoModoConsumo.PEIXE);
+		ConsumoPeixe.validarCodigo(codigosConsumoPeixe);
+	}
+	
+	
+	private FrequenciaAlimentar verificarSeAlimentoExiste(List<FrequenciaAlimentar> frequenciaAlimentar, AlimentoTipoModoConsumo alimentoTipoModoConsumo) {
+		FrequenciaAlimentar alimentoBuscado = null;
+		
+		for (FrequenciaAlimentar alimento : frequenciaAlimentar) {
+			String descricaoAlimento = alimento.getAlimentoFrequenciaAlimentar().getDescricao().toLowerCase();
+			
+			if (descricaoAlimento.contains(alimentoTipoModoConsumo.getDescricao()))
+				return alimentoBuscado;
+		}
+		
+		throw new NullPointerException("O alimento " + alimentoTipoModoConsumo + "não pode estar vazio!");
 	}
 }

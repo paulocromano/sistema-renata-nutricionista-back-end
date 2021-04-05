@@ -44,14 +44,27 @@ public enum ConsumoCarneVermelha {
 	}
 	
 	
-	public static ConsumoCarneVermelha converterParaEnum(String codigoConsumoCarneVermelha) {
-		if (Objects.isNull(codigoConsumoCarneVermelha))
-			return null;
+	public static void validarCodigo(String codigosConsumoCarneVermelha) {
+		String[] codigos = codigosConsumoCarneVermelha.split(";");
+		int quantidadeOpcoesEnum = ConsumoPeixe.values().length;
 		
-		for (ConsumoCarneVermelha consumoCarneVermelha : ConsumoCarneVermelha.values()) 
-			if (codigoConsumoCarneVermelha.equals(consumoCarneVermelha.codigo))
-				return consumoCarneVermelha;
+		if (codigos.length > quantidadeOpcoesEnum)
+			throw new IllegalArgumentException("Só é permitido escolher no máximo " + quantidadeOpcoesEnum + " opções!");
 		
-		throw new IllegalArgumentException("O código de Consumo de Carne Vermelha é inválido!");
+		boolean encontrouCodigoValido = false;
+		
+		for (String codigoConsumo : codigos) {
+			for (ConsumoCarneVermelha consumoCarneVermelha : ConsumoCarneVermelha.values()) {
+				if (codigoConsumo.equals(consumoCarneVermelha.codigo)) {
+					encontrouCodigoValido = true;
+					break;
+				}
+			}
+			
+			if (!encontrouCodigoValido)
+				throw new IllegalArgumentException("Existe(m) código(s) inválido(s)!");
+			
+			encontrouCodigoValido = false;
+		}
 	}
 }

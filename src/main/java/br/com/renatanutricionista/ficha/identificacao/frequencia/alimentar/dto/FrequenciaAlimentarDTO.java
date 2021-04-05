@@ -1,6 +1,6 @@
 package br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.dto;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alimentos.dto.AlimentoFrequenciaAlimentarDTO;
@@ -26,9 +26,7 @@ public class FrequenciaAlimentarDTO {
 	}
 	
 	
-	public static List<FrequenciaAlimentarDTO> converterParaListaFrequenciaAlimentarDTO(
-			List<FrequenciaAlimentar> frequenciaAlimentar) {
-		
-		return frequenciaAlimentar.stream().map(FrequenciaAlimentarDTO::new).collect(Collectors.toList());
+	public static Set<FrequenciaAlimentarDTO> converterParaListaFrequenciaAlimentarDTO(Set<FrequenciaAlimentar> frequenciaAlimentar) {
+		return frequenciaAlimentar.stream().map(FrequenciaAlimentarDTO::new).collect(Collectors.toSet());
 	}
 }

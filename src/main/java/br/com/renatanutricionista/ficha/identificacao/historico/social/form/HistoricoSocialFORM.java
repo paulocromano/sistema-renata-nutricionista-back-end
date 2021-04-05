@@ -89,7 +89,7 @@ public class HistoricoSocialFORM {
 	public HistoricoSocial converterParaHistoricoSocial(Paciente paciente) {
 		validarCamposDoFormulario(paciente);
 		
-		Builder historicoSocialBuilder =  new HistoricoSocial.Builder()
+		Builder historicoSocialBuilder = new HistoricoSocial.Builder()
 				.profissao(profissao)
 				.estadoCivil(estadoCivil)
 				.composicaoFamiliar(composicaoFamiliar)

@@ -44,14 +44,27 @@ public enum ConsumoFrango {
 	}
 	
 	
-	public static ConsumoFrango converterParaEnum(String codigoFrango) {
-		if (Objects.isNull(codigoFrango))
-			throw new NullPointerException("O Tipo de Consumo de Frango não pode estar nulo!");
+	public static void validarCodigo(String codigosConsumoFrango) {
+		String[] codigos = codigosConsumoFrango.split(";");
+		int quantidadeOpcoesEnum = ConsumoPeixe.values().length;
 		
-		for (ConsumoFrango consumoCarneVermelha : ConsumoFrango.values()) 
-			if (codigoFrango.equals(consumoCarneVermelha.codigo))
-				return consumoCarneVermelha;
+		if (codigos.length > quantidadeOpcoesEnum)
+			throw new IllegalArgumentException("Só é permitido escolher no máximo " + quantidadeOpcoesEnum + " opções!");
 		
-		throw new IllegalArgumentException("O código de Consumo de Frango é inválido!");
+		boolean encontrouCodigoValido = false;
+		
+		for (String codigoConsumo : codigos) {
+			for (ConsumoFrango consumoFrango : ConsumoFrango.values()) {
+				if (codigoConsumo.equals(consumoFrango.codigo)) {
+					encontrouCodigoValido = true;
+					break;
+				}
+			}
+			
+			if (!encontrouCodigoValido)
+				throw new IllegalArgumentException("Existe(m) código(s) inválido(s)!");
+			
+			encontrouCodigoValido = false;
+		}
 	}
 }

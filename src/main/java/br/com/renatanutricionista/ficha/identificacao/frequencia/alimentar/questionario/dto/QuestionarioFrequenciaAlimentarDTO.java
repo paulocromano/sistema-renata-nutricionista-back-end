@@ -1,6 +1,6 @@
 package br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.dto;
 
-import java.util.List;
+import java.util.Set;
 
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.dto.FrequenciaAlimentarDTO;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.model.QuestionarioFrequenciaAlimentar;
@@ -13,7 +13,7 @@ public class QuestionarioFrequenciaAlimentarDTO {
 
 	private Long id;
 	private String dataHoraCadastroQuestionario;
-	private List<FrequenciaAlimentarDTO> frequenciaConsumoAlimentos;
+	private Set<FrequenciaAlimentarDTO> frequenciaConsumoAlimentos;
 	private String consumoTipoBebida;
 	private String consumoTipoLeite;
 	private String consumoCarneVermelha;

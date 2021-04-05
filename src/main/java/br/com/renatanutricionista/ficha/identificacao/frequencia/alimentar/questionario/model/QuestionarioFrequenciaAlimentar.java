@@ -1,7 +1,7 @@
 package br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -20,8 +21,14 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.model.FrequenciaAlimentar;
+import br.com.renatanutricionista.paciente.model.Paciente;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -29,6 +36,9 @@ import lombok.Setter;
 @Table(name = "questionario_frequencia_alimentar", schema = "sistema_nutricionista")
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@JsonIgnoreProperties(value = { "paciente" })
 public class QuestionarioFrequenciaAlimentar {
 
 	@Id
@@ -46,7 +56,7 @@ public class QuestionarioFrequenciaAlimentar {
 			joinColumns = @JoinColumn(name = "questionario_frequencia_alimentar_id"),
 			inverseJoinColumns = @JoinColumn(name = "frequencia_alimentar_id"))
 	@NotNull(message = "O campo Frequências Alimentares do Questionário não pode estar nulo!")
-	private List<FrequenciaAlimentar> frequenciaConsumoAlimentos;
+	private Set<FrequenciaAlimentar> frequenciaConsumoAlimentos;
 	
 	@Column(name = "consumo_tipo_bebida")
 	@Size(max = 1, message = "O campo Consumo do Tipo de Bebida dever conter somente {max} caracter!")
@@ -67,4 +77,67 @@ public class QuestionarioFrequenciaAlimentar {
 	@Column(name = "consumo_peixe")
 	@Size(max = 8, message = "O campo Código do Consumo de Peixe dever conter no máximo {max} caracteres!")
 	private String consumoPeixe;
+	
+	@ManyToOne
+	@JoinColumn(name = "paciente_id")
+	private Paciente paciente;
+	
+	
+	public static class Builder {
+		private LocalDateTime dataHoraCadastroQuestionario;
+		private Set<FrequenciaAlimentar> frequenciaConsumoAlimentos;
+		private String consumoTipoBebida;
+		private String consumoTipoLeite;
+		private String consumoCarneVermelha;
+		private String ConsumoFrango;
+		private String consumoPeixe;
+		private Paciente paciente;
+		
+		
+		public Builder dataHoraCadastroQuestionario(LocalDateTime dataHoraCadastroQuestionario) {
+			this.dataHoraCadastroQuestionario = dataHoraCadastroQuestionario;
+			return this;
+		}
+		
+		public Builder frequenciaConsumoAlimentos(Set<FrequenciaAlimentar> frequenciaConsumoAlimentos) {
+			this.frequenciaConsumoAlimentos = frequenciaConsumoAlimentos;
+			return this;
+		}
+		
+		public Builder consumoTipoBebida(String consumoTipoBebida) {
+			this.consumoTipoBebida = consumoTipoBebida;
+			return this;
+		}
+		
+		public Builder consumoTipoLeite(String consumoTipoLeite) {
+			this.consumoTipoLeite = consumoTipoLeite;
+			return this;
+		}
+		
+		public Builder consumoCarneVermelha(String consumoCarneVermelha) {
+			this.consumoCarneVermelha = consumoCarneVermelha;
+			return this;
+		}
+		
+		public Builder ConsumoFrango(String ConsumoFrango) {
+			this.ConsumoFrango = ConsumoFrango;
+			return this;
+		}
+		
+		public Builder consumoPeixe(String consumoPeixe) {
+			this.consumoPeixe = consumoPeixe;
+			return this;
+		}
+		
+		public Builder paciente(Paciente paciente) {
+			this.paciente = paciente;
+			return this;
+		}
+		
+		
+		public QuestionarioFrequenciaAlimentar build() {
+			return new QuestionarioFrequenciaAlimentar(null, dataHoraCadastroQuestionario, frequenciaConsumoAlimentos, 
+					consumoTipoBebida, consumoTipoLeite, consumoCarneVermelha, ConsumoFrango, consumoPeixe, paciente);
+		}
+	}
 }

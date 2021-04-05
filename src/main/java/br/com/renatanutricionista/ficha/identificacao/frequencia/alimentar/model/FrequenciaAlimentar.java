@@ -19,6 +19,7 @@ import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alime
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.frequencia.consumo.FrequenciaConsumoAlimento;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.model.QuestionarioFrequenciaAlimentar;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -26,6 +27,7 @@ import lombok.Setter;
 @Table(name = "frequencia_alimentar", schema = "sistema_nutricionista")
 @Setter
 @Getter
+@NoArgsConstructor
 @JsonIgnoreProperties(value = { "questionarioFrequenciaAlimentar" })
 public class FrequenciaAlimentar {
 
@@ -45,8 +47,10 @@ public class FrequenciaAlimentar {
 	private List<QuestionarioFrequenciaAlimentar> questionariosFrequenciaAlimentar;
 
 	
-	public FrequenciaAlimentar(AlimentoFrequenciaAlimentar alimentoFrequenciaAlimentar, FrequenciaConsumoAlimento frequenciaConsumoAlimento) {
-		this.alimentoFrequenciaAlimentar = alimentoFrequenciaAlimentar;
+	public FrequenciaAlimentar(Integer idAlimentoFrequenciaAlimentar, FrequenciaConsumoAlimento frequenciaConsumoAlimento) {
+		alimentoFrequenciaAlimentar = new AlimentoFrequenciaAlimentar();
+		alimentoFrequenciaAlimentar.setId(idAlimentoFrequenciaAlimentar);
+
 		this.frequenciaConsumoAlimento = frequenciaConsumoAlimento;
 	}
 }

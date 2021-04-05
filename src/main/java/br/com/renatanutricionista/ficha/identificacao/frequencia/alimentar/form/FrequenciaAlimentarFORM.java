@@ -3,12 +3,14 @@ package br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.form
 import javax.validation.constraints.NotNull;
 
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.frequencia.consumo.FrequenciaConsumoAlimento;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Getter
 @Setter
+@EqualsAndHashCode(of = "idAlimentoFrequenciaAlimentar")
 public class FrequenciaAlimentarFORM {
 
 	@NotNull(message = "O campo ID do Alimento utilizado no questionário da Frequência Alimentar não pode ser nulo!")

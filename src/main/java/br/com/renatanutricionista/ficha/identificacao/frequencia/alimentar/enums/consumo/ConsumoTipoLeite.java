@@ -44,14 +44,34 @@ public enum ConsumoTipoLeite {
 	}
 	
 	
-	public static ConsumoTipoLeite converterParaEnum(String codigoLeite) {
-		if (Objects.isNull(codigoLeite))
-			throw new NullPointerException("O Tipo de Leite não pode estar nulo!");
+	public static void validarCodigo(String codigosConsumoTipoLeite) {
+		String[] codigos = codigosConsumoTipoLeite.split(";");
 		
-		for (ConsumoTipoLeite consumoTipoLeite : ConsumoTipoLeite.values()) 
-			if (codigoLeite.equals(consumoTipoLeite.codigo))
-				return consumoTipoLeite;
+		if (codigos.length > 4)
+			throw new IllegalArgumentException("Só é permitido escolher no máximo 4 opções!");
 		
-		throw new IllegalArgumentException("O código do Tipo de Leite é inválido!");
+		boolean encontrouOpçaoQualquerUm = false;
+		boolean encontrouCodigoValido = false;
+		
+		for (String codigoConsumo : codigos) {
+			for (ConsumoTipoLeite consumoTipoLeite : ConsumoTipoLeite.values()) {
+				if (codigoConsumo.equals(consumoTipoLeite.codigo)) {
+					encontrouCodigoValido = true;
+					break;
+				}	
+			}
+			
+			if (codigoConsumo.equals(QUALQUER_UM.codigo)) 
+				encontrouOpçaoQualquerUm = true;
+			
+			if (!encontrouCodigoValido)
+				throw new IllegalArgumentException("Existe(m) código(s) inválido(s)!");
+			
+			encontrouCodigoValido = false;
+		}
+		
+		if (encontrouOpçaoQualquerUm && codigos.length > 1)
+			throw new IllegalArgumentException("Ao selecionar a opção 'Qualquer um' não é permitido "
+					+ "escolher as demais opções!");
 	}
 }
