@@ -73,7 +73,7 @@ public class HistoricoAlimentar {
 	@OneToMany(mappedBy = "historicoAlimentar", cascade = CascadeType.REMOVE)
 	private List<SuplementoPaciente> suplementosPaciente;
 	
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinTable(name = "historico_alimentar_has_medicamento", 
 		joinColumns = @JoinColumn(name = "historico_alimentar_id"), 
