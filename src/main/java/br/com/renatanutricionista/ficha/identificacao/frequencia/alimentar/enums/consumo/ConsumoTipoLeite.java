@@ -24,7 +24,7 @@ public enum ConsumoTipoLeite {
 	
 	
 	public static String concatenarTiposLeiteConsumidos(String codigosLeite) {
-		if (Objects.isNull(codigosLeite))
+		if (Objects.isNull(codigosLeite) || codigosLeite.trim().isEmpty())
 			return null;
 
 		StringBuilder leitesBuilder = new StringBuilder();
@@ -40,7 +40,7 @@ public enum ConsumoTipoLeite {
 			}
 		}
 		
-		return leitesBuilder.substring(0, leitesBuilder.length() - 3).toString();
+		return leitesBuilder.substring(0, leitesBuilder.length() - 2).toString();
 	}
 	
 	
@@ -51,23 +51,12 @@ public enum ConsumoTipoLeite {
 			throw new IllegalArgumentException("Só é permitido escolher no máximo 4 opções!");
 		
 		boolean encontrouOpçaoQualquerUm = false;
-		boolean encontrouCodigoValido = false;
 		
 		for (String codigoConsumo : codigos) {
-			for (ConsumoTipoLeite consumoTipoLeite : ConsumoTipoLeite.values()) {
-				if (codigoConsumo.equals(consumoTipoLeite.codigo)) {
-					encontrouCodigoValido = true;
-					break;
-				}	
-			}
-			
-			if (codigoConsumo.equals(QUALQUER_UM.codigo)) 
+			if (codigoConsumo.equals(QUALQUER_UM.codigo)) {
 				encontrouOpçaoQualquerUm = true;
-			
-			if (!encontrouCodigoValido)
-				throw new IllegalArgumentException("Existe(m) código(s) inválido(s)!");
-			
-			encontrouCodigoValido = false;
+				break;
+			}
 		}
 		
 		if (encontrouOpçaoQualquerUm && codigos.length > 1)

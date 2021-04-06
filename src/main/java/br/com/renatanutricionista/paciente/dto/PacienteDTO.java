@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import br.com.renatanutricionista.atendimento.paciente.consulta.dto.ConsultaDTO;
 import br.com.renatanutricionista.endereco.dto.EnderecoDTO;
 import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.dto.AtividadeFisicaDTO;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.dto.QuestionarioFrequenciaAlimentarDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.dto.HistoricoAlimentarDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.dto.HistoricoPatologiaFamiliaresPorDataDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.dto.HistoricoSocialDTO;
@@ -32,6 +33,7 @@ public class PacienteDTO {
 	private List<HistoricoAlimentarDTO> historicoAlimentar;
 	private List<AtividadeFisicaDTO> atividadeFisica;
 	private Set<HistoricoPatologiaFamiliaresPorDataDTO> historicoPatologiaFamiliaresPorData;
+	private List<QuestionarioFrequenciaAlimentarDTO> questionariosFrequenciaAlimentar;
 	private List<ConsultaDTO> consultas;
 	protected String dataHoraUltimaAtualizacaoDadosDoPaciente;
 	
@@ -51,6 +53,9 @@ public class PacienteDTO {
 		
 		historicoPatologiaFamiliaresPorData = HistoricoPatologiaFamiliaresPorDataDTO.converterParaSetHistoricoPatologiaFamiliaresPorDataDTO(
 				paciente.getHistoricoPatologiaFamiliaresPorData());
+		
+		questionariosFrequenciaAlimentar = QuestionarioFrequenciaAlimentarDTO.converterParaQuestionarioFrequenciaAlimentarDTO(
+				paciente.getQuestionarioFrequenciaAlimentar());
 		
 		consultas = ConsultaDTO.converterParaListaConsultaDTO(paciente.getConsultas());
 		

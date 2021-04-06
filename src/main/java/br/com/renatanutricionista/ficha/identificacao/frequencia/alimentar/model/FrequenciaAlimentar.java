@@ -36,7 +36,7 @@ public class FrequenciaAlimentar {
 	private Long id;
 	
 	@OneToOne
-	@JoinColumn(name = "alimento_frequencia_alimentar_id")
+	@JoinColumn(name = "alimento_questionario_frequencia_alimentar_id")
 	private AlimentoFrequenciaAlimentar alimentoFrequenciaAlimentar;
 	
 	@Column(name = "frequencia_consumo_alimento")
@@ -47,10 +47,8 @@ public class FrequenciaAlimentar {
 	private List<QuestionarioFrequenciaAlimentar> questionariosFrequenciaAlimentar;
 
 	
-	public FrequenciaAlimentar(Integer idAlimentoFrequenciaAlimentar, FrequenciaConsumoAlimento frequenciaConsumoAlimento) {
-		alimentoFrequenciaAlimentar = new AlimentoFrequenciaAlimentar();
-		alimentoFrequenciaAlimentar.setId(idAlimentoFrequenciaAlimentar);
-
+	public FrequenciaAlimentar(AlimentoFrequenciaAlimentar alimentoFrequenciaAlimentar, FrequenciaConsumoAlimento frequenciaConsumoAlimento) {
+		this.alimentoFrequenciaAlimentar = alimentoFrequenciaAlimentar;
 		this.frequenciaConsumoAlimento = frequenciaConsumoAlimento;
 	}
 }

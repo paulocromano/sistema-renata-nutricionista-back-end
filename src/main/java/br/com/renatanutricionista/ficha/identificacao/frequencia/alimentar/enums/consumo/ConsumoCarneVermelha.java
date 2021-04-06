@@ -23,8 +23,8 @@ public enum ConsumoCarneVermelha {
 	private String descricao;
 	
 	
-	public static String concatenarConsumoCarneVermelha(String codigosCarne) {
-		if (Objects.isNull(codigosCarne))
+	public static String concatenarModosPreparoCarneVermelha(String codigosCarne) {
+		if (Objects.isNull(codigosCarne) || codigosCarne.trim().isEmpty())
 			return null;
 
 		StringBuilder carneBuilder = new StringBuilder();
@@ -40,31 +40,6 @@ public enum ConsumoCarneVermelha {
 			}
 		}
 		
-		return carneBuilder.substring(0, carneBuilder.length() - 3).toString();
-	}
-	
-	
-	public static void validarCodigo(String codigosConsumoCarneVermelha) {
-		String[] codigos = codigosConsumoCarneVermelha.split(";");
-		int quantidadeOpcoesEnum = ConsumoPeixe.values().length;
-		
-		if (codigos.length > quantidadeOpcoesEnum)
-			throw new IllegalArgumentException("Só é permitido escolher no máximo " + quantidadeOpcoesEnum + " opções!");
-		
-		boolean encontrouCodigoValido = false;
-		
-		for (String codigoConsumo : codigos) {
-			for (ConsumoCarneVermelha consumoCarneVermelha : ConsumoCarneVermelha.values()) {
-				if (codigoConsumo.equals(consumoCarneVermelha.codigo)) {
-					encontrouCodigoValido = true;
-					break;
-				}
-			}
-			
-			if (!encontrouCodigoValido)
-				throw new IllegalArgumentException("Existe(m) código(s) inválido(s)!");
-			
-			encontrouCodigoValido = false;
-		}
+		return carneBuilder.substring(0, carneBuilder.length() - 2).toString();
 	}
 }

@@ -1,9 +1,16 @@
 package br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.dto;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.dto.FrequenciaAlimentarDTO;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.consumo.ConsumoCarneVermelha;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.consumo.ConsumoPeixe;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.consumo.ConsumoTipoBebida;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.consumo.ConsumoTipoLeite;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.model.QuestionarioFrequenciaAlimentar;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.consumo.ConsumoFrango;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
 
@@ -17,7 +24,7 @@ public class QuestionarioFrequenciaAlimentarDTO {
 	private String consumoTipoBebida;
 	private String consumoTipoLeite;
 	private String consumoCarneVermelha;
-	private String ConsumoFrango;
+	private String consumoFrango;
 	private String consumoPeixe;
 	
 	
@@ -25,10 +32,17 @@ public class QuestionarioFrequenciaAlimentarDTO {
 		id = questionario.getId();
 		dataHoraCadastroQuestionario = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(questionario.getDataHoraCadastroQuestionario());
 		frequenciaConsumoAlimentos = FrequenciaAlimentarDTO.converterParaListaFrequenciaAlimentarDTO(questionario.getFrequenciaConsumoAlimentos());
-		consumoTipoBebida = questionario.getConsumoTipoBebida();
-		consumoTipoLeite = questionario.getConsumoTipoLeite();
-		consumoCarneVermelha = questionario.getConsumoCarneVermelha();
-		ConsumoFrango = questionario.getConsumoFrango();
-		consumoPeixe = questionario.getConsumoPeixe();
+		consumoTipoBebida = ConsumoTipoBebida.converterParaDescricao(questionario.getConsumoTipoBebida());
+		consumoTipoLeite = ConsumoTipoLeite.concatenarTiposLeiteConsumidos(questionario.getConsumoTipoLeite());
+		consumoCarneVermelha = ConsumoCarneVermelha.concatenarModosPreparoCarneVermelha(questionario.getConsumoCarneVermelha());
+		consumoFrango = ConsumoFrango.concatenarModosConsumoFrango(questionario.getConsumoFrango());
+		consumoPeixe = ConsumoPeixe.concatenarModosConsumoPeixe(questionario.getConsumoPeixe());
+	}
+	
+	
+	public static List<QuestionarioFrequenciaAlimentarDTO> converterParaQuestionarioFrequenciaAlimentarDTO(
+			List<QuestionarioFrequenciaAlimentar> questionariosFrequenciaAlimentar) {
+		
+		return questionariosFrequenciaAlimentar.stream().map(QuestionarioFrequenciaAlimentarDTO::new).collect(Collectors.toList());
 	}
 }

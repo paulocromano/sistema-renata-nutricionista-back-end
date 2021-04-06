@@ -67,11 +67,11 @@ public class QuestionarioFrequenciaAlimentar {
 	private String consumoTipoLeite;
 	
 	@Column(name = "consumo_carne_vermelha")
-	@Size(max = 8, message = "O campo Código do Consumo do Tipo de Leite dever conter no máximo {max} caracteres!")
+	@Size(max = 12, message = "O campo Código do Consumo do Tipo de Leite dever conter no máximo {max} caracteres!")
 	private String consumoCarneVermelha;
 	
 	@Column(name = "consumo_frango")
-	@Size(max = 8, message = "O campo Consumo de Frango dever conter no máximo {max} caracteres!")
+	@Size(max = 12, message = "O campo Consumo de Frango dever conter no máximo {max} caracteres!")
 	private String ConsumoFrango;
 	
 	@Column(name = "consumo_peixe")
@@ -119,7 +119,7 @@ public class QuestionarioFrequenciaAlimentar {
 			return this;
 		}
 		
-		public Builder ConsumoFrango(String ConsumoFrango) {
+		public Builder consumoFrango(String ConsumoFrango) {
 			this.ConsumoFrango = ConsumoFrango;
 			return this;
 		}

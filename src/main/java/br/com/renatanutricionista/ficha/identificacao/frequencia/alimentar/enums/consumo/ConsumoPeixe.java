@@ -21,8 +21,8 @@ public enum ConsumoPeixe {
 	private String descricao;
 	
 	
-	public static String concatenarConsumoPeixe(String codigosPeixe) {
-		if (Objects.isNull(codigosPeixe))
+	public static String concatenarModosConsumoPeixe(String codigosPeixe) {
+		if (Objects.isNull(codigosPeixe) || codigosPeixe.trim().isEmpty())
 			return null;
 
 		StringBuilder peixeBuilder = new StringBuilder();
@@ -38,31 +38,6 @@ public enum ConsumoPeixe {
 			}
 		}
 		
-		return peixeBuilder.substring(0, peixeBuilder.length() - 3).toString();
-	}
-	
-	
-	public static void validarCodigo(String codigosConsumoPeixe) {
-		String[] codigos = codigosConsumoPeixe.split(";");
-		int quantidadeOpcoesEnum = ConsumoPeixe.values().length;
-		
-		if (codigos.length > quantidadeOpcoesEnum)
-			throw new IllegalArgumentException("Só é permitido escolher no máximo " + quantidadeOpcoesEnum + " opções!");
-		
-		boolean encontrouCodigoValido = false;
-		
-		for (String codigoConsumo : codigos) {
-			for (ConsumoPeixe consumoPeixe : ConsumoPeixe.values()) {
-				if (codigoConsumo.equals(consumoPeixe.codigo)) {
-					encontrouCodigoValido = true;
-					break;
-				}
-			}
-			
-			if (!encontrouCodigoValido)
-				throw new IllegalArgumentException("Existe(m) código(s) inválido(s)!");
-			
-			encontrouCodigoValido = false;
-		}
+		return peixeBuilder.substring(0, peixeBuilder.length() - 2).toString();
 	}
 }

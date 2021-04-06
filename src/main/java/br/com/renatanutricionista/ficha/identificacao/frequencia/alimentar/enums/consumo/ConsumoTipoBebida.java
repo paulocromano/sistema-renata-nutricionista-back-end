@@ -21,7 +21,7 @@ public enum ConsumoTipoBebida {
 	
 	
 	public static String converterParaDescricao(String codigoConsumoTipoBebida) {
-		if (Objects.isNull(codigoConsumoTipoBebida))
+		if (Objects.isNull(codigoConsumoTipoBebida) || codigoConsumoTipoBebida.trim().isEmpty())
 			return null;
 
 		for (ConsumoTipoBebida consumoTipoBebida : ConsumoTipoBebida.values()) 
@@ -29,20 +29,5 @@ public enum ConsumoTipoBebida {
 				return consumoTipoBebida.descricao;
 		
 		throw new IllegalArgumentException("O código de Consumo do Tipo de Bebida é inválido!");
-	}
-	
-	
-	public static String validarCodigo(String codigoConsumoTipoBebida) {
-		String[] codigos = codigoConsumoTipoBebida.split(";");
-		
-		if (codigos.length > 1)
-			throw new IllegalArgumentException("Só é permitido escolher uma opção!");
-		
-		if (!(codigos[0].equals(NORMAL.codigo) || codigos[0].equals(DIET_LIGHT_ZERO.codigo) 
-				|| codigos[0].equals(QUALQUER_UM.codigo)))
-			
-			throw new IllegalArgumentException("O Código do Consumo do Tipo de Bebida é inválido!");
-		
-		return codigos[0];
 	}
 }

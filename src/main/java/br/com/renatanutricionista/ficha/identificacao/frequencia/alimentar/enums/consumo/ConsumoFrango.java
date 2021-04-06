@@ -23,8 +23,8 @@ public enum ConsumoFrango {
 	private String descricao;
 	
 	
-	public static String concatenarConsumoFrango(String codigosFrango) {
-		if (Objects.isNull(codigosFrango))
+	public static String concatenarModosConsumoFrango(String codigosFrango) {	
+		if (Objects.isNull(codigosFrango) || codigosFrango.trim().isEmpty())
 			return null;
 
 		StringBuilder frangoBuilder = new StringBuilder();
@@ -40,31 +40,6 @@ public enum ConsumoFrango {
 			}
 		}
 		
-		return frangoBuilder.substring(0, frangoBuilder.length() - 3).toString();
-	}
-	
-	
-	public static void validarCodigo(String codigosConsumoFrango) {
-		String[] codigos = codigosConsumoFrango.split(";");
-		int quantidadeOpcoesEnum = ConsumoPeixe.values().length;
-		
-		if (codigos.length > quantidadeOpcoesEnum)
-			throw new IllegalArgumentException("Só é permitido escolher no máximo " + quantidadeOpcoesEnum + " opções!");
-		
-		boolean encontrouCodigoValido = false;
-		
-		for (String codigoConsumo : codigos) {
-			for (ConsumoFrango consumoFrango : ConsumoFrango.values()) {
-				if (codigoConsumo.equals(consumoFrango.codigo)) {
-					encontrouCodigoValido = true;
-					break;
-				}
-			}
-			
-			if (!encontrouCodigoValido)
-				throw new IllegalArgumentException("Existe(m) código(s) inválido(s)!");
-			
-			encontrouCodigoValido = false;
-		}
+		return frangoBuilder.substring(0, frangoBuilder.length() - 2).toString();
 	}
 }

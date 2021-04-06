@@ -4,7 +4,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alimentos.dto.AlimentoFrequenciaAlimentarDTO;
-import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.frequencia.consumo.FrequenciaConsumoAlimento;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.model.FrequenciaAlimentar;
 import lombok.Getter;
 
@@ -14,7 +13,7 @@ public class FrequenciaAlimentarDTO {
 
 	private Long id;
 	private AlimentoFrequenciaAlimentarDTO alimentoQuestionarioFrequenciaAlimentar;
-	private FrequenciaConsumoAlimento frequenciaConsumoAlimento;
+	private String frequenciaConsumoAlimento;
 	
 	
 	public FrequenciaAlimentarDTO(FrequenciaAlimentar questionarioFrequenciaAlimentar) {
@@ -22,7 +21,7 @@ public class FrequenciaAlimentarDTO {
 		alimentoQuestionarioFrequenciaAlimentar = new AlimentoFrequenciaAlimentarDTO(
 				questionarioFrequenciaAlimentar.getAlimentoFrequenciaAlimentar());
 		
-		frequenciaConsumoAlimento = questionarioFrequenciaAlimentar.getFrequenciaConsumoAlimento();
+		frequenciaConsumoAlimento = questionarioFrequenciaAlimentar.getFrequenciaConsumoAlimento().getDescricao();
 	}
 	
 	
