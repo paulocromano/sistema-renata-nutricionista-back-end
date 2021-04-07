@@ -72,7 +72,7 @@ public class QuestionarioFrequenciaAlimentar {
 	
 	@Column(name = "consumo_frango")
 	@Size(max = 12, message = "O campo Consumo de Frango dever conter no máximo {max} caracteres!")
-	private String ConsumoFrango;
+	private String consumoFrango;
 	
 	@Column(name = "consumo_peixe")
 	@Size(max = 8, message = "O campo Código do Consumo de Peixe dever conter no máximo {max} caracteres!")
@@ -89,7 +89,7 @@ public class QuestionarioFrequenciaAlimentar {
 		private String consumoTipoBebida;
 		private String consumoTipoLeite;
 		private String consumoCarneVermelha;
-		private String ConsumoFrango;
+		private String consumoFrango;
 		private String consumoPeixe;
 		private Paciente paciente;
 		
@@ -119,8 +119,8 @@ public class QuestionarioFrequenciaAlimentar {
 			return this;
 		}
 		
-		public Builder consumoFrango(String ConsumoFrango) {
-			this.ConsumoFrango = ConsumoFrango;
+		public Builder consumoFrango(String consumoFrango) {
+			this.consumoFrango = consumoFrango;
 			return this;
 		}
 		
@@ -137,7 +137,7 @@ public class QuestionarioFrequenciaAlimentar {
 		
 		public QuestionarioFrequenciaAlimentar build() {
 			return new QuestionarioFrequenciaAlimentar(null, dataHoraCadastroQuestionario, frequenciaConsumoAlimentos, 
-					consumoTipoBebida, consumoTipoLeite, consumoCarneVermelha, ConsumoFrango, consumoPeixe, paciente);
+					consumoTipoBebida, consumoTipoLeite, consumoCarneVermelha, consumoFrango, consumoPeixe, paciente);
 		}
 	}
 }

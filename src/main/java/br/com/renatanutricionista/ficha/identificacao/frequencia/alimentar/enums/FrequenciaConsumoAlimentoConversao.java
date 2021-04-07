@@ -1,4 +1,4 @@
-package br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.frequencia.consumo;
+package br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums;
 
 import java.util.Objects;
 

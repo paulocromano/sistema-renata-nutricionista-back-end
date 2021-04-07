@@ -5,12 +5,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.dto.FrequenciaAlimentarDTO;
-import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.consumo.ConsumoCarneVermelha;
-import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.consumo.ConsumoPeixe;
-import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.consumo.ConsumoTipoBebida;
-import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.consumo.ConsumoTipoLeite;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.enums.ConsumoCarneVermelha;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.enums.ConsumoFrango;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.enums.ConsumoPeixe;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.enums.ConsumoTipoBebida;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.enums.ConsumoTipoLeite;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.model.QuestionarioFrequenciaAlimentar;
-import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.consumo.ConsumoFrango;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
 

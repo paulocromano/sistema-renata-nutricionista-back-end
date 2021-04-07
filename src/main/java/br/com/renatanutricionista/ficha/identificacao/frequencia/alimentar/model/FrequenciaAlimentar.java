@@ -16,7 +16,8 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alimentos.model.AlimentoFrequenciaAlimentar;
-import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.frequencia.consumo.FrequenciaConsumoAlimento;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.FrequenciaConsumoAlimento;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.FrequenciaConsumoAlimentoConversao;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.model.QuestionarioFrequenciaAlimentar;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,8 +48,8 @@ public class FrequenciaAlimentar {
 	private List<QuestionarioFrequenciaAlimentar> questionariosFrequenciaAlimentar;
 
 	
-	public FrequenciaAlimentar(AlimentoFrequenciaAlimentar alimentoFrequenciaAlimentar, FrequenciaConsumoAlimento frequenciaConsumoAlimento) {
+	public FrequenciaAlimentar(AlimentoFrequenciaAlimentar alimentoFrequenciaAlimentar, String codigoFrequenciaConsumoAlimento) {
 		this.alimentoFrequenciaAlimentar = alimentoFrequenciaAlimentar;
-		this.frequenciaConsumoAlimento = frequenciaConsumoAlimento;
+		this.frequenciaConsumoAlimento = new FrequenciaConsumoAlimentoConversao().convertToEntityAttribute(codigoFrequenciaConsumoAlimento);
 	}
 }

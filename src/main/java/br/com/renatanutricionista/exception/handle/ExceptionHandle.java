@@ -74,7 +74,7 @@ public class ExceptionHandle {
 	public ResponseEntity<PadraoErro> validation(MethodArgumentNotValidException exception, HttpServletRequest request) {
 		
 		ValidationError validationError = new ValidationError(System.currentTimeMillis(), HttpStatus.UNPROCESSABLE_ENTITY.value(), "Erro de Validação de Campos!", 
-				exception.getMessage(), request.getRequestURI());
+				"Existe(m) campo(m) inválido(s)!", request.getRequestURI());
 		
 		for (FieldError fieldError : exception.getBindingResult().getFieldErrors()) 
 			validationError.addError(fieldError.getField(), fieldError.getDefaultMessage());

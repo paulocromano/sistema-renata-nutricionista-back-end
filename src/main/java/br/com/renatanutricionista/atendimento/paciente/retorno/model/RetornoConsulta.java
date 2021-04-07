@@ -20,6 +20,7 @@ import br.com.renatanutricionista.atendimento.paciente.avaliacao.consumo.habitua
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.massa.muscular.corporea.antropometrica.model.AvaliacaoMassaMuscularCorporea;
 import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.model.CondutaNutricional;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
+import br.com.renatanutricionista.atendimento.paciente.registro.dieta.model.RegistroDieta;
 import br.com.renatanutricionista.atendimento.paciente.retorno.enums.SituacaoRetorno;
 import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import lombok.Getter;
@@ -79,6 +80,14 @@ public class RetornoConsulta {
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "conduta_nutricional_id")
 	private CondutaNutricional condutaNutricional;
+	
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "registro_dieta_habitual_id")
+	private RegistroDieta registroDietaHabitual;
+	
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "registro_dieta_24_horas_id")
+	private RegistroDieta registroDieta24Horas;
 	
 	@OneToOne(mappedBy = "retornoConsulta")
 	private Consulta consulta;

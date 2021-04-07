@@ -6,6 +6,7 @@ import br.com.renatanutricionista.atendimento.paciente.avaliacao.composicao.corp
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.consumo.habitual.dto.AvaliacaoConsumoHabitualDTO;
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.massa.muscular.corporea.antropometrica.dto.AvaliacaoMassaMuscularCorporeaDTO;
 import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.dto.CondutaNutricionalDTO;
+import br.com.renatanutricionista.atendimento.paciente.registro.dieta.dto.RegistroDietaDTO;
 import br.com.renatanutricionista.atendimento.paciente.retorno.model.RetornoConsulta;
 import br.com.renatanutricionista.calendario.atendimento.paciente.dto.CalendarioAtendimentoPacienteDTO;
 import lombok.Getter;
@@ -25,6 +26,8 @@ public class RetornoConsultaDTO {
 	private AvaliacaoComposicaoCorporalDTO avaliacaoComposicaoCorporal;
 	private AvaliacaoMassaMuscularCorporeaDTO avaliacaoMassaMuscularCorporea;
 	private CondutaNutricionalDTO condutaNutricional;
+	private RegistroDietaDTO registroDietaHabitual;
+	private RegistroDietaDTO registroDieta24Horas;
 	
 	
 	public RetornoConsultaDTO(RetornoConsulta retornoConsulta) {
@@ -48,5 +51,11 @@ public class RetornoConsultaDTO {
 		
 		if (Objects.nonNull(retornoConsulta.getCondutaNutricional()))
 			condutaNutricional = new CondutaNutricionalDTO(retornoConsulta.getCondutaNutricional());
+		
+		if (Objects.nonNull(retornoConsulta.getRegistroDietaHabitual()))
+			registroDietaHabitual = new RegistroDietaDTO(retornoConsulta.getRegistroDietaHabitual());
+		
+		if (Objects.nonNull(retornoConsulta.getRegistroDieta24Horas()))
+			registroDieta24Horas = new RegistroDietaDTO(retornoConsulta.getRegistroDieta24Horas());
 	}
 }

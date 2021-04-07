@@ -27,6 +27,7 @@ import br.com.renatanutricionista.atendimento.paciente.avaliacao.massa.muscular.
 import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.model.CondutaNutricional;
 import br.com.renatanutricionista.atendimento.paciente.consulta.enums.FormaPagamento;
 import br.com.renatanutricionista.atendimento.paciente.consulta.enums.SituacaoConsulta;
+import br.com.renatanutricionista.atendimento.paciente.registro.dieta.model.RegistroDieta;
 import br.com.renatanutricionista.atendimento.paciente.retorno.model.RetornoConsulta;
 import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import br.com.renatanutricionista.paciente.model.Paciente;
@@ -92,6 +93,10 @@ public class Consulta {
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "conduta_nutricional_id")
 	private CondutaNutricional condutaNutricional;
+	
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "registro_dieta_habitual_id")
+	private RegistroDieta registroDietaHabitual;
 	
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
 	@JoinColumn(name = "retorno_consulta_id")
