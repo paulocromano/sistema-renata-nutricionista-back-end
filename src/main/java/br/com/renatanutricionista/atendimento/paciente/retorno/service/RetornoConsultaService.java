@@ -14,6 +14,8 @@ import br.com.renatanutricionista.atendimento.paciente.avaliacao.massa.muscular.
 import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.form.CondutaNutricionalFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.enums.SituacaoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
+import br.com.renatanutricionista.atendimento.paciente.registro.dieta.enums.TipoRegistroDieta;
+import br.com.renatanutricionista.atendimento.paciente.registro.dieta.form.RegistroDietaFORM;
 import br.com.renatanutricionista.atendimento.paciente.retorno.enums.SituacaoRetorno;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.AgendamentoRetornoFORM;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.ReagendamentoRetornoFORM;
@@ -170,6 +172,30 @@ public class RetornoConsultaService {
 		
 		retornoConsulta.setCondutaNutricional(condutaNutricional.converterParaCondutaNutricional());
 		
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	
+	public ResponseEntity<Void> cadastrarRegistroDietaHabitual(Long idPaciente, Long idRetornoConsulta,
+			RegistroDietaFORM registroDietaHabitual) {
+		
+		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaPertenceAoPaciente(idPaciente, idRetornoConsulta);
+		validarSituacaoConsultaParaCadastroDeInformacoes(retornoConsulta);
+		
+		retornoConsulta.setRegistroDietaHabitual(registroDietaHabitual.converterParaRegistroDieta(TipoRegistroDieta.HABITUAL));
+	
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	
+	public ResponseEntity<Void> cadastrarRegistroDieta24Horas(Long idPaciente, Long idRetornoConsulta,
+			RegistroDietaFORM registroDieta24Horas) {
+		
+		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaPertenceAoPaciente(idPaciente, idRetornoConsulta);
+		validarSituacaoConsultaParaCadastroDeInformacoes(retornoConsulta);
+		
+		retornoConsulta.setRegistroDieta24Horas(registroDieta24Horas.converterParaRegistroDieta(TipoRegistroDieta.PERIODO_24H));
+	
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	

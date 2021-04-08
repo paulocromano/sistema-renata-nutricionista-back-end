@@ -17,6 +17,8 @@ import br.com.renatanutricionista.atendimento.paciente.consulta.form.Confirmacao
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.ReagendamentoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.respository.ConsultaRepository;
+import br.com.renatanutricionista.atendimento.paciente.registro.dieta.enums.TipoRegistroDieta;
+import br.com.renatanutricionista.atendimento.paciente.registro.dieta.form.RegistroDietaFORM;
 import br.com.renatanutricionista.atendimento.paciente.utils.AtendimentoUtils;
 import br.com.renatanutricionista.calendario.atendimento.paciente.enums.PeriodoDisponivel;
 import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
@@ -170,6 +172,18 @@ public class ConsultaService {
 		validarSituacaoConsultaParaCadastroDeInformacoes(consulta);
 		
 		consulta.setCondutaNutricional(condutaNutricional.converterParaCondutaNutricional());
+		
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	
+	public ResponseEntity<Void> cadastrarRegistroDietaHabitual(Long idPaciente, Long idConsulta, 
+			RegistroDietaFORM registroDietaHabitual) {
+		
+		Consulta consulta = atendimentoUtils.verificarPacienteConsulta(idPaciente, idConsulta);	
+		validarSituacaoConsultaParaCadastroDeInformacoes(consulta);
+		
+		consulta.setRegistroDietaHabitual(registroDietaHabitual.converterParaRegistroDieta(TipoRegistroDieta.HABITUAL));
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}

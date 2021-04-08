@@ -1,0 +1,44 @@
+package br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import lombok.Getter;
+import lombok.Setter;
+
+
+@Entity
+@Table(name = "atendimento_parametro", schema = "sistema_nutricionista_parametro")
+@Getter
+@Setter
+public class AtendimentoParametro {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
+	@Column(name = "quantidade_parcelas")
+	@NotNull(message = "O campo Quantidade de Parcelas não pode ser nulo!")
+	private Integer quantidadeParcelas;
+	
+	@Column(name = "intervalo_minutos_entre_atendimentos")
+	@NotNull(message = "O campo Minutos do Intervalo entre Atendimentos não pode ser nulo!")
+	private Integer intervaloMinutosEntreAtendimentos;
+	
+	@Column(name = "intervalo_dias_entre_primeira_consulta_retorno")
+	@NotNull(message = "O campo Intervalo de Dias entre Primeira Consulta/Retorno não pode ser nulo!")
+	private Integer intervaloDiasEntrePrimeiraConsultaRetorno;
+	
+	@Column(name = "intervalo_dias_entre_consulta_retorno")
+	@NotNull(message = "O campo Intervalo de Dias entre Consulta/Retorno não pode ser nulo!")
+	private Integer intervaloDiasEntreConsultaRetorno;
+	
+	@Column(name = "intervalo_dias_retorno_consulta")
+	@NotNull(message = "O campo Intervalo de Dias entre Retorno/Consulta não pode ser nulo!")
+	private Integer intervaloDiasEntreRetornoConsulta;
+}

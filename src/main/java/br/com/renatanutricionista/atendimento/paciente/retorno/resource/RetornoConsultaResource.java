@@ -17,6 +17,7 @@ import br.com.renatanutricionista.atendimento.paciente.avaliacao.composicao.corp
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.consumo.habitual.form.AvaliacaoConsumoHabitualFORM;
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.massa.muscular.corporea.antropometrica.form.AvaliacaoMassaMuscularCorporeaFORM;
 import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.form.CondutaNutricionalFORM;
+import br.com.renatanutricionista.atendimento.paciente.registro.dieta.form.RegistroDietaFORM;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.AgendamentoRetornoFORM;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.ReagendamentoRetornoFORM;
 import br.com.renatanutricionista.atendimento.paciente.retorno.service.RetornoConsultaService;
@@ -111,5 +112,23 @@ public class RetornoConsultaResource {
 			@RequestBody @Valid CondutaNutricionalFORM condutaNutricional) {
 		
 		return retornoConsultaService.cadastrarCondutaNutricional(idPaciente, idRetornoConsulta, condutaNutricional);
+	}
+	
+	
+	@PostMapping("/cadastrar-registro-dieta-habitual/{idPaciente}/{idRetornoConsulta}")
+	@Transactional
+	public ResponseEntity<Void> cadastrarRegistroDietaHabitual(@PathVariable Long idPaciente, @PathVariable Long idRetornoConsulta,
+			@RequestBody @Valid RegistroDietaFORM registroDietaHabitual) {
+		
+		return retornoConsultaService.cadastrarRegistroDietaHabitual(idPaciente, idRetornoConsulta, registroDietaHabitual);
+	}
+	
+	
+	@PostMapping("/cadastrar-registro-dieta-24horas/{idPaciente}/{idRetornoConsulta}")
+	@Transactional
+	public ResponseEntity<Void> cadastrarRegistroDieta24Horas(@PathVariable Long idPaciente, @PathVariable Long idRetornoConsulta,
+			@RequestBody @Valid RegistroDietaFORM registroDieta24Horas) {
+		
+		return retornoConsultaService.cadastrarRegistroDieta24Horas(idPaciente, idRetornoConsulta, registroDieta24Horas);
 	}
 }

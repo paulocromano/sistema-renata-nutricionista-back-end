@@ -5,14 +5,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.registro.dieta.enums.TipoRegistroDieta;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import br.com.renatanutricionista.atendimento.paciente.retorno.model.RetornoConsulta;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,10 +23,10 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "registro_dieta", schema = "sistema_nutricionista")
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@JsonIgnoreProperties(value = { "consulta", "retornoConsultaRegistroHabitual", "retornoConsultaRegistro24Horas" })
 public class RegistroDieta {
 
 	@Id
@@ -104,6 +107,39 @@ public class RegistroDieta {
 	@Size(max = 500, message = "O campo Quantidade Medida Caseira de Alimentos no Final de Semana  deve ter no máximo {max} caracteres!")
 	private String quantidadeMedidaCaseiraAlimentosFinalDeSemana;
 	
+	@OneToOne(mappedBy = "registroDietaHabitual")
+	private Consulta consulta;
+	
+	@OneToOne(mappedBy = "registroDietaHabitual")
+	private RetornoConsulta retornoConsultaRegistroHabitual;
+	
+	@OneToOne(mappedBy = "registroDieta24Horas")
+	private RetornoConsulta retornoConsultaRegistro24Horas;
+	
+	
+	private RegistroDieta(TipoRegistroDieta tipoRegistroDieta, String alimentosDesjejum, String quantidadeMedidaCaseiraAlimentosDesjejum,
+			String alimentosLancheManha, String quantidadeMedidaCaseiraAlimentosLancheManha, String alimentosAlmoco,
+			String quantidadeMedidaCaseiraAlimentosAlmoco, String alimentosLancheTarde, String quantidadeMedidaCaseiraAlimentosLancheTarde,
+			String alimentosJanta, String quantidadeMedidaCaseiraAlimentosJanta, String alimentosCeia, String quantidadeMedidaCaseiraAlimentosCeia,
+			String alimentosFinalDeSemana, String quantidadeMedidaCaseiraAlimentosFinalDeSemana) {
+		
+		this.tipoRegistroDieta = tipoRegistroDieta;
+		this.alimentosDesjejum = alimentosDesjejum;
+		this.quantidadeMedidaCaseiraAlimentosDesjejum = quantidadeMedidaCaseiraAlimentosDesjejum;
+		this.alimentosLancheManha = alimentosLancheManha;
+		this.quantidadeMedidaCaseiraAlimentosLancheManha = quantidadeMedidaCaseiraAlimentosLancheManha;
+		this.alimentosAlmoco = alimentosAlmoco;
+		this.quantidadeMedidaCaseiraAlimentosAlmoco = quantidadeMedidaCaseiraAlimentosAlmoco;
+		this.alimentosLancheTarde = alimentosLancheTarde;
+		this.quantidadeMedidaCaseiraAlimentosLancheTarde = quantidadeMedidaCaseiraAlimentosLancheTarde;
+		this.alimentosJanta = alimentosJanta;
+		this.quantidadeMedidaCaseiraAlimentosJanta = quantidadeMedidaCaseiraAlimentosJanta;
+		this.alimentosCeia = alimentosCeia;
+		this.quantidadeMedidaCaseiraAlimentosCeia = quantidadeMedidaCaseiraAlimentosCeia;
+		this.alimentosFinalDeSemana = alimentosFinalDeSemana;
+		this.quantidadeMedidaCaseiraAlimentosFinalDeSemana = quantidadeMedidaCaseiraAlimentosFinalDeSemana;
+	}
+
 	
 	public static class Builder {
 		
@@ -201,7 +237,7 @@ public class RegistroDieta {
 		
 		
 		public RegistroDieta build() {
-			return new RegistroDieta(null, tipoRegistroDieta, alimentosDesjejum, quantidadeMedidaCaseiraAlimentosDesjejum, 
+			return new RegistroDieta(tipoRegistroDieta, alimentosDesjejum, quantidadeMedidaCaseiraAlimentosDesjejum, 
 					alimentosLancheManha, quantidadeMedidaCaseiraAlimentosLancheManha, alimentosAlmoco, 
 					quantidadeMedidaCaseiraAlimentosAlmoco, alimentosLancheTarde, quantidadeMedidaCaseiraAlimentosLancheTarde, 
 					alimentosJanta, quantidadeMedidaCaseiraAlimentosJanta, alimentosCeia, quantidadeMedidaCaseiraAlimentosCeia, 

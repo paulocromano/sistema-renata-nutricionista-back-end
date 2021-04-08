@@ -30,8 +30,8 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "retorno_consulta_paciente", schema = "sistema_nutricionista")
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(value = { "consulta" })
 public class RetornoConsulta {

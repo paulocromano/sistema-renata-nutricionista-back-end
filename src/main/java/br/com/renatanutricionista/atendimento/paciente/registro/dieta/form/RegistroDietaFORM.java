@@ -1,7 +1,6 @@
 package br.com.renatanutricionista.atendimento.paciente.registro.dieta.form;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.com.renatanutricionista.atendimento.paciente.registro.dieta.enums.TipoRegistroDieta;
@@ -13,9 +12,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RegistroDietaFORM {
-
-	@NotNull(message = "O campo do Tipo de Registro da Dieta não pode estar nulo!")
-	private TipoRegistroDieta tipoRegistroDieta;
 	
 	@NotEmpty(message = "O campo Alimentos no Desjejum não pode estar nulo/vazio!")
 	@Size(max = 500, message = "O campo Alimentos no Desjejum deve ter no máximo {max} caracteres!")
@@ -74,7 +70,8 @@ public class RegistroDietaFORM {
 	private String quantidadeMedidaCaseiraAlimentosFinalDeSemana;
 	
 	
-	public RegistroDieta converterParaRegistroDieta() {
+	public RegistroDieta converterParaRegistroDieta(TipoRegistroDieta tipoRegistroDieta) {
+		
 		return new RegistroDieta.Builder()
 				.tipoRegistroDieta(tipoRegistroDieta)
 				.alimentosDesjejum(alimentosDesjejum)
