@@ -26,7 +26,7 @@ public class CalendarioAtendimentoPacienteService {
 		LocalDate dataAgendamento = ConversaoUtils.converterStringParaLocalDate(data);
 		LocalTime horarioAgendamento = ConversaoUtils.converterStringParaLocalTime(horario + ":00");
 		
-		verificarSeDataHorarioSaoValidos(dataAgendamento, horarioAgendamento);
+		verificarSeDataHorarioSaoValidas(dataAgendamento, horarioAgendamento);
 		
 		Optional<CalendarioAtendimentoPaciente> periodo = calendarioAgendamentoRepository.findByDataAndHorario(dataAgendamento, horarioAgendamento);
 		
@@ -39,7 +39,8 @@ public class CalendarioAtendimentoPacienteService {
 		return periodo.get();
 	}
 	
-	private void verificarSeDataHorarioSaoValidos(LocalDate data, LocalTime horario) {
+	
+	private void verificarSeDataHorarioSaoValidas(LocalDate data, LocalTime horario) {
 		if (!data.isAfter(LocalDate.now()))
 			throw new IllegalArgumentException("Data inválida. A data deve ser um dia "
 					+ "após o dia atual!");
