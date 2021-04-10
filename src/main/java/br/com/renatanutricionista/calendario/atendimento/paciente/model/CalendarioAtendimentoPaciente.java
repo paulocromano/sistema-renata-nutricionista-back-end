@@ -15,6 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import br.com.renatanutricionista.calendario.atendimento.paciente.enums.PeriodoDisponivel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -22,6 +23,7 @@ import lombok.Setter;
 @Table(name = "calendario_atendimento_paciente", schema = "sistema_nutricionista")
 @Setter
 @Getter
+@NoArgsConstructor
 public class CalendarioAtendimentoPaciente {
 
 	@Id
@@ -39,4 +41,11 @@ public class CalendarioAtendimentoPaciente {
 	@Column(name = "periodo_disponivel")
 	@NotNull(message = "O campo Período Disponível não pode estar nulo!")
 	private PeriodoDisponivel periodoDisponivel;
+
+	
+	public CalendarioAtendimentoPaciente(LocalDate data, LocalTime horario) {
+		this.data = data;
+		this.horario = horario;
+		this.periodoDisponivel = PeriodoDisponivel.SIM;
+	}
 }

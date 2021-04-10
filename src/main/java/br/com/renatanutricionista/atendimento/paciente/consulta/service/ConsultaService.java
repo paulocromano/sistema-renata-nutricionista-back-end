@@ -20,7 +20,6 @@ import br.com.renatanutricionista.atendimento.paciente.consulta.respository.Cons
 import br.com.renatanutricionista.atendimento.paciente.registro.dieta.enums.TipoRegistroDieta;
 import br.com.renatanutricionista.atendimento.paciente.registro.dieta.form.RegistroDietaFORM;
 import br.com.renatanutricionista.atendimento.paciente.utils.AtendimentoUtils;
-import br.com.renatanutricionista.calendario.atendimento.paciente.enums.PeriodoDisponivel;
 import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import br.com.renatanutricionista.calendario.atendimento.paciente.service.CalendarioAtendimentoPacienteService;
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
@@ -52,7 +51,6 @@ public class ConsultaService {
 		CalendarioAtendimentoPaciente periodoAgendamento = calendarioAtendimentoService
 				.verificarPossibilidadeDeAgendarConsultaRetorno(agendamentoConsulta.getData(), agendamentoConsulta.getHorario());
 		
-		periodoAgendamento.setPeriodoDisponivel(PeriodoDisponivel.NAO);
 		consultaRepository.save(agendamentoConsulta.converterParaConsulta(paciente, periodoAgendamento));
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -63,13 +61,12 @@ public class ConsultaService {
 		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
 		
 		Consulta consultaPaciente = atendimentoUtils.verificarSeConsultaExiste(idConsulta);
+		
 		atendimentoUtils.verificarSeConsultaPertenceAoPaciente(paciente, consultaPaciente);
 		verificarSeConsultaParaRemarcarEstaAguardandoConfirmacao(consultaPaciente);
+		calendarioAtendimentoService.verificarPossibilidadeDeAgendarConsultaRetorno(reagendamentoConsulta.getData(), reagendamentoConsulta.getHorario());
 		
-		CalendarioAtendimentoPaciente periodoConsultaRemarcada = calendarioAtendimentoService
-				.verificarPossibilidadeDeAgendarConsultaRetorno(reagendamentoConsulta.getData(), reagendamentoConsulta.getHorario());
-		
-		reagendamentoConsulta.atualizarInformacoesDaConsulta(consultaPaciente, periodoConsultaRemarcada);
+		reagendamentoConsulta.atualizarInformacoesDaConsulta(consultaPaciente);
 		
 		return ResponseEntity.ok().build();
 	}
@@ -95,7 +92,7 @@ public class ConsultaService {
 			throw new AtendimentoException("Não é possível cancelar uma Consulta Finalizada!");
 		
 		consultaRepository.delete(consulta);
-		calendarioAtendimentoService.alterarPeriodoDoCalendarioParaDisponivel(consulta.getPeriodoConsulta().getId());
+		calendarioAtendimentoService.alterarPeriodoDoCalendarioParaDisponivel(consulta.getDataHorario());
 		
 		return ResponseEntity.noContent().build();
 	}

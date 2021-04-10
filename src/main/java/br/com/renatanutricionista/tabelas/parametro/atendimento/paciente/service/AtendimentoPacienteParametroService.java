@@ -38,7 +38,7 @@ public class AtendimentoPacienteParametroService {
 	}
 	
 	
-	private AtendimentoPacienteParametro verificarSeExisteAtendimentoPacienteParametro(Integer idAtendimentoPacienteParametro) {
+	public AtendimentoPacienteParametro verificarSeExisteAtendimentoPacienteParametro(Integer idAtendimentoPacienteParametro) {
 		if (Objects.isNull(idAtendimentoPacienteParametro))
 			throw new NullPointerException("O ID do Parâmetro de Atendimento de Paciente não pode estar nulo!");
 			

@@ -14,7 +14,7 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name = "atendimento_paciente_parametro", schema = "sistema_nutricionista_parametro")
+@Table(name = "atendimento_paciente_parametro", catalog = "sistema_nutricionista_parametro")
 @Getter
 @Setter
 @NoArgsConstructor

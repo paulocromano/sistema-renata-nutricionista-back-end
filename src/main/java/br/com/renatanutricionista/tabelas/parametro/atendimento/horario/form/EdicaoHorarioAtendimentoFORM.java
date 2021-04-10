@@ -7,7 +7,12 @@ import javax.validation.constraints.Pattern;
 
 import br.com.renatanutricionista.tabelas.parametro.atendimento.horario.model.HorarioAtendimento;
 import br.com.renatanutricionista.utils.ConversaoUtils;
+import lombok.Getter;
+import lombok.Setter;
 
+
+@Getter
+@Setter
 public class EdicaoHorarioAtendimentoFORM extends ValidacaoFormularioHorarioAtendimento {
 
 	@NotEmpty(message = "O Horário de Entrada antes do Almoço não pode estar nulo/vazio!")

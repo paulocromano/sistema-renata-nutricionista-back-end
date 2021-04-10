@@ -1,6 +1,7 @@
 package br.com.renatanutricionista.atendimento.paciente.consulta.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +20,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.composicao.corporal.model.AvaliacaoComposicaoCorporal;
@@ -29,7 +32,6 @@ import br.com.renatanutricionista.atendimento.paciente.consulta.enums.FormaPagam
 import br.com.renatanutricionista.atendimento.paciente.consulta.enums.SituacaoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.registro.dieta.model.RegistroDieta;
 import br.com.renatanutricionista.atendimento.paciente.retorno.model.RetornoConsulta;
-import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,6 +54,11 @@ public class Consulta {
 	@NotNull(message = "O campo Situação da Consulta não pode estar nulo!")
 	private SituacaoConsulta situacaoConsulta;
 	
+	@Column(name = "data_horario")
+	@NotNull(message = "O campo Data e Horário da Consulta nçao pode estar nulo!")
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	private LocalDateTime dataHorario;
+	
 	@Column(name = "forma_pagamento")
 	private FormaPagamento formaPagamento;
 	
@@ -72,11 +79,6 @@ public class Consulta {
 	@JoinColumn(name = "paciente_id")
 	@NotNull(message = "O objeto Paciente não pode estar nulo!")
 	private Paciente paciente;
-	
-	@OneToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "calendario_atendimento_consulta_id")
-	@NotNull(message = "O objeto Período de Agendamento da Consulta não pode estar nulo!")
-	private CalendarioAtendimentoPaciente periodoConsulta;
 	
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "avaliacao_consumo_habitual_id")
@@ -103,26 +105,31 @@ public class Consulta {
 	private RetornoConsulta retornoConsulta;
 
 	
-	private Consulta(SituacaoConsulta situacaoConsulta, String motivoConsulta,
-			Paciente paciente, CalendarioAtendimentoPaciente periodoConsulta) {
+	private Consulta(SituacaoConsulta situacaoConsulta, LocalDateTime dataHorario,
+			String motivoConsulta, Paciente paciente) {
 		
 		this.situacaoConsulta = situacaoConsulta;
+		this.dataHorario = dataHorario;
 		this.motivoConsulta = motivoConsulta;
 		this.paciente = paciente;
-		this.periodoConsulta = periodoConsulta;
 	}
 	
 	
 	public static class Builder {
 		
 		private SituacaoConsulta situacaoConsulta;
+		private LocalDateTime dataHorario;
 		private String motivoConsulta;
 		private Paciente paciente;
-		private CalendarioAtendimentoPaciente periodoConsulta;
 		
 		
 		public Builder situacaoConsulta(SituacaoConsulta situacaoConsulta) {
 			this.situacaoConsulta = situacaoConsulta;
+			return this;
+		}
+		
+		public Builder dataHorario(LocalDateTime dataHorario) {
+			this.dataHorario = dataHorario;
 			return this;
 		}
 		
@@ -136,14 +143,9 @@ public class Consulta {
 			return this;
 		}
 		
-		public Builder periodoConsulta(CalendarioAtendimentoPaciente periodoConsulta) {
-			this.periodoConsulta = periodoConsulta;
-			return this;
-		}
-		
 		
 		public Consulta build() {
-			return new Consulta(situacaoConsulta, motivoConsulta, paciente, periodoConsulta);
+			return new Consulta(situacaoConsulta, dataHorario, motivoConsulta, paciente);
 		}
 	}
 }

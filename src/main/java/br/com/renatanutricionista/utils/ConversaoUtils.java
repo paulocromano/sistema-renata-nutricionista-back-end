@@ -6,21 +6,15 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Objects;
 
 
 public final class ConversaoUtils {
 	
 	public static final String converterLocalDateTimeParaString(LocalDateTime localDateTime) {
-		try {
-			return localDateTime.format(FormatacaoUtils.FORMATADOR_DATA_HORA);
-		}
-		catch (DateTimeException e) {
-			throw new DateTimeException("Formato de Data e/ou Hora inválido para conversão em String!");
-		}
-	}
-	
-	
-	public static final String converterLocalDateTimeParaStringDataHoraMinuto(LocalDateTime localDateTime) {
+		if (Objects.isNull(localDateTime))
+			throw new NullPointerException("LocalDateTime não pode ser nulo!");
+		
 		try {
 			return localDateTime.format(FormatacaoUtils.FORMATADOR_DATA_HORA_MINUTO);
 		}
@@ -30,7 +24,36 @@ public final class ConversaoUtils {
 	}
 	
 	
+	public static final String converterLocalDateTimeParaStringDataHoraMinuto(LocalDateTime localDateTime) {
+		if (Objects.isNull(localDateTime))
+			throw new NullPointerException("LocalDateTime não pode ser nulo!");
+		
+		try {
+			return localDateTime.format(FormatacaoUtils.FORMATADOR_DATA_HORA_MINUTO);
+		}
+		catch (DateTimeException e) {
+			throw new DateTimeException("Formato de Data e/ou Hora inválido para conversão em String!");
+		}
+	}
+	
+	
+	public static final String converterLocalTimeParaString(LocalTime localTime) {
+		if (Objects.isNull(localTime))
+			throw new NullPointerException("LocalTime não pode ser nulo!");
+		
+		try {
+			return FormatacaoUtils.FORMATADOR_HORA_MINUTO.format(localTime);
+		}
+		catch (DateTimeException e) {
+			throw new DateTimeException("Formato de Hora inválido para conversão em String!");
+		}
+	}
+	
+	
 	public static final String converterLocalDateParaString(LocalDate localDate) {
+		if (Objects.isNull(localDate))
+			throw new NullPointerException("LocalDate não pode ser nulo!");
+		
 		try {
 			return localDate.format(FormatacaoUtils.FORMATADOR_DATA);
 		}
@@ -41,63 +64,66 @@ public final class ConversaoUtils {
 	
 	
 	public static final LocalDate converterStringParaLocalDate(String data) {
+		if (Objects.isNull(data))
+			throw new NullPointerException("Data não pode ser nulo!");
+		
 		try {
 			return LocalDate.parse(data, FormatacaoUtils.FORMATADOR_DATA);
 		}
 		catch (DateTimeParseException e) {
 			throw new DateTimeException("Formato de Data inválido para conversão em LocalDate!");
 		}
-		catch (NullPointerException e) {
-			throw new NullPointerException("A Data está nula!");
-		}
 	}
 	
 	
 	public static final LocalDate converterStringParaLocalDate(String data, DateTimeFormatter formatter) {
+		if (Objects.isNull(data))
+			throw new NullPointerException("Data não pode ser nulo!");
+		
 		try {
 			return LocalDate.parse(data, formatter);
 		}
 		catch (DateTimeParseException e) {
 			throw new DateTimeException("Formato de Data inválido para conversão em LocalDate!");
 		}
-		catch (NullPointerException e) {
-			throw new NullPointerException("A Data está nula!");
-		}
 	}
 	
 	
 	public static final LocalTime converterStringParaLocalTime(String hora) {
+		if (Objects.isNull(hora))
+			throw new NullPointerException("Hora não pode ser nulo!");
+		
 		try {
 			return LocalTime.parse(hora, FormatacaoUtils.FORMATADOR_HORA);
 		}
 		catch (DateTimeParseException e) {
 			throw new DateTimeException("Formato de Hora inválido para conversão em LocalTime!");
 		}
-		catch (NullPointerException e) {
-			throw new NullPointerException("A Hora está nula!");
-		}
 	}
 	
 	
 	public static final LocalTime converterStringParaLocalTimeHoraMinuto(String hora) {
+		if (Objects.isNull(hora))
+			throw new NullPointerException("Hora não pode ser nulo!");
+		
 		try {
 			return LocalTime.parse(hora, FormatacaoUtils.FORMATADOR_HORA_MINUTO);
 		}
 		catch (DateTimeParseException e) {
 			throw new DateTimeException("Formato de Hora inválido para conversão em LocalTime!");
 		}
-		catch (NullPointerException e) {
-			throw new NullPointerException("A Hora está nula!");
-		}
 	}
 	
 	
-	public static final String converterLocalTimeParaString(LocalTime hora) {
+	public static final LocalDateTime converterStringParaLocalDateTime(String data, String horario) {
+		if (Objects.isNull(data) || Objects.isNull(horario))
+			throw new NullPointerException("Data e/ou Horário estão nulos!");
+		
 		try {
-			return FormatacaoUtils.FORMATADOR_HORA_MINUTO.format(hora);
+			return LocalDateTime.parse(data + " " + horario, FormatacaoUtils.FORMATADOR_DATA_HORA_MINUTO);
 		}
-		catch (DateTimeException e) {
-			throw new DateTimeException("Formato de Hora inválido para conversão em String!");
+		catch (DateTimeParseException e) {
+			throw new DateTimeException("Formato de Data e/ou Horário inválido para conversão em LocalDateTime!");
 		}
 	}
 }

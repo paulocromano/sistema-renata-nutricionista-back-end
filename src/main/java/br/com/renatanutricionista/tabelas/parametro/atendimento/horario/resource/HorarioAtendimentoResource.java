@@ -38,7 +38,7 @@ public class HorarioAtendimentoResource {
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<List<HorarioAtendimentoDTO>> cadastrarDiaDeAtendimento(
+	public ResponseEntity<Void> cadastrarDiaDeAtendimento(
 			@RequestBody @Valid HorarioAtendimentoFORM horarioAtendimento) {
 		
 		return horarioAtendimentoService.cadastrarDiaDeAtendimento(horarioAtendimento);
@@ -47,7 +47,7 @@ public class HorarioAtendimentoResource {
 	
 	@PutMapping("/{idHorarioAtendimento}")
 	@Transactional
-	public ResponseEntity<List<HorarioAtendimentoDTO>> atualizarHorariosDeUmDiaDaSamana(@PathVariable Integer idHorarioAtendimento,
+	public ResponseEntity<Void> atualizarHorariosDeUmDiaDaSamana(@PathVariable Integer idHorarioAtendimento,
 			@RequestBody @Valid EdicaoHorarioAtendimentoFORM edicaoHorarioAtendimento) {
 		
 		return horarioAtendimentoService.atualizarHorariosDeUmDiaDaSamana(idHorarioAtendimento, edicaoHorarioAtendimento);
@@ -56,7 +56,7 @@ public class HorarioAtendimentoResource {
 	
 	@DeleteMapping("/{idHorarioAtendimento}")
 	@Transactional
-	public ResponseEntity<List<HorarioAtendimentoDTO>> removerUmDiaDeAtendimento(Integer idHorarioAtendimento) {
-		return horarioAtendimentoService.removerUmDiaDeAtendimento(idHorarioAtendimento);
+	public ResponseEntity<Void> excluirUmDiaDeAtendimento(Integer idHorarioAtendimento) {
+		return horarioAtendimentoService.excluirUmDiaDeAtendimento(idHorarioAtendimento);
 	}
 }

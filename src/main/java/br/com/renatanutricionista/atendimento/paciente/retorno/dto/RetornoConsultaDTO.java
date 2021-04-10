@@ -9,6 +9,7 @@ import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.dto.C
 import br.com.renatanutricionista.atendimento.paciente.registro.dieta.dto.RegistroDietaDTO;
 import br.com.renatanutricionista.atendimento.paciente.retorno.model.RetornoConsulta;
 import br.com.renatanutricionista.calendario.atendimento.paciente.dto.CalendarioAtendimentoPacienteDTO;
+import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
 
 
@@ -17,6 +18,8 @@ public class RetornoConsultaDTO {
 
 	private Long id;
 	private String situacaoRetorno;
+	private String data;
+	private String horario;
 	private String dificuldadesParaSeguirOrientacoes;
 	private String alteracoesSintomas;
 	private String alteracoesQueimacoes;
@@ -34,10 +37,11 @@ public class RetornoConsultaDTO {
 		id = retornoConsulta.getId();
 		situacaoRetorno = retornoConsulta.getSituacaoRetorno().getDescricao();
 		dificuldadesParaSeguirOrientacoes = retornoConsulta.getDificuldadesParaSeguirOrientacoes();
+		data = ConversaoUtils.converterLocalDateParaString(retornoConsulta.getDataHorario().toLocalDate());
+		horario = retornoConsulta.getDataHorario().toLocalTime().toString();
 		alteracoesSintomas = retornoConsulta.getAlteracoesSintomas();
 		alteracoesQueimacoes = retornoConsulta.getAlteracoesQueimacoes();
 		alteracoesMedicamentos = retornoConsulta.getAlteracoesMedicamentos();
-		periodoRetorno = new CalendarioAtendimentoPacienteDTO(retornoConsulta.getPeriodoRetorno());
 		
 		if (Objects.nonNull(retornoConsulta.getAvaliacaoConsumoHabitual()))
 			avaliacaoConsumoHabitual = new AvaliacaoConsumoHabitualDTO(retornoConsulta.getAvaliacaoConsumoHabitual());

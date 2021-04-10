@@ -33,7 +33,7 @@ public class HorarioAtendimentoService {
 	}
 	
 	
-	public ResponseEntity<List<HorarioAtendimentoDTO>> cadastrarDiaDeAtendimento(HorarioAtendimentoFORM horarioAtendimento) {
+	public ResponseEntity<Void> cadastrarDiaDeAtendimento(HorarioAtendimentoFORM horarioAtendimento) {
 		try {
 			horarioAtendimentoRepository.save(horarioAtendimento.converterParaHorarioAtendimento());
 		}
@@ -41,25 +41,25 @@ public class HorarioAtendimentoService {
 			throw new IntegrityConstraintViolationException("O dia especificado de Horários de Atendimento já existe!");
 		}
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(listarHorariosAtendimento().getBody());
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	
 	
-	public ResponseEntity<List<HorarioAtendimentoDTO>> atualizarHorariosDeUmDiaDaSamana(Integer idHorarioAtendimento,
+	public ResponseEntity<Void> atualizarHorariosDeUmDiaDaSamana(Integer idHorarioAtendimento,
 			EdicaoHorarioAtendimentoFORM edicaoHorarioAtendimento) {
 		
 		HorarioAtendimento horarioAtendimento = verificarSeExisteHorarioAtendimento(idHorarioAtendimento);
 		edicaoHorarioAtendimento.atualizarHorariosAtendimentoDeUmDiaDaSemana(horarioAtendimento);
 		
-		return ResponseEntity.ok().body(listarHorariosAtendimento().getBody());
+		return ResponseEntity.ok().build();
 	}
 	
 	
-	public ResponseEntity<List<HorarioAtendimentoDTO>> removerUmDiaDeAtendimento(Integer idHorarioAtendimento) {
+	public ResponseEntity<Void> excluirUmDiaDeAtendimento(Integer idHorarioAtendimento) {
 		verificarSeExisteHorarioAtendimento(idHorarioAtendimento);
 		horarioAtendimentoRepository.deleteById(idHorarioAtendimento);
 		
-		return ResponseEntity.ok().body(listarHorariosAtendimento().getBody());
+		return ResponseEntity.noContent().build();
 	}
 	
 	

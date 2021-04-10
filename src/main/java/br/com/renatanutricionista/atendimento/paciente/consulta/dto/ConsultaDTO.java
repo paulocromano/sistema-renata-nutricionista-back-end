@@ -13,6 +13,7 @@ import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.registro.dieta.dto.RegistroDietaDTO;
 import br.com.renatanutricionista.atendimento.paciente.retorno.dto.RetornoConsultaDTO;
 import br.com.renatanutricionista.calendario.atendimento.paciente.dto.CalendarioAtendimentoPacienteDTO;
+import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
 
 
@@ -21,6 +22,8 @@ public class ConsultaDTO {
 
 	private Long id;
 	private String situacaoConsulta;
+	private String data;
+	private String horario;
 	private String formaPagamento;
 	private Integer numeroParcelas;
 	private BigDecimal valorConsulta;
@@ -37,6 +40,8 @@ public class ConsultaDTO {
 	public ConsultaDTO(Consulta consulta) {
 		id = consulta.getId();
 		situacaoConsulta = consulta.getSituacaoConsulta().getDescricao();
+		data = ConversaoUtils.converterLocalDateParaString(consulta.getDataHorario().toLocalDate());
+		horario = consulta.getDataHorario().toLocalTime().toString();
 	
 		if (Objects.nonNull(consulta.getFormaPagamento()))
 			formaPagamento = consulta.getFormaPagamento().getDescricao();
@@ -44,7 +49,6 @@ public class ConsultaDTO {
 		numeroParcelas = consulta.getNumeroParcelas();
 		valorConsulta = consulta.getValorConsulta();
 		motivoConsulta = consulta.getMotivoConsulta();
-		periodoConsulta = new CalendarioAtendimentoPacienteDTO(consulta.getPeriodoConsulta());
 		
 		if (Objects.nonNull(consulta.getAvaliacaoConsumoHabitual()))
 			avaliacaoConsumoHabitual = new AvaliacaoConsumoHabitualDTO(consulta.getAvaliacaoConsumoHabitual());

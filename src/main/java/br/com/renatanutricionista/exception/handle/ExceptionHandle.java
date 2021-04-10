@@ -15,6 +15,7 @@ import br.com.renatanutricionista.exception.custom.IntegrityConstraintViolationE
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.exception.custom.PacienteException;
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
+import br.com.renatanutricionista.exception.custom.EmptyResultDataAccessException;
 import br.com.renatanutricionista.exception.model.PadraoErro;
 import br.com.renatanutricionista.exception.model.ValidationError;
 
@@ -49,6 +50,12 @@ public class ExceptionHandle {
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<PadraoErro> notFound(ObjectNotFoundException exception, HttpServletRequest request) {
 		return erroPadronizado(HttpStatus.NOT_FOUND, "Objeto não encontrado!", exception, request);
+	}
+	
+	
+	@ExceptionHandler(EmptyResultDataAccessException.class)
+	public ResponseEntity<PadraoErro> notFound(EmptyResultDataAccessException exception, HttpServletRequest request) {
+		return erroPadronizado(HttpStatus.BAD_REQUEST, "Operação retornou um resultado vazio!", exception, request);
 	}
 	
 	

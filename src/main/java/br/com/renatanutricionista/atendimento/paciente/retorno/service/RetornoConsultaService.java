@@ -22,7 +22,6 @@ import br.com.renatanutricionista.atendimento.paciente.retorno.form.Reagendament
 import br.com.renatanutricionista.atendimento.paciente.retorno.model.RetornoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.retorno.repository.RetornoConsultaRepository;
 import br.com.renatanutricionista.atendimento.paciente.utils.AtendimentoUtils;
-import br.com.renatanutricionista.calendario.atendimento.paciente.enums.PeriodoDisponivel;
 import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import br.com.renatanutricionista.calendario.atendimento.paciente.service.CalendarioAtendimentoPacienteService;
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
@@ -57,7 +56,6 @@ public class RetornoConsultaService {
 		
 		verificarSePeriodoRetornoConsultaProcedePeriodoConsulta(consulta, periodoAgendamento);
 		
-		periodoAgendamento.setPeriodoDisponivel(PeriodoDisponivel.NAO);
 		consulta.setRetornoConsulta(agendamentoRetorno.converterParaRetornoConsulta(periodoAgendamento));
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -72,7 +70,7 @@ public class RetornoConsultaService {
 				.verificarPossibilidadeDeAgendarConsultaRetorno(reagendamentoRetorno.getData(), reagendamentoRetorno.getHorario());
 		
 		verificarSePeriodoRetornoConsultaProcedePeriodoConsulta(retornoConsulta.getConsulta(), periodoRetornoRemarcado);
-		reagendamentoRetorno.atualizarInformacoesRetornoPaciente(retornoConsulta, periodoRetornoRemarcado);
+		reagendamentoRetorno.atualizarInformacoesRetornoPaciente(retornoConsulta);
 		
 		return ResponseEntity.ok().build();
 	}
@@ -94,7 +92,7 @@ public class RetornoConsultaService {
 		if (retornoConsulta.getSituacaoRetorno().equals(SituacaoRetorno.RETORNO_FINALIZADO))
 			throw new AtendimentoException("Não é possível cancelar um Retorno Finalizado!");
 		
-		calendarioAtendimentoService.alterarPeriodoDoCalendarioParaDisponivel(retornoConsulta.getPeriodoRetorno().getId());
+		calendarioAtendimentoService.alterarPeriodoDoCalendarioParaDisponivel(retornoConsulta.getDataHorario());
 		retornoConsultaRepository.delete(retornoConsulta);
 		
 		return ResponseEntity.noContent().build();
@@ -210,7 +208,7 @@ public class RetornoConsultaService {
 	private void verificarSePeriodoRetornoConsultaProcedePeriodoConsulta(Consulta consulta,
 			CalendarioAtendimentoPaciente periodoAgendamento) {
 			
-		if (!periodoAgendamento.getData().isAfter(consulta.getPeriodoConsulta().getData()))
+		if (!periodoAgendamento.getData().isAfter(consulta.getDataHorario().toLocalDate()))
 			throw new AtendimentoException("A data do Retorno deve ser marcada pelo menos "
 					+ "um dia após a Consulta!");
 	}

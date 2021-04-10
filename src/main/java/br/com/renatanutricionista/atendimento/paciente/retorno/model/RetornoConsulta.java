@@ -1,5 +1,7 @@
 package br.com.renatanutricionista.atendimento.paciente.retorno.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.composicao.corporal.model.AvaliacaoComposicaoCorporal;
@@ -22,7 +26,6 @@ import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.model
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.registro.dieta.model.RegistroDieta;
 import br.com.renatanutricionista.atendimento.paciente.retorno.enums.SituacaoRetorno;
-import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -44,6 +47,11 @@ public class RetornoConsulta {
 	@NotNull(message = "O campo Situação do Retorno não pode ser nulo!")
 	private SituacaoRetorno situacaoRetorno;
 	
+	@Column(name = "data_horario")
+	@NotNull(message = "O campo Data e Horário do Retorno da Consulta nçao pode estar nulo!")
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	private LocalDateTime dataHorario;
+	
 	@Column(name = "dificuldades_seguir_orientacoes")
 	@Size(max = 500, message = "O campo Dificuldades para Seguir Orientações deve ter no máximo {max} caracteres!")
 	private String dificuldadesParaSeguirOrientacoes;
@@ -59,11 +67,6 @@ public class RetornoConsulta {
 	@Column(name = "alteracoes_medicamentos")
 	@Size(max = 500, message = "O campo Alterações dos Medicamentos deve ter no máximo {max} caracteres!")
 	private String alteracoesMedicamentos;
-	
-	@OneToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "calendario_atendimento_retorno_id")
-	@NotNull(message = "O objeto Período do Retorno não pode estar nulo!")
-	private CalendarioAtendimentoPaciente periodoRetorno;
 	
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "avaliacao_consumo_habitual_id")
@@ -93,8 +96,8 @@ public class RetornoConsulta {
 	private Consulta consulta;
 	
 	
-	public RetornoConsulta(SituacaoRetorno situacaoRetorno, CalendarioAtendimentoPaciente periodoRetorno) {
+	public RetornoConsulta(SituacaoRetorno situacaoRetorno, LocalDateTime dataHorario) {
 		this.situacaoRetorno = situacaoRetorno;
-		this.periodoRetorno = periodoRetorno;
+		this.dataHorario = dataHorario;
 	}
 }
