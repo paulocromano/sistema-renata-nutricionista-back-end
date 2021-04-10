@@ -31,8 +31,9 @@ public class AtendimentoPacienteParametroFORM {
 	private Integer intervaloDiasEntreRetornoConsulta;
 	
 	
-	public void atualizarInformacoesDosParametrosParaAtendimentoDePaciente(AtendimentoPacienteParametro atendimentoPacienteParametro) {
-		validarCampos();
+	public void atualizarInformacoesDosParametrosParaAtendimentoDePaciente(AtendimentoPacienteParametro atendimentoPacienteParametro,
+			Integer quantidadeMaximaParcelas, Integer tempoMaximoEmMesesGeracaoAutomaticaHorariosAtendimento) {
+		validarCampos(quantidadeMaximaParcelas, tempoMaximoEmMesesGeracaoAutomaticaHorariosAtendimento);
 		
 		atendimentoPacienteParametro.setQuantidadeParcelas(quantidadeParcelas);
 		atendimentoPacienteParametro.setTempoMesesGeracaoAutomaticaHorariosAtendimento(tempoMesesGeracaoAutomaticaHorariosAtendimento);
@@ -43,11 +44,11 @@ public class AtendimentoPacienteParametroFORM {
 	}
 	
 	
-	private void validarCampos() {
-		if (quantidadeParcelas > 12) 
+	private void validarCampos(Integer quantidadeMaximaParcelas, Integer tempoMaximoEmMesesGeracaoAutomaticaHorariosAtendimento) {
+		if (quantidadeParcelas > quantidadeMaximaParcelas) 
 			throw new AtendimentoException("O número máximo de Parcelas permitido é 12!");
 
-		if (tempoMesesGeracaoAutomaticaHorariosAtendimento > 5) 
+		if (tempoMesesGeracaoAutomaticaHorariosAtendimento > tempoMaximoEmMesesGeracaoAutomaticaHorariosAtendimento) 
 			throw new AtendimentoException("O tempo máximo para geração automática de Horários de "
 					+ "Atendimento é de 5 meses!");
 	}

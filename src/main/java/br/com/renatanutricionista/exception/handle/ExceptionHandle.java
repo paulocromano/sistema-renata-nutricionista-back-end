@@ -54,7 +54,7 @@ public class ExceptionHandle {
 	
 	
 	@ExceptionHandler(EmptyResultDataAccessException.class)
-	public ResponseEntity<PadraoErro> notFound(EmptyResultDataAccessException exception, HttpServletRequest request) {
+	public ResponseEntity<PadraoErro> emptyResultDataAccess(EmptyResultDataAccessException exception, HttpServletRequest request) {
 		return erroPadronizado(HttpStatus.BAD_REQUEST, "Operação retornou um resultado vazio!", exception, request);
 	}
 	

@@ -46,7 +46,7 @@ public class CalendarioAtendimentoPacienteService {
 	
 	@Autowired
 	private AtendimentoPacienteParametroService atendimentoPacienteParametroService;
-	
+
 	
 	public ResponseEntity<List<CalendarioAtendimentoPacienteDTO>> listarHorariosAPartirDoDiaAtual() {
 		List<CalendarioAtendimentoPaciente> calendarioAPartirDaDataAtual = calendarioAgendamentoRepository.findAllByDataGreaterThanEqual(LocalDate.now());
@@ -69,7 +69,7 @@ public class CalendarioAtendimentoPacienteService {
 		LocalTime horarioParaCadastro = ConversaoUtils.converterStringParaLocalTimeHoraMinuto(periodoAtendimento.getHorario());
 		validarDataHorarioParaCadastroDeUmPeriodo(dataPeriodo, horarioParaCadastro);
 	
-		AtendimentoPacienteParametro parametroAtendimento = atendimentoPacienteParametroService.verificarSeExisteAtendimentoPacienteParametro(1);
+		AtendimentoPacienteParametro parametroAtendimento = atendimentoPacienteParametroService.buscarAtendimentoPacienteParametro();
 		int intervaloMinutosEntreAtendimentos = parametroAtendimento.getIntervaloMinutosEntreAtendimentos();
 		
 		List<CalendarioAtendimentoPaciente> horariosDoDia = calendarioAgendamentoRepository
@@ -101,7 +101,7 @@ public class CalendarioAtendimentoPacienteService {
 	
 	public ResponseEntity<Void> cadastrarPeriodosAutomaticamenteNoCalendarioParaAtendimentoPaciente() {
 		
-		AtendimentoPacienteParametro parametroAtendimento = atendimentoPacienteParametroService.verificarSeExisteAtendimentoPacienteParametro(1);
+		AtendimentoPacienteParametro parametroAtendimento = atendimentoPacienteParametroService.buscarAtendimentoPacienteParametro();
 		List<HorarioAtendimento> diasDeAtendimento = horarioAtendimentoRepository.findAll();
 		
 		LocalDate hoje = LocalDate.now();
@@ -117,7 +117,7 @@ public class CalendarioAtendimentoPacienteService {
 	
 	public ResponseEntity<Void> cadastrarPeriodosManualmenteNoCalendarioParaAtendimentoPaciente(CalendarioAtendimentoPacienteFORM calendarioAtendimento) {
 		
-		AtendimentoPacienteParametro parametroAtendimento = atendimentoPacienteParametroService.verificarSeExisteAtendimentoPacienteParametro(1);
+		AtendimentoPacienteParametro parametroAtendimento = atendimentoPacienteParametroService.buscarAtendimentoPacienteParametro();
 		calendarioAtendimento.validarDataInicialFinal(parametroAtendimento.getTempoMesesGeracaoAutomaticaHorariosAtendimento());
 		List<HorarioAtendimento> diasDeAtendimento = horarioAtendimentoRepository.findAll();
 		
