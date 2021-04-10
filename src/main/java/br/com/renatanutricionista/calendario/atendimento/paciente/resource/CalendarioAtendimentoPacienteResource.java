@@ -3,6 +3,7 @@ package br.com.renatanutricionista.calendario.atendimento.paciente.resource;
 import java.util.List;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +11,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.renatanutricionista.calendario.atendimento.paciente.dto.CalendarioAtendimentoPacienteDTO;
+import br.com.renatanutricionista.calendario.atendimento.paciente.form.CalendarioAtendimentoPacienteFORM;
+import br.com.renatanutricionista.calendario.atendimento.paciente.form.PeriodoAtendimentoFORM;
 import br.com.renatanutricionista.calendario.atendimento.paciente.service.CalendarioAtendimentoPacienteService;
 
 
@@ -31,10 +35,25 @@ public class CalendarioAtendimentoPacienteResource {
 	}
 	
 	
+	@PostMapping("/cadastrar-periodo")
+	@Transactional
+	public ResponseEntity<Void> cadastrarUmPeriodoNoCalendario(@RequestBody @Valid PeriodoAtendimentoFORM periodoAtendimento) {
+		return calendarioAtendimentoPacienteService.cadastrarUmPeriodoNoCalendario(periodoAtendimento);
+	}
+	
+	
 	@PostMapping("/cadastrar-periodos-automaticamente")
 	@Transactional
 	public ResponseEntity<Void> cadastrarPeriodosAutomaticamenteNoCalendarioParaAtendimentoPaciente() {
 		return calendarioAtendimentoPacienteService.cadastrarPeriodosAutomaticamenteNoCalendarioParaAtendimentoPaciente();
+	}
+	
+	
+	@PostMapping("/cadastrar-periodos-manualmente")
+	@Transactional
+	public ResponseEntity<Void> cadastrarPeriodosManualmenteNoCalendarioParaAtendimentoPaciente(
+			@RequestBody @Valid CalendarioAtendimentoPacienteFORM calendarioAtendimento) {
+		return calendarioAtendimentoPacienteService.cadastrarPeriodosManualmenteNoCalendarioParaAtendimentoPaciente(calendarioAtendimento);
 	}
 	
 	

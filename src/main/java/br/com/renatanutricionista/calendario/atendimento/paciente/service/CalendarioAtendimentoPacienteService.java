@@ -1,6 +1,7 @@
 package br.com.renatanutricionista.calendario.atendimento.paciente.service;
 
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.renatanutricionista.calendario.atendimento.paciente.dto.CalendarioAtendimentoPacienteDTO;
 import br.com.renatanutricionista.calendario.atendimento.paciente.enums.PeriodoDisponivel;
+import br.com.renatanutricionista.calendario.atendimento.paciente.form.CalendarioAtendimentoPacienteFORM;
+import br.com.renatanutricionista.calendario.atendimento.paciente.form.PeriodoAtendimentoFORM;
 import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import br.com.renatanutricionista.calendario.atendimento.paciente.repository.CalendarioAtendimentoPacienteRepository;
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
@@ -53,15 +56,75 @@ public class CalendarioAtendimentoPacienteService {
 	}
 	
 	
-	public ResponseEntity<Void> cadastrarPeriodosAutomaticamenteNoCalendarioParaAtendimentoPaciente() {
-		AtendimentoPacienteParametro parametroAtendimento = atendimentoPacienteParametroService.verificarSeExisteAtendimentoPacienteParametro(1);
+	public ResponseEntity<Void> cadastrarUmPeriodoNoCalendario(PeriodoAtendimentoFORM periodoAtendimento) {
+		CalendarioAtendimentoPaciente periodo = verificarHorarioParaCadastroDeUmPeriodo(periodoAtendimento);
+		calendarioAgendamentoRepository.save(periodo);
 		
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	
+	private CalendarioAtendimentoPaciente verificarHorarioParaCadastroDeUmPeriodo(PeriodoAtendimentoFORM periodoAtendimento) {
+		LocalDate dataPeriodo = ConversaoUtils.converterStringParaLocalDate(periodoAtendimento.getData());
+		LocalTime horarioParaCadastro = ConversaoUtils.converterStringParaLocalTimeHoraMinuto(periodoAtendimento.getHorario());
+		validarDataHorarioParaCadastroDeUmPeriodo(dataPeriodo, horarioParaCadastro);
+	
+		AtendimentoPacienteParametro parametroAtendimento = atendimentoPacienteParametroService.verificarSeExisteAtendimentoPacienteParametro(1);
+		int intervaloMinutosEntreAtendimentos = parametroAtendimento.getIntervaloMinutosEntreAtendimentos();
+		
+		List<CalendarioAtendimentoPaciente> horariosDoDia = calendarioAgendamentoRepository
+				.findAllByDataAndHorarioBetween(dataPeriodo, horarioParaCadastro.minusMinutes(intervaloMinutosEntreAtendimentos),
+						horarioParaCadastro.plusMinutes(intervaloMinutosEntreAtendimentos)); 
+
+		if (!horariosDoDia.isEmpty()) {				
+			horariosDoDia.forEach(horarioDoDia -> {
+				Duration duracao = Duration.between(horarioDoDia.getHorario(), horarioParaCadastro);
+				
+				if (duracao.abs().toMinutes() < intervaloMinutosEntreAtendimentos) 
+					throw new AtendimentoException("O período de Atendimento deve ter um intervalo de "
+							+ intervaloMinutosEntreAtendimentos + " minutos entre o atendimento anterior e o próximo!");
+			});
+		}
+		
+		return periodoAtendimento.converterParaCalendarioAtendimentoPaciente();
+	}
+	
+	
+	private void validarDataHorarioParaCadastroDeUmPeriodo(LocalDate dataPeriodo, LocalTime horarioParaCadastro) {
+		if (dataPeriodo.isBefore(LocalDate.now()))
+			throw new AtendimentoException("A Data não pode ser anterior à data atual!");
+		
+		if (dataPeriodo.isEqual(LocalDate.now()) && !horarioParaCadastro.isAfter(LocalTime.now()))
+			throw new AtendimentoException("O Horário não pode ser anterior ou igual ao horário atual!");
+	}
+	
+	
+	public ResponseEntity<Void> cadastrarPeriodosAutomaticamenteNoCalendarioParaAtendimentoPaciente() {
+		
+		AtendimentoPacienteParametro parametroAtendimento = atendimentoPacienteParametroService.verificarSeExisteAtendimentoPacienteParametro(1);
 		List<HorarioAtendimento> diasDeAtendimento = horarioAtendimentoRepository.findAll();
-		System.out.println("1");
+		
 		LocalDate hoje = LocalDate.now();
-		List<LocalDate> datasDeAtendimento = gerarListaComDatasDeAtendimento(hoje.plusDays(1L), 
+		List<LocalDate> datasDeAtendimento = gerarListaComDatasDeAtendimento(hoje.plusDays(1), 
 				hoje.plusMonths(parametroAtendimento.getTempoMesesGeracaoAutomaticaHorariosAtendimento()), diasDeAtendimento);
 		
+		List<CalendarioAtendimentoPaciente> calendario = gerarListaComOsNovosPeriodosDeAtendimento(parametroAtendimento, datasDeAtendimento, diasDeAtendimento);
+		calendarioAgendamentoRepository.saveAll(calendario);
+		
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	
+	public ResponseEntity<Void> cadastrarPeriodosManualmenteNoCalendarioParaAtendimentoPaciente(CalendarioAtendimentoPacienteFORM calendarioAtendimento) {
+		
+		AtendimentoPacienteParametro parametroAtendimento = atendimentoPacienteParametroService.verificarSeExisteAtendimentoPacienteParametro(1);
+		calendarioAtendimento.validarDataInicialFinal(parametroAtendimento.getTempoMesesGeracaoAutomaticaHorariosAtendimento());
+		List<HorarioAtendimento> diasDeAtendimento = horarioAtendimentoRepository.findAll();
+		
+		LocalDate dataInicial = ConversaoUtils.converterStringParaLocalDate(calendarioAtendimento.getDataInicial());
+		LocalDate dataFinal = ConversaoUtils.converterStringParaLocalDate(calendarioAtendimento.getDataFinal());
+		
+		List<LocalDate> datasDeAtendimento = gerarListaComDatasDeAtendimento(dataInicial, dataFinal, diasDeAtendimento);
 		List<CalendarioAtendimentoPaciente> calendario = gerarListaComOsNovosPeriodosDeAtendimento(parametroAtendimento, datasDeAtendimento, diasDeAtendimento);
 		calendarioAgendamentoRepository.saveAll(calendario);
 		
@@ -75,18 +138,18 @@ public class CalendarioAtendimentoPacienteService {
 		Map<DayOfWeek, HorarioAtendimento> horarioAtendimentoSeparadoPeloDiaDaSemana = gerarMapComHorarioAtendimentoSeparadoPeloDiaDaSemana(diasDeAtendimento);
 		List<CalendarioAtendimentoPaciente> calendarioAtendimento = new ArrayList<>();
 		
-		int intervaloMinutosEntreAtendimentos = 1;
+		int intervaloMinutosEntreAtendimentos = parametroAtendimento.getIntervaloMinutosEntreAtendimentos();
 		
 		datasDeAtendimento.forEach(data -> {
 			DayOfWeek diaDaSemana = data.getDayOfWeek();
 			HorarioAtendimento horario = horarioAtendimentoSeparadoPeloDiaDaSemana.get(diaDaSemana);
-			
+
 			for (LocalTime agora = horario.getHorarioEntradaAntesAlmoco(); agora.isBefore(horario.getHorarioSaidaDepoisAlmoco()); 
-					agora.plusMinutes(intervaloMinutosEntreAtendimentos)) {
-				
+					agora = agora.plusMinutes(intervaloMinutosEntreAtendimentos)) {
 				
 				if (!agora.isAfter(horario.getHorarioSaidaAntesAlmoco().minusMinutes(intervaloMinutosEntreAtendimentos))
-						|| !agora.isAfter(horario.getHorarioSaidaDepoisAlmoco().minusMinutes(intervaloMinutosEntreAtendimentos))) {
+						|| (!agora.isBefore(horario.getHorarioEntradaDepoisAlmoco()) && 
+					!agora.isAfter(horario.getHorarioSaidaDepoisAlmoco().minusMinutes(intervaloMinutosEntreAtendimentos)))) {
 					
 					calendarioAtendimento.add(new CalendarioAtendimentoPaciente(data, agora));
 				}
@@ -95,6 +158,7 @@ public class CalendarioAtendimentoPacienteService {
 		
 		return calendarioAtendimento;
 	}
+	
 	
 	private Map<DayOfWeek, HorarioAtendimento> gerarMapComHorarioAtendimentoSeparadoPeloDiaDaSemana(List<HorarioAtendimento> diasDeAtendimento) {
 		Map<DayOfWeek, HorarioAtendimento> horarioAtendimentoSeparadoPeloDiaDaSemana = new HashMap<>();
@@ -112,14 +176,13 @@ public class CalendarioAtendimentoPacienteService {
 			List<HorarioAtendimento> diasDeAtendimento) {
 		
 		Set<DayOfWeek> diasDeAtendimentoDaSemana = gerarListaComOsDiasDeAtendimentoDaSemana(diasDeAtendimento);
-		
 		List<CalendarioAtendimentoPaciente> calendarioAtendimento = calendarioAgendamentoRepository.findByDataBetween(dataInicial, dataFinal);
 		List<LocalDate> datasExistentesNoCalendario = calendarioAtendimento.stream().map(CalendarioAtendimentoPaciente::getData).collect(Collectors.toList());
+		
 		List<LocalDate> datasDeAtendimento = new ArrayList<>();
 		
-		
 		if (calendarioAtendimento.isEmpty()) {
-			for (LocalDate data = dataInicial; !dataInicial.isAfter(dataFinal); data.plusDays(1)) {
+			for (LocalDate data = dataInicial; !data.isAfter(dataFinal); data = data.plusDays(1)) {
 				DayOfWeek diaDaSemana = data.getDayOfWeek();
 				
 				if (diasDeAtendimentoDaSemana.contains(diaDaSemana))
@@ -127,9 +190,9 @@ public class CalendarioAtendimentoPacienteService {
 			}
 		}
 		else {
-			for (LocalDate data = dataInicial; !dataInicial.isAfter(dataFinal); data.plusDays(1)) {
+			for (LocalDate data = dataInicial; !data.isAfter(dataFinal); data = data.plusDays(1)) {
 				DayOfWeek diaDaSemana = data.getDayOfWeek();
-				
+
 				if (!datasExistentesNoCalendario.contains(data) && diasDeAtendimentoDaSemana.contains(diaDaSemana))
 					datasDeAtendimento.add(data);
 			}
@@ -137,6 +200,7 @@ public class CalendarioAtendimentoPacienteService {
 		
 		return datasDeAtendimento;
 	}
+	
 	
 	private Set<DayOfWeek> gerarListaComOsDiasDeAtendimentoDaSemana(List<HorarioAtendimento> diasDeAtendimento) {
 		if (diasDeAtendimento.isEmpty())

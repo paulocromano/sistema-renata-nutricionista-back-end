@@ -17,4 +17,7 @@ public interface CalendarioAtendimentoPacienteRepository extends JpaRepository<C
 	List<CalendarioAtendimentoPaciente> findAllByDataGreaterThanEqual(LocalDate dataAtual);
 
 	List<CalendarioAtendimentoPaciente> findByDataBetween(LocalDate dataInicial, LocalDate dataFinal);
+
+	List<CalendarioAtendimentoPaciente> findAllByDataAndHorarioBetween(LocalDate dataPeriodo, LocalTime horarioAnteriorConformeIntervaloEntreConsultas,
+			LocalTime horarioPosteriorConformeIntervaloEntreConsultas);
 }
