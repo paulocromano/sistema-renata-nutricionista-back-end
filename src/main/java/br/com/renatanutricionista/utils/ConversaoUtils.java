@@ -65,7 +65,7 @@ public final class ConversaoUtils {
 	
 	public static final LocalDate converterStringParaLocalDate(String data) {
 		if (Objects.isNull(data))
-			throw new NullPointerException("Data não pode ser nulo!");
+			throw new NullPointerException("Data não pode ser nula!");
 		
 		try {
 			return LocalDate.parse(data, FormatacaoUtils.FORMATADOR_DATA);
@@ -78,7 +78,7 @@ public final class ConversaoUtils {
 	
 	public static final LocalDate converterStringParaLocalDate(String data, DateTimeFormatter formatter) {
 		if (Objects.isNull(data))
-			throw new NullPointerException("Data não pode ser nulo!");
+			throw new NullPointerException("Data não pode ser nula!");
 		
 		try {
 			return LocalDate.parse(data, formatter);
@@ -91,7 +91,7 @@ public final class ConversaoUtils {
 	
 	public static final LocalTime converterStringParaLocalTime(String hora) {
 		if (Objects.isNull(hora))
-			throw new NullPointerException("Hora não pode ser nulo!");
+			throw new NullPointerException("Hora não pode ser nula!");
 		
 		try {
 			return LocalTime.parse(hora, FormatacaoUtils.FORMATADOR_HORA);
@@ -104,7 +104,7 @@ public final class ConversaoUtils {
 	
 	public static final LocalTime converterStringParaLocalTimeHoraMinuto(String hora) {
 		if (Objects.isNull(hora))
-			throw new NullPointerException("Hora não pode ser nulo!");
+			throw new NullPointerException("Hora não pode ser nula!");
 		
 		try {
 			return LocalTime.parse(hora, FormatacaoUtils.FORMATADOR_HORA_MINUTO);

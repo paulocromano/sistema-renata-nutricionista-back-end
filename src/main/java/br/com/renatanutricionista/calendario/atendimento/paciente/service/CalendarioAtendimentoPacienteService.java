@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,23 +143,51 @@ public class CalendarioAtendimentoPacienteService {
 		
 		datasDeAtendimento.forEach(data -> {
 			DayOfWeek diaDaSemana = data.getDayOfWeek();
-			HorarioAtendimento horario = horarioAtendimentoSeparadoPeloDiaDaSemana.get(diaDaSemana);
-
-			for (LocalTime agora = horario.getHorarioEntradaAntesAlmoco(); agora.isBefore(horario.getHorarioSaidaDepoisAlmoco()); 
-					agora = agora.plusMinutes(intervaloMinutosEntreAtendimentos)) {
+			HorarioAtendimento horarioAtendimento = horarioAtendimentoSeparadoPeloDiaDaSemana.get(diaDaSemana);
+			
+			LocalTime horarioInicial;
+			LocalTime horarioFinal;
+			Predicate<LocalTime> predicate;
+			
+			if (Objects.nonNull(horarioAtendimento.getHorarioEntradaAntesAlmoco())) {
+				horarioInicial = horarioAtendimento.getHorarioEntradaAntesAlmoco();
+				horarioFinal = horarioAtendimento.getHorarioSaidaAntesAlmoco();
 				
-				if (!agora.isAfter(horario.getHorarioSaidaAntesAlmoco().minusMinutes(intervaloMinutosEntreAtendimentos))
-						|| (!agora.isBefore(horario.getHorarioEntradaDepoisAlmoco()) && 
-					!agora.isAfter(horario.getHorarioSaidaDepoisAlmoco().minusMinutes(intervaloMinutosEntreAtendimentos)))) {
-					
-					calendarioAtendimento.add(new CalendarioAtendimentoPaciente(data, agora));
-				}
+				predicate = horarioAtual -> !horarioAtual.isAfter(horarioAtendimento.getHorarioSaidaAntesAlmoco().minusMinutes(intervaloMinutosEntreAtendimentos));
+				
+				calendarioAtendimento.addAll(gerarListaComOsNovosPeriodosDeAtendimentoConformePeriodoDeTrabalho(data, horarioInicial, 
+						horarioFinal, intervaloMinutosEntreAtendimentos, predicate));
+			}
+			
+			if (Objects.nonNull(horarioAtendimento.getHorarioEntradaDepoisAlmoco())) {
+				horarioInicial = horarioAtendimento.getHorarioEntradaDepoisAlmoco();
+				horarioFinal = horarioAtendimento.getHorarioSaidaDepoisAlmoco();
+				
+				predicate = horarioAtual-> !horarioAtual.isAfter(horarioAtendimento.getHorarioSaidaDepoisAlmoco().minusMinutes(intervaloMinutosEntreAtendimentos));
+				
+				calendarioAtendimento.addAll(gerarListaComOsNovosPeriodosDeAtendimentoConformePeriodoDeTrabalho(data, horarioInicial, 
+						horarioFinal, intervaloMinutosEntreAtendimentos, predicate));
 			}
 		});
 		
 		return calendarioAtendimento;
 	}
 	
+	
+	private List<CalendarioAtendimentoPaciente> gerarListaComOsNovosPeriodosDeAtendimentoConformePeriodoDeTrabalho(LocalDate data, 
+			LocalTime horarioInicial, LocalTime horarioFinal, int intervaloMinutosEntreAtendimentos, Predicate<LocalTime> predicate) {
+		
+		List<CalendarioAtendimentoPaciente> calendarioAtendimento = new ArrayList<>();
+		
+		for (LocalTime agora = horarioInicial; agora.isBefore(horarioFinal); agora = agora.plusMinutes(intervaloMinutosEntreAtendimentos)) {
+			if (predicate.test(agora)) {
+				calendarioAtendimento.add(new CalendarioAtendimentoPaciente(data, agora));
+			}
+		}
+		
+		return calendarioAtendimento;
+	}
+
 	
 	private Map<DayOfWeek, HorarioAtendimento> gerarMapComHorarioAtendimentoSeparadoPeloDiaDaSemana(List<HorarioAtendimento> diasDeAtendimento) {
 		Map<DayOfWeek, HorarioAtendimento> horarioAtendimentoSeparadoPeloDiaDaSemana = new HashMap<>();
@@ -214,14 +243,56 @@ public class CalendarioAtendimentoPacienteService {
 	public ResponseEntity<Void> excluirPeriodo(Long idCalendarioAtendimento) {
 		CalendarioAtendimentoPaciente horarioAtendimento = verificarSeExistePeriodoNoCalendarioAtendimento(idCalendarioAtendimento);
 		
-		if (horarioAtendimento.getPeriodoDisponivel().equals(PeriodoDisponivel.NAO))
-			throw new AtendimentoException("Não é possível remover um período que não está disponível!");
+		if (horarioAtendimento.getPeriodoDisponivel().equals(PeriodoDisponivel.NAO) && !horarioAtendimento.getData().isBefore(LocalDate.now()))
+			throw new AtendimentoException("Não é possível remover um período que não está disponível e que seja "
+					+ "igual ou posterior ao dia atual!");
 		
 		calendarioAgendamentoRepository.delete(horarioAtendimento);
 		
 		return ResponseEntity.noContent().build();
 	}
 	
+	
+	public ResponseEntity<Void> excluirTodosHorariosAnterioresAoPeriodoAtual() {
+		calendarioAgendamentoRepository.deleteByDataLessThan(LocalDate.now());
+		
+		return ResponseEntity.noContent().build();
+	}
+	
+	
+	public ResponseEntity<Void> excluirPeriodosConformeDataInicialFinal(String dataInicio, String dataFim) {
+		List<CalendarioAtendimentoPaciente> periodosAtendimento = validarPeriodosParaExclusao(dataInicio, dataFim);
+		calendarioAgendamentoRepository.deleteAll(periodosAtendimento);
+		
+		return ResponseEntity.noContent().build();
+	}
+	
+	
+	private List<CalendarioAtendimentoPaciente> validarPeriodosParaExclusao(String dataInicio, String dataFim) {
+		LocalDate dataInicial = ConversaoUtils.converterStringParaLocalDate(dataInicio);
+		LocalDate dataFinal = ConversaoUtils.converterStringParaLocalDate(dataFim);
+		
+		if (dataInicial.isAfter(dataFinal))
+			throw new IllegalArgumentException("A data inicial não pode ser posterior à data final!");
+		
+		List<CalendarioAtendimentoPaciente> periodosAtendimento = calendarioAgendamentoRepository.findByDataBetween(dataInicial, dataFinal);
+		
+		if (periodosAtendimento.isEmpty())
+			throw new EmptyResultDataAccessException("Não há períodos para serem excluídos!");
+		
+		if (!dataFinal.isBefore(LocalDate.now())) {
+			boolean existePeriodoIndisponivel = periodosAtendimento.stream()
+					.filter(periodo -> periodo.getPeriodoDisponivel().equals(PeriodoDisponivel.NAO))
+					.findFirst().isPresent();
+			
+			if (existePeriodoIndisponivel)
+				throw new AtendimentoException("Não foi possível excluir os períodos devido haver "
+						+ "horários com atendimento agendado!");
+		}
+		
+		return periodosAtendimento;
+	}
+
 	
 	public CalendarioAtendimentoPaciente verificarPossibilidadeDeAgendarConsultaRetorno(String data, String horario) {
 		LocalDate dataAgendamento = ConversaoUtils.converterStringParaLocalDate(data);

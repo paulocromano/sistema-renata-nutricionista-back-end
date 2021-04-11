@@ -20,4 +20,6 @@ public interface CalendarioAtendimentoPacienteRepository extends JpaRepository<C
 
 	List<CalendarioAtendimentoPaciente> findAllByDataAndHorarioBetween(LocalDate dataPeriodo, LocalTime horarioAnteriorConformeIntervaloEntreConsultas,
 			LocalTime horarioPosteriorConformeIntervaloEntreConsultas);
+
+	void deleteByDataLessThan(LocalDate data);
 }

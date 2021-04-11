@@ -55,7 +55,7 @@ public class ExceptionHandle {
 	
 	@ExceptionHandler(EmptyResultDataAccessException.class)
 	public ResponseEntity<PadraoErro> emptyResultDataAccess(EmptyResultDataAccessException exception, HttpServletRequest request) {
-		return erroPadronizado(HttpStatus.BAD_REQUEST, "Operação retornou um resultado vazio!", exception, request);
+		return erroPadronizado(HttpStatus.NOT_FOUND, "Operação retornou um resultado vazio!", exception, request);
 	}
 	
 	

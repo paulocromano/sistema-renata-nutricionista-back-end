@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.renatanutricionista.calendario.atendimento.paciente.dto.CalendarioAtendimentoPacienteDTO;
@@ -57,9 +58,23 @@ public class CalendarioAtendimentoPacienteResource {
 	}
 	
 	
-	@DeleteMapping("/{idCalendarioAtendimento}")
+	@DeleteMapping("/excluir-periodo/{idCalendarioAtendimento}")
 	@Transactional
 	public ResponseEntity<Void> excluirPeriodo(@PathVariable Long idCalendarioAtendimento) {
 		return calendarioAtendimentoPacienteService.excluirPeriodo(idCalendarioAtendimento);
+	}
+	
+	
+	@DeleteMapping("/excluir-horarios-precedem-data-atual")
+	@Transactional
+	public ResponseEntity<Void> excluirTodosHorariosAnterioresAoPeriodoAtual() {
+		return calendarioAtendimentoPacienteService.excluirTodosHorariosAnterioresAoPeriodoAtual();
+	}
+	
+	
+	@DeleteMapping("/excluir-periodos")
+	@Transactional
+	public ResponseEntity<Void> excluirPeriodosConformeDataInicialFinal(@RequestParam String dataInicio, @RequestParam String dataFim) {
+		return calendarioAtendimentoPacienteService.excluirPeriodosConformeDataInicialFinal(dataInicio, dataFim);
 	}
 }
