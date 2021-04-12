@@ -100,7 +100,7 @@ public class Consulta {
 	@JoinColumn(name = "registro_dieta_habitual_id")
 	private RegistroDieta registroDietaHabitual;
 	
-	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "retorno_consulta_id")
 	private RetornoConsulta retornoConsulta;
 

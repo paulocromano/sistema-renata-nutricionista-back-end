@@ -13,13 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.renatanutricionista.atendimento.paciente.avaliacao.composicao.corporal.form.AvaliacaoComposicaoCorporalFORM;
-import br.com.renatanutricionista.atendimento.paciente.avaliacao.consumo.habitual.form.AvaliacaoConsumoHabitualFORM;
-import br.com.renatanutricionista.atendimento.paciente.avaliacao.massa.muscular.corporea.antropometrica.form.AvaliacaoMassaMuscularCorporeaFORM;
-import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.form.CondutaNutricionalFORM;
-import br.com.renatanutricionista.atendimento.paciente.registro.dieta.form.RegistroDietaFORM;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.AgendamentoRetornoFORM;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.ReagendamentoRetornoFORM;
+import br.com.renatanutricionista.atendimento.paciente.retorno.form.RetornoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.retorno.service.RetornoConsultaService;
 
 
@@ -72,63 +68,9 @@ public class RetornoConsultaResource {
 	
 	@PutMapping("/finalizar/{idPaciente}/{idRetornoConsulta}")
 	@Transactional
-	public ResponseEntity<Void> finalizarRetornoConsulta(@PathVariable Long idPaciente, @PathVariable Long idRetornoConsulta) {
-		return retornoConsultaService.finalizarRetornoConsulta(idPaciente, idRetornoConsulta);
-	}
-	
-	
-	@PostMapping("/cadastrar-avaliacao-consumo-habitual/{idPaciente}/{idRetornoConsulta}")
-	@Transactional
-	public ResponseEntity<Void> cadastrarAvaliacaoConsumoHabitual(@PathVariable Long idPaciente, @PathVariable Long idRetornoConsulta,
-			@RequestBody @Valid AvaliacaoConsumoHabitualFORM avaliacaoConsumoHabitual) {
+	public ResponseEntity<Void> finalizarRetornoConsulta(@PathVariable Long idPaciente, @PathVariable Long idRetornoConsulta,
+			@RequestBody @Valid RetornoConsultaFORM formularioRetornoConsulta) {
 		
-		return retornoConsultaService.cadastrarAvaliacaoConsumoHabitual(idPaciente, idRetornoConsulta, avaliacaoConsumoHabitual);
-	}
-	
-	
-	@PostMapping("/cadastrar-avaliacao-composicao-corporal/{idPaciente}/{idRetornoConsulta}")
-	@Transactional
-	public ResponseEntity<Void> cadastrarAvaliacaoComposicaoCorporal(@PathVariable Long idPaciente, @PathVariable Long idRetornoConsulta,
-			@RequestBody @Valid AvaliacaoComposicaoCorporalFORM avaliacaoComposicaoCorporal) {
-		
-		return retornoConsultaService.cadastrarAvaliacaoComposicaoCorporal(idPaciente, idRetornoConsulta, avaliacaoComposicaoCorporal);
-	}
-	
-	
-	@PostMapping("/cadastrar-avaliacao-massa-muscular-corporea/{idPaciente}/{idRetornoConsulta}")
-	@Transactional
-	public ResponseEntity<Void> cadastrarAvaliacaoMassaMuscularCorporeaMedidaAntropometrica(@PathVariable Long idPaciente, 
-			@PathVariable Long idRetornoConsulta, 
-			@RequestBody @Valid AvaliacaoMassaMuscularCorporeaFORM avaliacaoMassaMuscularCorporea) {
-		
-		return retornoConsultaService.cadastrarAvaliacaoMassaMuscularCorporeaMedidaAntropometrica(idPaciente, idRetornoConsulta, 
-				avaliacaoMassaMuscularCorporea);
-	}
-	
-	
-	@PostMapping("/cadastrar-conduta-nutricional/{idPaciente}/{idRetornoConsulta}")
-	@Transactional
-	public ResponseEntity<Void> cadastrarCondutaNutricional(@PathVariable Long idPaciente, @PathVariable Long idRetornoConsulta,
-			@RequestBody @Valid CondutaNutricionalFORM condutaNutricional) {
-		
-		return retornoConsultaService.cadastrarCondutaNutricional(idPaciente, idRetornoConsulta, condutaNutricional);
-	}
-	
-	
-	@PostMapping("/cadastrar-registro-dieta-habitual/{idPaciente}/{idRetornoConsulta}")
-	@Transactional
-	public ResponseEntity<Void> cadastrarRegistroDietaHabitual(@PathVariable Long idPaciente, @PathVariable Long idRetornoConsulta,
-			@RequestBody @Valid RegistroDietaFORM registroDietaHabitual) {
-		
-		return retornoConsultaService.cadastrarRegistroDietaHabitual(idPaciente, idRetornoConsulta, registroDietaHabitual);
-	}
-	
-	
-	@PostMapping("/cadastrar-registro-dieta-24horas/{idPaciente}/{idRetornoConsulta}")
-	@Transactional
-	public ResponseEntity<Void> cadastrarRegistroDieta24Horas(@PathVariable Long idPaciente, @PathVariable Long idRetornoConsulta,
-			@RequestBody @Valid RegistroDietaFORM registroDieta24Horas) {
-		
-		return retornoConsultaService.cadastrarRegistroDieta24Horas(idPaciente, idRetornoConsulta, registroDieta24Horas);
+		return retornoConsultaService.finalizarRetornoConsulta(idPaciente, idRetornoConsulta, formularioRetornoConsulta);
 	}
 }

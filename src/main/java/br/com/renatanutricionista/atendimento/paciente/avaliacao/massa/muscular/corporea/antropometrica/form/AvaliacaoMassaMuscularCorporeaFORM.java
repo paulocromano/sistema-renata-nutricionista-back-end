@@ -56,7 +56,7 @@ public class AvaliacaoMassaMuscularCorporeaFORM {
 	private BigDecimal indiceMassaMuscularKgMetroQuadrado;
 	
 	
-	public AvaliacaoMassaMuscularCorporea criarAvaliacaoMassaMuscularCorporea() {
+	public AvaliacaoMassaMuscularCorporea converterParaAvaliacaoMassaMuscularCorporea() {
 		return new AvaliacaoMassaMuscularCorporea.Builder()
 				.circunferenciaCinturaCentimetros(circunferenciaCinturaCentimetros)
 				.circunferenciaBracoCentimentros(circunferenciaBracoCentimentros)

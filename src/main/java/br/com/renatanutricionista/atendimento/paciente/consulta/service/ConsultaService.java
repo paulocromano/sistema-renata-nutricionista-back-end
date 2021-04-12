@@ -1,5 +1,6 @@
 package br.com.renatanutricionista.atendimento.paciente.consulta.service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,25 +8,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import br.com.renatanutricionista.atendimento.paciente.avaliacao.composicao.corporal.form.AvaliacaoComposicaoCorporalFORM;
-import br.com.renatanutricionista.atendimento.paciente.avaliacao.consumo.habitual.form.AvaliacaoConsumoHabitualFORM;
-import br.com.renatanutricionista.atendimento.paciente.avaliacao.massa.muscular.corporea.antropometrica.form.AvaliacaoMassaMuscularCorporeaFORM;
-import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.form.CondutaNutricionalFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.enums.SituacaoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.AgendamentoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.ConfirmacaoConsultaFORM;
+import br.com.renatanutricionista.atendimento.paciente.consulta.form.ConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.ReagendamentoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.respository.ConsultaRepository;
-import br.com.renatanutricionista.atendimento.paciente.registro.dieta.enums.TipoRegistroDieta;
-import br.com.renatanutricionista.atendimento.paciente.registro.dieta.form.RegistroDietaFORM;
 import br.com.renatanutricionista.atendimento.paciente.utils.AtendimentoUtils;
 import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import br.com.renatanutricionista.calendario.atendimento.paciente.service.CalendarioAtendimentoPacienteService;
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.utils.PacienteUtils;
-import br.com.renatanutricionista.utils.enums.SexoUtils;
 
 
 @Service
@@ -111,78 +106,37 @@ public class ConsultaService {
 	}
 	
 	
-	public ResponseEntity<Void> finalizarConsulta(Long idPaciente, Long idConsulta) {
+	public ResponseEntity<Void> finalizarConsulta(Long idPaciente, Long idConsulta, ConsultaFORM formularioConsulta) {
 		Consulta consulta = atendimentoUtils.verificarPacienteConsulta(idPaciente, idConsulta);	
 		
-		if (!consulta.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_FINALIZADA))
+		if (!consulta.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_INICIADA))
 			throw new AtendimentoException("Só é possível finalizar uma Consulta que esteja com a Situação de " 
-					+ SituacaoConsulta.CONSULTA_FINALIZADA.getDescricao() + "!");
+					+ SituacaoConsulta.CONSULTA_INICIADA.getDescricao() + "!");
 		
-		consulta.setSituacaoConsulta(SituacaoConsulta.CONSULTA_FINALIZADA);
+		validarHistoricosPaciente(consulta.getPaciente());
+		formularioConsulta.atualizarInformacoesDaConsulta(consulta);
 		
 		return ResponseEntity.ok().build();
 	}
 	
 	
-	public ResponseEntity<Void> cadastrarAvaliacaoConsumoHabitual(Long idPaciente, Long idConsulta,
-			AvaliacaoConsumoHabitualFORM avaliacaoConsumoHabitual) {
-
-		Consulta consulta = atendimentoUtils.verificarPacienteConsulta(idPaciente, idConsulta);	
-		validarSituacaoConsultaParaCadastroDeInformacoes(consulta);
+	private void validarHistoricosPaciente(Paciente paciente) {
+		if (Objects.isNull(paciente.getHistoricoSocial()))
+			throw new NullPointerException("O Histórico Social do Paciente não pode ser nulo!");
 		
-		consulta.setAvaliacaoConsumoHabitual(avaliacaoConsumoHabitual.criarAvaliacaoConsumoHabitual());
+		if (Objects.isNull(paciente.getHistoricoAlimentar()))
+			throw new NullPointerException("O Histórico Alimentar do Paciente não pode ser nulo!");
 		
-		return ResponseEntity.status(HttpStatus.CREATED).build();
-	}
-	
-	
-	public ResponseEntity<Void> cadastrarAvaliacaoComposicaoCorporal(Long idPaciente, Long idConsulta,
-			AvaliacaoComposicaoCorporalFORM avaliacaoComposicaoCorporal) {
+		if (Objects.isNull(paciente.getAtividadeFisica()))
+			throw new NullPointerException("O Histórico de Atividades Físicas não pode ser nulo!");
 		
-		Consulta consulta = atendimentoUtils.verificarPacienteConsulta(idPaciente, idConsulta);	
-		validarSituacaoConsultaParaCadastroDeInformacoes(consulta);
+		if (Objects.isNull(paciente.getHistoricoPatologiaFamiliaresPorData()))
+			throw new NullPointerException("o Histórico de Patologias dos Familiares do Paciente por data "
+					+ "não pode ser nulo!");
 		
-		SexoUtils sexoPaciente = consulta.getPaciente().getSexo();
-		
-		consulta.setAvaliacaoComposicaoCorporal(avaliacaoComposicaoCorporal.criarAvaliacaoComposicaoCorporal(sexoPaciente));
-		
-		return ResponseEntity.status(HttpStatus.CREATED).build();
-	}
-	
-	
-	public ResponseEntity<Void> cadastrarAvaliacaoMassaMuscularCorporeaMedidaAntropometrica(Long idPaciente, 
-			Long idConsulta, AvaliacaoMassaMuscularCorporeaFORM avaliacaoMassaMuscularCorporea) {
-		
-		Consulta consulta = atendimentoUtils.verificarPacienteConsulta(idPaciente, idConsulta);	
-		validarSituacaoConsultaParaCadastroDeInformacoes(consulta);
-		
-		consulta.setAvaliacaoMassaMuscularCorporeaAntropometrica(avaliacaoMassaMuscularCorporea.criarAvaliacaoMassaMuscularCorporea());
-		
-		return ResponseEntity.status(HttpStatus.CREATED).build();
-	}
-	
-	
-	public ResponseEntity<Void> cadastrarCondutaNutricional(Long idPaciente, Long idConsulta,
-			CondutaNutricionalFORM condutaNutricional) {
-		
-		Consulta consulta = atendimentoUtils.verificarPacienteConsulta(idPaciente, idConsulta);	
-		validarSituacaoConsultaParaCadastroDeInformacoes(consulta);
-		
-		consulta.setCondutaNutricional(condutaNutricional.converterParaCondutaNutricional());
-		
-		return ResponseEntity.status(HttpStatus.CREATED).build();
-	}
-	
-	
-	public ResponseEntity<Void> cadastrarRegistroDietaHabitual(Long idPaciente, Long idConsulta, 
-			RegistroDietaFORM registroDietaHabitual) {
-		
-		Consulta consulta = atendimentoUtils.verificarPacienteConsulta(idPaciente, idConsulta);	
-		validarSituacaoConsultaParaCadastroDeInformacoes(consulta);
-		
-		consulta.setRegistroDietaHabitual(registroDietaHabitual.converterParaRegistroDieta(TipoRegistroDieta.HABITUAL));
-		
-		return ResponseEntity.status(HttpStatus.CREATED).build();
+		if (Objects.isNull(paciente.getQuestionarioFrequenciaAlimentar()))
+			throw new NullPointerException("O Questionário de Frequência Alimentar do Paciente "
+					+ "não pode ser nulo!");
 	}
 	
 	
@@ -200,12 +154,5 @@ public class ConsultaService {
 		if (!consultaPacienteQueSeraCancelada.getSituacaoConsulta().equals(SituacaoConsulta.AGUARDANDO_CONFIRMACAO))
 			throw new AtendimentoException("Não é possível remarcar uma Consulta que não esteja com a Situação de "
 					+ SituacaoConsulta.AGUARDANDO_CONFIRMACAO.getDescricao() + "!");
-	}
-	
-	
-	private void validarSituacaoConsultaParaCadastroDeInformacoes(Consulta consulta) {
-		if (!consulta.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_INICIADA))
-			throw new AtendimentoException("Só é possível cadastrar informações em uma "
-					+ "Consulta caso ela tenha sido iniciada!");
 	}
 }

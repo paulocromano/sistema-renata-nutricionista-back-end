@@ -71,7 +71,7 @@ public class AvaliacaoComposicaoCorporalFORM {
 	private BigDecimal resultadoCalculoDensidadeCorporal;
 	
 	
-	public AvaliacaoComposicaoCorporal criarAvaliacaoComposicaoCorporal(SexoUtils sexoPaciente) {
+	public AvaliacaoComposicaoCorporal converterParaAvaliacaoComposicaoCorporal(SexoUtils sexoPaciente) {
 		
 		Builder avaliacaoComposicaoCorporalBuilder = 
 				new AvaliacaoComposicaoCorporal.Builder()

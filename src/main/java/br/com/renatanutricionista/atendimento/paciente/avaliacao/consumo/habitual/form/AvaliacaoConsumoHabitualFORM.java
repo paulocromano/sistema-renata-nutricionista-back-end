@@ -111,7 +111,7 @@ public class AvaliacaoConsumoHabitualFORM {
 	private BigDecimal leucinaMiligramas;
 	
 	
-	public AvaliacaoConsumoHabitual criarAvaliacaoConsumoHabitual() {
+	public AvaliacaoConsumoHabitual converterParaAvaliacaoConsumoHabitual() {
 		return new AvaliacaoConsumoHabitual.Builder()
 				.energiaKcal(energiaKcal)
 				.proteinaTotalGramas(proteinaTotalGramas)

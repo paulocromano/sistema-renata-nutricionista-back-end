@@ -40,7 +40,7 @@ public final class AtendimentoUtils {
 	
 	public final Consulta verificarSeConsultaExiste(Long idConsulta) {
 		if (Objects.isNull(idConsulta))
-			throw new NullPointerException("O ID da Consulta está nulo!");
+			throw new NullPointerException("O ID da Consulta não pode nulo!");
 			
 		Optional<Consulta> consulta = consultaRepository.findById(idConsulta);
 		
