@@ -1,5 +1,6 @@
 package br.com.renatanutricionista.atendimento.paciente.consulta.service;
 
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -21,6 +22,7 @@ import br.com.renatanutricionista.calendario.atendimento.paciente.service.Calend
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.utils.PacienteUtils;
+import br.com.renatanutricionista.utils.RelatorioUtils;
 
 
 @Service
@@ -37,6 +39,12 @@ public class ConsultaService {
 	
 	@Autowired
 	private CalendarioAtendimentoPacienteService calendarioAtendimentoService;
+	
+	
+	public ResponseEntity<byte[]> gerarRelatorioDosPagamentosPendentes() {
+		
+		return RelatorioUtils.gerarRelatorioEmPDF("pagamentos-pendentes", new HashMap<>());
+	}
 	
 	
 	public ResponseEntity<Void> agendarConsulta(Long idPaciente, AgendamentoConsultaFORM agendamentoConsulta) {

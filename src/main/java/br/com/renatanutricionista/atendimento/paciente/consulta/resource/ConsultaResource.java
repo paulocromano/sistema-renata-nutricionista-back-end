@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,6 +27,12 @@ public class ConsultaResource {
 
 	@Autowired
 	private ConsultaService consultaService;
+	
+	
+	@GetMapping("/gerar-relatorio-pagamentos-pendentes")
+	public ResponseEntity<byte[]> gerarRelatorioDosPagamentosPendentes() {
+		return consultaService.gerarRelatorioDosPagamentosPendentes();
+	}
 	
 	
 	@PostMapping("/agendar/{idPaciente}")
