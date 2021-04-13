@@ -1,7 +1,6 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.alimentar.form;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -41,7 +40,7 @@ public class HistoricoAlimentarFORM {
 	private Set<Integer> idMedicamentos;
 	
 	@Valid
-	private List<SuplementoPacienteFORM> suplementosPaciente;
+	private Set<SuplementoPacienteFORM> suplementosPaciente;
 	
 	
 	public HistoricoAlimentar converterParaHistoricoAlimentar(Paciente paciente, Set<Medicamento> medicamentosPaciente) {
@@ -58,10 +57,10 @@ public class HistoricoAlimentarFORM {
 	}
 	
 	
-	public List<SuplementoPaciente> gerarListaSuplementosPaciente(HistoricoAlimentar historicoAlimentar) {
+	public Set<SuplementoPaciente> gerarSetSuplementosPaciente(HistoricoAlimentar historicoAlimentar) {
 		return suplementosPaciente.stream().map(suplementoPaciente -> new SuplementoPaciente(suplementoPaciente.getDose(), 
 				suplementoPaciente.getFormaPreparo(), historicoAlimentar, suplementoPaciente.getIdSuplemento()))
 				
-				.collect(Collectors.toList());
+				.collect(Collectors.toSet());
 	}
 }

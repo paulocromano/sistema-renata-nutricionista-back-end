@@ -8,7 +8,6 @@ import br.com.renatanutricionista.atendimento.paciente.avaliacao.massa.muscular.
 import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.dto.CondutaNutricionalDTO;
 import br.com.renatanutricionista.atendimento.paciente.registro.dieta.dto.RegistroDietaDTO;
 import br.com.renatanutricionista.atendimento.paciente.retorno.model.RetornoConsulta;
-import br.com.renatanutricionista.calendario.atendimento.paciente.dto.CalendarioAtendimentoPacienteDTO;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
 
@@ -24,7 +23,6 @@ public class RetornoConsultaDTO {
 	private String alteracoesSintomas;
 	private String alteracoesQueimacoes;
 	private String alteracoesMedicamentos;
-	private CalendarioAtendimentoPacienteDTO periodoRetorno;
 	private AvaliacaoConsumoHabitualDTO avaliacaoConsumoHabitual;
 	private AvaliacaoComposicaoCorporalDTO avaliacaoComposicaoCorporal;
 	private AvaliacaoMassaMuscularCorporeaDTO avaliacaoMassaMuscularCorporea;

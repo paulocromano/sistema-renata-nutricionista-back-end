@@ -1,8 +1,6 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.social.dto;
 
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.dto.PatologiaPacienteDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
@@ -59,10 +57,5 @@ public class HistoricoSocialDTO {
 		}
 		
 		dataHoraUltimaAtualizacaoDadosDoHistoricoSocial = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(historicoSocial.getDataHoraUltimaAtualizacaoDadosDoHistoricoSocial());
-	}
-	
-	
-	public static List<HistoricoSocialDTO> converterParaListaHistoricoSocialDTO(List<HistoricoSocial> historicoSocial) {
-		return historicoSocial.stream().map(HistoricoSocialDTO::new).collect(Collectors.toList());
 	}
 }

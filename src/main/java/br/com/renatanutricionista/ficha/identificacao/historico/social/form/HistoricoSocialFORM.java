@@ -1,7 +1,6 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.social.form;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -116,10 +115,10 @@ public class HistoricoSocialFORM {
 	}
 	
 	
-	public List<PatologiaPaciente> gerarListaPatologiasPaciente(HistoricoSocial historicoSocial) {
+	public Set<PatologiaPaciente> gerarSetPatologiasPaciente(HistoricoSocial historicoSocial) {
 		 return patologiasPaciente.stream().map(patologiaFORM -> 
 		 		 new PatologiaPaciente(patologiaFORM.getQuantosAnosPossuiPatologia(), historicoSocial, patologiaFORM.getIdPatologia()))
-				 .collect(Collectors.toList());
+				 .collect(Collectors.toSet());
 	}
 	
 	

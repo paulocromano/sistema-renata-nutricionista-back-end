@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.suplemento.model.Suplemento;
+import br.com.renatanutricionista.utils.FormatacaoUtils;
 import lombok.Getter;
 
 
 @Getter
-public class SuplementoDTO {
+public class SuplementoDTO implements Comparable<SuplementoDTO> {
 
 	private Integer id;
 	private String nome;
@@ -24,7 +25,13 @@ public class SuplementoDTO {
 	}
 	
 	
+	@Override
+	public int compareTo(SuplementoDTO other) {
+		return FormatacaoUtils.COLLATOR.compare(nome, other.getNome());
+	}
+	
+	
 	public static List<SuplementoDTO> converterParaListaSuplementoDTO(List<Suplemento> suplementos) {
-		return suplementos.stream().map(SuplementoDTO::new).collect(Collectors.toList());
+		return suplementos.stream().sorted().map(SuplementoDTO::new).collect(Collectors.toList());
 	}
 }

@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -50,7 +51,7 @@ public class QuestionarioFrequenciaAlimentar {
 	@NotNull(message = "O campo Data e Hora do Cadastro do Questionário não pode estar nulo!")
 	private LocalDateTime dataHoraCadastroQuestionario;
 	
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinTable(name = "questionario_has_frequencia_alimentar",
 			joinColumns = @JoinColumn(name = "questionario_frequencia_alimentar_id"),
@@ -78,7 +79,7 @@ public class QuestionarioFrequenciaAlimentar {
 	@Size(max = 8, message = "O campo Código do Consumo de Peixe dever conter no máximo {max} caracteres!")
 	private String consumoPeixe;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "paciente_id")
 	private Paciente paciente;
 	

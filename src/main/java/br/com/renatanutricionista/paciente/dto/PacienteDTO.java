@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import br.com.renatanutricionista.atendimento.paciente.consulta.dto.ConsultaDTO;
+import br.com.renatanutricionista.atendimento.paciente.consulta.dto.InformacoesPreviasConsultaDTO;
 import br.com.renatanutricionista.endereco.dto.EnderecoDTO;
 import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.dto.AtividadeFisicaDTO;
-import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.dto.QuestionarioFrequenciaAlimentarDTO;
-import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.dto.HistoricoAlimentarDTO;
-import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.dto.HistoricoPatologiaFamiliaresPorDataDTO;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.dto.HistoricoSocialDTO;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.dto.InformacoesPreviasQuestionarioDTO;
+import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.dto.InformacoesPreviasHistoricoAlimentarDTO;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.dto.PreviaHistoricoPatologiaFamiliaresPorDataDTO;
+import br.com.renatanutricionista.ficha.identificacao.historico.social.dto.InformacoesPreviasHistoricoSocialDTO;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
@@ -29,12 +29,12 @@ public class PacienteDTO {
 	protected String telefone;
 	protected String telefoneRecado;
 	protected EnderecoDTO endereco;
-	private List<HistoricoSocialDTO> historicoSocial;
-	private List<HistoricoAlimentarDTO> historicoAlimentar;
+	private List<InformacoesPreviasHistoricoSocialDTO> previaHistoricosSociais;
+	private List<InformacoesPreviasHistoricoAlimentarDTO> previaHistoricosAlimentares;
 	private List<AtividadeFisicaDTO> atividadeFisica;
-	private Set<HistoricoPatologiaFamiliaresPorDataDTO> historicoPatologiaFamiliaresPorData;
-	private List<QuestionarioFrequenciaAlimentarDTO> questionariosFrequenciaAlimentar;
-	private List<ConsultaDTO> consultas;
+	private Set<PreviaHistoricoPatologiaFamiliaresPorDataDTO> previaHistoricoPatologiaFamiliaresPorData;
+	private List<InformacoesPreviasQuestionarioDTO> previasQuestionariosFrequenciaAlimentar;
+	private List<InformacoesPreviasConsultaDTO> previasConsultas;
 	protected String dataHoraUltimaAtualizacaoDadosDoPaciente;
 	
 	
@@ -47,17 +47,17 @@ public class PacienteDTO {
 		telefone = paciente.getTelefone();
 		telefoneRecado = paciente.getTelefoneRecado();
 		endereco = new EnderecoDTO(paciente.getEndereco());
-		historicoSocial = HistoricoSocialDTO.converterParaListaHistoricoSocialDTO(paciente.getHistoricoSocial());
-		historicoAlimentar = HistoricoAlimentarDTO.converterParaListaHistoricoAlimentarDTO(paciente.getHistoricoAlimentar());
+		previaHistoricosSociais = InformacoesPreviasHistoricoSocialDTO.converterParaListaInformacoesPreviasHistoricoSocialDTO(paciente.getHistoricoSocial());
+		previaHistoricosAlimentares = InformacoesPreviasHistoricoAlimentarDTO.converterParaListaInformacoesPreviasHistoricoAlimentarDTO(paciente.getHistoricoAlimentar());
 		atividadeFisica = AtividadeFisicaDTO.converterParaListaAtividadeFisicaDTO(paciente.getAtividadeFisica());
 		
-		historicoPatologiaFamiliaresPorData = HistoricoPatologiaFamiliaresPorDataDTO.converterParaSetHistoricoPatologiaFamiliaresPorDataDTO(
+		previaHistoricoPatologiaFamiliaresPorData = PreviaHistoricoPatologiaFamiliaresPorDataDTO.converterParaSetPreviaHistoricoPatologiaFamiliaresPorDataDTO(
 				paciente.getHistoricoPatologiaFamiliaresPorData());
 		
-		questionariosFrequenciaAlimentar = QuestionarioFrequenciaAlimentarDTO.converterParaQuestionarioFrequenciaAlimentarDTO(
+		previasQuestionariosFrequenciaAlimentar = InformacoesPreviasQuestionarioDTO.converterParaListaInformacoesPreviasQuestionarioDTO(
 				paciente.getQuestionarioFrequenciaAlimentar());
 		
-		consultas = ConsultaDTO.converterParaListaConsultaDTO(paciente.getConsultas());
+		previasConsultas = InformacoesPreviasConsultaDTO.converterParaListaInformacoesPreviasConsultaDTO(paciente.getConsultas());
 		
 		dataHoraUltimaAtualizacaoDadosDoPaciente = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(paciente.getDataHoraUltimaAtualizacaoDadosDoPaciente());
 	}

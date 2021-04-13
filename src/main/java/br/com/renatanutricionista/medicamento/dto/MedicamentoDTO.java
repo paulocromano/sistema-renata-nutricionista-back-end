@@ -2,6 +2,7 @@ package br.com.renatanutricionista.medicamento.dto;
 
 import java.text.Collator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.medicamento.model.Medicamento;
@@ -28,7 +29,13 @@ public class MedicamentoDTO implements Comparable<MedicamentoDTO> {
 		return COLLATOR.compare(nome, outroMedicamento.getNome());
 	}
 	
+	
 	public static List<MedicamentoDTO> converterParaListaMedicamentoDTOEmOrdemAlfabetica(List<Medicamento> medicamentos) {
 		return medicamentos.stream().map(MedicamentoDTO::new).sorted().collect(Collectors.toList());
+	}
+	
+	
+	public static Set<MedicamentoDTO> converterParaSetMedicamentoDTOEmOrdemAlfabetica(Set<Medicamento> medicamentos) {
+		return medicamentos.stream().map(MedicamentoDTO::new).sorted().collect(Collectors.toSet());
 	}
 }

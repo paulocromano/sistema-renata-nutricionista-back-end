@@ -4,12 +4,14 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Getter
 @Setter
+@EqualsAndHashCode(of = "idSuplemento")
 public class SuplementoPacienteFORM {
 
 	@NotEmpty(message = "O campo Dose não pode estar nulo/vazio!")

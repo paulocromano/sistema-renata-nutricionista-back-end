@@ -48,7 +48,7 @@ public class HistoricoPatologiaFamiliaresPorDataFORM {
 	}
 	
 	
-	public Set<HistoricoPatologiaFamiliares> gerarListaHistoricoPatologiaFamiliares(HistoricoPatologiaFamiliaresPorData historicoPatologiaFamiliaresPorData) {
+	public Set<HistoricoPatologiaFamiliares> gerarSetHistoricoPatologiaFamiliares(HistoricoPatologiaFamiliaresPorData historicoPatologiaFamiliaresPorData) {
 		return patologiasFamiliares.stream().map(patologiaFamiliares -> 
 			patologiaFamiliares.converterParaHistoricoPatologiaFamiliares(historicoPatologiaFamiliaresPorData))
 			.collect(Collectors.toSet());

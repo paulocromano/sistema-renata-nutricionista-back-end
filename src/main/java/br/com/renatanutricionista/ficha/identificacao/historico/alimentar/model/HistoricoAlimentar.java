@@ -1,7 +1,6 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.alimentar.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -71,7 +70,7 @@ public class HistoricoAlimentar {
 	private String consumoAgua;
 	
 	@OneToMany(mappedBy = "historicoAlimentar", cascade = CascadeType.REMOVE)
-	private List<SuplementoPaciente> suplementosPaciente;
+	private Set<SuplementoPaciente> suplementosPaciente;
 	
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
 	@OnDelete(action = OnDeleteAction.CASCADE)

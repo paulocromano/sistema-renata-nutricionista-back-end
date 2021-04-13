@@ -1,12 +1,10 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.alimentar.dto;
 
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.model.HistoricoAlimentar;
 import br.com.renatanutricionista.ficha.identificacao.historico.suplemento.dto.SuplementoPacienteDTO;
-import br.com.renatanutricionista.medicamento.model.Medicamento;
+import br.com.renatanutricionista.medicamento.dto.MedicamentoDTO;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
 
@@ -20,8 +18,8 @@ public class HistoricoAlimentarDTO {
 	private String alimentosPacienteNaoGosta;
 	private String alteracoesGastrointestinal;
 	private String consumoAgua;
-	private List<SuplementoPacienteDTO> suplementosPaciente;
-	private Set<Medicamento> medicamentosPaciente;
+	private Set<SuplementoPacienteDTO> suplementosPaciente;
+	private Set<MedicamentoDTO> medicamentosPaciente;
 	private String dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar;
 	
 	
@@ -32,14 +30,9 @@ public class HistoricoAlimentarDTO {
 		alimentosPacienteNaoGosta = historicoAlimentar.getAlimentosPacienteNaoGosta();
 		alteracoesGastrointestinal = historicoAlimentar.getAlteracoesGastrointestinal();
 		consumoAgua = historicoAlimentar.getConsumoAgua();
-		suplementosPaciente = SuplementoPacienteDTO.converterParaListaSuplementoPacienteDTO(historicoAlimentar.getSuplementosPaciente());
-		medicamentosPaciente = historicoAlimentar.getMedicamentos();
+		suplementosPaciente = SuplementoPacienteDTO.converterParaSetSuplementoPacienteDTO(historicoAlimentar.getSuplementosPaciente());
+		medicamentosPaciente = MedicamentoDTO.converterParaSetMedicamentoDTOEmOrdemAlfabetica(historicoAlimentar.getMedicamentos());
 		dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(
 				historicoAlimentar.getDataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar());
-	}
-	
-	
-	public static List<HistoricoAlimentarDTO> converterParaListaHistoricoAlimentarDTO(List<HistoricoAlimentar> historicoAlimentar) {
-		return historicoAlimentar.stream().map(HistoricoAlimentarDTO::new).collect(Collectors.toList());
 	}
 }

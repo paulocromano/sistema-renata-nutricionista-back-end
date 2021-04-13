@@ -1,6 +1,7 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.suplemento.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,11 +39,11 @@ public class SuplementoPaciente {
 	@Size(max = 250, message = "O campo Forma de Preparo deve ter no máximo {max} caracteres!")
 	private String formaPreparo;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "historico_alimentar_id")
 	private HistoricoAlimentar historicoAlimentar;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "suplemento_id")
 	@NotNull(message = "O objeto Suplemento não pode estar nulo!")
 	private Suplemento suplemento;

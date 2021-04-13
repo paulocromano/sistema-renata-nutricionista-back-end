@@ -1,8 +1,6 @@
 package br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.dto;
 
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.dto.FrequenciaAlimentarDTO;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.enums.ConsumoCarneVermelha;
@@ -37,12 +35,5 @@ public class QuestionarioFrequenciaAlimentarDTO {
 		consumoCarneVermelha = ConsumoCarneVermelha.concatenarModosPreparoCarneVermelha(questionario.getConsumoCarneVermelha());
 		consumoFrango = ConsumoFrango.concatenarModosConsumoFrango(questionario.getConsumoFrango());
 		consumoPeixe = ConsumoPeixe.concatenarModosConsumoPeixe(questionario.getConsumoPeixe());
-	}
-	
-	
-	public static List<QuestionarioFrequenciaAlimentarDTO> converterParaQuestionarioFrequenciaAlimentarDTO(
-			List<QuestionarioFrequenciaAlimentar> questionariosFrequenciaAlimentar) {
-		
-		return questionariosFrequenciaAlimentar.stream().map(QuestionarioFrequenciaAlimentarDTO::new).collect(Collectors.toList());
 	}
 }

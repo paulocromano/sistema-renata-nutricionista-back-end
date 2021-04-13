@@ -2,6 +2,7 @@ package br.com.renatanutricionista.ficha.identificacao.historico.patologia.pacie
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,11 +36,11 @@ public class PatologiaPaciente {
 	@NotNull(message = "O campo de Quantos Anos que o Paciente possui a Patologia não pode estar nulo!")
 	private Integer quantosAnosPosssuiPatologia;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "historico_social_paciente_id")
 	private HistoricoSocial historicoSocial;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "patologia_id", referencedColumnName = "id")
 	@NotNull(message = "O objeto Patologia não pode estar vazio!")
 	private Patologia patologia;

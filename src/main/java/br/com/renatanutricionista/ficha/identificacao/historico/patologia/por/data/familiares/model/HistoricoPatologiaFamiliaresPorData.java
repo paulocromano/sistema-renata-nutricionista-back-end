@@ -55,7 +55,7 @@ public class HistoricoPatologiaFamiliaresPorData {
 			fetch = FetchType.LAZY)
 	private Set<HistoricoPatologiaFamiliares> patologiasFamiliares;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "paciente_id")
 	@NotNull(message = "O objeto Paciente não pode estar nulo!")
 	private Paciente paciente;

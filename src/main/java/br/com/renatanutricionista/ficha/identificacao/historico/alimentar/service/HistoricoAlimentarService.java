@@ -44,7 +44,7 @@ public class HistoricoAlimentarService {
 		historicoAlimentarRepository.save(historicoAlimentar);
 		
 		try {
-			suplementoPacienteRepository.saveAll(historicoAlimentarFORM.gerarListaSuplementosPaciente(historicoAlimentar));
+			suplementoPacienteRepository.saveAll(historicoAlimentarFORM.gerarSetSuplementosPaciente(historicoAlimentar));
 		}
 		catch (Exception e) {
 			throw new IntegrityConstraintViolationException("Existe(m) Suplemento(s) inválido(s) na lista de Suplementos "

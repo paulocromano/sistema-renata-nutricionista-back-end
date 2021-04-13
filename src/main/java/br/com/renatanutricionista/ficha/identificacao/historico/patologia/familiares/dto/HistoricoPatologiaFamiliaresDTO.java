@@ -4,11 +4,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.model.HistoricoPatologiaFamiliares;
+import br.com.renatanutricionista.utils.FormatacaoUtils;
 import lombok.Getter;
 
 
 @Getter
-public class HistoricoPatologiaFamiliaresDTO {
+public class HistoricoPatologiaFamiliaresDTO implements Comparable<HistoricoPatologiaFamiliaresDTO> {
 
 	private Long id;
 	private String patologiaFamiliares;
@@ -32,7 +33,13 @@ public class HistoricoPatologiaFamiliaresDTO {
 	}
 	
 	
-	public static Set<HistoricoPatologiaFamiliaresDTO> converterParaListaHistoricoPatologiaFamiliaresDTO(Set<HistoricoPatologiaFamiliares> historicoPatologiaFamiliares) {
-		return historicoPatologiaFamiliares.stream().map(HistoricoPatologiaFamiliaresDTO::new).collect(Collectors.toSet());
+	@Override
+	public int compareTo(HistoricoPatologiaFamiliaresDTO other) {
+		return FormatacaoUtils.COLLATOR.compare(patologiaFamiliares, other.getPatologiaFamiliares());
+	}
+	
+	
+	public static Set<HistoricoPatologiaFamiliaresDTO> converterParaSetHistoricoPatologiaFamiliaresDTO(Set<HistoricoPatologiaFamiliares> historicoPatologiaFamiliares) {
+		return historicoPatologiaFamiliares.stream().map(HistoricoPatologiaFamiliaresDTO::new).sorted().collect(Collectors.toSet());
 	}
 }

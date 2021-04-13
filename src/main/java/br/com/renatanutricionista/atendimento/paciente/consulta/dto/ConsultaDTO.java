@@ -1,9 +1,7 @@
 package br.com.renatanutricionista.atendimento.paciente.consulta.dto;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.composicao.corporal.dto.AvaliacaoComposicaoCorporalDTO;
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.consumo.habitual.dto.AvaliacaoConsumoHabitualDTO;
@@ -12,33 +10,37 @@ import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.dto.C
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.registro.dieta.dto.RegistroDietaDTO;
 import br.com.renatanutricionista.atendimento.paciente.retorno.dto.RetornoConsultaDTO;
-import br.com.renatanutricionista.calendario.atendimento.paciente.dto.CalendarioAtendimentoPacienteDTO;
+import br.com.renatanutricionista.paciente.dto.PacienteDTO;
 import br.com.renatanutricionista.utils.ConversaoUtils;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ConsultaDTO {
 
-	private Long id;
-	private String situacaoConsulta;
-	private String data;
-	private String horario;
+	protected Long id;
+	private PacienteDTO paciente;
+	protected String situacaoConsulta;
+	protected String data;
+	protected String horario;
 	private String formaPagamento;
 	private Integer numeroParcelas;
 	private BigDecimal valorConsulta;
 	private String motivoConsulta;
-	private CalendarioAtendimentoPacienteDTO periodoConsulta;
 	private AvaliacaoConsumoHabitualDTO avaliacaoConsumoHabitual;
 	private AvaliacaoComposicaoCorporalDTO avaliacaoComposicaoCorporal;
 	private AvaliacaoMassaMuscularCorporeaDTO avaliacaoMassaMuscularCorporea;
 	private CondutaNutricionalDTO condutaNutricional;
 	private RegistroDietaDTO registroDietaHabitual;
-	private RetornoConsultaDTO retornoConsulta;
+	protected RetornoConsultaDTO retornoConsulta;
 	
 	
 	public ConsultaDTO(Consulta consulta) {
 		id = consulta.getId();
+		paciente = new PacienteDTO(consulta.getPaciente());
 		situacaoConsulta = consulta.getSituacaoConsulta().getDescricao();
 		data = ConversaoUtils.converterLocalDateParaString(consulta.getDataHorario().toLocalDate());
 		horario = consulta.getDataHorario().toLocalTime().toString();
@@ -63,15 +65,10 @@ public class ConsultaDTO {
 		if (Objects.nonNull(consulta.getCondutaNutricional()))
 			condutaNutricional = new CondutaNutricionalDTO(consulta.getCondutaNutricional());
 		
-		if (Objects.nonNull(consulta.getRetornoConsulta()))
-			retornoConsulta = new RetornoConsultaDTO(consulta.getRetornoConsulta());
-		
 		if (Objects.nonNull(consulta.getRegistroDietaHabitual()))
 			registroDietaHabitual = new RegistroDietaDTO(consulta.getRegistroDietaHabitual());
-	}
-	
-	
-	public static List<ConsultaDTO> converterParaListaConsultaDTO(List<Consulta> consultas) {
-		return consultas.stream().map(ConsultaDTO::new).collect(Collectors.toList());
+		
+		if (Objects.nonNull(consulta.getRetornoConsulta()))
+			retornoConsulta = new RetornoConsultaDTO(consulta.getRetornoConsulta());
 	}
 }

@@ -1,5 +1,6 @@
 package br.com.renatanutricionista.ficha.identificacao.atividade.fisica.dto;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,11 +24,16 @@ public class AtividadeFisicaDTO {
 		atividadePraticada = atividadeFisica.getAtividadePraticada();
 		frequencia = atividadeFisica.getFrequencia().getDescricao();
 		duracao = atividadeFisica.getDuracao();
-		dataHoraUltimaAtualizacaoDadosDaAtividadeFisica = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(atividadeFisica.getDataHoraUltimaAtualizacaoDadosDaAtividadeFisica());
+		dataHoraUltimaAtualizacaoDadosDaAtividadeFisica = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(
+				atividadeFisica.getDataHoraUltimaAtualizacaoDadosDaAtividadeFisica());
 	}
 	
 	
 	public static List<AtividadeFisicaDTO> converterParaListaAtividadeFisicaDTO(List<AtividadeFisica> atividadesFisica) {
-		return atividadesFisica.stream().map(AtividadeFisicaDTO::new).collect(Collectors.toList());
+		return atividadesFisica.stream()
+				.sorted(Comparator.comparing(AtividadeFisica::getDataHoraUltimaAtualizacaoDadosDaAtividadeFisica)
+				.reversed())
+				.map(AtividadeFisicaDTO::new)
+				.collect(Collectors.toList());
 	}
 }

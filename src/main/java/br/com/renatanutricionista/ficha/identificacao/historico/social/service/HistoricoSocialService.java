@@ -33,7 +33,7 @@ public class HistoricoSocialService {
 		HistoricoSocial historicoSocial = historicoSocialRepository.save(historicoSocialFORM.converterParaHistoricoSocial(paciente));
 		
 		try {
-			patologiaPacienteRepository.saveAll(historicoSocialFORM.gerarListaPatologiasPaciente(historicoSocial));
+			patologiaPacienteRepository.saveAll(historicoSocialFORM.gerarSetPatologiasPaciente(historicoSocial));
 		}
 		catch (Exception e) {
 			throw new IntegrityConstraintViolationException("Existe(m) Patologia(s) inválida(s) na lista de Patologias " + 

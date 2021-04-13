@@ -75,7 +75,7 @@ public class Consulta {
 	@Size(max = 250, message = "O campo Motivo da Consulta deve ter no máximo {max} caracteres!")
 	private String motivoConsulta;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "paciente_id")
 	@NotNull(message = "O objeto Paciente não pode estar nulo!")
 	private Paciente paciente;

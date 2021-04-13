@@ -5,11 +5,12 @@ import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.model.PatologiaPaciente;
 import br.com.renatanutricionista.patologia.dto.PatologiaDTO;
+import br.com.renatanutricionista.utils.FormatacaoUtils;
 import lombok.Getter;
 
 
 @Getter
-public class PatologiaPacienteDTO {
+public class PatologiaPacienteDTO implements Comparable<PatologiaPacienteDTO> {
 
 	private Long id;
 	private Integer quantosAnosPosssuiPatologia;
@@ -23,7 +24,13 @@ public class PatologiaPacienteDTO {
 	}
 	
 	
+	@Override
+	public int compareTo(PatologiaPacienteDTO other) {
+		return FormatacaoUtils.COLLATOR.compare(patologia, other.getPatologia());
+	}
+	
+	
 	public static Set<PatologiaPacienteDTO> converterParaSetPatologiaPacienteDTO(Set<PatologiaPaciente> patologiasPaciente) {
-		return patologiasPaciente.stream().map(PatologiaPacienteDTO::new).collect(Collectors.toSet());
+		return patologiasPaciente.stream().map(PatologiaPacienteDTO::new).sorted().collect(Collectors.toSet());
 	}
 }

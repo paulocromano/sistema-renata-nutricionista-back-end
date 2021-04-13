@@ -1,7 +1,6 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.dto;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.dto.HistoricoPatologiaFamiliaresDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.model.HistoricoPatologiaFamiliaresPorData;
@@ -25,14 +24,7 @@ public class HistoricoPatologiaFamiliaresPorDataDTO {
 		dataHoraCadastroPatologiasFamiliares = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(
 				historicoPatologiaFamiliaresPorData.getDataHoraCadastroPatologiasFamiliares());
 		
-		patologiasFamiliares = HistoricoPatologiaFamiliaresDTO.converterParaListaHistoricoPatologiaFamiliaresDTO(
+		patologiasFamiliares = HistoricoPatologiaFamiliaresDTO.converterParaSetHistoricoPatologiaFamiliaresDTO(
 				historicoPatologiaFamiliaresPorData.getPatologiasFamiliares());
-	}
-	
-	
-	public static Set<HistoricoPatologiaFamiliaresPorDataDTO> converterParaSetHistoricoPatologiaFamiliaresPorDataDTO(
-			Set<HistoricoPatologiaFamiliaresPorData> historicoPatologiaFamiliaresPorDatas) {
-		
-		return historicoPatologiaFamiliaresPorDatas.stream().map(HistoricoPatologiaFamiliaresPorDataDTO::new).collect(Collectors.toSet());
 	}
 }
