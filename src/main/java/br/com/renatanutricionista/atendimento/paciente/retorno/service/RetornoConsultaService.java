@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import br.com.renatanutricionista.atendimento.paciente.consulta.enums.SituacaoConsulta;
+import br.com.renatanutricionista.atendimento.paciente.consulta.enums.situacao.consulta.SituacaoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.retorno.enums.SituacaoRetorno;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.AgendamentoRetornoFORM;

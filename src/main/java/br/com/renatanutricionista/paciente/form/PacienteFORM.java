@@ -12,7 +12,7 @@ import br.com.renatanutricionista.endereco.form.EnderecoFORM;
 import br.com.renatanutricionista.paciente.enums.EtniaConversao;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.utils.ConversaoUtils;
-import br.com.renatanutricionista.utils.enums.SexoUtlisConversao;
+import br.com.renatanutricionista.utils.enums.sexo.SexoUtlisConversao;
 import lombok.Getter;
 import lombok.Setter;
 

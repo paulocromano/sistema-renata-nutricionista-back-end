@@ -5,7 +5,7 @@ import java.util.Set;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.dto.PatologiaPacienteDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.utils.ConversaoUtils;
-import br.com.renatanutricionista.utils.enums.SexoUtils;
+import br.com.renatanutricionista.utils.enums.sexo.SexoUtils;
 import lombok.Getter;
 
 

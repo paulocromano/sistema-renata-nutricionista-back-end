@@ -29,9 +29,8 @@ import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.diu
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.diurese.frequencia.FrequenciaDiurese;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.estado.civil.EstadoCivil;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.habito.intestinal.HabitoIntestinal;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.mulher.menopausa.Menopausa;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.mulher.menstruacao.normal.MenstruacaoNormal;
 import br.com.renatanutricionista.paciente.model.Paciente;
+import br.com.renatanutricionista.utils.enums.resposta.RespostaUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -102,13 +101,13 @@ public class HistoricoSocial {
 	private Integer horasSono;
 	
 	@Column(name = "menstruacao_normal")
-	private MenstruacaoNormal menstruacaoNormal;
+	private RespostaUtils menstruacaoNormal;
 	
 	@Column(name = "motivo_anormalidade_menstruacao")
 	@Size(max = 200, message = "O campo Motivo Anormalidade da Menstruação deve ter no máximo {max} caracteres!")
 	private String motivoAnormalidadeMenstruacao;
 	
-	private Menopausa menopausa;
+	private RespostaUtils menopausa;
 	
 	@Column(name = "quantos_anos_menopausa")
 	private Integer quantosAnosEstaNaMenopausa;
@@ -127,8 +126,8 @@ public class HistoricoSocial {
 	private HistoricoSocial(String profissao, EstadoCivil estadoCivil, String composicaoFamiliar, String localRefeicoes,
 			ConsumoBebidasAlcoolicas frequenciaConsumoBebidasAlcoolicas,ConsumoCigarro consumoCigarro, Integer quantidadeCigarrosPorDia,
 			HabitoIntestinal habitoIntestinal, ConsistenciaFezes consistenciaFezes, FrequenciaDiurese frequenciaDiurese,
-			ColoracaoDiurese coloracaoDiurese, Integer horasSono, MenstruacaoNormal menstruacaoNormal, 
-			String motivoAnormalidadeMenstruacao, Menopausa menopausa, Integer quantosAnosEstaNaMenopausa, 
+			ColoracaoDiurese coloracaoDiurese, Integer horasSono, RespostaUtils menstruacaoNormal, 
+			String motivoAnormalidadeMenstruacao, RespostaUtils menopausa, Integer quantosAnosEstaNaMenopausa, 
 			LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoSocial, Paciente paciente) {
 		
 		this.profissao = profissao;
@@ -166,9 +165,9 @@ public class HistoricoSocial {
 		private FrequenciaDiurese frequenciaDiurese;
 		private ColoracaoDiurese coloracaoDiurese;
 		private Integer horasSono;
-		private MenstruacaoNormal menstruacaoNormal;
+		private RespostaUtils menstruacaoNormal;
 		private String motivoAnormalidadeMenstruacao;
-		private Menopausa menopausa;
+		private RespostaUtils menopausa;
 		private Integer quantosAnosEstaNaMenopausa;
 		private LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoSocial;
 		private Paciente paciente;
@@ -234,7 +233,7 @@ public class HistoricoSocial {
 			return this;
 		}
 		
-		public Builder menstruacaoNormal(MenstruacaoNormal menstruacaoNormal) {
+		public Builder menstruacaoNormal(RespostaUtils menstruacaoNormal) {
 			this.menstruacaoNormal = menstruacaoNormal;
 			return this;
 		}
@@ -244,7 +243,7 @@ public class HistoricoSocial {
 			return this;
 		}
 		
-		public Builder menopausa(Menopausa menopausa) {
+		public Builder menopausa(RespostaUtils menopausa) {
 			this.menopausa = menopausa;
 			return this;
 		}

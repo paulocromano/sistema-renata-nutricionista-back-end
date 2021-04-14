@@ -7,8 +7,8 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
-import br.com.renatanutricionista.atendimento.paciente.consulta.enums.FormaPagamento;
-import br.com.renatanutricionista.atendimento.paciente.consulta.enums.SituacaoConsulta;
+import br.com.renatanutricionista.atendimento.paciente.consulta.enums.forma.pagamento.FormaPagamento;
+import br.com.renatanutricionista.atendimento.paciente.consulta.enums.situacao.consulta.SituacaoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import lombok.Getter;
 import lombok.Setter;

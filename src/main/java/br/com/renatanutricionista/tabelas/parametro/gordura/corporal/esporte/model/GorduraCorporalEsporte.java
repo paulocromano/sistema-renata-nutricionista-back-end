@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import br.com.renatanutricionista.tabelas.parametro.gordura.corporal.esporte.enums.ModalidadeEsporte;
-import br.com.renatanutricionista.utils.enums.SexoUtils;
+import br.com.renatanutricionista.utils.enums.sexo.SexoUtils;
 import lombok.Getter;
 
 

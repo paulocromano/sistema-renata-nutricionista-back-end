@@ -4,10 +4,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.enums.FamiliarTemPatologiaConversao;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.enums.PatologiaFamiliares;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.model.HistoricoPatologiaFamiliares;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.model.HistoricoPatologiaFamiliaresPorData;
+import br.com.renatanutricionista.utils.enums.resposta.RespostaUtils;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,40 +23,39 @@ public class HistoricoPatologiaFamiliaresFORM {
 	
 	@NotEmpty(message = "O campo Pai não pode estar nulo/vazio!")
 	@Size(max = 1, message = "O campo Pai deve ter no máximo {max} caracter")
-	private String pai;
+	private RespostaUtils pai;
 	
 	@NotEmpty(message = "O campo Mãe não pode estar nulo/vazio!")
 	@Size(max = 1, message = "O campo Mãe deve ter no máximo {max} caracter")
-	private String mae;
+	private RespostaUtils mae;
 
 	@NotEmpty(message = "O campo Avôs não pode estar nulo/vazio!")
 	@Size(max = 1, message = "O campo Avôs deve ter no máximo {max} caracter")
-	private String avosMasculinos;
+	private RespostaUtils avosMasculinos;
 
 	@NotEmpty(message = "O campo Avós não pode estar nulo/vazio!")
 	@Size(max = 1, message = "O campo Avós deve ter no máximo {max} caracter")
-	private String avosFemininos;
+	private RespostaUtils avosFemininos;
 	
 	@NotEmpty(message = "O campo Tios não pode estar nulo/vazio!")
 	@Size(max = 1, message = "O campo Tios deve ter no máximo {max} caracter")
-	private String tios;
+	private RespostaUtils tios;
 	
 	@NotEmpty(message = "O campo Tias não pode estar nulo/vazio!")
 	@Size(max = 1, message = "O campo Tias deve ter no máximo {max} caracter")
-	private String tias;
+	private RespostaUtils tias;
 	
 	
 	public HistoricoPatologiaFamiliares converterParaHistoricoPatologiaFamiliares(HistoricoPatologiaFamiliaresPorData historicoPatologiaFamiliaresPorData) {
-		FamiliarTemPatologiaConversao familiarTemPatologia = new FamiliarTemPatologiaConversao();
 		
 		return new HistoricoPatologiaFamiliares.Builder()
 				.patologiaFamiliares(patologiaFamiliares)
-				.pai(familiarTemPatologia.convertToEntityAttribute(pai))
-				.mae(familiarTemPatologia.convertToEntityAttribute(mae))
-				.avosMasculinos(familiarTemPatologia.convertToEntityAttribute(avosMasculinos))
-				.avosFemininos(familiarTemPatologia.convertToEntityAttribute(avosFemininos))
-				.tios(familiarTemPatologia.convertToEntityAttribute(tios))
-				.tias(familiarTemPatologia.convertToEntityAttribute(tias))
+				.pai(pai)
+				.mae(mae)
+				.avosMasculinos(avosMasculinos)
+				.avosFemininos(avosFemininos)
+				.tios(tios)
+				.tias(tias)
 				.historicoPatologiaFamiliaresPorData(historicoPatologiaFamiliaresPorData)
 				.build();
 	}

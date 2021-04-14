@@ -20,12 +20,11 @@ import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.diu
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.diurese.frequencia.FrequenciaDiurese;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.estado.civil.EstadoCivil;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.habito.intestinal.HabitoIntestinal;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.mulher.menopausa.Menopausa;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.mulher.menstruacao.normal.MenstruacaoNormal;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial.Builder;
 import br.com.renatanutricionista.paciente.model.Paciente;
-import br.com.renatanutricionista.utils.enums.SexoUtils;
+import br.com.renatanutricionista.utils.enums.resposta.RespostaUtils;
+import br.com.renatanutricionista.utils.enums.sexo.SexoUtils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -75,12 +74,12 @@ public class HistoricoSocialFORM {
 	@NotNull(message = "O campo Horas de Sono não pode ser nulo!")
 	private Integer horasSono;
 	
-	private MenstruacaoNormal menstruacaoNormal;
+	private RespostaUtils menstruacaoNormal;
 	
 	@Size(max = 200, message = "O campo Motivo Anormalidade da Menstruação deve ter no máximo {max} caracteres!")
 	private String motivoAnormalidadeMenstruacao;
 
-	private Menopausa menopausa;
+	private RespostaUtils menopausa;
 	
 	private Integer quantosAnosEstaNaMenopausa;
 	
@@ -138,12 +137,12 @@ public class HistoricoSocialFORM {
 	}
 	
 	private void validarMotivoMenstruacaoAnormal() {
-		if (menstruacaoNormal.equals(MenstruacaoNormal.NAO) && Objects.isNull(motivoAnormalidadeMenstruacao))
+		if (menstruacaoNormal.equals(RespostaUtils.NAO) && Objects.isNull(motivoAnormalidadeMenstruacao))
 			throw new PacienteException("O Motivo da Anormalidade da Menstruação não pode estar nula!");
 	}
 	
 	private void validarTempoPacienteEstaNaMenopausa() {
-		if (menopausa.equals(Menopausa.SIM) && Objects.isNull(quantosAnosEstaNaMenopausa))
+		if (menopausa.equals(RespostaUtils.SIM) && Objects.isNull(quantosAnosEstaNaMenopausa))
 			throw new PacienteException("O campo de Quantos Anos a Paciente está na Menopausa não "
 					+ "não pode estar nulo!");
 	}

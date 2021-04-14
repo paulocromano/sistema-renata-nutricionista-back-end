@@ -7,7 +7,7 @@ import br.com.renatanutricionista.atendimento.paciente.avaliacao.composicao.corp
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.consumo.habitual.form.AvaliacaoConsumoHabitualFORM;
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.massa.muscular.corporea.antropometrica.form.AvaliacaoMassaMuscularCorporeaFORM;
 import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.form.CondutaNutricionalFORM;
-import br.com.renatanutricionista.atendimento.paciente.consulta.enums.SituacaoConsulta;
+import br.com.renatanutricionista.atendimento.paciente.consulta.enums.situacao.consulta.SituacaoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.registro.dieta.enums.TipoRegistroDieta;
 import br.com.renatanutricionista.atendimento.paciente.registro.dieta.form.RegistroDietaFORM;

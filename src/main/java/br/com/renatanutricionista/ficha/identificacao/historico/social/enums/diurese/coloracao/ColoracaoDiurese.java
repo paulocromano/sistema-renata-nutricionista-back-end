@@ -1,12 +1,13 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.social.enums.diurese.coloracao;
 
+import br.com.renatanutricionista.utils.conversao.enums.GettersEnum;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public enum ColoracaoDiurese {
+public enum ColoracaoDiurese implements GettersEnum<ColoracaoDiurese> {
 
 	AMARELO_BEM_CLARO("0", "Amarelo bem claro"),
 	AMARELO_CLARO("1", "Amarelo claro"),

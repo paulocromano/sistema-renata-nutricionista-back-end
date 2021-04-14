@@ -6,7 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import br.com.renatanutricionista.atendimento.paciente.consulta.enums.SituacaoConsulta;
+import br.com.renatanutricionista.atendimento.paciente.consulta.enums.situacao.consulta.SituacaoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.calendario.atendimento.paciente.enums.PeriodoDisponivel;
 import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;

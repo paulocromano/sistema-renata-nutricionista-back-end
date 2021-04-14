@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.renatanutricionista.atendimento.paciente.consulta.dto.InformacoesConsultaHistoricoParaCadastroDTO;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.AgendamentoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.ConfirmacaoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.ConsultaFORM;
@@ -73,6 +74,15 @@ public class ConsultaResource {
 	@Transactional
 	public ResponseEntity<Void> iniciarConsulta(@PathVariable Long idPaciente, @PathVariable Long idConsulta) { 
 		return consultaService.iniciarConsulta(idPaciente, idConsulta);
+	}
+	
+	
+	@GetMapping("/informacoes-consulta-historicos-cadastro/{idPaciente}/{idConsulta}")
+	@Transactional
+	public ResponseEntity<InformacoesConsultaHistoricoParaCadastroDTO> informacoesPacienteHistoricosParaCadastroNaConsulta(
+			@PathVariable Long idPaciente, @PathVariable Long idConsulta) {
+		
+		return consultaService.informacoesPacienteHistoricosParaCadastroNaConsulta(idPaciente, idConsulta);
 	}
 	
 	

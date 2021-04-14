@@ -10,7 +10,7 @@ import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.dto.C
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.registro.dieta.dto.RegistroDietaDTO;
 import br.com.renatanutricionista.atendimento.paciente.retorno.dto.RetornoConsultaDTO;
-import br.com.renatanutricionista.paciente.dto.PacienteDTO;
+import br.com.renatanutricionista.paciente.dto.PacientePreviaHistoricosDTO;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class ConsultaDTO {
 
 	protected Long id;
-	private PacienteDTO paciente;
+	private PacientePreviaHistoricosDTO pacientePreviaHistoricos;
 	protected String situacaoConsulta;
 	protected String data;
 	protected String horario;
@@ -40,7 +40,7 @@ public class ConsultaDTO {
 	
 	public ConsultaDTO(Consulta consulta) {
 		id = consulta.getId();
-		paciente = new PacienteDTO(consulta.getPaciente());
+		pacientePreviaHistoricos = new PacientePreviaHistoricosDTO(consulta.getPaciente());
 		situacaoConsulta = consulta.getSituacaoConsulta().getDescricao();
 		data = ConversaoUtils.converterLocalDateParaString(consulta.getDataHorario().toLocalDate());
 		horario = consulta.getDataHorario().toLocalTime().toString();

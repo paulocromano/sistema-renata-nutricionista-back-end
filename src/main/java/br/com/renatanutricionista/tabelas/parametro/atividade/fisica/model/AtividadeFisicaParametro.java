@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 
 import br.com.renatanutricionista.tabelas.parametro.atividade.fisica.enums.TipoPessoaAtividadeFisica;
-import br.com.renatanutricionista.utils.enums.SexoUtils;
+import br.com.renatanutricionista.utils.enums.sexo.SexoUtils;
 import lombok.Getter;
 
 

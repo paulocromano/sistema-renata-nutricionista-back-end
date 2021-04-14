@@ -25,13 +25,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.endereco.model.Endereco;
-import br.com.renatanutricionista.ficha.identificacao.atividade.fisica.model.AtividadeFisica;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.model.QuestionarioFrequenciaAlimentar;
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.model.HistoricoAlimentar;
+import br.com.renatanutricionista.ficha.identificacao.historico.atividade.fisica.model.HistoricoAtividadeFisica;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.model.HistoricoPatologiaFamiliaresPorData;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.paciente.enums.Etnia;
-import br.com.renatanutricionista.utils.enums.SexoUtils;
+import br.com.renatanutricionista.utils.enums.sexo.SexoUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -72,7 +72,7 @@ public class Paciente {
 	@Pattern(regexp = "(\\(?\\d{2}\\)?\\s)?(\\d{4,5}\\-\\d{4})", message = "O formato do número do Telefone para Recado é inválido!")
 	private String telefoneRecado;
 	
-	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "endereco_id")
 	@NotNull(message = "O objeto Endereço do Paciente não pode estar nulo!")
 	private Endereco endereco;
@@ -84,7 +84,7 @@ public class Paciente {
 	private List<HistoricoAlimentar> historicoAlimentar;
 	
 	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-	private List<AtividadeFisica> atividadeFisica;
+	private List<HistoricoAtividadeFisica> historicoAtividadeFisica;
 	
 	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private Set<HistoricoPatologiaFamiliaresPorData> historicoPatologiaFamiliaresPorData;

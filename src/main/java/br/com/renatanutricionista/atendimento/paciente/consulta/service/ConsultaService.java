@@ -9,7 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import br.com.renatanutricionista.atendimento.paciente.consulta.enums.SituacaoConsulta;
+import br.com.renatanutricionista.atendimento.paciente.consulta.dto.InformacoesConsultaHistoricoParaCadastroDTO;
+import br.com.renatanutricionista.atendimento.paciente.consulta.enums.situacao.consulta.SituacaoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.AgendamentoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.ConfirmacaoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.ConsultaFORM;
@@ -20,6 +21,7 @@ import br.com.renatanutricionista.atendimento.paciente.utils.AtendimentoUtils;
 import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import br.com.renatanutricionista.calendario.atendimento.paciente.service.CalendarioAtendimentoPacienteService;
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
+import br.com.renatanutricionista.paciente.dto.PacientePreviaHistoricosDTO;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.utils.PacienteUtils;
 import br.com.renatanutricionista.utils.RelatorioUtils;
@@ -114,6 +116,14 @@ public class ConsultaService {
 	}
 	
 	
+	public ResponseEntity<InformacoesConsultaHistoricoParaCadastroDTO> informacoesPacienteHistoricosParaCadastroNaConsulta(Long idPaciente, Long idConsulta) {
+		Consulta consulta = atendimentoUtils.verificarPacienteConsulta(idPaciente, idConsulta);	
+		PacientePreviaHistoricosDTO pacientePreviaHistoricos = new PacientePreviaHistoricosDTO(consulta.getPaciente());
+		
+		return ResponseEntity.ok().body(new InformacoesConsultaHistoricoParaCadastroDTO(pacientePreviaHistoricos));
+	}
+	
+	
 	public ResponseEntity<Void> finalizarConsulta(Long idPaciente, Long idConsulta, ConsultaFORM formularioConsulta) {
 		Consulta consulta = atendimentoUtils.verificarPacienteConsulta(idPaciente, idConsulta);	
 		
@@ -135,7 +145,7 @@ public class ConsultaService {
 		if (Objects.isNull(paciente.getHistoricoAlimentar()))
 			throw new NullPointerException("O Histórico Alimentar do Paciente não pode ser nulo!");
 		
-		if (Objects.isNull(paciente.getAtividadeFisica()))
+		if (Objects.isNull(paciente.getHistoricoAtividadeFisica()))
 			throw new NullPointerException("O Histórico de Atividades Físicas não pode ser nulo!");
 		
 		if (Objects.isNull(paciente.getHistoricoPatologiaFamiliaresPorData()))

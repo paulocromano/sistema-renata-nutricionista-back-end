@@ -12,9 +12,9 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.enums.FamiliarTemPatologia;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.enums.PatologiaFamiliares;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.model.HistoricoPatologiaFamiliaresPorData;
+import br.com.renatanutricionista.utils.enums.resposta.RespostaUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,24 +40,24 @@ public class HistoricoPatologiaFamiliares {
 	private PatologiaFamiliares patologiaFamiliares;
 	
 	@NotNull(message = "O campo Pai não pode estar nulo!")
-	private FamiliarTemPatologia pai;
+	private RespostaUtils pai;
 	
 	@NotNull(message = "O campo Mãe não pode estar nulo!")
-	private FamiliarTemPatologia mae;
+	private RespostaUtils mae;
 	
 	@Column(name = "avos_masculinos")
 	@NotNull(message = "O campo Avôs não pode estar nulo!")
-	private FamiliarTemPatologia avosMasculinos;
+	private RespostaUtils avosMasculinos;
 	
 	@Column(name = "avos_femininos")
 	@NotNull(message = "O campo Avós não pode estar nulo!")
-	private FamiliarTemPatologia avosFemininos;
+	private RespostaUtils avosFemininos;
 	
 	@NotNull(message = "O campo Tios não pode estar nulo!")
-	private FamiliarTemPatologia tios;
+	private RespostaUtils tios;
 	
 	@NotNull(message = "O campo Tias não pode estar nulo!")
-	private FamiliarTemPatologia tias;
+	private RespostaUtils tias;
 	
 	@ManyToOne
 	@JoinColumn(name = "historico_patologia_familiares_por_data_id")
@@ -67,12 +67,12 @@ public class HistoricoPatologiaFamiliares {
 	public static class Builder {
 		
 		private PatologiaFamiliares patologiaFamiliares;
-		private FamiliarTemPatologia pai;
-		private FamiliarTemPatologia mae;
-		private FamiliarTemPatologia avosMasculinos;
-		private FamiliarTemPatologia avosFemininos;
-		private FamiliarTemPatologia tios;
-		private FamiliarTemPatologia tias;
+		private RespostaUtils pai;
+		private RespostaUtils mae;
+		private RespostaUtils avosMasculinos;
+		private RespostaUtils avosFemininos;
+		private RespostaUtils tios;
+		private RespostaUtils tias;
 		private HistoricoPatologiaFamiliaresPorData historicoPatologiaFamiliaresPorData;
 		
 		
@@ -81,32 +81,32 @@ public class HistoricoPatologiaFamiliares {
 			return this;
 		}
 		
-		public Builder pai(FamiliarTemPatologia pai) {
+		public Builder pai(RespostaUtils pai) {
 			this.pai = pai;
 			return this;
 		}
 		
-		public Builder mae(FamiliarTemPatologia mae) {
+		public Builder mae(RespostaUtils mae) {
 			this.mae = mae;
 			return this;
 		}
 		
-		public Builder avosMasculinos(FamiliarTemPatologia avosMasculinos) {
+		public Builder avosMasculinos(RespostaUtils avosMasculinos) {
 			this.avosMasculinos = avosMasculinos;
 			return this;
 		}
 		
-		public Builder avosFemininos(FamiliarTemPatologia avosFemininos) {
+		public Builder avosFemininos(RespostaUtils avosFemininos) {
 			this.avosFemininos = avosFemininos;
 			return this;
 		}
 		
-		public Builder tios(FamiliarTemPatologia tios) {
+		public Builder tios(RespostaUtils tios) {
 			this.tios = tios;
 			return this;
 		}
 		
-		public Builder tias(FamiliarTemPatologia tias) {
+		public Builder tias(RespostaUtils tias) {
 			this.tias = tias;
 			return this;
 		}

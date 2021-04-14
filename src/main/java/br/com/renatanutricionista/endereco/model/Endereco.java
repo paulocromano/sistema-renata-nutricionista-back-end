@@ -1,6 +1,7 @@
 package br.com.renatanutricionista.endereco.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -58,7 +59,7 @@ public class Endereco {
 	@Size(max = 2, message = "O campo UF deve ter no máximo {max} caracteres!")
 	private String uf;
 	
-	@OneToOne(mappedBy = "endereco")
+	@OneToOne(mappedBy = "endereco", fetch = FetchType.LAZY)
 	private Paciente paciente;
 	
 	
