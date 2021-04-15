@@ -1,7 +1,9 @@
 package br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.enums;
 
-import java.util.Objects;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import br.com.renatanutricionista.utils.DesserializacaoEnum;
+import br.com.renatanutricionista.utils.conversao.enums.GettersEnum;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +11,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public enum ConsumoTipoLeite {
+@JsonDeserialize(using = DesserializacaoEnum.class)
+public enum ConsumoTipoLeite implements GettersEnum<ConsumoTipoLeite> {
 
 	INTEGRAL("0", "Integral"),
 	SEMIDESNATADO("1", "Semidesnatado"),
@@ -21,27 +24,6 @@ public enum ConsumoTipoLeite {
 	
 	private String codigo;
 	private String descricao;
-	
-	
-	public static String concatenarTiposLeiteConsumidos(String codigosLeite) {
-		if (Objects.isNull(codigosLeite) || codigosLeite.trim().isEmpty())
-			return null;
-
-		StringBuilder leitesBuilder = new StringBuilder();
-		
-		for (String codigoLeite : codigosLeite.split(";")) {
-			for (ConsumoTipoLeite consumoTipoLeite : ConsumoTipoLeite.values()) {
-				if (codigoLeite.equals(consumoTipoLeite.codigo)) {
-					leitesBuilder.append(consumoTipoLeite.descricao);
-					leitesBuilder.append(", ");
-					
-					break;
-				}
-			}
-		}
-		
-		return leitesBuilder.substring(0, leitesBuilder.length() - 2).toString();
-	}
 	
 	
 	public static void validarCodigo(String codigosConsumoTipoLeite) {

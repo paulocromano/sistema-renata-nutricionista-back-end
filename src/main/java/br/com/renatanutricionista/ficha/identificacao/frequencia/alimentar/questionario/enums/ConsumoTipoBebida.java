@@ -1,7 +1,9 @@
 package br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.enums;
 
-import java.util.Objects;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import br.com.renatanutricionista.utils.DesserializacaoEnum;
+import br.com.renatanutricionista.utils.conversao.enums.GettersEnum;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +11,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public enum ConsumoTipoBebida {
+@JsonDeserialize(using = DesserializacaoEnum.class)
+public enum ConsumoTipoBebida implements GettersEnum<ConsumoTipoBebida> {
 
 	NORMAL("N", "Normal"),
 	DIET_LIGHT_ZERO("D", "Diet. Light/zero"),
@@ -18,16 +21,4 @@ public enum ConsumoTipoBebida {
 	
 	private String codigo;
 	private String descricao;
-	
-	
-	public static String converterParaDescricao(String codigoConsumoTipoBebida) {
-		if (Objects.isNull(codigoConsumoTipoBebida) || codigoConsumoTipoBebida.trim().isEmpty())
-			return null;
-
-		for (ConsumoTipoBebida consumoTipoBebida : ConsumoTipoBebida.values()) 
-			if (codigoConsumoTipoBebida.equals(consumoTipoBebida.codigo))
-				return consumoTipoBebida.descricao;
-		
-		throw new IllegalArgumentException("O código de Consumo do Tipo de Bebida é inválido!");
-	}
 }

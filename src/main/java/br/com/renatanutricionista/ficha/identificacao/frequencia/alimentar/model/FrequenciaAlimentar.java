@@ -45,7 +45,7 @@ public class FrequenciaAlimentar {
 	@NotNull(message = "O campo Frequência do Consumo do Alimento não pode estar nulo!")
 	private FrequenciaConsumoAlimento frequenciaConsumoAlimento;
 	
-	@ManyToMany(mappedBy = "frequenciaConsumoAlimentos")
+	@ManyToMany(mappedBy = "frequenciaConsumoAlimentos", fetch = FetchType.LAZY)
 	private List<QuestionarioFrequenciaAlimentar> questionariosFrequenciaAlimentar;
 
 	

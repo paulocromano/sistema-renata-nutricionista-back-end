@@ -1,7 +1,9 @@
 package br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.enums;
 
-import java.util.Objects;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import br.com.renatanutricionista.utils.DesserializacaoEnum;
+import br.com.renatanutricionista.utils.conversao.enums.GettersEnum;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +11,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public enum ConsumoCarneVermelha {
+@JsonDeserialize(using = DesserializacaoEnum.class)
+public enum ConsumoCarneVermelha implements GettersEnum<ConsumoCarneVermelha> {
 
 	COM_GORDURA("0", "Com gordura"),
 	SEM_GORDURA("1", "Sem gordura"),
@@ -21,25 +24,4 @@ public enum ConsumoCarneVermelha {
 	
 	private String codigo;
 	private String descricao;
-	
-	
-	public static String concatenarModosPreparoCarneVermelha(String codigosCarne) {
-		if (Objects.isNull(codigosCarne) || codigosCarne.trim().isEmpty())
-			return null;
-
-		StringBuilder carneBuilder = new StringBuilder();
-		
-		for (String codigoCarne : codigosCarne.split(";")) {
-			for (ConsumoCarneVermelha consumoCarneVermelha : ConsumoCarneVermelha.values()) {
-				if (codigoCarne.equals(consumoCarneVermelha.codigo)) {
-					carneBuilder.append(consumoCarneVermelha.descricao);
-					carneBuilder.append(", ");
-					
-					break;
-				}
-			}
-		}
-		
-		return carneBuilder.substring(0, carneBuilder.length() - 2).toString();
-	}
 }

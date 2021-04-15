@@ -1,7 +1,9 @@
 package br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.enums;
 
-import java.util.Objects;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import br.com.renatanutricionista.utils.DesserializacaoEnum;
+import br.com.renatanutricionista.utils.conversao.enums.GettersEnum;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +11,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public enum ConsumoFrango {
+@JsonDeserialize(using = DesserializacaoEnum.class)
+public enum ConsumoFrango implements GettersEnum<ConsumoFrango> {
 
 	COM_PELE("0", "Com pele"),
 	SEM_PELE("1", "Sem pele"),
@@ -21,25 +24,4 @@ public enum ConsumoFrango {
 	
 	private String codigo;
 	private String descricao;
-	
-	
-	public static String concatenarModosConsumoFrango(String codigosFrango) {	
-		if (Objects.isNull(codigosFrango) || codigosFrango.trim().isEmpty())
-			return null;
-
-		StringBuilder frangoBuilder = new StringBuilder();
-		
-		for (String codigoConsumoFrango : codigosFrango.split(";")) {
-			for (ConsumoFrango consumoFrango : ConsumoFrango.values()) {
-				if (codigoConsumoFrango.equals(consumoFrango.codigo)) {
-					frangoBuilder.append(consumoFrango.descricao);
-					frangoBuilder.append(", ");
-					
-					break;
-				}
-			}
-		}
-		
-		return frangoBuilder.substring(0, frangoBuilder.length() - 2).toString();
-	}
 }

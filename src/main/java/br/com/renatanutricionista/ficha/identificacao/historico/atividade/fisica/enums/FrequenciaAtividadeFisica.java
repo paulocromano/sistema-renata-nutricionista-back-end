@@ -1,5 +1,9 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.atividade.fisica.enums;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import br.com.renatanutricionista.utils.DesserializacaoEnum;
+import br.com.renatanutricionista.utils.conversao.enums.GettersEnum;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +11,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public enum FrequenciaAtividadeFisica {
+@JsonDeserialize(using = DesserializacaoEnum.class)
+public enum FrequenciaAtividadeFisica implements GettersEnum<FrequenciaAtividadeFisica> {
 
 	DIARIA("D", "Diária"),
 	FREQUENTE("F", "Frequente"),

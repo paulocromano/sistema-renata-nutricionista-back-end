@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import br.com.renatanutricionista.calendario.atendimento.paciente.enums.PeriodoDisponivel;
+import br.com.renatanutricionista.utils.enums.resposta.RespostaUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,12 +40,12 @@ public class CalendarioAtendimentoPaciente {
 	
 	@Column(name = "periodo_disponivel")
 	@NotNull(message = "O campo Período Disponível não pode estar nulo!")
-	private PeriodoDisponivel periodoDisponivel;
+	private RespostaUtils periodoDisponivel;
 
 	
 	public CalendarioAtendimentoPaciente(LocalDate data, LocalTime horario) {
 		this.data = data;
 		this.horario = horario;
-		this.periodoDisponivel = PeriodoDisponivel.SIM;
+		this.periodoDisponivel = RespostaUtils.SIM;
 	}
 }

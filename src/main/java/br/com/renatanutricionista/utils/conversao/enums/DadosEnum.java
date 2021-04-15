@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class DadosEnum {
+public final class DadosEnum {
 
 	private String codigo;
 	private String descricao;

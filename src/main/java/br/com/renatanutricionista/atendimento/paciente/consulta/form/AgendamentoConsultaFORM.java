@@ -8,10 +8,10 @@ import javax.validation.constraints.Size;
 
 import br.com.renatanutricionista.atendimento.paciente.consulta.enums.situacao.consulta.SituacaoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
-import br.com.renatanutricionista.calendario.atendimento.paciente.enums.PeriodoDisponivel;
 import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.utils.ConversaoUtils;
+import br.com.renatanutricionista.utils.enums.resposta.RespostaUtils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,7 +35,7 @@ public class AgendamentoConsultaFORM {
 	
 	public Consulta converterParaConsulta(Paciente paciente, CalendarioAtendimentoPaciente periodoAgendamento) {
 		LocalDateTime dataHorario = ConversaoUtils.converterStringParaLocalDateTime(data, horario);
-		periodoAgendamento.setPeriodoDisponivel(PeriodoDisponivel.NAO);
+		periodoAgendamento.setPeriodoDisponivel(RespostaUtils.NAO);
 		
 		return new Consulta.Builder()
 				.situacaoConsulta(SituacaoConsulta.AGUARDANDO_CONFIRMACAO)

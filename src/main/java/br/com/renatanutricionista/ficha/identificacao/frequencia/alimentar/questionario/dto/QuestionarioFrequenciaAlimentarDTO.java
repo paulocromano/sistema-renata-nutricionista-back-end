@@ -3,6 +3,7 @@ package br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.ques
 import java.util.Set;
 
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.dto.FrequenciaAlimentarDTO;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.enums.ConcatenacaoValoresEnum;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.enums.ConsumoCarneVermelha;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.enums.ConsumoFrango;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.enums.ConsumoPeixe;
@@ -30,10 +31,12 @@ public class QuestionarioFrequenciaAlimentarDTO {
 		id = questionario.getId();
 		dataHoraCadastroQuestionario = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(questionario.getDataHoraCadastroQuestionario());
 		frequenciaConsumoAlimentos = FrequenciaAlimentarDTO.converterParaListaFrequenciaAlimentarDTO(questionario.getFrequenciaConsumoAlimentos());
-		consumoTipoBebida = ConsumoTipoBebida.converterParaDescricao(questionario.getConsumoTipoBebida());
-		consumoTipoLeite = ConsumoTipoLeite.concatenarTiposLeiteConsumidos(questionario.getConsumoTipoLeite());
-		consumoCarneVermelha = ConsumoCarneVermelha.concatenarModosPreparoCarneVermelha(questionario.getConsumoCarneVermelha());
-		consumoFrango = ConsumoFrango.concatenarModosConsumoFrango(questionario.getConsumoFrango());
-		consumoPeixe = ConsumoPeixe.concatenarModosConsumoPeixe(questionario.getConsumoPeixe());
+		
+		ConcatenacaoValoresEnum concatenacao = new ConcatenacaoValoresEnum();
+		consumoTipoBebida = concatenacao.concatenarValoresEnum(questionario.getConsumoTipoBebida(), ConsumoTipoBebida.values());
+		consumoTipoLeite = concatenacao.concatenarValoresEnum(questionario.getConsumoTipoLeite(), ConsumoTipoLeite.values());
+		consumoCarneVermelha = concatenacao.concatenarValoresEnum(questionario.getConsumoCarneVermelha(), ConsumoCarneVermelha.values());
+		consumoFrango = concatenacao.concatenarValoresEnum(questionario.getConsumoFrango(), ConsumoFrango.values());
+		consumoPeixe = concatenacao.concatenarValoresEnum(questionario.getConsumoPeixe(), ConsumoPeixe.values());
 	}
 }

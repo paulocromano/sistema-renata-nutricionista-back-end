@@ -7,9 +7,9 @@ import javax.validation.constraints.Pattern;
 
 import br.com.renatanutricionista.atendimento.paciente.retorno.enums.SituacaoRetorno;
 import br.com.renatanutricionista.atendimento.paciente.retorno.model.RetornoConsulta;
-import br.com.renatanutricionista.calendario.atendimento.paciente.enums.PeriodoDisponivel;
 import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import br.com.renatanutricionista.utils.ConversaoUtils;
+import br.com.renatanutricionista.utils.enums.resposta.RespostaUtils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,7 +29,7 @@ public class AgendamentoRetornoFORM {
 	
 	public RetornoConsulta converterParaRetornoConsulta(CalendarioAtendimentoPaciente periodoAgendamento) {
 		LocalDateTime dataHorario = ConversaoUtils.converterStringParaLocalDateTime(data, horario);
-		periodoAgendamento.setPeriodoDisponivel(PeriodoDisponivel.NAO);
+		periodoAgendamento.setPeriodoDisponivel(RespostaUtils.NAO);
 		
 		return new RetornoConsulta(SituacaoRetorno.AGUARDANDO_CONFIRMACAO, dataHorario);
 	}

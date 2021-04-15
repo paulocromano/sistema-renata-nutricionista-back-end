@@ -21,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.renatanutricionista.calendario.atendimento.paciente.dto.CalendarioAtendimentoPacienteDTO;
-import br.com.renatanutricionista.calendario.atendimento.paciente.enums.PeriodoDisponivel;
 import br.com.renatanutricionista.calendario.atendimento.paciente.form.CalendarioAtendimentoPacienteFORM;
 import br.com.renatanutricionista.calendario.atendimento.paciente.form.PeriodoAtendimentoFORM;
 import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
@@ -34,6 +33,7 @@ import br.com.renatanutricionista.tabelas.parametro.atendimento.horario.reposito
 import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
 import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.service.AtendimentoPacienteParametroService;
 import br.com.renatanutricionista.utils.ConversaoUtils;
+import br.com.renatanutricionista.utils.enums.resposta.RespostaUtils;
 
 
 @Service
@@ -243,7 +243,7 @@ public class CalendarioAtendimentoPacienteService {
 	public ResponseEntity<Void> excluirPeriodo(Long idCalendarioAtendimento) {
 		CalendarioAtendimentoPaciente horarioAtendimento = verificarSeExistePeriodoNoCalendarioAtendimento(idCalendarioAtendimento);
 		
-		if (horarioAtendimento.getPeriodoDisponivel().equals(PeriodoDisponivel.NAO) && !horarioAtendimento.getData().isBefore(LocalDate.now()))
+		if (horarioAtendimento.getPeriodoDisponivel().equals(RespostaUtils.NAO) && !horarioAtendimento.getData().isBefore(LocalDate.now()))
 			throw new AtendimentoException("Não é possível remover um período que não está disponível e que seja "
 					+ "igual ou posterior ao dia atual!");
 		
@@ -282,7 +282,7 @@ public class CalendarioAtendimentoPacienteService {
 		
 		if (!dataFinal.isBefore(LocalDate.now())) {
 			boolean existePeriodoIndisponivel = periodosAtendimento.stream()
-					.filter(periodo -> periodo.getPeriodoDisponivel().equals(PeriodoDisponivel.NAO))
+					.filter(periodo -> periodo.getPeriodoDisponivel().equals(RespostaUtils.NAO))
 					.findFirst().isPresent();
 			
 			if (existePeriodoIndisponivel)
@@ -320,7 +320,7 @@ public class CalendarioAtendimentoPacienteService {
 	
 	
 	private void verificarDisponibilidadeNoCalendario(CalendarioAtendimentoPaciente periodo) {
-		if (periodo.getPeriodoDisponivel().equals(PeriodoDisponivel.NAO))
+		if (periodo.getPeriodoDisponivel().equals(RespostaUtils.NAO))
 			throw new AtendimentoException("O Período escolhido não está disponível para Agendamento "
 					+ "de Consulta ou Retorno!");
 	}
@@ -359,6 +359,6 @@ public class CalendarioAtendimentoPacienteService {
 		CalendarioAtendimentoPaciente periodoAgendamento = verificarSeExistePeriodoNoCalendarioAtendimento(
 				dataHorario.toLocalDate(), dataHorario.toLocalTime());
 		
-		periodoAgendamento.setPeriodoDisponivel(PeriodoDisponivel.SIM);
+		periodoAgendamento.setPeriodoDisponivel(RespostaUtils.SIM);
 	}
 }

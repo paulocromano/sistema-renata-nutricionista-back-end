@@ -11,17 +11,19 @@ import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.est
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.habito.intestinal.HabitoIntestinal;
 import br.com.renatanutricionista.utils.conversao.enums.ConversaoDadosEnum;
 import br.com.renatanutricionista.utils.conversao.enums.DadosEnum;
+import lombok.Getter;
 
 
+@Getter
 public class InformacoesHistoricoSocialParaCadastroDTO {
 
-	public final List<DadosEnum> estadoCivil;
-	public final List<DadosEnum> consumoBebidasAlcoolicas;
-	public final List<DadosEnum> consumoCigarro;
-	public final List<DadosEnum> habitoIntestinal;
-	public final List<DadosEnum> consistenciaFezes;
-	public final List<DadosEnum> frequenciaDiurese;
-	public final List<DadosEnum> coloracaoDiurese;
+	private List<DadosEnum> estadoCivil;
+	private List<DadosEnum> consumoBebidasAlcoolicas;
+	private List<DadosEnum> consumoCigarro;
+	private List<DadosEnum> habitoIntestinal;
+	private List<DadosEnum> consistenciaFezes;
+	private List<DadosEnum> frequenciaDiurese;
+	private List<DadosEnum> coloracaoDiurese;
 	
 	
 	public InformacoesHistoricoSocialParaCadastroDTO() {

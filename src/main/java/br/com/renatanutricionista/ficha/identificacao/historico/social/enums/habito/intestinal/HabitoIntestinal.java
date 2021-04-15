@@ -1,5 +1,8 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.social.enums.habito.intestinal;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import br.com.renatanutricionista.utils.DesserializacaoEnum;
 import br.com.renatanutricionista.utils.conversao.enums.GettersEnum;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -8,6 +11,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@JsonDeserialize(using = DesserializacaoEnum.class)
 public enum HabitoIntestinal implements GettersEnum<HabitoIntestinal> {
 
 	DIARIO("A", "Diário"),
