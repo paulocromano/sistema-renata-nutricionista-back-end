@@ -10,6 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PacienteParametroFORM {
+	
+	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Questionário de Frequência Alimentar não pode ser nulo!")
+	private Integer tempoMesesAtualizarQuestionarioFrequenciaAlimentar;
 
 	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico Social não pode ser nulo!")
 	private Integer tempoMesesAtualizarHistoricoSocial;
@@ -28,6 +31,7 @@ public class PacienteParametroFORM {
 	
 	
 	public void atualizarInformacoesPacienteParametro(PacienteParametro pacienteParametro) {
+		pacienteParametro.setTempoMesesAtualizarQuestionarioFrequenciaAlimentar(tempoMesesAtualizarQuestionarioFrequenciaAlimentar);
 		pacienteParametro.setTempoMesesAtualizarHistoricoSocial(tempoMesesAtualizarHistoricoSocial);
 		pacienteParametro.setTempoMesesAtualizarHistoricoFamiliar(tempoMesesAtualizarHistoricoFamiliar);
 		pacienteParametro.setTempoMesesAtualizarHistoricoAtividadeFisica(tempoMesesAtualizarHistoricoAtividadeFisica);

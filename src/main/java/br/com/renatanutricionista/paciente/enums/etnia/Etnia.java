@@ -1,4 +1,4 @@
-package br.com.renatanutricionista.paciente.enums;
+package br.com.renatanutricionista.paciente.enums.etnia;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 

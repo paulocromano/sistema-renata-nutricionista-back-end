@@ -7,8 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import br.com.renatanutricionista.paciente.enums.sexo.Sexo;
 import br.com.renatanutricionista.tabelas.parametro.gordura.corporal.esporte.enums.ModalidadeEsporte;
-import br.com.renatanutricionista.utils.enums.sexo.SexoUtils;
 import lombok.Getter;
 
 
@@ -24,7 +24,7 @@ public class GorduraCorporalEsporte {
 	@Column(name = "modalidade_esporte")
 	private ModalidadeEsporte modalidadeEsporte;
 	
-	private SexoUtils sexo;
+	private Sexo sexo;
 	
 	@Column(name = "percentual_minimo")
 	private Integer percentualMinimo;

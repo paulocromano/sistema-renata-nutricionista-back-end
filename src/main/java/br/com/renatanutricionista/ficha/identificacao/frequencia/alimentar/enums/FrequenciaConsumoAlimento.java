@@ -3,6 +3,7 @@ package br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enum
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import br.com.renatanutricionista.utils.DesserializacaoEnum;
+import br.com.renatanutricionista.utils.conversao.enums.GettersEnum;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @JsonDeserialize(using = DesserializacaoEnum.class)
-public enum FrequenciaConsumoAlimento {
+public enum FrequenciaConsumoAlimento implements GettersEnum<FrequenciaConsumoAlimento> {
 
 	NUNCA("N", "Nunca"),
 	DIA("D", "Dia"),

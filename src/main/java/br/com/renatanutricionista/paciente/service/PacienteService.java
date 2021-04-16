@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.renatanutricionista.paciente.dto.PacienteDTO;
+import br.com.renatanutricionista.paciente.dto.PacientePreviaHistoricosDTO;
 import br.com.renatanutricionista.paciente.form.AtualizacaoPacienteFORM;
 import br.com.renatanutricionista.paciente.form.PacienteFORM;
 import br.com.renatanutricionista.paciente.model.Paciente;
@@ -25,8 +26,15 @@ public class PacienteService {
 	private PacienteUtils pacienteUtils;
 	
 	
-	public ResponseEntity<List<PacienteDTO>> listarTodosPacientes() {	
-		return ResponseEntity.ok().body(PacienteDTO.converterParaListaPacienteDTO(pacienteRepository.findAll()));
+	public ResponseEntity<List<PacienteDTO>> listarTodosPacientesPorOrdemAlfabetica() {	
+		return ResponseEntity.ok().body(PacienteDTO.converterParaListaPacienteDTOEmOrdemAlfabetica(pacienteRepository.findAll()));
+	}
+	
+	
+	public ResponseEntity<PacientePreviaHistoricosDTO> buscarInformacoesPreviasHistoricosDoPaciente(Long idPaciente) {
+		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
+		
+		return ResponseEntity.ok().body(new PacientePreviaHistoricosDTO(paciente));
 	}
 	
 	

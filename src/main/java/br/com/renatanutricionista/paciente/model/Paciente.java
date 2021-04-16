@@ -30,8 +30,8 @@ import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.model.
 import br.com.renatanutricionista.ficha.identificacao.historico.atividade.fisica.model.HistoricoAtividadeFisica;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.model.HistoricoPatologiaFamiliaresPorData;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
-import br.com.renatanutricionista.paciente.enums.Etnia;
-import br.com.renatanutricionista.utils.enums.sexo.SexoUtils;
+import br.com.renatanutricionista.paciente.enums.etnia.Etnia;
+import br.com.renatanutricionista.paciente.enums.sexo.Sexo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -57,7 +57,7 @@ public class Paciente {
 	private LocalDate dataNascimento;
 	
 	@NotNull(message = "O campo Sexo não pode estar nulo!")
-	private SexoUtils sexo;
+	private Sexo sexo;
 	
 	@NotNull(message = "O campo Etnia não pode estar nulo!")
 	private Etnia etnia;
@@ -101,7 +101,7 @@ public class Paciente {
 	private LocalDateTime dataHoraUltimaAtualizacaoDadosDoPaciente;
 	
 	
-	private Paciente(String nome, LocalDate dataNascimento, SexoUtils sexo, Etnia etnia, String telefone, 
+	private Paciente(String nome, LocalDate dataNascimento, Sexo sexo, Etnia etnia, String telefone, 
 			String telefoneRecado, Endereco endereco, LocalDateTime dataHoraUltimaAtualizacaoDadosDoPaciente) {
 		
 		this.nome = nome;
@@ -118,7 +118,7 @@ public class Paciente {
 	public static class Builder {
 		private String nome;
 		private LocalDate dataNascimento;
-		private SexoUtils sexo;
+		private Sexo sexo;
 		private Etnia etnia;
 		private String telefone;
 		private String telefoneRecado;
@@ -136,7 +136,7 @@ public class Paciente {
 			return this;
 		}
 		
-		public Builder sexo(SexoUtils sexo) {
+		public Builder sexo(Sexo sexo) {
 			this.sexo = sexo;
 			return this;
 		}

@@ -22,6 +22,10 @@ public class PacienteParametro {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@Column(name = "tempo_meses_atualizar_questionario_frequencia_alimentar")
+	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Questionário de Frequência Alimentar não pode ser nulo!")
+	private Integer tempoMesesAtualizarQuestionarioFrequenciaAlimentar;
+	
 	@Column(name = "tempo_meses_atualizar_historico_social")
 	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico Social não pode ser nulo!")
 	private Integer tempoMesesAtualizarHistoricoSocial;

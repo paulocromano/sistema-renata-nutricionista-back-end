@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alimentos.dto.AlimentoFrequenciaAlimentarDTO;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alimentos.model.AlimentoFrequenciaAlimentar;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.enums.FrequenciaConsumoAlimento;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.enums.ConsumoCarneVermelha;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.enums.ConsumoFrango;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.enums.ConsumoPeixe;
@@ -23,6 +24,7 @@ public class InformacoesConsumoQuestionarioParaCadastroDTO {
 	private List<DadosEnum> consumoPeixe;
 	private List<DadosEnum> consumoTipoBebida;
 	private List<DadosEnum> consumoTipoLeite;	
+	private List<DadosEnum> frequenciaConsumoAlimento;
 	
 	
 	public InformacoesConsumoQuestionarioParaCadastroDTO(List<AlimentoFrequenciaAlimentar> alimentosFrequenciaAlimentar) {
@@ -35,5 +37,6 @@ public class InformacoesConsumoQuestionarioParaCadastroDTO {
 		consumoPeixe = conversao.converterDadosEnum(ConsumoPeixe.values());
 		consumoTipoBebida = conversao.converterDadosEnum(ConsumoTipoBebida.values());
 		consumoTipoLeite = conversao.converterDadosEnum(ConsumoTipoLeite.values());
+		frequenciaConsumoAlimento = conversao.converterDadosEnum(FrequenciaConsumoAlimento.values()); 
 	}
 }

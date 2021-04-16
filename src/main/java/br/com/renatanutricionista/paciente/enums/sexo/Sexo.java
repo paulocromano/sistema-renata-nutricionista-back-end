@@ -1,4 +1,4 @@
-package br.com.renatanutricionista.utils.enums.sexo;
+package br.com.renatanutricionista.paciente.enums.sexo;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public enum SexoUtils {
+public enum Sexo {
 
 	MASCULINO("M", "Masculino"),
 	FEMININO("F", "Feminino");

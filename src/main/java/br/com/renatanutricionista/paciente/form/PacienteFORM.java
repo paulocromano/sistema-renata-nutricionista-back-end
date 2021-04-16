@@ -9,10 +9,10 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import br.com.renatanutricionista.endereco.form.EnderecoFORM;
-import br.com.renatanutricionista.paciente.enums.EtniaConversao;
+import br.com.renatanutricionista.paciente.enums.etnia.EtniaConversao;
+import br.com.renatanutricionista.paciente.enums.sexo.SexoConversao;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.utils.ConversaoUtils;
-import br.com.renatanutricionista.utils.enums.sexo.SexoUtlisConversao;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -52,7 +52,7 @@ public class PacienteFORM {
 		return new Paciente.Builder()
 				.nome(nome)
 				.dataNascimento(ConversaoUtils.converterStringParaLocalDate(dataNascimento))
-				.sexo(new SexoUtlisConversao().convertToEntityAttribute(sexo))
+				.sexo(new SexoConversao().convertToEntityAttribute(sexo))
 				.etnia(new EtniaConversao().convertToEntityAttribute(etnia))
 				.telefone(telefone)
 				.telefoneRecado(telefoneRecado)

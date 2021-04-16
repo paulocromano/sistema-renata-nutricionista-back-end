@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import br.com.renatanutricionista.utils.enums.sexo.SexoUtils;
+import br.com.renatanutricionista.paciente.enums.sexo.Sexo;
 import lombok.Getter;
 
 
@@ -23,7 +23,7 @@ public class EquacaoPollock {
 	private String descricao;
 	
 	@Column(name = "sexo")
-	private SexoUtils sexoPessoa;
+	private Sexo sexoPessoa;
 	
 	@Column(name = "gordura_essencial_minima")
 	private Integer gorduraEssencialMinimaEmPorcentagem;

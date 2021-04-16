@@ -4,8 +4,8 @@ import java.util.Set;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.dto.PatologiaPacienteDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
+import br.com.renatanutricionista.paciente.enums.sexo.Sexo;
 import br.com.renatanutricionista.utils.ConversaoUtils;
-import br.com.renatanutricionista.utils.enums.sexo.SexoUtils;
 import lombok.Getter;
 
 
@@ -49,7 +49,7 @@ public class HistoricoSocialDTO {
 		patologiasPaciente = PatologiaPacienteDTO.converterParaSetPatologiaPacienteDTO(historicoSocial.getPatologiasPaciente());
 		horasSono = historicoSocial.getHorasSono();
 		
-		if (historicoSocial.getPaciente().getSexo().equals(SexoUtils.FEMININO)) {
+		if (historicoSocial.getPaciente().getSexo().equals(Sexo.FEMININO)) {
 			menstruacaoNormal = historicoSocial.getMenstruacaoNormal().getDescricao();
 			motivoAnormalidadeMenstruacao = historicoSocial.getMotivoAnormalidadeMenstruacao();
 			menopausa = historicoSocial.getMenopausa().getDescricao();

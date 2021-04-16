@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.renatanutricionista.paciente.dto.PacienteDTO;
+import br.com.renatanutricionista.paciente.dto.PacientePreviaHistoricosDTO;
 import br.com.renatanutricionista.paciente.form.AtualizacaoPacienteFORM;
 import br.com.renatanutricionista.paciente.form.PacienteFORM;
 import br.com.renatanutricionista.paciente.service.PacienteService;
@@ -31,8 +32,14 @@ public class PacienteResource {
 	
 	
 	@GetMapping
-	public ResponseEntity<List<PacienteDTO>> listarTodosPacientes() {
-		return pacienteService.listarTodosPacientes();
+	public ResponseEntity<List<PacienteDTO>> listarTodosPacientesPorOrdemAlfabetica() {
+		return pacienteService.listarTodosPacientesPorOrdemAlfabetica();
+	}
+	
+	
+	@GetMapping("informacoes-previas-historicos/{idPaciente}")
+	public ResponseEntity<PacientePreviaHistoricosDTO> buscarInformacoesPreviasHistoricosDoPaciente(@PathVariable Long idPaciente) {
+		return pacienteService.buscarInformacoesPreviasHistoricosDoPaciente(idPaciente);
 	}
 
 	

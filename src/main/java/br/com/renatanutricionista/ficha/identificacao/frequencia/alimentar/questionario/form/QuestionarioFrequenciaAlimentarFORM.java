@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -22,7 +23,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QuestionarioFrequenciaAlimentarFORM {
-
+	
+	@Valid
 	@NotNull(message = "A lista da Frequência Alimentar não poser ser nula!")
 	private Set<FrequenciaAlimentarFORM> frequenciaConsumoAlimentos;
 	

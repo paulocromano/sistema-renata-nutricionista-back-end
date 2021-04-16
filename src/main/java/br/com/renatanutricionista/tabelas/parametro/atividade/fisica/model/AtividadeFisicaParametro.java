@@ -10,8 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 
+import br.com.renatanutricionista.paciente.enums.sexo.Sexo;
 import br.com.renatanutricionista.tabelas.parametro.atividade.fisica.enums.TipoPessoaAtividadeFisica;
-import br.com.renatanutricionista.utils.enums.sexo.SexoUtils;
 import lombok.Getter;
 
 
@@ -30,7 +30,7 @@ public class AtividadeFisicaParametro {
 	private String observacao;
 	
 	@Column(name = "sexo")
-	private SexoUtils sexoPessoa;
+	private Sexo sexoPessoa;
 	
 	@Digits(integer = 2, fraction = 2)
 	private BigDecimal sedentario;

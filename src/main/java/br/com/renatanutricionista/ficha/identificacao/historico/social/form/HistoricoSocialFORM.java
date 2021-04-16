@@ -22,9 +22,9 @@ import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.est
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.habito.intestinal.HabitoIntestinal;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial.Builder;
+import br.com.renatanutricionista.paciente.enums.sexo.Sexo;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.utils.enums.resposta.RespostaUtils;
-import br.com.renatanutricionista.utils.enums.sexo.SexoUtils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -103,7 +103,7 @@ public class HistoricoSocialFORM {
 				.dataHoraUltimaAtualizacaoDadosDoHistoricoSocial(LocalDateTime.now())
 				.paciente(paciente);
 		
-		if (paciente.getSexo().equals(SexoUtils.FEMININO)) {
+		if (paciente.getSexo().equals(Sexo.FEMININO)) {
 			historicoSocialBuilder.menstruacaoNormal(menstruacaoNormal)
 					.motivoAnormalidadeMenstruacao(motivoAnormalidadeMenstruacao)
 					.menopausa(menopausa)
@@ -124,7 +124,7 @@ public class HistoricoSocialFORM {
 	private void validarCamposDoFormulario(Paciente paciente) {
 		validarQuantidadeConsumoCigarrosPorDia();
 		
-		if (paciente.getSexo().equals(SexoUtils.FEMININO)) {
+		if (paciente.getSexo().equals(Sexo.FEMININO)) {
 			validarMotivoMenstruacaoAnormal();
 			validarTempoPacienteEstaNaMenopausa();
 		}

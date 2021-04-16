@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import br.com.renatanutricionista.atendimento.paciente.consulta.enums.TipoAtendimento;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
@@ -16,7 +15,7 @@ public class InformacoesPreviasConsultaRetornoDTO extends ConsultaDTO {
 	
 	private String nomePaciente;
 	private String possuiRetornoConsulta;
-	private TipoAtendimento tipoAtendimento;
+	private String tipoAtendimento;
 	
 
 	public InformacoesPreviasConsultaRetornoDTO(Consulta consulta) {

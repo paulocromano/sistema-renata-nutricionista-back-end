@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.composicao.corporal.model.AvaliacaoComposicaoCorporal;
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.composicao.corporal.model.AvaliacaoComposicaoCorporal.Builder;
-import br.com.renatanutricionista.utils.enums.sexo.SexoUtils;
+import br.com.renatanutricionista.paciente.enums.sexo.Sexo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -71,7 +71,7 @@ public class AvaliacaoComposicaoCorporalFORM {
 	private BigDecimal resultadoCalculoDensidadeCorporal;
 	
 	
-	public AvaliacaoComposicaoCorporal converterParaAvaliacaoComposicaoCorporal(SexoUtils sexoPaciente) {
+	public AvaliacaoComposicaoCorporal converterParaAvaliacaoComposicaoCorporal(Sexo sexoPaciente) {
 		
 		Builder avaliacaoComposicaoCorporalBuilder = 
 				new AvaliacaoComposicaoCorporal.Builder()
@@ -83,7 +83,7 @@ public class AvaliacaoComposicaoCorporalFORM {
 				.dobraCutaneaCoxaMilimetros(dobraCutaneaCoxaMilimetros)
 				.dobraCutaneaPanturrilhaMilimetros(dobraCutaneaPanturrilhaMilimetros);	
 		
-		if (sexoPaciente.equals(SexoUtils.MASCULINO)) {
+		if (sexoPaciente.equals(Sexo.MASCULINO)) {
 			avaliacaoComposicaoCorporalBuilder = validarComposicaoCorporalHomem(avaliacaoComposicaoCorporalBuilder);
 		}
 		else

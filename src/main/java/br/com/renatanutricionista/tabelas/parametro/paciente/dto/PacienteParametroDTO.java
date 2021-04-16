@@ -8,6 +8,7 @@ import lombok.Getter;
 public class PacienteParametroDTO {
 
 	private Integer id;
+	private Integer tempoMesesAtualizarQuestionarioFrequenciaAlimentar;
 	private Integer tempoMesesAtualizarHistoricoSocial;
 	private Integer tempoMesesAtualizarHistoricoFamiliar;
 	private Integer tempoMesesAtualizarHistoricoAtividadeFisica;
@@ -17,6 +18,7 @@ public class PacienteParametroDTO {
 	
 	public PacienteParametroDTO(PacienteParametro pacienteParametro) {
 		id = pacienteParametro.getId();
+		tempoMesesAtualizarQuestionarioFrequenciaAlimentar = pacienteParametro.getTempoMesesAtualizarQuestionarioFrequenciaAlimentar();
 		tempoMesesAtualizarHistoricoSocial = pacienteParametro.getTempoMesesAtualizarHistoricoSocial();
 		tempoMesesAtualizarHistoricoFamiliar = pacienteParametro.getTempoMesesAtualizarHistoricoFamiliar();
 		tempoMesesAtualizarHistoricoAtividadeFisica = pacienteParametro.getTempoMesesAtualizarHistoricoAtividadeFisica();
