@@ -16,7 +16,7 @@ public class HistoricoAtividadeFisicaDTO {
 	private String atividadePraticada;
 	private String frequencia;
 	private String duracao;
-	private String dataHoraUltimaAtualizacaoDadosDaAtividadeFisica;
+	private String dataHoraCadastroAtividadeFisica;
 	
 	
 	public HistoricoAtividadeFisicaDTO(HistoricoAtividadeFisica historicoAtividadeFisica) {
@@ -24,14 +24,14 @@ public class HistoricoAtividadeFisicaDTO {
 		atividadePraticada = historicoAtividadeFisica.getAtividadePraticada();
 		frequencia = historicoAtividadeFisica.getFrequencia().getDescricao();
 		duracao = historicoAtividadeFisica.getDuracao();
-		dataHoraUltimaAtualizacaoDadosDaAtividadeFisica = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(
-				historicoAtividadeFisica.getDataHoraUltimaAtualizacaoDadosDaAtividadeFisica());
+		dataHoraCadastroAtividadeFisica = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(
+				historicoAtividadeFisica.getDataHoraCadastroAtividadeFisica());
 	}
 	
 	
 	public static List<HistoricoAtividadeFisicaDTO> converterParaListaAtividadeFisicaDTO(List<HistoricoAtividadeFisica> atividadesFisica) {
 		return atividadesFisica.stream()
-				.sorted(Comparator.comparing(HistoricoAtividadeFisica::getDataHoraUltimaAtualizacaoDadosDaAtividadeFisica)
+				.sorted(Comparator.comparing(HistoricoAtividadeFisica::getDataHoraCadastroAtividadeFisica)
 				.reversed())
 				.map(HistoricoAtividadeFisicaDTO::new)
 				.collect(Collectors.toList());

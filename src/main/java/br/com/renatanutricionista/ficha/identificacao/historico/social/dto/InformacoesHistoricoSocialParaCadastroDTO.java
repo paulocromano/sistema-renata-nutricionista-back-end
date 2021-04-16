@@ -27,14 +27,12 @@ public class InformacoesHistoricoSocialParaCadastroDTO {
 	
 	
 	public InformacoesHistoricoSocialParaCadastroDTO() {
-		ConversaoDadosEnum conversao = new ConversaoDadosEnum();
-		
-		estadoCivil = conversao.converterDadosEnum(EstadoCivil.values());
-		consumoBebidasAlcoolicas = conversao.converterDadosEnum(ConsumoBebidasAlcoolicas.values());
-		consumoCigarro = conversao.converterDadosEnum(ConsumoCigarro.values());
-		habitoIntestinal = conversao.converterDadosEnum(HabitoIntestinal.values());
-		consistenciaFezes = conversao.converterDadosEnum(ConsistenciaFezes.values());
-		frequenciaDiurese = conversao.converterDadosEnum(FrequenciaDiurese.values());
-		coloracaoDiurese = conversao.converterDadosEnum(ColoracaoDiurese.values());
+		estadoCivil = ConversaoDadosEnum.converterDadosEnum(EstadoCivil.values());
+		consumoBebidasAlcoolicas = ConversaoDadosEnum.converterDadosEnum(ConsumoBebidasAlcoolicas.values());
+		consumoCigarro = ConversaoDadosEnum.converterDadosEnum(ConsumoCigarro.values());
+		habitoIntestinal = ConversaoDadosEnum.converterDadosEnum(HabitoIntestinal.values());
+		consistenciaFezes = ConversaoDadosEnum.converterDadosEnum(ConsistenciaFezes.values());
+		frequenciaDiurese = ConversaoDadosEnum.converterDadosEnum(FrequenciaDiurese.values());
+		coloracaoDiurese = ConversaoDadosEnum.converterDadosEnum(ColoracaoDiurese.values());
 	}
 }

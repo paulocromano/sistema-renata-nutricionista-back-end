@@ -10,7 +10,7 @@ public class PacienteParametroDTO {
 	private Integer id;
 	private Integer tempoMesesAtualizarQuestionarioFrequenciaAlimentar;
 	private Integer tempoMesesAtualizarHistoricoSocial;
-	private Integer tempoMesesAtualizarHistoricoFamiliar;
+	private Integer tempoMesesAtualizarHistoricoPatologiaFamiliares;
 	private Integer tempoMesesAtualizarHistoricoAtividadeFisica;
 	private Integer tempoMesesAtualizarHistoricoAlimentar;
 	private Integer tempoMesesAtualizarHistoricoFrequenciaAlimentar;
@@ -20,7 +20,7 @@ public class PacienteParametroDTO {
 		id = pacienteParametro.getId();
 		tempoMesesAtualizarQuestionarioFrequenciaAlimentar = pacienteParametro.getTempoMesesAtualizarQuestionarioFrequenciaAlimentar();
 		tempoMesesAtualizarHistoricoSocial = pacienteParametro.getTempoMesesAtualizarHistoricoSocial();
-		tempoMesesAtualizarHistoricoFamiliar = pacienteParametro.getTempoMesesAtualizarHistoricoFamiliar();
+		tempoMesesAtualizarHistoricoPatologiaFamiliares = pacienteParametro.getTempoMesesAtualizarHistoricoPatologiaFamiliares();
 		tempoMesesAtualizarHistoricoAtividadeFisica = pacienteParametro.getTempoMesesAtualizarHistoricoAtividadeFisica();
 		tempoMesesAtualizarHistoricoAlimentar = pacienteParametro.getTempoMesesAtualizarHistoricoAlimentar();
 		tempoMesesAtualizarHistoricoFrequenciaAlimentar = pacienteParametro.getTempoMesesAtualizarHistoricoFrequenciaAlimentar();

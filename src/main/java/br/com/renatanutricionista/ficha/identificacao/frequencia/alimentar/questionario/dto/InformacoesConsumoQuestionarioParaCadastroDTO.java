@@ -29,14 +29,12 @@ public class InformacoesConsumoQuestionarioParaCadastroDTO {
 	
 	public InformacoesConsumoQuestionarioParaCadastroDTO(List<AlimentoFrequenciaAlimentar> alimentosFrequenciaAlimentar) {
 		this.alimentosFrequenciaAlimentar = AlimentoFrequenciaAlimentarDTO.converterParaListaAlimentoFrequenciaAlimentarDTO(alimentosFrequenciaAlimentar);
-		
-		ConversaoDadosEnum conversao = new ConversaoDadosEnum();
-		
-		consumoCarneVermelha = conversao.converterDadosEnum(ConsumoCarneVermelha.values());
-		consumoFrango = conversao.converterDadosEnum(ConsumoFrango.values());
-		consumoPeixe = conversao.converterDadosEnum(ConsumoPeixe.values());
-		consumoTipoBebida = conversao.converterDadosEnum(ConsumoTipoBebida.values());
-		consumoTipoLeite = conversao.converterDadosEnum(ConsumoTipoLeite.values());
-		frequenciaConsumoAlimento = conversao.converterDadosEnum(FrequenciaConsumoAlimento.values()); 
+
+		consumoCarneVermelha = ConversaoDadosEnum.converterDadosEnum(ConsumoCarneVermelha.values());
+		consumoFrango = ConversaoDadosEnum.converterDadosEnum(ConsumoFrango.values());
+		consumoPeixe = ConversaoDadosEnum.converterDadosEnum(ConsumoPeixe.values());
+		consumoTipoBebida = ConversaoDadosEnum.converterDadosEnum(ConsumoTipoBebida.values());
+		consumoTipoLeite = ConversaoDadosEnum.converterDadosEnum(ConsumoTipoLeite.values());
+		frequenciaConsumoAlimento = ConversaoDadosEnum.converterDadosEnum(FrequenciaConsumoAlimento.values()); 
 	}
 }

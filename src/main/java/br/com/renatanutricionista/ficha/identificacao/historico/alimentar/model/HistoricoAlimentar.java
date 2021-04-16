@@ -84,10 +84,10 @@ public class HistoricoAlimentar {
 	@NotNull(message = "O objeto Paciente não pode estar nulo!")
 	private Paciente paciente;
 	
-	@Column(name = "data_hora_ultima_atualizacao_dados_historico_alimentar")
-	@NotNull(message = "A Data e Hora da Última Atualização dos Dados do Histórico Alimentar não pode estar nula!")
+	@Column(name = "data_hora_cadastro_historico_alimentar")
+	@NotNull(message = "A Data e Hora do Cadastro do Histórico Alimentar não pode estar nula!")
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	private LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar;
+	private LocalDateTime dataHoraCadastroHistoricoAlimentar;
 	
 	
 	public static class Builder {
@@ -99,7 +99,7 @@ public class HistoricoAlimentar {
 		private String consumoAgua;
 		private Set<Medicamento> medicamentos;
 		private Paciente paciente;
-		private LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar;
+		private LocalDateTime dataHoraCadastroHistoricoAlimentar;
 		
 		
 		public Builder intoleranciaAlergiaAlimentosPaciente(String intoleranciaAlergiaAlimentosPaciente) {
@@ -137,8 +137,8 @@ public class HistoricoAlimentar {
 			return this;
 		}
 		
-		public Builder dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar(LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar) {
-			this.dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar = dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar;
+		public Builder dataHoraCadastroHistoricoAlimentar(LocalDateTime dataHoraCadastroHistoricoAlimentar) {
+			this.dataHoraCadastroHistoricoAlimentar = dataHoraCadastroHistoricoAlimentar;
 			return this;
 		}
 		
@@ -146,7 +146,7 @@ public class HistoricoAlimentar {
 		public HistoricoAlimentar build() {
 			return new HistoricoAlimentar(null, intoleranciaAlergiaAlimentosPaciente, preferenciaAlimentarPaciente, 
 					alimentosPacienteNaoGosta, alteracoesGastrointestinal, consumoAgua, null, 
-					medicamentos, paciente, dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar);
+					medicamentos, paciente, dataHoraCadastroHistoricoAlimentar);
 		}
 	}
 }

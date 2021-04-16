@@ -30,9 +30,9 @@ public class PacienteParametro {
 	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico Social não pode ser nulo!")
 	private Integer tempoMesesAtualizarHistoricoSocial;
 	
-	@Column(name = "tempo_meses_atualizar_historico_familiar")
-	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico Familiar não pode ser nulo!")
-	private Integer tempoMesesAtualizarHistoricoFamiliar;
+	@Column(name = "tempo_meses_atualizar_historico_patologia_familiares")
+	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico de patologia dos Familiares não pode ser nulo!")
+	private Integer tempoMesesAtualizarHistoricoPatologiaFamiliares;
 	
 	@Column(name = "tempo_meses_atualizar_historico_atividade_fisica")
 	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico de Atividade Física não pode ser nulo!")

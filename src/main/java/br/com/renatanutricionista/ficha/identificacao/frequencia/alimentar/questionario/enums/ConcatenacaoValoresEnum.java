@@ -8,7 +8,7 @@ import br.com.renatanutricionista.utils.conversao.enums.GettersEnum;
 public final class ConcatenacaoValoresEnum {
 	
 
-	public <T extends Enum<T> & GettersEnum<T>> String concatenarValoresEnum(String codigosEnum, T[] valoresEnum) {
+	public static final <T extends Enum<T> & GettersEnum<T>> String concatenarValoresEnum(String codigosEnum, T[] valoresEnum) {
 		if (Objects.isNull(codigosEnum) || codigosEnum.trim().isEmpty())
 			return null;
 		

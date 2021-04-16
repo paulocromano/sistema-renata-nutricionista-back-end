@@ -20,7 +20,7 @@ public class HistoricoAlimentarDTO {
 	private String consumoAgua;
 	private Set<SuplementoPacienteDTO> suplementosPaciente;
 	private Set<MedicamentoDTO> medicamentosPaciente;
-	private String dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar;
+	private String dataHoraCadastroHistoricoAlimentar;
 	
 	
 	public HistoricoAlimentarDTO(HistoricoAlimentar historicoAlimentar) {
@@ -32,7 +32,7 @@ public class HistoricoAlimentarDTO {
 		consumoAgua = historicoAlimentar.getConsumoAgua();
 		suplementosPaciente = SuplementoPacienteDTO.converterParaSetSuplementoPacienteDTO(historicoAlimentar.getSuplementosPaciente());
 		medicamentosPaciente = MedicamentoDTO.converterParaSetMedicamentoDTOEmOrdemAlfabetica(historicoAlimentar.getMedicamentos());
-		dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(
-				historicoAlimentar.getDataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar());
+		dataHoraCadastroHistoricoAlimentar = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(
+				historicoAlimentar.getDataHoraCadastroHistoricoAlimentar());
 	}
 }

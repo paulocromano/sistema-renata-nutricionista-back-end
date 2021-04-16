@@ -11,21 +11,19 @@ import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.registro.dieta.dto.RegistroDietaDTO;
 import br.com.renatanutricionista.atendimento.paciente.retorno.dto.RetornoConsultaDTO;
 import br.com.renatanutricionista.paciente.dto.PacientePreviaHistoricosDTO;
+import br.com.renatanutricionista.tabelas.parametro.paciente.model.PacienteParametro;
 import br.com.renatanutricionista.utils.ConversaoUtils;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ConsultaDTO {
 
-	protected Long id;
+	private Long id;
 	private PacientePreviaHistoricosDTO pacientePreviaHistoricos;
-	protected String situacaoConsulta;
-	protected String data;
-	protected String horario;
+	private String situacaoConsulta;
+	private String data;
+	private String horario;
 	private String formaPagamento;
 	private Integer numeroParcelas;
 	private BigDecimal valorConsulta;
@@ -35,12 +33,12 @@ public class ConsultaDTO {
 	private AvaliacaoMassaMuscularCorporeaDTO avaliacaoMassaMuscularCorporea;
 	private CondutaNutricionalDTO condutaNutricional;
 	private RegistroDietaDTO registroDietaHabitual;
-	protected RetornoConsultaDTO retornoConsulta;
+	private RetornoConsultaDTO retornoConsulta;
 	
 	
-	public ConsultaDTO(Consulta consulta) {
+	public ConsultaDTO(Consulta consulta, PacienteParametro pacienteParametro) {
 		id = consulta.getId();
-		pacientePreviaHistoricos = new PacientePreviaHistoricosDTO(consulta.getPaciente());
+		pacientePreviaHistoricos = new PacientePreviaHistoricosDTO(consulta.getPaciente(), pacienteParametro);
 		situacaoConsulta = consulta.getSituacaoConsulta().getDescricao();
 		data = ConversaoUtils.converterLocalDateParaString(consulta.getDataHorario().toLocalDate());
 		horario = consulta.getDataHorario().toLocalTime().toString();

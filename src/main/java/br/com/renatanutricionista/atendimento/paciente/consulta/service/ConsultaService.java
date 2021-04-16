@@ -27,6 +27,8 @@ import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alime
 import br.com.renatanutricionista.paciente.dto.PacientePreviaHistoricosDTO;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.utils.PacienteUtils;
+import br.com.renatanutricionista.tabelas.parametro.paciente.model.PacienteParametro;
+import br.com.renatanutricionista.tabelas.parametro.paciente.service.PacienteParametroService;
 import br.com.renatanutricionista.utils.RelatorioUtils;
 
 
@@ -47,6 +49,9 @@ public class ConsultaService {
 	
 	@Autowired
 	private CalendarioAtendimentoPacienteService calendarioAtendimentoService;
+	
+	@Autowired
+	private PacienteParametroService pacienteParametroService;
 	
 	
 	public ResponseEntity<byte[]> gerarRelatorioDosPagamentosPendentes() {
@@ -131,7 +136,9 @@ public class ConsultaService {
 	
 	public ResponseEntity<InformacoesConsultaHistoricoParaCadastroDTO> informacoesPacienteHistoricosParaCadastroNaConsulta(Long idPaciente, Long idConsulta) {
 		Consulta consulta = atendimentoUtils.verificarPacienteConsulta(idPaciente, idConsulta);	
-		PacientePreviaHistoricosDTO pacientePreviaHistoricos = new PacientePreviaHistoricosDTO(consulta.getPaciente());
+		PacienteParametro pacienteParametro = pacienteParametroService.buscarPacienteParametro();
+		
+		PacientePreviaHistoricosDTO pacientePreviaHistoricos = new PacientePreviaHistoricosDTO(consulta.getPaciente(), pacienteParametro);
 		
 		return ResponseEntity.ok().body(new InformacoesConsultaHistoricoParaCadastroDTO(pacientePreviaHistoricos,
 				alimentoFrequenciaAlimentarRepository.findAll()));

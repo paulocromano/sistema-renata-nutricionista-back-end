@@ -29,11 +29,10 @@ public abstract class InformacoesAtendimentoParaCadastroDTO {
 		this.pacientePreviaHistoricos = pacientePreviaHistoricos;
 		informacoesHistoricoSocialParaCadastro = new InformacoesHistoricoSocialParaCadastroDTO();
 		informacoesConsumoQuestionarioFrequenciaAlimentarParaCadastro = new InformacoesConsumoQuestionarioParaCadastroDTO(alimentosFrequenciaAlimentar);
-		
-		ConversaoDadosEnum conversao = new ConversaoDadosEnum();
-		respostaSimNao = conversao.converterDadosEnum(RespostaUtils.values());
-		patologiaFamiliares = conversao.converterDadosEnum(PatologiaFamiliares.values());
-		frequenciaAtividadeFisica = conversao.converterDadosEnum(FrequenciaAtividadeFisica.values());
+
+		respostaSimNao = ConversaoDadosEnum.converterDadosEnum(RespostaUtils.values());
+		patologiaFamiliares = ConversaoDadosEnum.converterDadosEnum(PatologiaFamiliares.values());
+		frequenciaAtividadeFisica = ConversaoDadosEnum.converterDadosEnum(FrequenciaAtividadeFisica.values());
 	}	
 }
  

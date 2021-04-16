@@ -17,8 +17,8 @@ public class PacienteParametroFORM {
 	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico Social não pode ser nulo!")
 	private Integer tempoMesesAtualizarHistoricoSocial;
 
-	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico Familiar não pode ser nulo!")
-	private Integer tempoMesesAtualizarHistoricoFamiliar;
+	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico de patologia dos Familiares não pode ser nulo!")
+	private Integer tempoMesesAtualizarHistoricoPatologiaFamiliares;
 
 	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico de Atividade Física não pode ser nulo!")
 	private Integer tempoMesesAtualizarHistoricoAtividadeFisica;
@@ -33,7 +33,7 @@ public class PacienteParametroFORM {
 	public void atualizarInformacoesPacienteParametro(PacienteParametro pacienteParametro) {
 		pacienteParametro.setTempoMesesAtualizarQuestionarioFrequenciaAlimentar(tempoMesesAtualizarQuestionarioFrequenciaAlimentar);
 		pacienteParametro.setTempoMesesAtualizarHistoricoSocial(tempoMesesAtualizarHistoricoSocial);
-		pacienteParametro.setTempoMesesAtualizarHistoricoFamiliar(tempoMesesAtualizarHistoricoFamiliar);
+		pacienteParametro.setTempoMesesAtualizarHistoricoPatologiaFamiliares(tempoMesesAtualizarHistoricoPatologiaFamiliares);
 		pacienteParametro.setTempoMesesAtualizarHistoricoAtividadeFisica(tempoMesesAtualizarHistoricoAtividadeFisica);
 		pacienteParametro.setTempoMesesAtualizarHistoricoAlimentar(tempoMesesAtualizarHistoricoAlimentar);
 		pacienteParametro.setTempoMesesAtualizarHistoricoFrequenciaAlimentar(tempoMesesAtualizarHistoricoFrequenciaAlimentar);

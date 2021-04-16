@@ -31,12 +31,11 @@ public class QuestionarioFrequenciaAlimentarDTO {
 		id = questionario.getId();
 		dataHoraCadastroQuestionario = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(questionario.getDataHoraCadastroQuestionario());
 		frequenciaConsumoAlimentos = FrequenciaAlimentarDTO.converterParaListaFrequenciaAlimentarDTO(questionario.getFrequenciaConsumoAlimentos());
-		
-		ConcatenacaoValoresEnum concatenacao = new ConcatenacaoValoresEnum();
-		consumoTipoBebida = concatenacao.concatenarValoresEnum(questionario.getConsumoTipoBebida(), ConsumoTipoBebida.values());
-		consumoTipoLeite = concatenacao.concatenarValoresEnum(questionario.getConsumoTipoLeite(), ConsumoTipoLeite.values());
-		consumoCarneVermelha = concatenacao.concatenarValoresEnum(questionario.getConsumoCarneVermelha(), ConsumoCarneVermelha.values());
-		consumoFrango = concatenacao.concatenarValoresEnum(questionario.getConsumoFrango(), ConsumoFrango.values());
-		consumoPeixe = concatenacao.concatenarValoresEnum(questionario.getConsumoPeixe(), ConsumoPeixe.values());
+
+		consumoTipoBebida = ConcatenacaoValoresEnum.concatenarValoresEnum(questionario.getConsumoTipoBebida(), ConsumoTipoBebida.values());
+		consumoTipoLeite = ConcatenacaoValoresEnum.concatenarValoresEnum(questionario.getConsumoTipoLeite(), ConsumoTipoLeite.values());
+		consumoCarneVermelha = ConcatenacaoValoresEnum.concatenarValoresEnum(questionario.getConsumoCarneVermelha(), ConsumoCarneVermelha.values());
+		consumoFrango = ConcatenacaoValoresEnum.concatenarValoresEnum(questionario.getConsumoFrango(), ConsumoFrango.values());
+		consumoPeixe = ConcatenacaoValoresEnum.concatenarValoresEnum(questionario.getConsumoPeixe(), ConsumoPeixe.values());
 	}
 }

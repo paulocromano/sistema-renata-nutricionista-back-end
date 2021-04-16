@@ -52,7 +52,7 @@ public class HistoricoAlimentarFORM {
 				.consumoAgua(consumoAgua)
 				.medicamentos(medicamentosPaciente)
 				.paciente(paciente)
-				.dataHoraUltimaAtualizacaoDadosDoHistoricoAlimentar(LocalDateTime.now())
+				.dataHoraCadastroHistoricoAlimentar(LocalDateTime.now())
 				.build();
 	}
 	

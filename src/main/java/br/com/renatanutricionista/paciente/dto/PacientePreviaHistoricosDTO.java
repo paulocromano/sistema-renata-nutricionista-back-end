@@ -10,6 +10,7 @@ import br.com.renatanutricionista.ficha.identificacao.historico.atividade.fisica
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.dto.PreviaHistoricoPatologiaFamiliaresPorDataDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.dto.InformacoesPreviasHistoricoSocialDTO;
 import br.com.renatanutricionista.paciente.model.Paciente;
+import br.com.renatanutricionista.tabelas.parametro.paciente.model.PacienteParametro;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,9 +26,10 @@ public class PacientePreviaHistoricosDTO extends PacienteAbstractDTO {
 	private List<HistoricoAtividadeFisicaDTO> atividadeFisica;
 	private Set<PreviaHistoricoPatologiaFamiliaresPorDataDTO> previaHistoricoPatologiaFamiliaresPorData;
 	private List<InformacoesPreviasQuestionarioDTO> previaQuestionariosFrequenciaAlimentar;
+	private DataProximaAtualizacaoHistoricosPacienteDTO dataProximaAtualizacaoHistoricosPaciente;
 	
 	
-	public PacientePreviaHistoricosDTO(Paciente paciente) {
+	public PacientePreviaHistoricosDTO(Paciente paciente, PacienteParametro pacieteParametro) {
 		id = paciente.getId();
 		nome = paciente.getNome();
 		dataNascimento = ConversaoUtils.converterLocalDateParaString(paciente.getDataNascimento());
@@ -47,5 +49,6 @@ public class PacientePreviaHistoricosDTO extends PacienteAbstractDTO {
 				paciente.getQuestionarioFrequenciaAlimentar());
 		
 		dataHoraUltimaAtualizacaoDadosDoPaciente = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(paciente.getDataHoraUltimaAtualizacaoDadosDoPaciente());
+		dataProximaAtualizacaoHistoricosPaciente = new DataProximaAtualizacaoHistoricosPacienteDTO(paciente, pacieteParametro);
 	}
 }

@@ -92,7 +92,7 @@ public class RetornoConsulta {
 	@JoinColumn(name = "registro_dieta_24_horas_id")
 	private RegistroDieta registroDieta24Horas;
 	
-	@OneToOne(mappedBy = "retornoConsulta")
+	@OneToOne(mappedBy = "retornoConsulta", fetch = FetchType.LAZY)
 	private Consulta consulta;
 	
 	

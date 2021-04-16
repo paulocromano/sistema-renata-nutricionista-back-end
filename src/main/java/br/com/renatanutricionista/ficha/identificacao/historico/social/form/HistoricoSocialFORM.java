@@ -100,7 +100,7 @@ public class HistoricoSocialFORM {
 				.frequenciaDiurese(frequenciaDiurese)
 				.coloracaoDiurese(coloracaoDiurese)
 				.horasSono(horasSono)
-				.dataHoraUltimaAtualizacaoDadosDoHistoricoSocial(LocalDateTime.now())
+				.dataHoraCadastroHistoricoSocial(LocalDateTime.now())
 				.paciente(paciente);
 		
 		if (paciente.getSexo().equals(Sexo.FEMININO)) {

@@ -112,10 +112,10 @@ public class HistoricoSocial {
 	@Column(name = "quantos_anos_menopausa")
 	private Integer quantosAnosEstaNaMenopausa;
 	
-	@Column(name = "data_hora_ultima_atualizacao_dados_historico_social")
-	@NotNull(message = "A Data da Última Atualização dos Dados do Histórico Social não pode estar nula!")
+	@Column(name = "data_hora_cadastro_historico_social")
+	@NotNull(message = "A Data e Hora do Cadastro do Histórico Social não pode estar nula!")
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	private LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoSocial;
+	private LocalDateTime dataHoraCadastroHistoricoSocial;
 	
 	@ManyToOne
 	@JoinColumn(name = "paciente_id")
@@ -128,7 +128,7 @@ public class HistoricoSocial {
 			HabitoIntestinal habitoIntestinal, ConsistenciaFezes consistenciaFezes, FrequenciaDiurese frequenciaDiurese,
 			ColoracaoDiurese coloracaoDiurese, Integer horasSono, RespostaUtils menstruacaoNormal, 
 			String motivoAnormalidadeMenstruacao, RespostaUtils menopausa, Integer quantosAnosEstaNaMenopausa, 
-			LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoSocial, Paciente paciente) {
+			LocalDateTime dataHoraCadastroHistoricoSocial, Paciente paciente) {
 		
 		this.profissao = profissao;
 		this.estadoCivil = estadoCivil;
@@ -147,7 +147,7 @@ public class HistoricoSocial {
 		this.menopausa = menopausa;
 		this.quantosAnosEstaNaMenopausa = quantosAnosEstaNaMenopausa;
 		this.paciente = paciente;
-		this.dataHoraUltimaAtualizacaoDadosDoHistoricoSocial = dataHoraUltimaAtualizacaoDadosDoHistoricoSocial;
+		this.dataHoraCadastroHistoricoSocial = dataHoraCadastroHistoricoSocial;
 	}
 
 	
@@ -169,7 +169,7 @@ public class HistoricoSocial {
 		private String motivoAnormalidadeMenstruacao;
 		private RespostaUtils menopausa;
 		private Integer quantosAnosEstaNaMenopausa;
-		private LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoSocial;
+		private LocalDateTime dataHoraCadastroHistoricoSocial;
 		private Paciente paciente;
 		
 		
@@ -253,8 +253,8 @@ public class HistoricoSocial {
 			return this;
 		}
 		
-		public Builder dataHoraUltimaAtualizacaoDadosDoHistoricoSocial(LocalDateTime dataHoraUltimaAtualizacaoDadosDoHistoricoSocial) {
-			this.dataHoraUltimaAtualizacaoDadosDoHistoricoSocial = dataHoraUltimaAtualizacaoDadosDoHistoricoSocial;
+		public Builder dataHoraCadastroHistoricoSocial(LocalDateTime dataHoraCadastroHistoricoSocial) {
+			this.dataHoraCadastroHistoricoSocial = dataHoraCadastroHistoricoSocial;
 			return this;
 		}
 		
@@ -269,7 +269,7 @@ public class HistoricoSocial {
 					frequenciaConsumoBebidasAlcoolicas, consumoCigarro, quantidadeCigarrosPorDia, habitoIntestinal, 
 					consistenciaFezes, frequenciaDiurese, coloracaoDiurese, horasSono, menstruacaoNormal, 
 					motivoAnormalidadeMenstruacao, menopausa, quantosAnosEstaNaMenopausa, 
-					dataHoraUltimaAtualizacaoDadosDoHistoricoSocial, paciente);
+					dataHoraCadastroHistoricoSocial, paciente);
 		}
 	}
 }

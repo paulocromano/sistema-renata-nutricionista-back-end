@@ -30,7 +30,7 @@ public class HistoricoSocialDTO {
 	private String motivoAnormalidadeMenstruacao;
 	private String menopausa;
 	private Integer quantosAnosEstaNaMenopausa;
-	private String dataHoraUltimaAtualizacaoDadosDoHistoricoSocial;
+	private String dataHoraCadastroHistoricoSocial;
 	
 	
 	public HistoricoSocialDTO(HistoricoSocial historicoSocial) {
@@ -56,6 +56,6 @@ public class HistoricoSocialDTO {
 			quantosAnosEstaNaMenopausa = historicoSocial.getQuantosAnosEstaNaMenopausa();
 		}
 		
-		dataHoraUltimaAtualizacaoDadosDoHistoricoSocial = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(historicoSocial.getDataHoraUltimaAtualizacaoDadosDoHistoricoSocial());
+		dataHoraCadastroHistoricoSocial = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(historicoSocial.getDataHoraCadastroHistoricoSocial());
 	}
 }

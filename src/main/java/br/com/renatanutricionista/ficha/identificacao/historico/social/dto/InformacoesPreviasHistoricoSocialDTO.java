@@ -13,18 +13,18 @@ import lombok.Getter;
 public class InformacoesPreviasHistoricoSocialDTO {
 
 	private Long id;
-	private String dataHoraUltimaAtualizacaoDadosDoHistoricoSocial;
+	private String dataHoraCadastroHistoricoSocial;
 	
 	
 	public InformacoesPreviasHistoricoSocialDTO(HistoricoSocial historicoSocial) {
 		id = historicoSocial.getId();
-		dataHoraUltimaAtualizacaoDadosDoHistoricoSocial = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(historicoSocial.getDataHoraUltimaAtualizacaoDadosDoHistoricoSocial());
+		dataHoraCadastroHistoricoSocial = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(historicoSocial.getDataHoraCadastroHistoricoSocial());
 	}
 	
 	
 	public static List<InformacoesPreviasHistoricoSocialDTO> converterParaListaInformacoesPreviasHistoricoSocialDTO(List<HistoricoSocial> historicoSocial) {
 		return historicoSocial.stream()
-				.sorted(Comparator.comparing(HistoricoSocial::getDataHoraUltimaAtualizacaoDadosDoHistoricoSocial)
+				.sorted(Comparator.comparing(HistoricoSocial::getDataHoraCadastroHistoricoSocial)
 				.reversed())
 				.map(InformacoesPreviasHistoricoSocialDTO::new)
 				.collect(Collectors.toList());
