@@ -23,8 +23,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.model.HistoricoPatologiaFamiliares;
 import br.com.renatanutricionista.paciente.model.Paciente;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,8 +32,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@JsonIgnoreProperties(value = "paciente")
+@JsonIgnoreProperties(value = { "paciente" })
 public class HistoricoPatologiaFamiliaresPorData {
 
 	@Id
@@ -61,6 +58,13 @@ public class HistoricoPatologiaFamiliaresPorData {
 	private Paciente paciente;
 	
 	
+	private HistoricoPatologiaFamiliaresPorData(String observacao, LocalDateTime dataHoraCadastroPatologiasFamiliares, Paciente paciente) {
+		this.observacao = observacao;
+		this.dataHoraCadastroPatologiasFamiliares = dataHoraCadastroPatologiasFamiliares;
+		this.paciente = paciente;
+	}
+
+
 	public static class Builder {
 		
 		private String observacao;
@@ -86,7 +90,7 @@ public class HistoricoPatologiaFamiliaresPorData {
 		
 		
 		public HistoricoPatologiaFamiliaresPorData build() {
-			return new HistoricoPatologiaFamiliaresPorData(null, observacao, dataHoraCadastroPatologiasFamiliares, null, paciente);
+			return new HistoricoPatologiaFamiliaresPorData(observacao, dataHoraCadastroPatologiasFamiliares, paciente);
 		}
 	}
 }

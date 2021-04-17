@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -93,7 +94,7 @@ public class HistoricoSocial {
 	@NotNull(message = "O campo Coloração da Diurese não pode ser nulo!")
 	private ColoracaoDiurese coloracaoDiurese;
 	
-	@OneToMany(mappedBy = "historicoSocial", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "historicoSocial", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private Set<PatologiaPaciente> patologiasPaciente;
 	
 	@Column(name = "horas_sono")
@@ -117,7 +118,7 @@ public class HistoricoSocial {
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime dataHoraCadastroHistoricoSocial;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "paciente_id")
 	@NotNull(message = "O Paciente do Histórico Social não deve estar nulo!")
 	private Paciente paciente;

@@ -1,6 +1,8 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.alimentar.service;
 
 import java.util.HashSet;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.renatanutricionista.exception.custom.IntegrityConstraintViolationException;
+import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.form.HistoricoAlimentarFORM;
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.model.HistoricoAlimentar;
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.repository.HistoricoAlimentarRepository;
@@ -70,5 +73,26 @@ public class HistoricoAlimentarService {
 		}
 
 		return new HashSet<>();
+	}
+	
+	
+	public ResponseEntity<Void> excluirHistoricoAlimentar(Long idHistoricoAlimentar) {
+		HistoricoAlimentar historicoAlimentar = verificarSeHistoricoAlimentarExiste(idHistoricoAlimentar);
+		historicoAlimentarRepository.delete(historicoAlimentar);
+		
+		return ResponseEntity.noContent().build();
+	}
+	
+	
+	private HistoricoAlimentar verificarSeHistoricoAlimentarExiste(Long idHistoricoAlimentar) {
+		if (Objects.isNull(idHistoricoAlimentar))
+			throw new NullPointerException("O ID do Histórico Alimentar não pode ser nulo!");
+		
+		Optional<HistoricoAlimentar> historicoAlimentar = historicoAlimentarRepository.findById(idHistoricoAlimentar);
+		
+		if (historicoAlimentar.isEmpty())
+			throw new ObjectNotFoundException("Histórico Alimentar não encontrado!");
+		
+		return historicoAlimentar.get();
 	}
 }

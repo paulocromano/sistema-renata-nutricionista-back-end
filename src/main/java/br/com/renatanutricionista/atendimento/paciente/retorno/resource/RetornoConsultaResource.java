@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.renatanutricionista.atendimento.paciente.retorno.dto.RetornoConsultaDTO;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.AgendamentoRetornoFORM;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.ReagendamentoRetornoFORM;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.RetornoConsultaFORM;
@@ -25,6 +27,12 @@ public class RetornoConsultaResource {
 
 	@Autowired
 	private RetornoConsultaService retornoConsultaService;
+	
+	
+	@GetMapping("/buscar/{tipoAtendimento}/{idRetornoConsulta}")
+	public ResponseEntity<RetornoConsultaDTO> buscarRetornoConsultaDoPaciente(@PathVariable Integer tipoAtendimento, @PathVariable Long idRetornoConsulta) {
+		return retornoConsultaService.buscarRetornoConsultaDoPaciente(tipoAtendimento, idRetornoConsulta);
+	}
 	
 	
 	@PostMapping("/agendar/{idPaciente}/{idConsulta}")

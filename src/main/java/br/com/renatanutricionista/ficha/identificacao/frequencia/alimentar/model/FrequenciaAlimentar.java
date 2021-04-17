@@ -38,6 +38,7 @@ public class FrequenciaAlimentar {
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "alimento_questionario_frequencia_alimentar_id")
+	@NotNull(message = "O Alimento utilizado no Questionário de Frequência Alimentar não pode ser nulo!")
 	private AlimentoFrequenciaAlimentar alimentoFrequenciaAlimentar;
 	
 	@Column(name = "frequencia_consumo_alimento")

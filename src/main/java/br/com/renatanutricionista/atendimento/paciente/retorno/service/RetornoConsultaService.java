@@ -11,12 +11,14 @@ import org.springframework.stereotype.Service;
 import br.com.renatanutricionista.atendimento.paciente.consulta.enums.situacao.consulta.SituacaoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.service.ConsultaService;
+import br.com.renatanutricionista.atendimento.paciente.retorno.dto.RetornoConsultaDTO;
 import br.com.renatanutricionista.atendimento.paciente.retorno.enums.SituacaoRetorno;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.AgendamentoRetornoFORM;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.ReagendamentoRetornoFORM;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.RetornoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.retorno.model.RetornoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.retorno.repository.RetornoConsultaRepository;
+import br.com.renatanutricionista.atendimento.paciente.utils.TipoAtendimento;
 import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import br.com.renatanutricionista.calendario.atendimento.paciente.service.CalendarioAtendimentoPacienteService;
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
@@ -39,6 +41,16 @@ public class RetornoConsultaService {
 	
 	@Autowired
 	private CalendarioAtendimentoPacienteService calendarioAtendimentoService;
+	
+	
+	public ResponseEntity<RetornoConsultaDTO> buscarRetornoConsultaDoPaciente(Integer tipoAtendimento, Long idRetornoConsulta) {
+		if (!TipoAtendimento.converterParaEnum(tipoAtendimento).equals(TipoAtendimento.RETORNO_CONSULTA)) 
+			throw new IllegalArgumentException("O Tipo de Atendimento deve ser um retorno de consulta!");
+		
+		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaExiste(idRetornoConsulta);
+		
+		return ResponseEntity.ok().body(new RetornoConsultaDTO(retornoConsulta));
+	}
 
 	
 	public ResponseEntity<Void> agendarRetorno(Long idPaciente, Long idConsulta, AgendamentoRetornoFORM agendamentoRetorno) {

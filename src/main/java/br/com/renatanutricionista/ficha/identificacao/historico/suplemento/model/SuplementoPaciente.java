@@ -26,7 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonIgnoreProperties(value = "historicoAlimentar")
+@JsonIgnoreProperties(value = { "historicoAlimentar" })
 public class SuplementoPaciente {
 
 	@Id

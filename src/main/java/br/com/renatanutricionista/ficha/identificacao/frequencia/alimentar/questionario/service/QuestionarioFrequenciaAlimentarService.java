@@ -1,6 +1,8 @@
 package br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -9,12 +11,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.exception.custom.PacienteException;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alimentos.model.AlimentoFrequenciaAlimentar;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alimentos.repository.AlimentoFrequenciaAlimentarRepository;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.form.FrequenciaAlimentarFORM;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.model.FrequenciaAlimentar;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.form.QuestionarioFrequenciaAlimentarFORM;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.model.QuestionarioFrequenciaAlimentar;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.repository.QuestionarioFrequenciaAlimentarRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.service.PacienteService;
@@ -60,5 +64,26 @@ public class QuestionarioFrequenciaAlimentarService {
 			throw new IllegalArgumentException("Existe(m) Alimento(s) inválido(s) na lista de Alimentos " + 
 					"do Questionário informada pelo Usuário!");
 		}
+	}
+	
+	
+	public ResponseEntity<Void> excluirQuestionarioFrequenciaAlimentar(Long idQuestionarioFrequenciaAlimentar) {
+		QuestionarioFrequenciaAlimentar questionario = verificarSeQuestionarioFrequenciaAlimentarExiste(idQuestionarioFrequenciaAlimentar);
+		questionarioFrequenciaAlimentarRepository.delete(questionario);
+		
+		return ResponseEntity.noContent().build();
+	}
+	
+	
+	private QuestionarioFrequenciaAlimentar verificarSeQuestionarioFrequenciaAlimentarExiste(Long idQuestionarioFrequenciaAlimentar) {
+		if (Objects.isNull(idQuestionarioFrequenciaAlimentar))
+			throw new NullPointerException("O ID do Questionário de Frequência Alimentar não pode ser nulo!");
+		
+		Optional<QuestionarioFrequenciaAlimentar> questionario = questionarioFrequenciaAlimentarRepository.findById(idQuestionarioFrequenciaAlimentar);
+		
+		if (questionario.isEmpty())
+			throw new ObjectNotFoundException("Questionário de Frequência Alimentar não encontrado!");
+		
+		return questionario.get();
 	}
 }

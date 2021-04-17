@@ -25,7 +25,6 @@ import br.com.renatanutricionista.atendimento.paciente.consulta.form.Confirmacao
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.ConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.ReagendamentoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.service.ConsultaService;
-import br.com.renatanutricionista.atendimento.paciente.utils.TipoAtendimento;
 
 
 @RestController
@@ -57,8 +56,7 @@ public class ConsultaResource {
 	
 	
 	@GetMapping("/buscar/{tipoAtendimento}/{idConsulta}")
-	public ResponseEntity<ConsultaDTO> buscarConsultaDoPaciente(@PathVariable TipoAtendimento tipoAtendimento, @PathVariable Long idConsulta) {
-		System.out.println("Chegu");
+	public ResponseEntity<ConsultaDTO> buscarConsultaDoPaciente(@PathVariable Integer tipoAtendimento, @PathVariable Long idConsulta) {
 		return consultaService.buscarConsultaDoPaciente(tipoAtendimento, idConsulta);
 	}
 	

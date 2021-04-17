@@ -86,14 +86,13 @@ public class ConsultaService {
 	}
 	
 	
-	public ResponseEntity<ConsultaDTO> buscarConsultaDoPaciente(TipoAtendimento tipoAtendimento, Long idConsulta) {
-		if (!tipoAtendimento.equals(TipoAtendimento.CONSULTA))
-			throw new IllegalArgumentException("Tipo de Atendimento inválido para buscar a consulta do paciente!");
-		
+	public ResponseEntity<ConsultaDTO> buscarConsultaDoPaciente(Integer tipoAtendimento, Long idConsulta) {
+		if (!TipoAtendimento.converterParaEnum(tipoAtendimento).equals(TipoAtendimento.CONSULTA)) 
+			throw new IllegalArgumentException("O Tipo de Atendimento deve ser uma consulta!");
+			
 		Consulta consulta = verificarSeConsultaExiste(idConsulta);
-		PacienteParametro pacienteParametro = pacienteParametroService.buscarPacienteParametro();
 		
-		return ResponseEntity.ok().body(new ConsultaDTO(consulta, pacienteParametro));
+		return ResponseEntity.ok().body(new ConsultaDTO(consulta));
 	}
 
 	

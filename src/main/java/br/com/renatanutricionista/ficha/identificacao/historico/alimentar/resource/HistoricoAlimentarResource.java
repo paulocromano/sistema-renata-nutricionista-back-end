@@ -5,6 +5,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,5 +30,12 @@ public class HistoricoAlimentarResource {
 			@RequestBody @Valid HistoricoAlimentarFORM historicoAlimentarFORM) {
 		
 		return historicoAlimentarService.cadastrarHistoricoAlimentarDoPaciente(idPaciente, historicoAlimentarFORM);
+	}
+	
+	
+	@DeleteMapping("/{idHistoricoAlimentar}")
+	@Transactional
+	public ResponseEntity<Void> excluirHistoricoAlimentar(@PathVariable Long idHistoricoAlimentar) {
+		return historicoAlimentarService.excluirHistoricoAlimentar(idHistoricoAlimentar);
 	}
 }
