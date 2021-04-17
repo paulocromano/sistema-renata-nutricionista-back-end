@@ -20,4 +20,9 @@ public class MedicamentoFORM {
 	public Medicamento converterParaMedicamento() {
 		return new Medicamento(nome);
 	}
+	
+	
+	public void atualizarMedicamento(Medicamento medicamento) {
+		medicamento.setNome(nome);
+	}
 }

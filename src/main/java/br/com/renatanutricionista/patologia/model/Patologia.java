@@ -10,12 +10,14 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "patologia", schema = "sistema_nutricionista")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Patologia {
 
 	@Id
@@ -26,4 +28,9 @@ public class Patologia {
 	@NotEmpty(message = "O campo Descrição não pode estar nulo/vazio!")
 	@Size(max = 100, message = "O campo Descrição deve ter no máximo {max} caracteres!")
 	private String descricao;
+
+	
+	public Patologia(String descricao) {
+		this.descricao = descricao;
+	}
 }

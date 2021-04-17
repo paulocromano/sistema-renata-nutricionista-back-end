@@ -1,6 +1,5 @@
 package br.com.renatanutricionista.medicamento.dto;
 
-import java.text.Collator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,7 +15,6 @@ public class MedicamentoDTO implements Comparable<MedicamentoDTO> {
 	private Integer id;
 	private String nome;
 	
-	private static final Collator COLLATOR = FormatacaoUtils.COLLATOR;
 	
 	public MedicamentoDTO(Medicamento medicamento) {
 		id = medicamento.getId();
@@ -26,7 +24,7 @@ public class MedicamentoDTO implements Comparable<MedicamentoDTO> {
 	
 	@Override
 	public int compareTo(MedicamentoDTO outroMedicamento) {
-		return COLLATOR.compare(nome, outroMedicamento.getNome());
+		return FormatacaoUtils.COLLATOR.compare(nome, outroMedicamento.getNome());
 	}
 	
 	

@@ -1,6 +1,7 @@
 package br.com.renatanutricionista.patologia.dto;
 
-import java.text.Collator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.patologia.model.Patologia;
 import br.com.renatanutricionista.utils.FormatacaoUtils;
@@ -12,8 +13,7 @@ public class PatologiaDTO implements Comparable<PatologiaDTO> {
 
 	private Integer id;
 	private String descricao;
-	
-	private static final Collator COLLATOR = FormatacaoUtils.COLLATOR;
+
 	
 	public PatologiaDTO(Patologia patologia) {
 		id = patologia.getId();
@@ -22,7 +22,12 @@ public class PatologiaDTO implements Comparable<PatologiaDTO> {
 	
 	
 	@Override
-	public int compareTo(PatologiaDTO outraPatologia) {
-		return COLLATOR.compare(descricao, outraPatologia.getDescricao());
+	public int compareTo(PatologiaDTO other) {
+		return FormatacaoUtils.COLLATOR.compare(descricao, other.getDescricao());
+	}
+	
+	
+	public static List<PatologiaDTO> converterParaListaPatologiaDTOEmOrdemAlfabetica(List<Patologia> patologias) {
+		return patologias.stream().map(PatologiaDTO::new).sorted().collect(Collectors.toList());
 	}
 }
