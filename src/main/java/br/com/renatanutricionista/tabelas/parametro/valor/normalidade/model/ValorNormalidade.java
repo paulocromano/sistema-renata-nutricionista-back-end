@@ -12,7 +12,7 @@ import lombok.Getter;
 
 
 @Entity
-@Table(name = "valor_normalidade", schema = "sistema_nutricionista_parametro")
+@Table(name = "valor_normalidade", catalog = "sistema_nutricionista_parametro")
 @Getter
 public class ValorNormalidade {
 

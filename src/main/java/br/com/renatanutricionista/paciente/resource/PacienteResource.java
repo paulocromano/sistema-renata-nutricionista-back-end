@@ -37,7 +37,7 @@ public class PacienteResource {
 	}
 	
 	
-	@GetMapping("informacoes-previas-historicos/{idPaciente}")
+	@GetMapping("/informacoes-previas-historicos/{idPaciente}")
 	public ResponseEntity<PacientePreviaHistoricosDTO> buscarInformacoesPreviasHistoricosDoPaciente(@PathVariable Long idPaciente) {
 		return pacienteService.buscarInformacoesPreviasHistoricosDoPaciente(idPaciente);
 	}

@@ -36,13 +36,15 @@ public class DataProximaAtualizacaoHistoricosPacienteDTO {
 				.max(Comparator.comparing(LocalDate::toEpochDay));
 		
 		if (dataQuestionarioMaisRecente.isPresent()) {
-			if (LocalDate.now().isAfter(dataQuestionarioMaisRecente.get())) {
+			LocalDate dataQuestionarioFrequenciaAlimentar = dataQuestionarioMaisRecente.get()
+					.plusMonths(pacieteParametro.getTempoMesesAtualizarQuestionarioFrequenciaAlimentar());
+			
+			if (LocalDate.now().isAfter(dataQuestionarioFrequenciaAlimentar)) {
 				dataProximaAtualizacaoQuestionarioFrequenciaAlimentar = "O Questionário de Frequência Alimentar do paciente "
 						+ "está desatualizado!";
 			}
 			else {
-				dataProximaAtualizacaoQuestionarioFrequenciaAlimentar = ConversaoUtils.converterLocalDateParaString(
-						dataQuestionarioMaisRecente.get().plusMonths(pacieteParametro.getTempoMesesAtualizarQuestionarioFrequenciaAlimentar()));
+				dataProximaAtualizacaoQuestionarioFrequenciaAlimentar = ConversaoUtils.converterLocalDateParaString(dataQuestionarioFrequenciaAlimentar);
 			}
 		}
 	}
@@ -54,12 +56,13 @@ public class DataProximaAtualizacaoHistoricosPacienteDTO {
 				.max(Comparator.comparing(LocalDate::toEpochDay));
 		
 		if (dataHistoricoAlimentarMaisRecente.isPresent()) {
-			if (LocalDate.now().isAfter(dataHistoricoAlimentarMaisRecente.get())) {
+			LocalDate dataHistoricoAlimentar = dataHistoricoAlimentarMaisRecente.get().plusMonths(pacieteParametro.getTempoMesesAtualizarHistoricoAlimentar());
+			
+			if (LocalDate.now().isAfter(dataHistoricoAlimentar)) {
 				dataProximaAtualizacaoHistoricoAlimentar = "O Histórico Alimentar do paciente está desatualizado!";
 			}
 			else {
-				dataProximaAtualizacaoHistoricoAlimentar = ConversaoUtils.converterLocalDateParaString(
-						dataHistoricoAlimentarMaisRecente.get().plusMonths(pacieteParametro.getTempoMesesAtualizarHistoricoAlimentar()));
+				dataProximaAtualizacaoHistoricoAlimentar = ConversaoUtils.converterLocalDateParaString(dataHistoricoAlimentar);
 			}
 		}
 	}
@@ -71,12 +74,14 @@ public class DataProximaAtualizacaoHistoricosPacienteDTO {
 				.max(Comparator.comparing(LocalDate::toEpochDay));
 		
 		if (dataHistoricoAtividadeFisicaMaisRecente.isPresent()) {
-			if (LocalDate.now().isAfter(dataHistoricoAtividadeFisicaMaisRecente.get())) {
+			LocalDate dataHistoricoAtividadeFisica = dataHistoricoAtividadeFisicaMaisRecente.get()
+					.plusMonths(pacieteParametro.getTempoMesesAtualizarHistoricoAtividadeFisica());
+			
+			if (LocalDate.now().isAfter(dataHistoricoAtividadeFisica)) {
 				dataProximaAtualizacaoHistoricoAtividadeFisica = "O Histórico de Atividade Física do paciente está desatualizado!";
 			}
 			else {
-				dataProximaAtualizacaoHistoricoAtividadeFisica = ConversaoUtils.converterLocalDateParaString(
-						dataHistoricoAtividadeFisicaMaisRecente.get().plusMonths(pacieteParametro.getTempoMesesAtualizarHistoricoAtividadeFisica()));
+				dataProximaAtualizacaoHistoricoAtividadeFisica = ConversaoUtils.converterLocalDateParaString(dataHistoricoAtividadeFisica);
 			}
 		}
 	}
@@ -88,13 +93,15 @@ public class DataProximaAtualizacaoHistoricosPacienteDTO {
 				.max(Comparator.comparing(LocalDate::toEpochDay));
 		
 		if (dataHistoricoPatologiaFamiliaresMaisRecente.isPresent()) {
-			if (LocalDate.now().isAfter(dataHistoricoPatologiaFamiliaresMaisRecente.get())) {
+			LocalDate dataHistoricoPatologiaFamiliares = dataHistoricoPatologiaFamiliaresMaisRecente.get()
+					.plusMonths(pacieteParametro.getTempoMesesAtualizarHistoricoPatologiaFamiliares());
+			
+			if (LocalDate.now().isAfter(dataHistoricoPatologiaFamiliares)) {
 				dataProximaAtualizacaoHistoricoPatologiasFamiliares = "O Histórico de Patologias dos Familiares "
 						+ "do paciente está desatualizado!";
 			}
 			else {
-				dataProximaAtualizacaoHistoricoPatologiasFamiliares = ConversaoUtils.converterLocalDateParaString(
-						dataHistoricoPatologiaFamiliaresMaisRecente.get().plusMonths(pacieteParametro.getTempoMesesAtualizarHistoricoPatologiaFamiliares()));
+				dataProximaAtualizacaoHistoricoPatologiasFamiliares = ConversaoUtils.converterLocalDateParaString(dataHistoricoPatologiaFamiliares);
 			}
 		}
 	}
@@ -106,12 +113,13 @@ public class DataProximaAtualizacaoHistoricosPacienteDTO {
 				.max(Comparator.comparing(LocalDate::toEpochDay));
 		
 		if (dataHistoricoSocialMaisRecente.isPresent()) {
-			if (LocalDate.now().isAfter(dataHistoricoSocialMaisRecente.get())) {
+			LocalDate dataHistoricoSocial = dataHistoricoSocialMaisRecente.get().plusMonths(pacieteParametro.getTempoMesesAtualizarHistoricoSocial());
+			
+			if (LocalDate.now().isAfter(dataHistoricoSocial)) {
 				dataProximaAtualizacaoHistoricoSocial = "O Histórico Social do paciente está desatualizado!";
 			}
 			else {
-				dataProximaAtualizacaoHistoricoSocial = ConversaoUtils.converterLocalDateParaString(
-						dataHistoricoSocialMaisRecente.get().plusMonths(pacieteParametro.getTempoMesesAtualizarHistoricoSocial()));
+				dataProximaAtualizacaoHistoricoSocial = ConversaoUtils.converterLocalDateParaString(dataHistoricoSocial);
 			}
 		}
 	}

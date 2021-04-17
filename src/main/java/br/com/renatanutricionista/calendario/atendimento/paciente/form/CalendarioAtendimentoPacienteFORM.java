@@ -7,6 +7,7 @@ import javax.validation.constraints.Pattern;
 
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
 import br.com.renatanutricionista.utils.ConversaoUtils;
+import br.com.renatanutricionista.utils.RegexUtils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,11 +17,11 @@ import lombok.Setter;
 public class CalendarioAtendimentoPacienteFORM {
 
 	@NotEmpty(message = "O campo da Data Inicial não pode estar vazia/nula!")
-	@Pattern(regexp = "(3[01]|[12][0-9]|0[1-9])/(1[0-2]|0[1-9])/[0-9]{4}", message = "O formato da Data Inicial para cadastro de períodos é inválida!")
+	@Pattern(regexp = RegexUtils.DATA, message = "O formato da Data Inicial para cadastro de períodos é inválida!")
 	private String dataInicial;
 	
 	@NotEmpty(message = "O campo da Data Final não pode estar vazia/nula!")
-	@Pattern(regexp = "(3[01]|[12][0-9]|0[1-9])/(1[0-2]|0[1-9])/[0-9]{4}", message = "O formato da Data Final para cadastro de períodos é inválida!")
+	@Pattern(regexp = RegexUtils.DATA, message = "O formato da Data Final para cadastro de períodos é inválida!")
 	private String dataFinal;
 	
 	

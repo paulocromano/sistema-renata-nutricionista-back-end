@@ -35,8 +35,8 @@ public class RetornoConsultaDTO {
 		id = retornoConsulta.getId();
 		situacaoRetorno = retornoConsulta.getSituacaoRetorno().getDescricao();
 		dificuldadesParaSeguirOrientacoes = retornoConsulta.getDificuldadesParaSeguirOrientacoes();
-		data = ConversaoUtils.converterLocalDateParaString(retornoConsulta.getDataHorario().toLocalDate());
-		horario = retornoConsulta.getDataHorario().toLocalTime().toString();
+		data = ConversaoUtils.converterLocalDateParaString(retornoConsulta.getData());
+		horario = retornoConsulta.getHorario().toString();
 		alteracoesSintomas = retornoConsulta.getAlteracoesSintomas();
 		alteracoesQueimacoes = retornoConsulta.getAlteracoesQueimacoes();
 		alteracoesMedicamentos = retornoConsulta.getAlteracoesMedicamentos();

@@ -1,5 +1,7 @@
 package br.com.renatanutricionista.atendimento.paciente.consulta.resource;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -12,14 +14,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.renatanutricionista.atendimento.paciente.consulta.dto.ConsultaDTO;
 import br.com.renatanutricionista.atendimento.paciente.consulta.dto.InformacoesConsultaHistoricoParaCadastroDTO;
+import br.com.renatanutricionista.atendimento.paciente.consulta.dto.InformacoesPreviasConsultaRetornoDTO;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.AgendamentoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.ConfirmacaoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.ConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.ReagendamentoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.service.ConsultaService;
+import br.com.renatanutricionista.atendimento.paciente.utils.TipoAtendimento;
 
 
 @RestController
@@ -33,6 +39,27 @@ public class ConsultaResource {
 	@GetMapping("/gerar-relatorio-pagamentos-pendentes")
 	public ResponseEntity<byte[]> gerarRelatorioDosPagamentosPendentes() {
 		return consultaService.gerarRelatorioDosPagamentosPendentes();
+	}
+	
+	
+	@GetMapping("/listar-atendimentos-periodo-padrao")
+	public ResponseEntity<List<InformacoesPreviasConsultaRetornoDTO>> listarAtendimentosPorPeriodoPadrao() {
+		return consultaService.listarAtendimentosPorPeriodoPadrao();
+	}
+	
+	
+	@GetMapping("/listar-atendimentos-por-periodo")
+	public ResponseEntity<List<InformacoesPreviasConsultaRetornoDTO>> listarAtendimentosPorPeriodo(@RequestParam String dataInicial, 
+			@RequestParam String dataFinal) {
+		
+		return consultaService.listarAtendimentosPorPeriodo(dataInicial, dataFinal);
+	}
+	
+	
+	@GetMapping("/buscar/{tipoAtendimento}/{idConsulta}")
+	public ResponseEntity<ConsultaDTO> buscarConsultaDoPaciente(@PathVariable TipoAtendimento tipoAtendimento, @PathVariable Long idConsulta) {
+		System.out.println("Chegu");
+		return consultaService.buscarConsultaDoPaciente(tipoAtendimento, idConsulta);
 	}
 	
 	

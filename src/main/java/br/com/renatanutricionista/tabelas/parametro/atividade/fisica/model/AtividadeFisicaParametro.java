@@ -16,7 +16,7 @@ import lombok.Getter;
 
 
 @Entity
-@Table(name = "atividade_fisica_parametro", schema = "sistema_nutricionista_parametro")
+@Table(name = "atividade_fisica_parametro", catalog = "sistema_nutricionista_parametro")
 @Getter
 public class AtividadeFisicaParametro {
 

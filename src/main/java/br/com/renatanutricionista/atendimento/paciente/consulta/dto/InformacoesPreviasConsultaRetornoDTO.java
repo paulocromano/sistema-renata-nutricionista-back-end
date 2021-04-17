@@ -1,14 +1,17 @@
 package br.com.renatanutricionista.atendimento.paciente.consulta.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import br.com.renatanutricionista.atendimento.paciente.consulta.enums.TipoAtendimento;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.retorno.model.RetornoConsulta;
+import br.com.renatanutricionista.atendimento.paciente.utils.TipoAtendimento;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
 
@@ -23,14 +26,18 @@ public class InformacoesPreviasConsultaRetornoDTO {
 	private String dataAtendimento;
 	private String horarioAtendimento;
 	
+	@JsonIgnore
+	private LocalDateTime dataHorarioAtendimento;
+	
 
 	private InformacoesPreviasConsultaRetornoDTO(Consulta consulta) {
 		idAtendimento = consulta.getId();
 		nomePaciente = consulta.getPaciente().getNome();
 		tipoAtendimento = TipoAtendimento.CONSULTA.getDescricao();
 		situacaoAtendimento = consulta.getSituacaoConsulta().getDescricao();
-		dataAtendimento = ConversaoUtils.converterLocalDateParaString(consulta.getDataHorario().toLocalDate());
-		horarioAtendimento = consulta.getDataHorario().toLocalTime().toString();
+		dataAtendimento = ConversaoUtils.converterLocalDateParaString(consulta.getData());
+		horarioAtendimento = consulta.getHorario().toString();
+		dataHorarioAtendimento = consulta.getData().atTime(consulta.getHorario());
 	}
 	
 	private InformacoesPreviasConsultaRetornoDTO(RetornoConsulta retornoConsulta) {
@@ -38,23 +45,22 @@ public class InformacoesPreviasConsultaRetornoDTO {
 		nomePaciente = retornoConsulta.getConsulta().getPaciente().getNome();
 		tipoAtendimento = TipoAtendimento.RETORNO_CONSULTA.getDescricao();
 		situacaoAtendimento = retornoConsulta.getSituacaoRetorno().getDescricao();
-		dataAtendimento = ConversaoUtils.converterLocalDateParaString(retornoConsulta.getDataHorario().toLocalDate());
-		horarioAtendimento = ConversaoUtils.converterLocalTimeParaString(retornoConsulta.getDataHorario().toLocalTime());
+		dataAtendimento = ConversaoUtils.converterLocalDateParaString(retornoConsulta.getData());
+		horarioAtendimento = retornoConsulta.getHorario().toString();
+		dataHorarioAtendimento = retornoConsulta.getData().atTime(retornoConsulta.getHorario());
 	}
 	
 	
 	public static List<InformacoesPreviasConsultaRetornoDTO> converterParaListaInformacoesPreviasConsultaRetornoDTO(List<Consulta> atendimentos,
 			LocalDate dataInicial, LocalDate dataFinal) {
 		
-		Predicate<Consulta> predicateConsulta = consulta -> !consulta.getDataHorario().toLocalDate().isBefore(dataInicial) 
-				&& !consulta.getDataHorario().toLocalDate().isAfter(dataFinal);
+		Predicate<Consulta> predicateConsulta = consulta -> !consulta.getData().isBefore(dataInicial) && !consulta.getData().isAfter(dataFinal);
 		
 		return atendimentos.stream()
-				.sorted(Comparator.comparing(Consulta::getDataHorario)
-				.reversed())
 				.map(atendimento -> (predicateConsulta.test(atendimento)) 
 						? new InformacoesPreviasConsultaRetornoDTO(atendimento) 
 						: new InformacoesPreviasConsultaRetornoDTO(atendimento.getRetornoConsulta()))
+				.sorted(Comparator.comparing(InformacoesPreviasConsultaRetornoDTO::getDataHorarioAtendimento))
 				.collect(Collectors.toList());
 	}
 }

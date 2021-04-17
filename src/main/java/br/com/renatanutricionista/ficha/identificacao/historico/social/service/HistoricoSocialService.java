@@ -17,7 +17,7 @@ import br.com.renatanutricionista.ficha.identificacao.historico.social.form.Hist
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.repository.HistoricoSocialRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
-import br.com.renatanutricionista.paciente.utils.PacienteUtils;
+import br.com.renatanutricionista.paciente.service.PacienteService;
 
 
 @Service
@@ -30,11 +30,11 @@ public class HistoricoSocialService {
 	private PatologiaPacienteRepository patologiaPacienteRepository;
 	
 	@Autowired
-	private PacienteUtils pacienteUtils;
+	private PacienteService pacienteService;
 	
 	
 	public ResponseEntity<Void> cadastrarHistoricoSocialDoPaciente(Long idPaciente, HistoricoSocialFORM historicoSocialFORM) {
-		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
+		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);
 		validarOpcaoConsumoBebidasAlcoolicasConsumoCigarro(paciente, historicoSocialFORM);
 		
 		HistoricoSocial historicoSocial = historicoSocialRepository.save(historicoSocialFORM.converterParaHistoricoSocial(paciente));
@@ -49,7 +49,7 @@ public class HistoricoSocialService {
 			}
 		}
 
-		pacienteUtils.atualizarDataHoraUltimaAlteracaoNosDadosDoPaciente(paciente);
+		pacienteService.atualizarDataHoraUltimaAlteracaoNosDadosDoPaciente(paciente);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
@@ -63,8 +63,6 @@ public class HistoricoSocialService {
 			
 			historicoPaciente = historicoSocialRepository.findFirstByPacienteAndFrequenciaConsumoBebidasAlcoolicasNotAndConsumoCigarroNot(
 				paciente, ConsumoBebidasAlcoolicas.NUNCA, ConsumoCigarro.NUNCA_FUMOU);
-			
-			System.out.println(historicoPaciente.isPresent());
 			
 			if (historicoPaciente.isPresent()) 
 				throw new PacienteException("Opção inválida! O Paciente possui antecedentes de consumo de "

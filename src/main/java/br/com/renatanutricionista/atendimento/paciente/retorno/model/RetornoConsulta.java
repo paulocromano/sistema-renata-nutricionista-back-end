@@ -1,6 +1,7 @@
 package br.com.renatanutricionista.atendimento.paciente.retorno.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -47,10 +48,13 @@ public class RetornoConsulta {
 	@NotNull(message = "O campo Situação do Retorno não pode ser nulo!")
 	private SituacaoRetorno situacaoRetorno;
 	
-	@Column(name = "data_horario")
-	@NotNull(message = "O campo Data e Horário do Retorno da Consulta nçao pode estar nulo!")
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	private LocalDateTime dataHorario;
+	@NotNull(message = "O campo Data do Retorno da Consulta nçao pode estar nulo!")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private LocalDate data;
+	
+	@NotNull(message = "O campo Horário do Retorno da Consulta não pode ser nulo!")
+	@DateTimeFormat(pattern = "HH:mm")
+	private LocalTime horario;
 	
 	@Column(name = "dificuldades_seguir_orientacoes")
 	@Size(max = 500, message = "O campo Dificuldades para Seguir Orientações deve ter no máximo {max} caracteres!")
@@ -94,10 +98,11 @@ public class RetornoConsulta {
 	
 	@OneToOne(mappedBy = "retornoConsulta", fetch = FetchType.LAZY)
 	private Consulta consulta;
+
 	
-	
-	public RetornoConsulta(SituacaoRetorno situacaoRetorno, LocalDateTime dataHorario) {
+	public RetornoConsulta(SituacaoRetorno situacaoRetorno, LocalDate data, LocalTime horario) {
 		this.situacaoRetorno = situacaoRetorno;
-		this.dataHorario = dataHorario;
+		this.data = data;
+		this.horario = horario;
 	}
 }

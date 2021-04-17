@@ -1,7 +1,8 @@
 package br.com.renatanutricionista.atendimento.paciente.consulta.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -54,10 +55,13 @@ public class Consulta {
 	@NotNull(message = "O campo Situação da Consulta não pode estar nulo!")
 	private SituacaoConsulta situacaoConsulta;
 	
-	@Column(name = "data_horario")
-	@NotNull(message = "O campo Data e Horário da Consulta nçao pode estar nulo!")
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	private LocalDateTime dataHorario;
+	@NotNull(message = "O campo Data da Consulta nçao pode estar nulo!")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private LocalDate data;
+	
+	@NotNull(message = "O campo Horário da Consulta não pode ser nulo!")
+	@DateTimeFormat(pattern = "HH:mm")
+	private LocalTime horario;
 	
 	@Column(name = "forma_pagamento")
 	private FormaPagamento formaPagamento;
@@ -105,20 +109,20 @@ public class Consulta {
 	private RetornoConsulta retornoConsulta;
 
 	
-	private Consulta(SituacaoConsulta situacaoConsulta, LocalDateTime dataHorario,
-			String motivoConsulta, Paciente paciente) {
-		
+	private Consulta(SituacaoConsulta situacaoConsulta, LocalDate data, LocalTime horario, String motivoConsulta, Paciente paciente) {
 		this.situacaoConsulta = situacaoConsulta;
-		this.dataHorario = dataHorario;
+		this.data = data;
+		this.horario = horario;
 		this.motivoConsulta = motivoConsulta;
 		this.paciente = paciente;
 	}
-	
-	
+
+
 	public static class Builder {
 		
 		private SituacaoConsulta situacaoConsulta;
-		private LocalDateTime dataHorario;
+		private LocalDate data;
+		private LocalTime horario;
 		private String motivoConsulta;
 		private Paciente paciente;
 		
@@ -128,8 +132,13 @@ public class Consulta {
 			return this;
 		}
 		
-		public Builder dataHorario(LocalDateTime dataHorario) {
-			this.dataHorario = dataHorario;
+		public Builder data(LocalDate data) {
+			this.data = data;
+			return this;
+		}
+		
+		public Builder horario(LocalTime horario) {
+			this.horario = horario;
 			return this;
 		}
 		
@@ -145,7 +154,7 @@ public class Consulta {
 		
 		
 		public Consulta build() {
-			return new Consulta(situacaoConsulta, dataHorario, motivoConsulta, paciente);
+			return new Consulta(situacaoConsulta, data, horario, motivoConsulta, paciente);
 		}
 	}
 }

@@ -16,7 +16,7 @@ import br.com.renatanutricionista.ficha.identificacao.historico.suplemento.repos
 import br.com.renatanutricionista.medicamento.model.Medicamento;
 import br.com.renatanutricionista.medicamento.repository.MedicamentoRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
-import br.com.renatanutricionista.paciente.utils.PacienteUtils;
+import br.com.renatanutricionista.paciente.service.PacienteService;
 
 
 @Service
@@ -32,11 +32,11 @@ public class HistoricoAlimentarService {
 	private MedicamentoRepository medicamentoRepository;
 	
 	@Autowired
-	private PacienteUtils pacienteUtils;
+	private PacienteService pacienteService;
 	
 	
 	public ResponseEntity<Void> cadastrarHistoricoAlimentarDoPaciente(Long idPaciente, HistoricoAlimentarFORM historicoAlimentarFORM) {
-		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
+		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);
 		
 		Set<Medicamento> medicamentosPaciente = validarListaMedicamentosPaciente(historicoAlimentarFORM.getIdMedicamentos());
 		HistoricoAlimentar historicoAlimentar = historicoAlimentarFORM.converterParaHistoricoAlimentar(paciente, medicamentosPaciente);
@@ -52,7 +52,7 @@ public class HistoricoAlimentarService {
 
 		}
 		
-		pacienteUtils.atualizarDataHoraUltimaAlteracaoNosDadosDoPaciente(paciente);
+		pacienteService.atualizarDataHoraUltimaAlteracaoNosDadosDoPaciente(paciente);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}

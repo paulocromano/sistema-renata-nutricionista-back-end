@@ -17,7 +17,7 @@ import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.model
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.form.QuestionarioFrequenciaAlimentarFORM;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.repository.QuestionarioFrequenciaAlimentarRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
-import br.com.renatanutricionista.paciente.utils.PacienteUtils;
+import br.com.renatanutricionista.paciente.service.PacienteService;
 
 
 @Service
@@ -30,11 +30,11 @@ public class QuestionarioFrequenciaAlimentarService {
 	private AlimentoFrequenciaAlimentarRepository alimentoFrequenciaAlimentarRepository;
 
 	@Autowired
-	private PacienteUtils pacienteUtils;
+	private PacienteService pacienteService;
 	
 	
 	public ResponseEntity<Void> cadastrarQuestionarioFrequenciaAlimentar(Long idPaciente, QuestionarioFrequenciaAlimentarFORM questionarioFrequenciaAlimentar) {
-		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
+		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);
 		Set<FrequenciaAlimentar> frequenciaAlimentar = gerarSetFrequenciaAlimentar(questionarioFrequenciaAlimentar.getFrequenciaConsumoAlimentos());
 		
 		questionarioFrequenciaAlimentarRepository.save(questionarioFrequenciaAlimentar.converterParaQuestionarioFrequenciaAlimentar(paciente, frequenciaAlimentar));

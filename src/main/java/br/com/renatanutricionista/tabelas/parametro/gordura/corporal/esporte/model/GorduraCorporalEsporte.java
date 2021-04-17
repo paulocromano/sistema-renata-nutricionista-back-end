@@ -13,7 +13,7 @@ import lombok.Getter;
 
 
 @Entity
-@Table(name = "percentual_gordura_corporal_esporte", schema = "sistema_nutricionista_parametro")
+@Table(name = "percentual_gordura_corporal_esporte", catalog = "sistema_nutricionista_parametro")
 @Getter
 public class GorduraCorporalEsporte {
 

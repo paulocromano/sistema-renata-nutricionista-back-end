@@ -113,17 +113,4 @@ public final class ConversaoUtils {
 			throw new DateTimeException("Formato de Hora inválido para conversão em LocalTime!");
 		}
 	}
-	
-	
-	public static final LocalDateTime converterStringParaLocalDateTime(String data, String horario) {
-		if (Objects.isNull(data) || Objects.isNull(horario))
-			throw new NullPointerException("Data e/ou Horário estão nulos!");
-		
-		try {
-			return LocalDateTime.parse(data + " " + horario, FormatacaoUtils.FORMATADOR_DATA_HORA_MINUTO);
-		}
-		catch (DateTimeParseException e) {
-			throw new DateTimeException("Formato de Data e/ou Horário inválido para conversão em LocalDateTime!");
-		}
-	}
 }

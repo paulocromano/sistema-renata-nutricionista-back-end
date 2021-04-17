@@ -3,7 +3,6 @@ package br.com.renatanutricionista.calendario.atendimento.paciente.service;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -355,9 +354,8 @@ public class CalendarioAtendimentoPacienteService {
 	}
 	
 	
-	public void alterarPeriodoDoCalendarioParaDisponivel(LocalDateTime dataHorario) {
-		CalendarioAtendimentoPaciente periodoAgendamento = verificarSeExistePeriodoNoCalendarioAtendimento(
-				dataHorario.toLocalDate(), dataHorario.toLocalTime());
+	public void alterarPeriodoDoCalendarioParaDisponivel(LocalDate data, LocalTime horario) {
+		CalendarioAtendimentoPaciente periodoAgendamento = verificarSeExistePeriodoNoCalendarioAtendimento(data, horario);
 		
 		periodoAgendamento.setPeriodoDisponivel(RespostaUtils.SIM);
 	}

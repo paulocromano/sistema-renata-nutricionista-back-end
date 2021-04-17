@@ -40,8 +40,8 @@ public class ConsultaDTO {
 		id = consulta.getId();
 		pacientePreviaHistoricos = new PacientePreviaHistoricosDTO(consulta.getPaciente(), pacienteParametro);
 		situacaoConsulta = consulta.getSituacaoConsulta().getDescricao();
-		data = ConversaoUtils.converterLocalDateParaString(consulta.getDataHorario().toLocalDate());
-		horario = consulta.getDataHorario().toLocalTime().toString();
+		data = ConversaoUtils.converterLocalDateParaString(consulta.getData());
+		horario = consulta.getHorario().toString();
 	
 		if (Objects.nonNull(consulta.getFormaPagamento()))
 			formaPagamento = consulta.getFormaPagamento().getDescricao();

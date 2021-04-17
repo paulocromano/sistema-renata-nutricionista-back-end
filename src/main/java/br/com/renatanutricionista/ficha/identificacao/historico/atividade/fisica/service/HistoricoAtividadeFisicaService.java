@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import br.com.renatanutricionista.ficha.identificacao.historico.atividade.fisica.form.HistoricoAtividadeFisicaFORM;
 import br.com.renatanutricionista.ficha.identificacao.historico.atividade.fisica.repository.HistoricoAtividadeFisicaRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
-import br.com.renatanutricionista.paciente.utils.PacienteUtils;
+import br.com.renatanutricionista.paciente.service.PacienteService;
 
 
 @Service
@@ -18,14 +18,14 @@ public class HistoricoAtividadeFisicaService {
 	private HistoricoAtividadeFisicaRepository historicoAtividadeFisicaRepository;
 	
 	@Autowired
-	private PacienteUtils pacienteUtils;
+	private PacienteService pacienteService;
 	
 	
 	public ResponseEntity<Void> cadastrarAtividadeFisicaDoPaciente(Long idPaciente, HistoricoAtividadeFisicaFORM historicoAtividadeFisicaFORM) {
-		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
+		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);
 		historicoAtividadeFisicaRepository.save(historicoAtividadeFisicaFORM.converterParaAtividadeFisica(paciente));
 		
-		pacienteUtils.atualizarDataHoraUltimaAlteracaoNosDadosDoPaciente(paciente);
+		pacienteService.atualizarDataHoraUltimaAlteracaoNosDadosDoPaciente(paciente);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}

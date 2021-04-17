@@ -12,7 +12,7 @@ import lombok.Getter;
 
 
 @Entity
-@Table(name = "massa_muscular_equacao_lee", schema = "sistema_nutricionista_parametro")
+@Table(name = "massa_muscular_equacao_lee", catalog = "sistema_nutricionista_parametro")
 @Getter
 public class MassaMuscularEquacaoLee {
 

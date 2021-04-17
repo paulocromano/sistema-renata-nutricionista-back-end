@@ -10,19 +10,19 @@ import org.springframework.stereotype.Service;
 
 import br.com.renatanutricionista.atendimento.paciente.consulta.enums.situacao.consulta.SituacaoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
+import br.com.renatanutricionista.atendimento.paciente.consulta.service.ConsultaService;
 import br.com.renatanutricionista.atendimento.paciente.retorno.enums.SituacaoRetorno;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.AgendamentoRetornoFORM;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.ReagendamentoRetornoFORM;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.RetornoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.retorno.model.RetornoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.retorno.repository.RetornoConsultaRepository;
-import br.com.renatanutricionista.atendimento.paciente.utils.AtendimentoUtils;
 import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import br.com.renatanutricionista.calendario.atendimento.paciente.service.CalendarioAtendimentoPacienteService;
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.paciente.model.Paciente;
-import br.com.renatanutricionista.paciente.utils.PacienteUtils;
+import br.com.renatanutricionista.paciente.service.PacienteService;
 
 
 @Service
@@ -32,17 +32,17 @@ public class RetornoConsultaService {
 	private RetornoConsultaRepository retornoConsultaRepository;
 
 	@Autowired
-	private PacienteUtils pacienteUtils;
+	private PacienteService pacienteService;
 	
 	@Autowired
-	private AtendimentoUtils atendimentoUtils;
+	private ConsultaService consultaService;
 	
 	@Autowired
 	private CalendarioAtendimentoPacienteService calendarioAtendimentoService;
 
 	
 	public ResponseEntity<Void> agendarRetorno(Long idPaciente, Long idConsulta, AgendamentoRetornoFORM agendamentoRetorno) {
-		Consulta consulta = atendimentoUtils.verificarPacienteConsulta(idPaciente, idConsulta);
+		Consulta consulta = consultaService.verificarPacienteConsulta(idPaciente, idConsulta);
 		verificarSeConsultaEstaFinalizada(consulta);
 		
 		CalendarioAtendimentoPaciente periodoAgendamento = calendarioAtendimentoService
@@ -86,7 +86,7 @@ public class RetornoConsultaService {
 		if (retornoConsulta.getSituacaoRetorno().equals(SituacaoRetorno.RETORNO_FINALIZADO))
 			throw new AtendimentoException("Não é possível cancelar um Retorno Finalizado!");
 		
-		calendarioAtendimentoService.alterarPeriodoDoCalendarioParaDisponivel(retornoConsulta.getDataHorario());
+		calendarioAtendimentoService.alterarPeriodoDoCalendarioParaDisponivel(retornoConsulta.getData(), retornoConsulta.getHorario());
 		retornoConsultaRepository.delete(retornoConsulta);
 		
 		return ResponseEntity.noContent().build();
@@ -122,7 +122,7 @@ public class RetornoConsultaService {
 	private void verificarSePeriodoRetornoConsultaProcedePeriodoConsulta(Consulta consulta,
 			CalendarioAtendimentoPaciente periodoAgendamento) {
 			
-		if (!periodoAgendamento.getData().isAfter(consulta.getDataHorario().toLocalDate()))
+		if (!periodoAgendamento.getData().isAfter(consulta.getData()))
 			throw new AtendimentoException("A data do Retorno deve ser marcada pelo menos "
 					+ "um dia após a Consulta!");
 	}
@@ -149,7 +149,7 @@ public class RetornoConsultaService {
 	
 	
 	private RetornoConsulta verificarSeRetornoConsultaPertenceAoPaciente(Long idPaciente, Long idRetornoConsulta) {
-		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);	
+		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);	
 		RetornoConsulta retornoConsultaPaciente = verificarSeRetornoConsultaExiste(idRetornoConsulta);
 		
 		if (!retornoConsultaPaciente.getConsulta().getPaciente().getId().equals(paciente.getId()))

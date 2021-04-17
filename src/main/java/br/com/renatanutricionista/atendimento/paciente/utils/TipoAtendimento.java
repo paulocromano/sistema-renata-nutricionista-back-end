@@ -1,4 +1,4 @@
-package br.com.renatanutricionista.atendimento.paciente.consulta.enums;
+package br.com.renatanutricionista.atendimento.paciente.utils;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

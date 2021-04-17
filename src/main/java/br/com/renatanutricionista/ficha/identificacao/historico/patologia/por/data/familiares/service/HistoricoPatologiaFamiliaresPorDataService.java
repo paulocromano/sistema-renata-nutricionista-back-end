@@ -10,7 +10,7 @@ import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.da
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.model.HistoricoPatologiaFamiliaresPorData;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.repository.HistoricoPatologiaFamiliaresPorDataRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
-import br.com.renatanutricionista.paciente.utils.PacienteUtils;
+import br.com.renatanutricionista.paciente.service.PacienteService;
 
 
 @Service
@@ -23,19 +23,19 @@ public class HistoricoPatologiaFamiliaresPorDataService {
 	private HistoricoPatologiaFamiliaresRepository historicoPatologiaFamiliaresRepository;
 	
 	@Autowired
-	private PacienteUtils pacienteUtils;
+	private PacienteService pacienteService;
 	
 	
 	public ResponseEntity<Void> cadastrarHistoricoPatologiaFamiliaresPorData(Long idPaciente,
 			HistoricoPatologiaFamiliaresPorDataFORM historicoPatologiaFamiliaresPorDataFORM) {
 		
-		Paciente paciente = pacienteUtils.verificarSePacienteExiste(idPaciente);
+		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);
 		
 		HistoricoPatologiaFamiliaresPorData historico = historicoPatologiaFamiliaresPorDataRepository.save(
 				historicoPatologiaFamiliaresPorDataFORM.converterParaHistoricoPatologiaFamiliaresPorData(paciente));
 		
 		historicoPatologiaFamiliaresRepository.saveAll(historicoPatologiaFamiliaresPorDataFORM.gerarSetHistoricoPatologiaFamiliares(historico));
-		pacienteUtils.atualizarDataHoraUltimaAlteracaoNosDadosDoPaciente(paciente);
+		pacienteService.atualizarDataHoraUltimaAlteracaoNosDadosDoPaciente(paciente);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
