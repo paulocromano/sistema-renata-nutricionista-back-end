@@ -31,7 +31,7 @@ public class SuplementoDTO implements Comparable<SuplementoDTO> {
 	}
 	
 	
-	public static List<SuplementoDTO> converterParaListaSuplementoDTO(List<Suplemento> suplementos) {
-		return suplementos.stream().sorted().map(SuplementoDTO::new).collect(Collectors.toList());
+	public static List<SuplementoDTO> converterParaListaSuplementoDTOEmOrdemAlfabetica(List<Suplemento> suplementos) {
+		return suplementos.stream().map(SuplementoDTO::new).sorted().collect(Collectors.toList());
 	}
 }

@@ -1,31 +1,17 @@
-package br.com.renatanutricionista.suplemento.model;
+package br.com.renatanutricionista.suplemento.form;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import br.com.renatanutricionista.suplemento.model.Suplemento;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-@Entity
-@Table(name = "suplemento", schema = "sistema_nutricionista")
 @Getter
 @Setter
-@NoArgsConstructor
-public class Suplemento {
+public class SuplementoFORM {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	
-	@Column(unique = true)
 	@NotEmpty(message = "O campo Nome não pode estar vazio/nulo!")
 	@Size(max = 100, message = "O campo Nome deve ter no máximo {max} caracteres!")
 	private String nome;
@@ -34,15 +20,19 @@ public class Suplemento {
 	@Size(max = 100, message = "O campo Dose deve ter no máximo {max} caracteres!")
 	private String dose;
 	
-	@Column(name = "forma_preparo")
 	@NotEmpty(message = "O campo Forma de Preparo não pode estar vazio/nulo!")
 	@Size(max = 250, message = "O campo Forma de Preparo deve ter no máximo {max} caracteres!")
 	private String formaPreparo;
-
 	
-	public Suplemento(String nome, String dose, String formaPreparo) {
-		this.nome = nome;
-		this.dose = dose;
-		this.formaPreparo = formaPreparo;
+	
+	public Suplemento converterParaSuplemento() {
+		return new Suplemento(nome, dose, formaPreparo);
+	}
+	
+	
+	public void atualizarSuplemento(Suplemento suplemento) {
+		suplemento.setNome(nome);
+		suplemento.setDose(dose);
+		suplemento.setFormaPreparo(formaPreparo);
 	}
 }
