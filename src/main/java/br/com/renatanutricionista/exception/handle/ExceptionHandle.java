@@ -61,7 +61,7 @@ public class ExceptionHandle {
 	
 	@ExceptionHandler(IntegrityConstraintViolationException.class)
 	public ResponseEntity<PadraoErro> integrityConstraintViolation(IntegrityConstraintViolationException exception, HttpServletRequest request) {
-		return erroPadronizado(HttpStatus.NOT_FOUND, "Erro de Integridade dos Dados!", exception, request);
+		return erroPadronizado(HttpStatus.BAD_REQUEST, "Erro de Integridade dos Dados!", exception, request);
 	}
 
 	
