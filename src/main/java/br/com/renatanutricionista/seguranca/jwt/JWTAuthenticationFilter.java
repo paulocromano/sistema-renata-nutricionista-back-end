@@ -58,7 +58,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 		String username = ((UserSpringSecurity) authResult.getPrincipal()).getUsername();
 		String token = jwtUtil.gerarToken(username);
+
 		response.addHeader("Authorization", "Bearer " + token);
+		response.addHeader("access-control-expose-headers", "Authorization");
 	}
 	
 	
@@ -67,6 +69,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         @Override
         public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
                 throws IOException, ServletException {
+        	
             response.setStatus(401);
             response.setContentType("application/json"); 
             response.getWriter().append(jsonNaoAutorizado());
