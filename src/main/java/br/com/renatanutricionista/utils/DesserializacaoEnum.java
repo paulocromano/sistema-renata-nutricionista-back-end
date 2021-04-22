@@ -25,7 +25,7 @@ public class DesserializacaoEnum<E extends GettersEnum<?>> extends JsonDeseriali
 		
 		String codigoEnumFormulario = p.getText();
 		
-		if (!Objects.isNull(codigoEnumFormulario)) {
+		if (Objects.nonNull(codigoEnumFormulario)) {
 			for (GettersEnum<?> valorEnum : constantesEnum) {
 				if (valorEnum.getCodigo().equals(codigoEnumFormulario))
 					return (E) valorEnum;

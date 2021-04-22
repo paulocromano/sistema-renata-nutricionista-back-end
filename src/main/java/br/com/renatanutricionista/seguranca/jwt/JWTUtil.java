@@ -6,6 +6,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import br.com.renatanutricionista.seguranca.user.spring.security.UserSpringSecurity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -21,9 +22,11 @@ public class JWTUtil {
 	private Long expiration; 
 	
 	
-	public String gerarToken(String username) {
+	public String gerarToken(UserSpringSecurity usuario) {
 		return Jwts.builder()
-				.setSubject(username)
+				.setSubject(usuario.getUsername())
+				.claim("nome", usuario.getNome())
+				.claim("permissoes", usuario.getAuthorities())
 				.setExpiration(new Date(System.currentTimeMillis() + expiration))
 				.signWith(SignatureAlgorithm.HS512, secret.getBytes())
 				.compact();

@@ -9,10 +9,11 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import br.com.renatanutricionista.endereco.form.EnderecoFORM;
-import br.com.renatanutricionista.paciente.enums.etnia.EtniaConversao;
-import br.com.renatanutricionista.paciente.enums.sexo.SexoConversao;
+import br.com.renatanutricionista.paciente.enums.etnia.Etnia;
+import br.com.renatanutricionista.paciente.enums.sexo.Sexo;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.utils.ConversaoUtils;
+import br.com.renatanutricionista.utils.RegexUtils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,14 +26,15 @@ public class PacienteFORM {
 	@Size(max = 150, message = "O campo Nome deve ter no máximo {max} caracteres!")
 	private String nome;
 	
-	@NotNull(message = "A Data de Nascimento não pode estar nula!")
+	@NotEmpty(message = "A Data de Nascimento não pode estar nula!")
+	@Pattern(regexp = RegexUtils.DATA, message = "O formato da Data de Nascimento é inválida!")
 	private String dataNascimento;
 	
 	@NotNull(message = "O campo Sexo não pode estar nulo!")
-	private String sexo;
+	private Sexo sexo;
 	
 	@NotNull(message = "O campo Etnia não pode estar nulo!")
-	private String etnia;
+	private Etnia etnia;
 	
 	@NotEmpty(message = "O campo Telefone não pode estar nulo/vazio!")
 	@Size(max = 15, message = "O campo Telefone deve ter no máximo {max} caracteres!")
@@ -44,7 +46,7 @@ public class PacienteFORM {
 	private String telefoneRecado;
 	
 	@Valid
-	@NotNull(message = "O objeto Endereco não pode estar nulo!")
+	@NotNull(message = "As informações do Endereco não podem estar nula!")
 	private EnderecoFORM endereco;
 	
 	
@@ -52,8 +54,8 @@ public class PacienteFORM {
 		return new Paciente.Builder()
 				.nome(nome)
 				.dataNascimento(ConversaoUtils.converterStringParaLocalDate(dataNascimento))
-				.sexo(new SexoConversao().convertToEntityAttribute(sexo))
-				.etnia(new EtniaConversao().convertToEntityAttribute(etnia))
+				.sexo(sexo)
+				.etnia(etnia)
 				.telefone(telefone)
 				.telefoneRecado(telefoneRecado)
 				.endereco(endereco.converterParaEndereco())

@@ -43,7 +43,7 @@ public class EnderecoFORM {
 	
 	
 	public Endereco converterParaEndereco() {
-		return new Endereco.EnderecoBuilder()
+		return new Endereco.Builder()
 				.logradouro(logradouro)
 				.numero(numero)
 				.complemento(complemento)
@@ -51,6 +51,6 @@ public class EnderecoFORM {
 				.cidade(cidade)
 				.cep(cep)
 				.uf(uf)
-				.criarEndereco();
+				.build();
 	}
 }

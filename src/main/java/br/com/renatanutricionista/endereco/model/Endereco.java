@@ -77,7 +77,7 @@ public class Endereco {
 	}
 
 
-	public static class EnderecoBuilder {
+	public static class Builder {
 		
 		private String logradouro;
 		private String numero;
@@ -89,48 +89,48 @@ public class Endereco {
 		private Paciente paciente;
 		
 		
-		public EnderecoBuilder logradouro(String logradouro) {
+		public Builder logradouro(String logradouro) {
 			this.logradouro = logradouro;
 			return this;
 		}
 		
-		public EnderecoBuilder numero(String numero) {
+		public Builder numero(String numero) {
 			this.numero = numero;
 			return this;
 		}
 		
-		public EnderecoBuilder complemento(String complemento) {
+		public Builder complemento(String complemento) {
 			this.complemento = complemento;
 			return this;
 		}
 		
-		public EnderecoBuilder bairro(String bairro) {
+		public Builder bairro(String bairro) {
 			this.bairro = bairro;
 			return this;
 		}
 		
-		public EnderecoBuilder cidade(String cidade) {
+		public Builder cidade(String cidade) {
 			this.cidade = cidade;
 			return this;
 		}
 
-		public EnderecoBuilder cep(String cep) {
+		public Builder cep(String cep) {
 			this.cep = cep;
 			return this;
 		}
 		
-		public EnderecoBuilder uf(String uf) {
+		public Builder uf(String uf) {
 			this.uf = uf;
 			return this;
 		}
 		
-		public EnderecoBuilder paciente(Paciente paciente) {
+		public Builder paciente(Paciente paciente) {
 			this.paciente = paciente;
 			return this;
 		}
 		
 		
-		public Endereco criarEndereco() {
+		public Endereco build() {
 			return new Endereco(logradouro, numero, complemento, bairro, cidade, cep, uf, paciente);
 		}
 	}
