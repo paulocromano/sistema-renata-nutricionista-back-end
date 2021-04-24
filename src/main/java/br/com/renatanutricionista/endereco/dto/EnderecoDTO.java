@@ -1,6 +1,7 @@
 package br.com.renatanutricionista.endereco.dto;
 
 import br.com.renatanutricionista.endereco.model.Endereco;
+import br.com.renatanutricionista.endereco.model.EnderecoAPIViaCEP;
 import lombok.Getter;
 
 
@@ -24,6 +25,16 @@ public class EnderecoDTO {
 		complemento = endereco.getComplemento();
 		bairro = endereco.getBairro();
 		cidade = endereco.getCidade();
+		cep = endereco.getCep();
+		uf = endereco.getUf();
+	}
+	
+	
+	public EnderecoDTO(EnderecoAPIViaCEP endereco) {
+		logradouro = endereco.getLogradouro();
+		complemento = endereco.getComplemento();
+		bairro = endereco.getBairro();
+		cidade = endereco.getLocalidade();
 		cep = endereco.getCep();
 		uf = endereco.getUf();
 	}

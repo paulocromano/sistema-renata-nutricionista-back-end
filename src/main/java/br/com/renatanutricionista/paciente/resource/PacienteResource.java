@@ -1,12 +1,11 @@
 package br.com.renatanutricionista.paciente.resource;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.renatanutricionista.paciente.dto.PacienteDTO;
+import br.com.renatanutricionista.paciente.dto.ListagemCadastroPacienteDTO;
 import br.com.renatanutricionista.paciente.dto.PacientePreviaHistoricosDTO;
 import br.com.renatanutricionista.paciente.form.AtualizacaoPacienteFORM;
 import br.com.renatanutricionista.paciente.form.PacienteFORM;
@@ -31,19 +30,21 @@ public class PacienteResource {
 	private PacienteService pacienteService;
 	
 	
-	@GetMapping
-	public ResponseEntity<List<PacienteDTO>> listarTodosPacientesPorOrdemAlfabetica() {
-		return pacienteService.listarTodosPacientesPorOrdemAlfabetica();
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@GetMapping("/informacoes-listagem-cadastro")
+	public ResponseEntity<ListagemCadastroPacienteDTO> buscarInformacoesListagemCadastroPaciente() {
+		return pacienteService.buscarInformacoesListagemCadastroPaciente();
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping("/informacoes-previas-historicos/{idPaciente}")
 	public ResponseEntity<PacientePreviaHistoricosDTO> buscarInformacoesPreviasHistoricosDoPaciente(@PathVariable Long idPaciente) {
 		return pacienteService.buscarInformacoesPreviasHistoricosDoPaciente(idPaciente);
 	}
 
 	
-	@PostMapping("/endereco")
+	@PostMapping
 	@Transactional
 	public ResponseEntity<Void> cadastrarPacienteEndereco(@RequestBody @Valid PacienteFORM pacienteFORM) {
 		return pacienteService.cadastrarPacienteEndereco(pacienteFORM);

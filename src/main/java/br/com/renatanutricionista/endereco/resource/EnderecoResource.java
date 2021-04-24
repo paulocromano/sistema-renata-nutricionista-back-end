@@ -22,4 +22,10 @@ public class EnderecoResource {
 	public ResponseEntity<EnderecoDTO> buscarEnderecoPaciente(@PathVariable Long idPaciente) {
 		return enderecoService.buscarEnderecoPaciente(idPaciente);
 	}
+	
+	
+	@GetMapping("/api-via-cep/{cep}")
+	public ResponseEntity<EnderecoDTO> buscarEnderecoPeloCEP(@PathVariable String cep) {
+		return enderecoService.buscarEnderecoPeloCEP(cep);
+	}
 }

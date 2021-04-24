@@ -1,7 +1,6 @@
 package br.com.renatanutricionista.paciente.service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -11,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
-import br.com.renatanutricionista.paciente.dto.PacienteDTO;
+import br.com.renatanutricionista.paciente.dto.ListagemCadastroPacienteDTO;
 import br.com.renatanutricionista.paciente.dto.PacientePreviaHistoricosDTO;
 import br.com.renatanutricionista.paciente.form.AtualizacaoPacienteFORM;
 import br.com.renatanutricionista.paciente.form.PacienteFORM;
@@ -31,8 +30,8 @@ public class PacienteService {
 	private PacienteParametroService pacienteParametroService;
 	
 	
-	public ResponseEntity<List<PacienteDTO>> listarTodosPacientesPorOrdemAlfabetica() {	
-		return ResponseEntity.ok().body(PacienteDTO.converterParaListaPacienteDTOEmOrdemAlfabetica(pacienteRepository.findAll()));
+	public ResponseEntity<ListagemCadastroPacienteDTO> buscarInformacoesListagemCadastroPaciente() {	
+		return ResponseEntity.ok().body(new ListagemCadastroPacienteDTO(pacienteRepository.findAll()));
 	}
 	
 	
