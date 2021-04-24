@@ -9,4 +9,6 @@ public final class RegexUtils {
 	public static final String EMAIL = "^[-a-zA-Z0-9][-.a-zA-Z0-9]*@[-.a-zA-Z0-9]+(\\.[-.a-zA-Z0-9]+)*\\."
 			+ "(com|edu|info|gov|int|mil|net|org|biz|name|museum|coop|aero|pro|tv|[a-zA-Z]{2})$";
 	public static final String SENHA = "((?=.*\\d)(?=.*[A-Z])(?=.*\\W).{6,20})";
+	
+	public static final String TELEFONE = "(\\(?\\d{2}\\)?\\s)?(\\d{4,5}\\-\\d{4})";
 }

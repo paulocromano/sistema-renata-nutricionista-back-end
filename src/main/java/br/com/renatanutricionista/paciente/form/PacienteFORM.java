@@ -1,6 +1,7 @@
 package br.com.renatanutricionista.paciente.form;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -38,11 +39,10 @@ public class PacienteFORM {
 	
 	@NotEmpty(message = "O campo Telefone não pode estar nulo/vazio!")
 	@Size(max = 15, message = "O campo Telefone deve ter no máximo {max} caracteres!")
-	@Pattern(regexp = "(\\(?\\d{2}\\)?\\s)?(\\d{4,5}\\-\\d{4})", message = "O formato do número de Telefone é inválido!")
+	@Pattern(regexp = RegexUtils.TELEFONE, message = "O formato do número de Telefone é inválido!")
 	private String telefone;
 	
 	@Size(max = 15, message = "O campo Telefone deve ter no máximo {max} caracteres!")
-	@Pattern(regexp = "(\\(?\\d{2}\\)?\\s)?(\\d{4,5}\\-\\d{4})", message = "O formato do número do Telefone para Recado é inválido!")
 	private String telefoneRecado;
 	
 	@Valid
@@ -51,6 +51,12 @@ public class PacienteFORM {
 	
 	
 	public Paciente converterParaPaciente() {
+		if (Objects.nonNull(telefoneRecado) && telefoneRecado.trim().length() != 0) {
+			if (!java.util.regex.Pattern.matches(RegexUtils.TELEFONE, telefoneRecado)) {
+				throw new IllegalArgumentException("O formato do Telefone para Recado é inválido!");
+			}
+		}
+		
 		return new Paciente.Builder()
 				.nome(nome)
 				.dataNascimento(ConversaoUtils.converterStringParaLocalDate(dataNascimento))

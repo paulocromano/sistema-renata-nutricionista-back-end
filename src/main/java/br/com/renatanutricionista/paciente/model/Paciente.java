@@ -3,6 +3,7 @@ package br.com.renatanutricionista.paciente.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -32,6 +33,7 @@ import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.da
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.paciente.enums.etnia.Etnia;
 import br.com.renatanutricionista.paciente.enums.sexo.Sexo;
+import br.com.renatanutricionista.utils.RegexUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -69,7 +71,6 @@ public class Paciente {
 	
 	@Column(name = "telefone_recado")
 	@Size(max = 15, message = "O campo Telefone deve ter no máximo {max} caracteres!")
-	@Pattern(regexp = "(\\(?\\d{2}\\)?\\s)?(\\d{4,5}\\-\\d{4})", message = "O formato do número do Telefone para Recado é inválido!")
 	private String telefoneRecado;
 	
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
@@ -152,7 +153,13 @@ public class Paciente {
 		}
 		
 		public Builder telefoneRecado(String telefoneRecado) {
-			this.telefoneRecado = telefoneRecado;
+			if (Objects.nonNull(telefoneRecado) && telefoneRecado.trim().length() != 0) {
+				if (!java.util.regex.Pattern.matches(RegexUtils.TELEFONE, telefoneRecado)) {
+					throw new IllegalArgumentException("O formato do Telefone para Recado é inválido!");
+				}
+			}
+			
+			this.telefoneRecado = telefoneRecado;	
 			return this;
 		}
 		

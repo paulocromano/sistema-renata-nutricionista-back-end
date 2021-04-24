@@ -30,14 +30,12 @@ public class PacienteResource {
 	private PacienteService pacienteService;
 	
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping("/informacoes-listagem-cadastro")
 	public ResponseEntity<ListagemCadastroPacienteDTO> buscarInformacoesListagemCadastroPaciente() {
 		return pacienteService.buscarInformacoesListagemCadastroPaciente();
 	}
 	
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping("/informacoes-previas-historicos/{idPaciente}")
 	public ResponseEntity<PacientePreviaHistoricosDTO> buscarInformacoesPreviasHistoricosDoPaciente(@PathVariable Long idPaciente) {
 		return pacienteService.buscarInformacoesPreviasHistoricosDoPaciente(idPaciente);
@@ -60,6 +58,7 @@ public class PacienteResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping("/{idPaciente}")
 	@Transactional
 	public ResponseEntity<Void> removerPaciente(@PathVariable Long idPaciente) {
