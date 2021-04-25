@@ -50,8 +50,6 @@ public class HistoricoSocialService {
 						" do Paciente informada pelo Usuário!");
 			}
 		}
-
-		pacienteService.atualizarDataHoraUltimaAlteracaoNosDadosDoPaciente(paciente);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}

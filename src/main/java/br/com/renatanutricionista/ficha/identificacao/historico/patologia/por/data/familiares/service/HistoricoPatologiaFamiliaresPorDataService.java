@@ -39,7 +39,6 @@ public class HistoricoPatologiaFamiliaresPorDataService {
 				historicoPatologiaFamiliaresPorDataFORM.converterParaHistoricoPatologiaFamiliaresPorData(paciente));
 		
 		historicoPatologiaFamiliaresRepository.saveAll(historicoPatologiaFamiliaresPorDataFORM.gerarSetHistoricoPatologiaFamiliares(historico));
-		pacienteService.atualizarDataHoraUltimaAlteracaoNosDadosDoPaciente(paciente);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}

@@ -49,7 +49,7 @@ public class PacienteResource {
 	}
 	
 	
-	@PutMapping("/endereco/{idPaciente}")
+	@PutMapping("/{idPaciente}")
 	@Transactional
 	public ResponseEntity<Void> atualizarPacienteEndereco(@PathVariable Long idPaciente, 
 			@RequestBody @Valid AtualizacaoPacienteFORM atualizacaoPaciente) {

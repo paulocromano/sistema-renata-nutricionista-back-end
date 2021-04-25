@@ -1,5 +1,6 @@
 package br.com.renatanutricionista.paciente.dto;
 
+import br.com.renatanutricionista.endereco.dto.EnderecoDTO;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
@@ -14,7 +15,8 @@ public abstract class PacienteAbstractDTO {
 	protected String etnia;
 	protected String telefone;
 	protected String telefoneRecado;
-	protected String dataHoraUltimaAtualizacaoDadosDoPaciente;
+	protected EnderecoDTO endereco;
+	protected String dataCadastro;
 	
 	
 	protected PacienteAbstractDTO(Paciente paciente) {
@@ -25,6 +27,7 @@ public abstract class PacienteAbstractDTO {
 		etnia = paciente.getEtnia().getDescricao();
 		telefone = paciente.getTelefone();
 		telefoneRecado = paciente.getTelefoneRecado();
-		dataHoraUltimaAtualizacaoDadosDoPaciente = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(paciente.getDataHoraUltimaAtualizacaoDadosDoPaciente());
+		endereco = new EnderecoDTO(paciente.getEndereco());
+		dataCadastro = ConversaoUtils.converterLocalDateParaString(paciente.getDataCadastro());
 	}
 }

@@ -30,8 +30,6 @@ public class HistoricoAtividadeFisicaService {
 		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);
 		historicoAtividadeFisicaRepository.save(historicoAtividadeFisicaFORM.converterParaAtividadeFisica(paciente));
 		
-		pacienteService.atualizarDataHoraUltimaAlteracaoNosDadosDoPaciente(paciente);
-		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	

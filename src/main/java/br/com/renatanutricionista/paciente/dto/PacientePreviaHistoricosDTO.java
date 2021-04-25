@@ -3,7 +3,6 @@ package br.com.renatanutricionista.paciente.dto;
 import java.util.List;
 import java.util.Set;
 
-import br.com.renatanutricionista.endereco.dto.EnderecoDTO;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.dto.InformacoesPreviasQuestionarioDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.dto.InformacoesPreviasHistoricoAlimentarDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.atividade.fisica.dto.HistoricoAtividadeFisicaDTO;
@@ -17,7 +16,6 @@ import lombok.Getter;
 @Getter
 public class PacientePreviaHistoricosDTO extends PacienteAbstractDTO {
 
-	private EnderecoDTO endereco;
 	private List<InformacoesPreviasHistoricoSocialDTO> previaHistoricoSocial;
 	private List<InformacoesPreviasHistoricoAlimentarDTO> previaHistoricosAlimentares;
 	private List<HistoricoAtividadeFisicaDTO> historicoAtividadeFisica;
@@ -28,7 +26,6 @@ public class PacientePreviaHistoricosDTO extends PacienteAbstractDTO {
 	
 	public PacientePreviaHistoricosDTO(Paciente paciente, PacienteParametro pacienteParametro) {
 		super(paciente);
-		endereco = new EnderecoDTO(paciente.getEndereco());
 		previaHistoricoSocial = InformacoesPreviasHistoricoSocialDTO.converterParaListaInformacoesPreviasHistoricoSocialDTO(paciente.getHistoricoSocial());
 		previaHistoricosAlimentares = InformacoesPreviasHistoricoAlimentarDTO.converterParaListaInformacoesPreviasHistoricoAlimentarDTO(paciente.getHistoricoAlimentar());
 		historicoAtividadeFisica = HistoricoAtividadeFisicaDTO.converterParaListaAtividadeFisicaDTO(paciente.getHistoricoAtividadeFisica());

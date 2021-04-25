@@ -1,6 +1,5 @@
 package br.com.renatanutricionista.paciente.service;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -65,12 +64,7 @@ public class PacienteService {
 		
 		return ResponseEntity.noContent().build();
 	}
-	
-	
-	public void atualizarDataHoraUltimaAlteracaoNosDadosDoPaciente(Paciente paciente) {
-		paciente.setDataHoraUltimaAtualizacaoDadosDoPaciente(LocalDateTime.now());
-	}
-	
+
 	
 	public Paciente verificarSePacienteExiste(Long idPaciente) {
 		if (Objects.isNull(idPaciente))

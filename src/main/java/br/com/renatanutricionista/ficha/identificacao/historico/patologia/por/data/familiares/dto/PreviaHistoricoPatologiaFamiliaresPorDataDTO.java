@@ -13,12 +13,12 @@ import lombok.Getter;
 public class PreviaHistoricoPatologiaFamiliaresPorDataDTO {
 
 	private Long id;
-	private String dataHoraCadastroPatologiasFamiliares;
+	private String dataHoraCadastroPatologiasFamiliaresPorData;
 	
 	
 	public PreviaHistoricoPatologiaFamiliaresPorDataDTO(HistoricoPatologiaFamiliaresPorData historicoPatologiaFamiliaresPorData) {
 		id = historicoPatologiaFamiliaresPorData.getId();
-		dataHoraCadastroPatologiasFamiliares = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(
+		dataHoraCadastroPatologiasFamiliaresPorData = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(
 				historicoPatologiaFamiliaresPorData.getDataHoraCadastroPatologiasFamiliares());
 	}
 	

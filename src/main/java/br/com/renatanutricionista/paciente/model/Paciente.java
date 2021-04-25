@@ -1,7 +1,6 @@
 package br.com.renatanutricionista.paciente.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -96,14 +95,14 @@ public class Paciente {
 	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private List<Consulta> consultas;
 	
-	@Column(name = "data_hora_ultima_atualizacao_dados_paciente")
-	@NotNull(message = "A Data e Hora da Última Atualização dos Dados do Paciente não pode estar nula!")
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	private LocalDateTime dataHoraUltimaAtualizacaoDadosDoPaciente;
+	@Column(name = "data_cadastro")
+	@NotNull(message = "A Data de Cadastro do Paciente não pode estar nula!")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private LocalDate dataCadastro;
 	
 	
 	private Paciente(String nome, LocalDate dataNascimento, Sexo sexo, Etnia etnia, String telefone, 
-			String telefoneRecado, Endereco endereco, LocalDateTime dataHoraUltimaAtualizacaoDadosDoPaciente) {
+			String telefoneRecado, Endereco endereco, LocalDate dataCadastro) {
 		
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
@@ -112,7 +111,7 @@ public class Paciente {
 		this.telefone = telefone;
 		this.telefoneRecado = telefoneRecado;
 		this.endereco = endereco;
-		this.dataHoraUltimaAtualizacaoDadosDoPaciente = dataHoraUltimaAtualizacaoDadosDoPaciente;
+		this.dataCadastro = dataCadastro;
 	}
 
 
@@ -124,7 +123,7 @@ public class Paciente {
 		private String telefone;
 		private String telefoneRecado;
 		private Endereco endereco;
-		private LocalDateTime dataHoraUltimaAtualizacaoDadosDoPaciente;
+		private LocalDate dataCadastro;
 		
 		
 		public Builder nome(String nome) {
@@ -168,14 +167,14 @@ public class Paciente {
 			return this;
 		}
 		
-		public Builder dataHoraUltimaAtualizacaoDadosDoPaciente(LocalDateTime dataHoraUltimaAtualizacaoDadosDoPaciente) {
-			this.dataHoraUltimaAtualizacaoDadosDoPaciente = dataHoraUltimaAtualizacaoDadosDoPaciente;
+		public Builder dataCadastro(LocalDate dataCadastro) {
+			this.dataCadastro = dataCadastro;
 			return this;
 		}
 		
 		
 		public Paciente build() {
-			return new Paciente(nome, dataNascimento, sexo, etnia, telefone, telefoneRecado, endereco, dataHoraUltimaAtualizacaoDadosDoPaciente);
+			return new Paciente(nome, dataNascimento, sexo, etnia, telefone, telefoneRecado, endereco, dataCadastro);
 		}
 	}
 }

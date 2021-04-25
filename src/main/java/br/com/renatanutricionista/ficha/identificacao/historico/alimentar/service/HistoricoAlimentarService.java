@@ -55,8 +55,6 @@ public class HistoricoAlimentarService {
 
 		}
 		
-		pacienteService.atualizarDataHoraUltimaAlteracaoNosDadosDoPaciente(paciente);
-		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	
