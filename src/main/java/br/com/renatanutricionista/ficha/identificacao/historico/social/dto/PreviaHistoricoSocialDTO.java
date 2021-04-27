@@ -10,23 +10,23 @@ import lombok.Getter;
 
 
 @Getter
-public class InformacoesPreviasHistoricoSocialDTO {
+public class PreviaHistoricoSocialDTO {
 
 	private Long id;
 	private String dataHoraCadastroHistoricoSocial;
 	
 	
-	public InformacoesPreviasHistoricoSocialDTO(HistoricoSocial historicoSocial) {
+	public PreviaHistoricoSocialDTO(HistoricoSocial historicoSocial) {
 		id = historicoSocial.getId();
-		dataHoraCadastroHistoricoSocial = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(historicoSocial.getDataHoraCadastroHistoricoSocial());
+		dataHoraCadastroHistoricoSocial = ConversaoUtils.converterLocalDateTimeParaFrontEndEmString(historicoSocial.getDataHoraCadastroHistoricoSocial());
 	}
 	
 	
-	public static List<InformacoesPreviasHistoricoSocialDTO> converterParaListaInformacoesPreviasHistoricoSocialDTO(List<HistoricoSocial> historicoSocial) {
+	public static List<PreviaHistoricoSocialDTO> converterParaListaPreviasHistoricoSocialDTO(List<HistoricoSocial> historicoSocial) {
 		return historicoSocial.stream()
 				.sorted(Comparator.comparing(HistoricoSocial::getDataHoraCadastroHistoricoSocial)
 				.reversed())
-				.map(InformacoesPreviasHistoricoSocialDTO::new)
+				.map(PreviaHistoricoSocialDTO::new)
 				.collect(Collectors.toList());
 	}
 }

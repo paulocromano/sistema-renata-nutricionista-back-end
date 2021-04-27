@@ -10,25 +10,25 @@ import lombok.Getter;
 
 
 @Getter
-public class InformacoesPreviasQuestionarioDTO {
+public class PreviaQuestionarioFrequenciaAlimentarDTO {
 
 	private Long id;
 	private String dataHoraCadastroQuestionario;
 	
 	
-	public InformacoesPreviasQuestionarioDTO(QuestionarioFrequenciaAlimentar questionario) {
+	public PreviaQuestionarioFrequenciaAlimentarDTO(QuestionarioFrequenciaAlimentar questionario) {
 		id = questionario.getId();
-		dataHoraCadastroQuestionario = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(questionario.getDataHoraCadastroQuestionario());
+		dataHoraCadastroQuestionario = ConversaoUtils.converterLocalDateTimeParaFrontEndEmString(questionario.getDataHoraCadastroQuestionario());
 	}
 	
 	
-	public static List<InformacoesPreviasQuestionarioDTO> converterParaListaInformacoesPreviasQuestionarioDTO(
+	public static List<PreviaQuestionarioFrequenciaAlimentarDTO> converterParaListaInformacoesPreviasQuestionarioDTO(
 			List<QuestionarioFrequenciaAlimentar> questionariosFrequenciaAlimentar) {
 		
 		return questionariosFrequenciaAlimentar.stream()
 				.sorted(Comparator.comparing(QuestionarioFrequenciaAlimentar::getDataHoraCadastroQuestionario)
 				.reversed())
-				.map(InformacoesPreviasQuestionarioDTO::new)
+				.map(PreviaQuestionarioFrequenciaAlimentarDTO::new)
 				.collect(Collectors.toList());
 	}
 }

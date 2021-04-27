@@ -78,19 +78,19 @@ public class Paciente {
 	private Endereco endereco;
 	
 	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-	private List<HistoricoSocial> historicoSocial;
+	private List<HistoricoSocial> historicosSociais;
 	
 	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-	private List<HistoricoAlimentar> historicoAlimentar;
+	private List<HistoricoAlimentar> historicosAlimentares;
 	
 	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-	private List<HistoricoAtividadeFisica> historicoAtividadeFisica;
+	private List<HistoricoAtividadeFisica> historicosAtividadeFisica;
 	
 	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-	private Set<HistoricoPatologiaFamiliaresPorData> historicoPatologiaFamiliaresPorData;
+	private Set<HistoricoPatologiaFamiliaresPorData> historicosPatologiaFamiliaresPorData;
 	
 	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-	private List<QuestionarioFrequenciaAlimentar> questionarioFrequenciaAlimentar;
+	private List<QuestionarioFrequenciaAlimentar> questionariosFrequenciaAlimentar;
 	
 	@OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private List<Consulta> consultas;

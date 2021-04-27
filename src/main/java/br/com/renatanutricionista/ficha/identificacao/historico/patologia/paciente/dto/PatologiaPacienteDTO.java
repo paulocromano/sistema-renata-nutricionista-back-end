@@ -4,7 +4,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.model.PatologiaPaciente;
-import br.com.renatanutricionista.patologia.dto.PatologiaDTO;
 import br.com.renatanutricionista.utils.FormatacaoUtils;
 import lombok.Getter;
 
@@ -13,20 +12,20 @@ import lombok.Getter;
 public class PatologiaPacienteDTO implements Comparable<PatologiaPacienteDTO> {
 
 	private Long id;
-	private Integer quantosAnosPosssuiPatologia;
-	private PatologiaDTO patologia;
+	private Integer quantosAnosPossuiPatologia;
+	private String descricaoPatologia;
 	
 	
 	public PatologiaPacienteDTO(PatologiaPaciente patologiaPaciente) {
 		id = patologiaPaciente.getId();
-		quantosAnosPosssuiPatologia = patologiaPaciente.getQuantosAnosPosssuiPatologia();
-		patologia = new PatologiaDTO(patologiaPaciente.getPatologia());
+		quantosAnosPossuiPatologia = patologiaPaciente.getQuantosAnosPosssuiPatologia();
+		descricaoPatologia = patologiaPaciente.getPatologia().getDescricao();
 	}
 	
 	
 	@Override
 	public int compareTo(PatologiaPacienteDTO other) {
-		return FormatacaoUtils.COLLATOR.compare(patologia, other.getPatologia());
+		return FormatacaoUtils.COLLATOR.compare(descricaoPatologia, other.getDescricaoPatologia());
 	}
 	
 	

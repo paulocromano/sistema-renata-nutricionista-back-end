@@ -56,6 +56,6 @@ public class HistoricoSocialDTO {
 			quantosAnosEstaNaMenopausa = historicoSocial.getQuantosAnosEstaNaMenopausa();
 		}
 		
-		dataHoraCadastroHistoricoSocial = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(historicoSocial.getDataHoraCadastroHistoricoSocial());
+		dataHoraCadastroHistoricoSocial = ConversaoUtils.converterLocalDateTimeParaFrontEndEmString(historicoSocial.getDataHoraCadastroHistoricoSocial());
 	}
 }

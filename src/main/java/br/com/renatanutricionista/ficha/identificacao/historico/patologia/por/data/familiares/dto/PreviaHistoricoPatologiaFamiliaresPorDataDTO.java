@@ -18,7 +18,7 @@ public class PreviaHistoricoPatologiaFamiliaresPorDataDTO {
 	
 	public PreviaHistoricoPatologiaFamiliaresPorDataDTO(HistoricoPatologiaFamiliaresPorData historicoPatologiaFamiliaresPorData) {
 		id = historicoPatologiaFamiliaresPorData.getId();
-		dataHoraCadastroPatologiasFamiliaresPorData = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(
+		dataHoraCadastroPatologiasFamiliaresPorData = ConversaoUtils.converterLocalDateTimeParaFrontEndEmString(
 				historicoPatologiaFamiliaresPorData.getDataHoraCadastroPatologiasFamiliares());
 	}
 	

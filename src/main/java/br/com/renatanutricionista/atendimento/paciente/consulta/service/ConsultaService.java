@@ -189,20 +189,20 @@ public class ConsultaService {
 	
 	
 	private void validarHistoricosPaciente(Paciente paciente) {
-		if (Objects.isNull(paciente.getHistoricoSocial()))
+		if (Objects.isNull(paciente.getHistoricosSociais()))
 			throw new NullPointerException("O Histórico Social do Paciente não pode ser nulo!");
 		
-		if (Objects.isNull(paciente.getHistoricoAlimentar()))
+		if (Objects.isNull(paciente.getHistoricosAlimentares()))
 			throw new NullPointerException("O Histórico Alimentar do Paciente não pode ser nulo!");
 		
-		if (Objects.isNull(paciente.getHistoricoAtividadeFisica()))
+		if (Objects.isNull(paciente.getHistoricosAtividadeFisica()))
 			throw new NullPointerException("O Histórico de Atividades Físicas não pode ser nulo!");
 		
-		if (Objects.isNull(paciente.getHistoricoPatologiaFamiliaresPorData()))
+		if (Objects.isNull(paciente.getHistoricosPatologiaFamiliaresPorData()))
 			throw new NullPointerException("o Histórico de Patologias dos Familiares do Paciente por data "
 					+ "não pode ser nulo!");
 		
-		if (Objects.isNull(paciente.getQuestionarioFrequenciaAlimentar()))
+		if (Objects.isNull(paciente.getQuestionariosFrequenciaAlimentar()))
 			throw new NullPointerException("O Questionário de Frequência Alimentar do Paciente "
 					+ "não pode ser nulo!");
 	}

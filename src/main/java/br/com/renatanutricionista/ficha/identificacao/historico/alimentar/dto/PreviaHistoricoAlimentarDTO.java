@@ -10,24 +10,23 @@ import lombok.Getter;
 
 
 @Getter
-public class InformacoesPreviasHistoricoAlimentarDTO {
+public class PreviaHistoricoAlimentarDTO {
 
 	private Long id;
 	private String dataHoraCadastroHistoricoAlimentar;
 	
 	
-	public InformacoesPreviasHistoricoAlimentarDTO(HistoricoAlimentar historicoAlimentar) {
+	public PreviaHistoricoAlimentarDTO(HistoricoAlimentar historicoAlimentar) {
 		id = historicoAlimentar.getId();
-		dataHoraCadastroHistoricoAlimentar = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(
-				historicoAlimentar.getDataHoraCadastroHistoricoAlimentar());
+		dataHoraCadastroHistoricoAlimentar = ConversaoUtils.converterLocalDateTimeParaFrontEndEmString(historicoAlimentar.getDataHoraCadastroHistoricoAlimentar());
 	}
 	
 	
-	public static List<InformacoesPreviasHistoricoAlimentarDTO> converterParaListaInformacoesPreviasHistoricoAlimentarDTO(List<HistoricoAlimentar> historicoAlimentar) {
+	public static List<PreviaHistoricoAlimentarDTO> converterParaListaInformacoesPreviasHistoricoAlimentarDTO(List<HistoricoAlimentar> historicoAlimentar) {
 		return historicoAlimentar.stream()
 				.sorted(Comparator.comparing(HistoricoAlimentar::getDataHoraCadastroHistoricoAlimentar)
 				.reversed())
-				.map(InformacoesPreviasHistoricoAlimentarDTO::new)
+				.map(PreviaHistoricoAlimentarDTO::new)
 				.collect(Collectors.toList());
 	}
 }

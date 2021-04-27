@@ -13,6 +13,7 @@ import br.com.renatanutricionista.exception.custom.IntegrityConstraintViolationE
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.exception.custom.PacienteException;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.repository.PatologiaPacienteRepository;
+import br.com.renatanutricionista.ficha.identificacao.historico.social.dto.HistoricoSocialDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.bebidas.alcoolicas.ConsumoBebidasAlcoolicas;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.cigarro.ConsumoCigarro;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.form.HistoricoSocialFORM;
@@ -33,6 +34,11 @@ public class HistoricoSocialService {
 	
 	@Autowired
 	private PacienteService pacienteService;
+	
+	
+	public ResponseEntity<HistoricoSocialDTO> buscarHistoricoSocialDoPaciente(Long idHistoricoSocial) {
+		return ResponseEntity.ok().body(new HistoricoSocialDTO(verificarSeHistoricoSocialExiste(idHistoricoSocial)));
+	} 
 	
 	
 	public ResponseEntity<Void> cadastrarHistoricoSocialDoPaciente(Long idPaciente, HistoricoSocialFORM historicoSocialFORM) {

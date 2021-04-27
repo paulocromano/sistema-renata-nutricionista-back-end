@@ -24,6 +24,20 @@ public final class ConversaoUtils {
 	}
 	
 	
+	public static final String converterLocalDateTimeParaFrontEndEmString(LocalDateTime localDateTime) {
+		if (Objects.isNull(localDateTime))
+			throw new NullPointerException("LocalDateTime não pode ser nulo!");
+		
+		try {
+			return converterLocalDateParaString(localDateTime.toLocalDate()) + " às " 
+					+ converterLocalTimeParaString(localDateTime.toLocalTime()) + "h";
+		}
+		catch (DateTimeException e) {
+			throw new DateTimeException("Formato de Data e/ou Hora inválido para conversão em String!");
+		}
+	}
+	
+	
 	public static final String converterLocalDateTimeParaStringDataHoraMinuto(LocalDateTime localDateTime) {
 		if (Objects.isNull(localDateTime))
 			throw new NullPointerException("LocalDateTime não pode ser nulo!");

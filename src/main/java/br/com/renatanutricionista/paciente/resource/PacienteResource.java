@@ -36,6 +36,7 @@ public class PacienteResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping("/informacoes-previas-historicos/{idPaciente}")
 	public ResponseEntity<PacientePreviaHistoricosDTO> buscarInformacoesPreviasHistoricosDoPaciente(@PathVariable Long idPaciente) {
 		return pacienteService.buscarInformacoesPreviasHistoricosDoPaciente(idPaciente);
