@@ -14,6 +14,7 @@ import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.exception.custom.PacienteException;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.repository.PatologiaPacienteRepository;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.dto.HistoricoSocialDTO;
+import br.com.renatanutricionista.ficha.identificacao.historico.social.dto.InformacoesPreviasHistoricosSociaisDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.bebidas.alcoolicas.ConsumoBebidasAlcoolicas;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.cigarro.ConsumoCigarro;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.form.HistoricoSocialFORM;
@@ -21,6 +22,8 @@ import br.com.renatanutricionista.ficha.identificacao.historico.social.model.His
 import br.com.renatanutricionista.ficha.identificacao.historico.social.repository.HistoricoSocialRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.service.PacienteService;
+import br.com.renatanutricionista.tabelas.parametro.paciente.model.PacienteParametro;
+import br.com.renatanutricionista.tabelas.parametro.paciente.service.PacienteParametroService;
 
 
 @Service
@@ -34,6 +37,18 @@ public class HistoricoSocialService {
 	
 	@Autowired
 	private PacienteService pacienteService;
+	
+	@Autowired
+	private PacienteParametroService pacienteParametroService;
+	
+	
+	
+	public ResponseEntity<InformacoesPreviasHistoricosSociaisDTO> buscarInformacoesPreviasHistoricosSociaisDoPaciente(Long idPaciente) {
+		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);
+		PacienteParametro pacienteParametro = pacienteParametroService.buscarPacienteParametro();
+
+		return ResponseEntity.ok().body(new InformacoesPreviasHistoricosSociaisDTO(paciente, pacienteParametro));
+	}
 	
 	
 	public ResponseEntity<HistoricoSocialDTO> buscarHistoricoSocialDoPaciente(Long idHistoricoSocial) {

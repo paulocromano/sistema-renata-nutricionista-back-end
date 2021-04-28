@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.social.dto.HistoricoSocialDTO;
+import br.com.renatanutricionista.ficha.identificacao.historico.social.dto.InformacoesPreviasHistoricosSociaisDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.form.HistoricoSocialFORM;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.service.HistoricoSocialService;
 
@@ -25,6 +26,13 @@ public class HistoricoSocialResource {
 
 	@Autowired
 	private HistoricoSocialService historicoSocialService;
+	
+	
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@GetMapping("/historicos/{idPaciente}")
+	public ResponseEntity<InformacoesPreviasHistoricosSociaisDTO> buscarInformacoesPreviasHistoricosSociaisDoPaciente(@PathVariable Long idPaciente) {
+		return historicoSocialService.buscarInformacoesPreviasHistoricosSociaisDoPaciente(idPaciente);
+	}
 	
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")

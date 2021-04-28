@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.repository.HistoricoPatologiaFamiliaresRepository;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.dto.HistoricoPatologiaFamiliaresPorDataDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.form.HistoricoPatologiaFamiliaresPorDataFORM;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.model.HistoricoPatologiaFamiliaresPorData;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.repository.HistoricoPatologiaFamiliaresPorDataRepository;
@@ -30,6 +31,11 @@ public class HistoricoPatologiaFamiliaresPorDataService {
 	private PacienteService pacienteService;
 	
 	
+	public ResponseEntity<HistoricoPatologiaFamiliaresPorDataDTO> buscarHistoricoPatologiaFamiliaresPorDataDoPaciente(Long idPatologiaFamiliares) {
+		return ResponseEntity.ok().body(new HistoricoPatologiaFamiliaresPorDataDTO(verificarSeHistoricoPatologiaFamiliaresPorDataExiste(idPatologiaFamiliares)));
+	}
+	
+	
 	public ResponseEntity<Void> cadastrarHistoricoPatologiaFamiliaresPorData(Long idPaciente,
 			HistoricoPatologiaFamiliaresPorDataFORM historicoPatologiaFamiliaresPorDataFORM) {
 		
@@ -45,14 +51,14 @@ public class HistoricoPatologiaFamiliaresPorDataService {
 	
 	
 	public ResponseEntity<Void> excluirHistoricoPatologiaFamiliaresPorData(Long idHistoricoPatologiaFamiliaresPorData) {
-		HistoricoPatologiaFamiliaresPorData historicoPatologiaFamiliaresPorData = verificarSeHistoricoPatologiaFamiliaresExiste(idHistoricoPatologiaFamiliaresPorData);
+		HistoricoPatologiaFamiliaresPorData historicoPatologiaFamiliaresPorData = verificarSeHistoricoPatologiaFamiliaresPorDataExiste(idHistoricoPatologiaFamiliaresPorData);
 		historicoPatologiaFamiliaresPorDataRepository.delete(historicoPatologiaFamiliaresPorData);
 		
 		return ResponseEntity.noContent().build();
 	}
 	
 	
-	private HistoricoPatologiaFamiliaresPorData verificarSeHistoricoPatologiaFamiliaresExiste(Long idHistoricoPatologiaFamiliaresPorData) {
+	private HistoricoPatologiaFamiliaresPorData verificarSeHistoricoPatologiaFamiliaresPorDataExiste(Long idHistoricoPatologiaFamiliaresPorData) {
 		if (Objects.isNull(idHistoricoPatologiaFamiliaresPorData))
 			throw new NullPointerException("O ID do Histórico de Patologia dos Familiares por Data não pode ser nulo!");
 		

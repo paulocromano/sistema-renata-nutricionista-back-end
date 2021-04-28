@@ -1,8 +1,6 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.form;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.enums.PatologiaFamiliares;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.model.HistoricoPatologiaFamiliares;
@@ -21,28 +19,22 @@ public class HistoricoPatologiaFamiliaresFORM {
 	@NotNull(message = "O campo da Patologia dos Familiares não pode ser nulo!")
 	private PatologiaFamiliares patologiaFamiliares;
 	
-	@NotEmpty(message = "O campo Pai não pode estar nulo/vazio!")
-	@Size(max = 1, message = "O campo Pai deve ter no máximo {max} caracter")
+	@NotNull(message = "O campo Pai não pode ser nulo!")
 	private RespostaUtils pai;
 	
-	@NotEmpty(message = "O campo Mãe não pode estar nulo/vazio!")
-	@Size(max = 1, message = "O campo Mãe deve ter no máximo {max} caracter")
+	@NotNull(message = "O campo Mãe não pode ser nulo!")
 	private RespostaUtils mae;
 
-	@NotEmpty(message = "O campo Avôs não pode estar nulo/vazio!")
-	@Size(max = 1, message = "O campo Avôs deve ter no máximo {max} caracter")
+	@NotNull(message = "O campo Avôs não pode ser nulo!")
 	private RespostaUtils avosMasculinos;
 
-	@NotEmpty(message = "O campo Avós não pode estar nulo/vazio!")
-	@Size(max = 1, message = "O campo Avós deve ter no máximo {max} caracter")
+	@NotNull(message = "O campo Avós não pode ser nulo!")
 	private RespostaUtils avosFemininos;
 	
-	@NotEmpty(message = "O campo Tios não pode estar nulo/vazio!")
-	@Size(max = 1, message = "O campo Tios deve ter no máximo {max} caracter")
+	@NotNull(message = "O campo Tios não pode ser nulo!")
 	private RespostaUtils tios;
 	
-	@NotEmpty(message = "O campo Tias não pode estar nulo/vazio!")
-	@Size(max = 1, message = "O campo Tias deve ter no máximo {max} caracter")
+	@NotNull(message = "O campo Tias não pode ser nulo!")
 	private RespostaUtils tias;
 	
 	
