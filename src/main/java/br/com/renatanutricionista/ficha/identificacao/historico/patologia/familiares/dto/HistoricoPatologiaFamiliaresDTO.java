@@ -12,7 +12,7 @@ import lombok.Getter;
 public class HistoricoPatologiaFamiliaresDTO implements Comparable<HistoricoPatologiaFamiliaresDTO> {
 
 	private Long id;
-	private String patologiaFamiliares;
+	private String descricaoPatologiaFamiliares;
 	private String pai;
 	private String mae;
 	private String avosMasculinos;
@@ -23,7 +23,7 @@ public class HistoricoPatologiaFamiliaresDTO implements Comparable<HistoricoPato
 	
 	public HistoricoPatologiaFamiliaresDTO(HistoricoPatologiaFamiliares historicoPatologiaFamiliares) {
 		id = historicoPatologiaFamiliares.getId();
-		patologiaFamiliares = historicoPatologiaFamiliares.getPatologiaFamiliares().getDescricao();
+		descricaoPatologiaFamiliares = historicoPatologiaFamiliares.getPatologiaFamiliares().getDescricao();
 		pai = historicoPatologiaFamiliares.getPai().getDescricao();
 		mae = historicoPatologiaFamiliares.getMae().getDescricao();
 		avosMasculinos = historicoPatologiaFamiliares.getAvosMasculinos().getDescricao();
@@ -35,7 +35,7 @@ public class HistoricoPatologiaFamiliaresDTO implements Comparable<HistoricoPato
 	
 	@Override
 	public int compareTo(HistoricoPatologiaFamiliaresDTO other) {
-		return FormatacaoUtils.COLLATOR.compare(patologiaFamiliares, other.getPatologiaFamiliares());
+		return FormatacaoUtils.COLLATOR.compare(descricaoPatologiaFamiliares, other.getDescricaoPatologiaFamiliares());
 	}
 	
 	

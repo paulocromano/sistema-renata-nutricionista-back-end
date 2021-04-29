@@ -23,7 +23,7 @@ public class HistoricoAtividadeFisicaDTO {
 		id = historicoAtividadeFisica.getId();
 		atividadePraticada = historicoAtividadeFisica.getAtividadePraticada();
 		frequencia = historicoAtividadeFisica.getFrequencia().getDescricao();
-		duracao = historicoAtividadeFisica.getDuracao();
+		duracao = historicoAtividadeFisica.getDuracao() + "h";
 		dataHoraCadastroAtividadeFisica = ConversaoUtils.converterLocalDateTimeParaFrontEndEmString(historicoAtividadeFisica.getDataHoraCadastroAtividadeFisica());
 	}
 	

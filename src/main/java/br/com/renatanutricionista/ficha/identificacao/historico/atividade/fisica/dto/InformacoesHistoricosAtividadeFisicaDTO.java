@@ -12,13 +12,13 @@ import lombok.Getter;
 
 
 @Getter
-public class InformacoesHistoricosAtividadesFisicasDTO {
+public class InformacoesHistoricosAtividadeFisicaDTO {
 
 	private List<HistoricoAtividadeFisicaDTO> historicosAtividadesFisicas;
 	private String dataProximaAtualizacaoHistoricoAtividadeFisica;
 	
 	
-	public InformacoesHistoricosAtividadesFisicasDTO(Paciente paciente, PacienteParametro pacienteParametro) {
+	public InformacoesHistoricosAtividadeFisicaDTO(Paciente paciente, PacienteParametro pacienteParametro) {
 		historicosAtividadesFisicas = HistoricoAtividadeFisicaDTO.converterParaListaAtividadeFisicaDTO(paciente.getHistoricosAtividadeFisica());
 		calcularDataProximaAtualizacaoHistoricoAtividadeFisica(paciente, pacienteParametro);
 	}

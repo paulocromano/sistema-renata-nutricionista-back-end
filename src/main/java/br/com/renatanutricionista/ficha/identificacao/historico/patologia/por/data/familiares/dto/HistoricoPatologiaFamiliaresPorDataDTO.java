@@ -21,7 +21,7 @@ public class HistoricoPatologiaFamiliaresPorDataDTO {
 		id = historicoPatologiaFamiliaresPorData.getId();
 		observacao= historicoPatologiaFamiliaresPorData.getObservacao();
 		
-		dataHoraCadastroPatologiasFamiliares = ConversaoUtils.converterLocalDateTimeParaStringDataHoraMinuto(
+		dataHoraCadastroPatologiasFamiliares = ConversaoUtils.converterLocalDateTimeParaFrontEndEmString(
 				historicoPatologiaFamiliaresPorData.getDataHoraCadastroPatologiasFamiliares());
 		
 		patologiasFamiliares = HistoricoPatologiaFamiliaresDTO.converterParaSetHistoricoPatologiaFamiliaresDTO(

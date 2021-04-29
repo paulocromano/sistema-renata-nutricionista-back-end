@@ -11,11 +11,14 @@ import org.springframework.stereotype.Service;
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.repository.HistoricoPatologiaFamiliaresRepository;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.dto.HistoricoPatologiaFamiliaresPorDataDTO;
+import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.dto.InformacoesPreviasHistoricosFamiliaresPorDataDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.form.HistoricoPatologiaFamiliaresPorDataFORM;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.model.HistoricoPatologiaFamiliaresPorData;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.repository.HistoricoPatologiaFamiliaresPorDataRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.service.PacienteService;
+import br.com.renatanutricionista.tabelas.parametro.paciente.model.PacienteParametro;
+import br.com.renatanutricionista.tabelas.parametro.paciente.service.PacienteParametroService;
 
 
 @Service
@@ -29,6 +32,17 @@ public class HistoricoPatologiaFamiliaresPorDataService {
 	
 	@Autowired
 	private PacienteService pacienteService;
+	
+	@Autowired
+	private PacienteParametroService pacienteParametroService;
+	
+	
+	public ResponseEntity<InformacoesPreviasHistoricosFamiliaresPorDataDTO> buscarInformacoesPreviasHistoricosPatologiasFamiliaresPorDataDoPaciente(Long idPaciente) {
+		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);
+		PacienteParametro pacienteParametro = pacienteParametroService.buscarPacienteParametro();
+		
+		return ResponseEntity.ok().body(new InformacoesPreviasHistoricosFamiliaresPorDataDTO(paciente, pacienteParametro));
+	}
 	
 	
 	public ResponseEntity<HistoricoPatologiaFamiliaresPorDataDTO> buscarHistoricoPatologiaFamiliaresPorDataDoPaciente(Long idPatologiaFamiliares) {

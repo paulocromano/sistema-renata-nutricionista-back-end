@@ -9,11 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
+import br.com.renatanutricionista.ficha.identificacao.historico.atividade.fisica.dto.InformacoesHistoricosAtividadeFisicaDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.atividade.fisica.form.HistoricoAtividadeFisicaFORM;
 import br.com.renatanutricionista.ficha.identificacao.historico.atividade.fisica.model.HistoricoAtividadeFisica;
 import br.com.renatanutricionista.ficha.identificacao.historico.atividade.fisica.repository.HistoricoAtividadeFisicaRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.service.PacienteService;
+import br.com.renatanutricionista.tabelas.parametro.paciente.model.PacienteParametro;
+import br.com.renatanutricionista.tabelas.parametro.paciente.service.PacienteParametroService;
 
 
 @Service
@@ -24,6 +27,17 @@ public class HistoricoAtividadeFisicaService {
 	
 	@Autowired
 	private PacienteService pacienteService;
+	
+	@Autowired
+	private PacienteParametroService pacienteParametroService;
+	
+	
+	public ResponseEntity<InformacoesHistoricosAtividadeFisicaDTO> buscarInformacoesHistoricosAtividadeFisicaDoPaciente(Long idPaciente) {
+		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);
+		PacienteParametro pacienteParametro = pacienteParametroService.buscarPacienteParametro();
+		
+		return ResponseEntity.ok().body(new InformacoesHistoricosAtividadeFisicaDTO(paciente, pacienteParametro));
+	}
 	
 	
 	public ResponseEntity<Void> cadastrarAtividadeFisicaDoPaciente(Long idPaciente, HistoricoAtividadeFisicaFORM historicoAtividadeFisicaFORM) {

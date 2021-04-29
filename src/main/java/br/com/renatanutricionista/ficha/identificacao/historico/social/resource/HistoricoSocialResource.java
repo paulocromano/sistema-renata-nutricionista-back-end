@@ -21,7 +21,7 @@ import br.com.renatanutricionista.ficha.identificacao.historico.social.service.H
 
 
 @RestController
-@RequestMapping("/historico-social-paciente")
+@RequestMapping("/historico-social")
 public class HistoricoSocialResource {
 
 	@Autowired
@@ -29,7 +29,7 @@ public class HistoricoSocialResource {
 	
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	@GetMapping("/historicos/{idPaciente}")
+	@GetMapping("/previa-historicos-paciente/{idPaciente}")
 	public ResponseEntity<InformacoesPreviasHistoricosSociaisDTO> buscarInformacoesPreviasHistoricosSociaisDoPaciente(@PathVariable Long idPaciente) {
 		return historicoSocialService.buscarInformacoesPreviasHistoricosSociaisDoPaciente(idPaciente);
 	}

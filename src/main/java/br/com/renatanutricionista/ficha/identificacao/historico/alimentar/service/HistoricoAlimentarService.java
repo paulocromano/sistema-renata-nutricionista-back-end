@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.renatanutricionista.exception.custom.IntegrityConstraintViolationException;
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
+import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.dto.HistoricoAlimentarDTO;
+import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.dto.InformacoesPreviasHistoricosAlimentaresDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.form.HistoricoAlimentarFORM;
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.model.HistoricoAlimentar;
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.repository.HistoricoAlimentarRepository;
@@ -20,6 +22,8 @@ import br.com.renatanutricionista.medicamento.model.Medicamento;
 import br.com.renatanutricionista.medicamento.repository.MedicamentoRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.service.PacienteService;
+import br.com.renatanutricionista.tabelas.parametro.paciente.model.PacienteParametro;
+import br.com.renatanutricionista.tabelas.parametro.paciente.service.PacienteParametroService;
 
 
 @Service
@@ -36,6 +40,22 @@ public class HistoricoAlimentarService {
 	
 	@Autowired
 	private PacienteService pacienteService;
+	
+	@Autowired
+	private PacienteParametroService pacienteParametroService;
+	
+	
+	public ResponseEntity<InformacoesPreviasHistoricosAlimentaresDTO> buscarInformacoesPreviasHistoricosAlimentaresDoPaciente(Long idPaciente) {
+		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);
+		PacienteParametro pacienteParametro = pacienteParametroService.buscarPacienteParametro();
+		
+		return ResponseEntity.ok().body(new InformacoesPreviasHistoricosAlimentaresDTO(paciente, pacienteParametro));
+	}
+	
+	
+	public ResponseEntity<HistoricoAlimentarDTO> buscarHistoricoAlimentarDoPaciente(Long idHistoricoAlimentar) {
+		return ResponseEntity.ok().body(new HistoricoAlimentarDTO(verificarSeHistoricoAlimentarExiste(idHistoricoAlimentar)));
+	}
 	
 	
 	public ResponseEntity<Void> cadastrarHistoricoAlimentarDoPaciente(Long idPaciente, HistoricoAlimentarFORM historicoAlimentarFORM) {
