@@ -15,7 +15,7 @@ import lombok.Getter;
 public class InformacoesPreviasQuestionariosDTO {
 
 	private List<PreviaQuestionarioFrequenciaAlimentarDTO> previaQuestionariosFrequenciaAlimentar;
-	private String dataProximaAtualizacaoQuestionarioFrequenciaAlimentar;
+	private String dataProximaAtualizacaoQuestionario;
 	
 	
 	public InformacoesPreviasQuestionariosDTO(Paciente paciente, PacienteParametro pacienteParametro) {
@@ -37,11 +37,11 @@ public class InformacoesPreviasQuestionariosDTO {
 					.plusMonths(pacienteParametro.getTempoMesesAtualizarQuestionarioFrequenciaAlimentar());
 			
 			if (LocalDate.now().isAfter(dataQuestionarioFrequenciaAlimentar)) {
-				dataProximaAtualizacaoQuestionarioFrequenciaAlimentar = "O Questionário de Frequência Alimentar do paciente "
+				dataProximaAtualizacaoQuestionario = "O Questionário de Frequência Alimentar do paciente "
 						+ "está desatualizado!";
 			}
 			else {
-				dataProximaAtualizacaoQuestionarioFrequenciaAlimentar = ConversaoUtils.converterLocalDateParaString(dataQuestionarioFrequenciaAlimentar);
+				dataProximaAtualizacaoQuestionario = ConversaoUtils.converterLocalDateParaString(dataQuestionarioFrequenciaAlimentar);
 			}
 		}
 	}

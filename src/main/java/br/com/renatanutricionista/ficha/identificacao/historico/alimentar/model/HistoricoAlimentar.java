@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,8 +20,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -72,14 +71,13 @@ public class HistoricoAlimentar {
 	@OneToMany(mappedBy = "historicoAlimentar", cascade = CascadeType.REMOVE)
 	private Set<SuplementoPaciente> suplementosPaciente;
 	
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
-	@OnDelete(action = OnDeleteAction.CASCADE)
+	@ManyToMany(cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
 	@JoinTable(name = "historico_alimentar_has_medicamento", 
 		joinColumns = @JoinColumn(name = "historico_alimentar_id"), 
 		inverseJoinColumns = @JoinColumn(name = "medicamento_id"))
 	private Set<Medicamento> medicamentos;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "paciente_id", referencedColumnName = "id")
 	@NotNull(message = "O objeto Paciente não pode estar nulo!")
 	private Paciente paciente;

@@ -30,11 +30,11 @@ public class SuplementoPacienteDTO implements Comparable<SuplementoPacienteDTO> 
 		
 		if (!dose.equals(suplemento.getDose()))
 			mensagemDoseUtilizadaPeloPacienteDiferenteDoSuplemento = "A Dose utilizada pelo Paciente não é igual a dose "
-					+ "contida nas informações do Suplemento";
+					+ "contida nas informações do Suplemento.";
 		
 		if (!formaPreparo.equals(suplemento.getFormaPreparo()))
 			mensagemFormaPreparoUtilizadaPeloPacienteDiferenteDoSuplemento = "A Forma de Preparo utilizada pelo Paciente "
-					+ "não é igual a Forma de Preaparo contida nas informações do Suplemento";
+					+ "não é igual a Forma de Preaparo contida nas informações do Suplemento.";
 	}
 
 	

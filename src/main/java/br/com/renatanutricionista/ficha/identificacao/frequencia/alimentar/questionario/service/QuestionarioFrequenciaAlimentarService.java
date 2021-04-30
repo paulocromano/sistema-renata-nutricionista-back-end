@@ -17,11 +17,15 @@ import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alime
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alimentos.repository.AlimentoFrequenciaAlimentarRepository;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.form.FrequenciaAlimentarFORM;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.model.FrequenciaAlimentar;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.dto.InformacoesPreviasQuestionariosDTO;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.dto.QuestionarioFrequenciaAlimentarDTO;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.form.QuestionarioFrequenciaAlimentarFORM;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.model.QuestionarioFrequenciaAlimentar;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.questionario.repository.QuestionarioFrequenciaAlimentarRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.service.PacienteService;
+import br.com.renatanutricionista.tabelas.parametro.paciente.model.PacienteParametro;
+import br.com.renatanutricionista.tabelas.parametro.paciente.service.PacienteParametroService;
 
 
 @Service
@@ -35,6 +39,22 @@ public class QuestionarioFrequenciaAlimentarService {
 
 	@Autowired
 	private PacienteService pacienteService;
+	
+	@Autowired
+	private PacienteParametroService pacienteParametroService;
+	
+	
+	public ResponseEntity<InformacoesPreviasQuestionariosDTO> buscarInformacoesPreviasQuestionariosDoPaciente(Long idPaciente) {
+		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);
+		PacienteParametro pacienteParametro = pacienteParametroService.buscarPacienteParametro();
+
+		return ResponseEntity.ok().body(new InformacoesPreviasQuestionariosDTO(paciente, pacienteParametro));
+	}
+	
+	
+	public ResponseEntity<QuestionarioFrequenciaAlimentarDTO> buscarQuestionarioFrequenciaAlimentarDoPaciente(Long idQuestionario) {
+		return ResponseEntity.ok().body(new QuestionarioFrequenciaAlimentarDTO(verificarSeQuestionarioFrequenciaAlimentarExiste(idQuestionario)));
+	} 
 	
 	
 	public ResponseEntity<Void> cadastrarQuestionarioFrequenciaAlimentar(Long idPaciente, QuestionarioFrequenciaAlimentarFORM questionarioFrequenciaAlimentar) {
