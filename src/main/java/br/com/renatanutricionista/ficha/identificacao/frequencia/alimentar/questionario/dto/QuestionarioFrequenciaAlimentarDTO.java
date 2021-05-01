@@ -37,7 +37,5 @@ public class QuestionarioFrequenciaAlimentarDTO {
 		consumoCarneVermelha = ConcatenacaoValoresEnum.concatenarValoresEnum(questionario.getConsumoCarneVermelha(), ConsumoCarneVermelha.values());
 		consumoFrango = ConcatenacaoValoresEnum.concatenarValoresEnum(questionario.getConsumoFrango(), ConsumoFrango.values());
 		consumoPeixe = ConcatenacaoValoresEnum.concatenarValoresEnum(questionario.getConsumoPeixe(), ConsumoPeixe.values());
-		
-		System.out.println(consumoTipoBebida);
 	}
 }

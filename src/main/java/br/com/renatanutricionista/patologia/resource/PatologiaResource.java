@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,12 +30,14 @@ public class PatologiaResource {
 	private PatologiaService patologiaService;
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping
 	public ResponseEntity<List<PatologiaDTO>> listarPatologiasEmOrdemAlfabetica() {
 		return patologiaService.listarPatologiasEmOrdemAlfabetica();
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	@Transactional
 	public ResponseEntity<Void> cadastrarPatologia(@RequestBody @Valid PatologiaFORM patologia) {
@@ -42,6 +45,7 @@ public class PatologiaResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/{idPatologia}")
 	@Transactional
 	public ResponseEntity<Void> alterarPatologia(@PathVariable Integer idPatologia, @RequestBody @Valid PatologiaFORM patologia) {
@@ -49,6 +53,7 @@ public class PatologiaResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping("/{idPatologia}")
 	@Transactional
 	public ResponseEntity<Void> excluirPatologia(@PathVariable Integer idPatologia) {

@@ -32,6 +32,7 @@ public class MedicamentoService {
 	
 	
 	public ResponseEntity<Void> cadastrarMedicamento(MedicamentoFORM medicamento) {
+		verificarSeExisteMedicamentoComMesmoNome(medicamento.getNome());
 		medicamentoRepository.save(medicamento.converterParaMedicamento());
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -39,6 +40,7 @@ public class MedicamentoService {
 	
 	
 	public ResponseEntity<Void> alterarMedicamento(Integer idMedicamento, MedicamentoFORM medicamento) {
+		verificarSeExisteMedicamentoComMesmoNome(medicamento.getNome());
 		medicamento.atualizarMedicamento(verificarSeMedicamentoExiste(idMedicamento));
 		
 		return ResponseEntity.ok().build();
@@ -59,6 +61,13 @@ public class MedicamentoService {
 		return ResponseEntity.noContent().build();
 	}
 	
+	
+	private void verificarSeExisteMedicamentoComMesmoNome(String nomeMedicamento) {
+		Optional<Medicamento> medicamento = medicamentoRepository.findByNomeIgnoreCase(nomeMedicamento);
+		
+		if (medicamento.isPresent()) 
+			throw new IllegalArgumentException("Já existe um medicamento com o mesmo nome cadastrado!");
+	}
 	
 	private Medicamento verificarSeMedicamentoExiste(Integer idMedicamento) {
 		if (Objects.isNull(idMedicamento))
