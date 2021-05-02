@@ -31,6 +31,7 @@ public class SuplementoService {
 	
 	
 	public ResponseEntity<Void> cadastrarSuplemento(SuplementoFORM suplemento) {
+		verificarSeExisteSuplementoComMesmoNome(suplemento);
 		suplementoRepository.save(suplemento.converterParaSuplemento());
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -38,6 +39,7 @@ public class SuplementoService {
 	
 	
 	public ResponseEntity<Void> alterarSuplemento(Integer idSuplemento, SuplementoFORM suplemento) {
+		verificarSeExisteSuplementoComMesmoNome(suplemento);
 		suplemento.atualizarSuplemento(verificarSeSuplementoExiste(idSuplemento));
 		
 		return ResponseEntity.ok().build();
@@ -56,6 +58,15 @@ public class SuplementoService {
 		}
 	
 		return ResponseEntity.noContent().build();
+	}
+	
+	
+	private void verificarSeExisteSuplementoComMesmoNome(SuplementoFORM suplementoFORM) {
+		Optional<Suplemento> suplemento = suplementoRepository.findByAllIgnoreCaseNomeAndDoseAndFormaPreparo(
+				suplementoFORM.getNome(), suplementoFORM.getDose(), suplementoFORM.getFormaPreparo());
+		
+		if (suplemento.isPresent())
+			throw new IllegalArgumentException("Já existe um suplemento com as mesmas informações cadastradas!");
 	}
 	
 	

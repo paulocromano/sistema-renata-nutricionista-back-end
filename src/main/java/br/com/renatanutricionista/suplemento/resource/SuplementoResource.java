@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,12 +30,14 @@ public class SuplementoResource {
 	private SuplementoService suplementoService;
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping
 	public ResponseEntity<List<SuplementoDTO>> listarSuplementosEmOrdemAlfabetica() {
 		return suplementoService.listarSuplementosEmOrdemAlfabetica();
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	@Transactional
 	public ResponseEntity<Void> cadastrarSuplemento(@RequestBody @Valid SuplementoFORM suplemento) {
@@ -42,6 +45,7 @@ public class SuplementoResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/{idSuplemento}")
 	@Transactional
 	public ResponseEntity<Void> alterarSuplemento(@PathVariable Integer idSuplemento, @RequestBody @Valid SuplementoFORM suplemento) {
@@ -49,6 +53,7 @@ public class SuplementoResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping("/{idSuplemento}")
 	@Transactional
 	public ResponseEntity<Void> excluirSuplemento(@PathVariable Integer idSuplemento) {

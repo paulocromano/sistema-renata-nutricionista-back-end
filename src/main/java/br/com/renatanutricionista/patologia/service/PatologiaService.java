@@ -31,6 +31,7 @@ public class PatologiaService {
 	
 	
 	public ResponseEntity<Void> cadastrarPatologia(PatologiaFORM patologia) {
+		verificarSeExistePatologiaComMesmaDescricao(patologia.getDescricao());
 		patologiaRepository.save(patologia.converterParaPatologia());
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -38,6 +39,7 @@ public class PatologiaService {
 	
 	
 	public ResponseEntity<Void> alterarPatologia(Integer idPatologia, PatologiaFORM patologia) {
+		verificarSeExistePatologiaComMesmaDescricao(patologia.getDescricao());
 		patologia.atualizarPatologia(verificarSePatologiaExiste(idPatologia));
 		
 		return ResponseEntity.ok().build();
@@ -56,6 +58,14 @@ public class PatologiaService {
 		}
 		
 		return ResponseEntity.noContent().build();
+	}
+	
+	
+	private void verificarSeExistePatologiaComMesmaDescricao(String descricaoPatologia) {
+		Optional<Patologia> patologia = patologiaRepository.findByDescricaoIgnoreCase(descricaoPatologia);
+		
+		if (patologia.isPresent())
+			throw new IllegalArgumentException("Já existe uma patologia com a mesma descrição cadastrada!");
 	}
 	
 	
