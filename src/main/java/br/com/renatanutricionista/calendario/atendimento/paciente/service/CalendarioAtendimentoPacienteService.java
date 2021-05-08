@@ -233,14 +233,14 @@ public class CalendarioAtendimentoPacienteService {
 	private Set<DayOfWeek> gerarListaComOsDiasDeAtendimentoDaSemana(List<HorarioAtendimento> diasDeAtendimento) {
 		if (diasDeAtendimento.isEmpty())
 			throw new EmptyResultDataAccessException("Não foi encontrado nenhum horário de atendimento "
-					+ "para geração de períodos de Atendimento!");
+					+ "para geração de períodos de atendimento!");
 		
 		return diasDeAtendimento.stream().map(HorarioAtendimento::getDiaDaSemana).collect(Collectors.toSet()); 
 	}
 	
 	
-	public ResponseEntity<Void> excluirPeriodo(Long idCalendarioAtendimento) {
-		CalendarioAtendimentoPaciente horarioAtendimento = verificarSeExistePeriodoNoCalendarioAtendimento(idCalendarioAtendimento);
+	public ResponseEntity<Void> excluirPeriodo(Long idPeriodo) {
+		CalendarioAtendimentoPaciente horarioAtendimento = verificarSeExistePeriodoNoCalendarioAtendimento(idPeriodo);
 		
 		if (horarioAtendimento.getPeriodoDisponivel().equals(RespostaUtils.NAO) && !horarioAtendimento.getData().isBefore(LocalDate.now()))
 			throw new AtendimentoException("Não é possível remover um período que não está disponível e que seja "
@@ -302,8 +302,8 @@ public class CalendarioAtendimentoPacienteService {
 		Optional<CalendarioAtendimentoPaciente> periodo = calendarioAgendamentoRepository.findByDataAndHorario(dataAgendamento, horarioAgendamento);
 		
 		if (periodo.isEmpty()) 
-			throw new ObjectNotFoundException("A Data e/ou Horário não existe(m) no Calendário de Agendamento "
-					+ "de Consulta e Retorno do Paciente!");
+			throw new ObjectNotFoundException("A data e/ou horário não existe(m) no calendário de agendamento "
+					+ "de consulta e retorno do paciente!");
 		
 		verificarDisponibilidadeNoCalendario(periodo.get());
 		
@@ -327,13 +327,13 @@ public class CalendarioAtendimentoPacienteService {
 	
 	public CalendarioAtendimentoPaciente verificarSeExistePeriodoNoCalendarioAtendimento(Long idCalendarioAtendimento) {
 		if (Objects.isNull(idCalendarioAtendimento))
-			throw new NullPointerException("O ID do Calnedário de Atendimento não pode ser nulo!");
+			throw new NullPointerException("O ID do calendário de atendimento não pode ser nulo!");
 			
 		Optional<CalendarioAtendimentoPaciente> calendarioAtendimento = 
 				calendarioAgendamentoRepository.findById(idCalendarioAtendimento);
 		
 		if (calendarioAtendimento.isEmpty())
-			throw new ObjectNotFoundException("Período no Calendário de Atendimento do Paciente "
+			throw new ObjectNotFoundException("Período no calendário de atendimento do paciente "
 					+ "não encontrado!");
 		
 		return calendarioAtendimento.get();
@@ -342,13 +342,13 @@ public class CalendarioAtendimentoPacienteService {
 	
 	public CalendarioAtendimentoPaciente verificarSeExistePeriodoNoCalendarioAtendimento(LocalDate data, LocalTime horario) {
 		if (Objects.isNull(data) || Objects.isNull(horario))
-			throw new NullPointerException("Data e/ou Horário estão nulos!");
+			throw new NullPointerException("Data e/ou horário estão nulos!");
 			
 		Optional<CalendarioAtendimentoPaciente> calendarioAtendimento = 
 				calendarioAgendamentoRepository.findByDataAndHorario(data, horario);
 		
 		if (calendarioAtendimento.isEmpty())
-			throw new ObjectNotFoundException("Período no Calendário de Atendimento do Paciente encontrado!");
+			throw new ObjectNotFoundException("Período no calendário de atendimento do paciente não encontrado!");
 		
 		return calendarioAtendimento.get();
 	}

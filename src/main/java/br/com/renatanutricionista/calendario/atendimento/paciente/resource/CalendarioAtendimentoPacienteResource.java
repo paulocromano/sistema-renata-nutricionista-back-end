@@ -58,10 +58,10 @@ public class CalendarioAtendimentoPacienteResource {
 	}
 	
 	
-	@DeleteMapping("/excluir-periodo/{idCalendarioAtendimento}")
+	@DeleteMapping("/excluir-periodo/{idPeriodo}")
 	@Transactional
-	public ResponseEntity<Void> excluirPeriodo(@PathVariable Long idCalendarioAtendimento) {
-		return calendarioAtendimentoPacienteService.excluirPeriodo(idCalendarioAtendimento);
+	public ResponseEntity<Void> excluirPeriodo(@PathVariable Long idPeriodo) {
+		return calendarioAtendimentoPacienteService.excluirPeriodo(idPeriodo);
 	}
 	
 	

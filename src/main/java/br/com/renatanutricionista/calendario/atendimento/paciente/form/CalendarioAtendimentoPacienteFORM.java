@@ -30,17 +30,17 @@ public class CalendarioAtendimentoPacienteFORM {
 		LocalDate dataFinal = ConversaoUtils.converterStringParaLocalDate(this.dataFinal);
 		
 		if (dataInicial.isAfter(dataFinal))
-			throw new AtendimentoException("A Data Inicial não pode proceder a Data Final!");
+			throw new AtendimentoException("A Data inicial não pode proceder a data final!");
 		
 		LocalDate hoje = LocalDate.now();
 		
 		if (!dataInicial.isAfter(hoje))
-			throw new AtendimentoException("A Data Inicial deve proceder a Data Atual!");
+			throw new AtendimentoException("A Data inicial deve proceder a data atual!");
 		
 		LocalDate dataLimiteParaGeracaoDePeriodos = hoje.plusMonths(tempoMesesGeracaoPeriodos).withDayOfMonth(dataInicial.getDayOfMonth());
 		
 		if (dataFinal.isAfter(dataLimiteParaGeracaoDePeriodos))
-			throw new AtendimentoException("A Data Final permita deve ser até " 
+			throw new AtendimentoException("A Data final permitida deve ser até " 
 				+ ConversaoUtils.converterLocalDateParaString(dataLimiteParaGeracaoDePeriodos) + "!");
 	}
 }
