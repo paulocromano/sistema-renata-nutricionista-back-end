@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,20 +54,6 @@ public class CalendarioAtendimentoPacienteResource {
 	public ResponseEntity<Void> cadastrarPeriodosManualmenteNoCalendarioParaAtendimentoPaciente(
 			@RequestBody @Valid CalendarioAtendimentoPacienteFORM calendarioAtendimento) {
 		return calendarioAtendimentoPacienteService.cadastrarPeriodosManualmenteNoCalendarioParaAtendimentoPaciente(calendarioAtendimento);
-	}
-	
-	
-	@DeleteMapping("/excluir-periodo/{idPeriodo}")
-	@Transactional
-	public ResponseEntity<Void> excluirPeriodo(@PathVariable Long idPeriodo) {
-		return calendarioAtendimentoPacienteService.excluirPeriodo(idPeriodo);
-	}
-	
-	
-	@DeleteMapping("/excluir-horarios-precedem-data-atual")
-	@Transactional
-	public ResponseEntity<Void> excluirTodosHorariosAnterioresAoPeriodoAtual() {
-		return calendarioAtendimentoPacienteService.excluirTodosHorariosAnterioresAoPeriodoAtual();
 	}
 	
 	

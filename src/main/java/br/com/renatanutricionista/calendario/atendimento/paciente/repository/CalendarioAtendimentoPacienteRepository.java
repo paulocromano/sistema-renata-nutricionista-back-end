@@ -8,13 +8,12 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
+import br.com.renatanutricionista.utils.enums.resposta.RespostaUtils;
 
 
 public interface CalendarioAtendimentoPacienteRepository extends JpaRepository<CalendarioAtendimentoPaciente, Long> {
 
 	Optional<CalendarioAtendimentoPaciente> findByDataAndHorario(LocalDate data, LocalTime horario);
-
-	List<CalendarioAtendimentoPaciente> findAllByDataGreaterThanEqual(LocalDate dataAtual);
 
 	List<CalendarioAtendimentoPaciente> findByDataBetween(LocalDate dataInicial, LocalDate dataFinal);
 
@@ -22,4 +21,6 @@ public interface CalendarioAtendimentoPacienteRepository extends JpaRepository<C
 			LocalTime horarioPosteriorConformeIntervaloEntreConsultas);
 
 	void deleteByDataLessThan(LocalDate data);
+
+	List<CalendarioAtendimentoPaciente> findByDataBetweenAndPeriodoDisponivel(LocalDate dataInicial, LocalDate dataFinal, RespostaUtils disponibilidadePeriodo);
 }

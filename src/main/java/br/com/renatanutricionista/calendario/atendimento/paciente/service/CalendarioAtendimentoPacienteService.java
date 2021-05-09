@@ -49,10 +49,26 @@ public class CalendarioAtendimentoPacienteService {
 
 	
 	public ResponseEntity<List<CalendarioAtendimentoPacienteDTO>> listarHorariosAPartirDoDiaAtual() {
-		List<CalendarioAtendimentoPaciente> calendarioAPartirDaDataAtual = calendarioAgendamentoRepository.findAllByDataGreaterThanEqual(LocalDate.now());
+		List<CalendarioAtendimentoPaciente> periodos = calendarioAgendamentoRepository.findAll();
+		
+		List<CalendarioAtendimentoPaciente> periodosAPartirDoDiaAtual = periodos.stream()
+				.filter(periodo -> !periodo.getData().isBefore(LocalDate.now())).collect(Collectors.toList());
+		
+		excluirPeriodosDoCalendarioAnterioresADataAtual(periodos);
 		
 		return ResponseEntity.ok().body(CalendarioAtendimentoPacienteDTO
-				.converterParaListaCalendarioAtendimentoPacienteDTOOrdenadaPorDataHorario(calendarioAPartirDaDataAtual));
+				.converterParaListaCalendarioAtendimentoPacienteDTOOrdenadaPorDataHorario(periodosAPartirDoDiaAtual));
+	}
+	
+	
+	private void excluirPeriodosDoCalendarioAnterioresADataAtual(List<CalendarioAtendimentoPaciente> periodos) {
+		List<CalendarioAtendimentoPaciente> periodosASeremExcluidos = periodos.stream()
+				.filter(periodo -> periodo.getData().isBefore(LocalDate.now()))
+				.collect(Collectors.toList());
+		
+		if (!periodosASeremExcluidos.isEmpty()) {
+			calendarioAgendamentoRepository.deleteAll(periodosASeremExcluidos);
+		}
 	}
 	
 	
@@ -250,14 +266,7 @@ public class CalendarioAtendimentoPacienteService {
 		
 		return ResponseEntity.noContent().build();
 	}
-	
-	
-	public ResponseEntity<Void> excluirTodosHorariosAnterioresAoPeriodoAtual() {
-		calendarioAgendamentoRepository.deleteByDataLessThan(LocalDate.now());
-		
-		return ResponseEntity.noContent().build();
-	}
-	
+
 	
 	public ResponseEntity<Void> excluirPeriodosConformeDataInicialFinal(String dataInicio, String dataFim) {
 		List<CalendarioAtendimentoPaciente> periodosAtendimento = validarPeriodosParaExclusao(dataInicio, dataFim);
@@ -274,20 +283,11 @@ public class CalendarioAtendimentoPacienteService {
 		if (dataInicial.isAfter(dataFinal))
 			throw new IllegalArgumentException("A data inicial não pode ser posterior à data final!");
 		
-		List<CalendarioAtendimentoPaciente> periodosAtendimento = calendarioAgendamentoRepository.findByDataBetween(dataInicial, dataFinal);
+		List<CalendarioAtendimentoPaciente> periodosAtendimento = calendarioAgendamentoRepository.findByDataBetweenAndPeriodoDisponivel(dataInicial, 
+				dataFinal, RespostaUtils.SIM);
 		
 		if (periodosAtendimento.isEmpty())
 			throw new EmptyResultDataAccessException("Não há períodos para serem excluídos!");
-		
-		if (!dataFinal.isBefore(LocalDate.now())) {
-			boolean existePeriodoIndisponivel = periodosAtendimento.stream()
-					.filter(periodo -> periodo.getPeriodoDisponivel().equals(RespostaUtils.NAO))
-					.findFirst().isPresent();
-			
-			if (existePeriodoIndisponivel)
-				throw new AtendimentoException("Não foi possível excluir os períodos devido haver "
-						+ "horários com atendimento agendado!");
-		}
 		
 		return periodosAtendimento;
 	}
