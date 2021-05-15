@@ -1,6 +1,5 @@
 package br.com.renatanutricionista.atendimento.paciente.consulta.dto;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -15,6 +14,7 @@ import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.retorno.model.RetornoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.utils.TipoAtendimento;
 import br.com.renatanutricionista.utils.ConversaoUtils;
+import br.com.renatanutricionista.utils.FormatacaoUtils;
 import lombok.Getter;
 
 
@@ -30,7 +30,7 @@ public class InformacoesPreviasConsultaRetornoDTO {
 	private String horarioAtendimento;
 	private String formaPagamentoConsulta;
 	private Integer numeroParcelasConsulta;
-	private BigDecimal valorConsulta;
+	private String valorConsulta;
 	private String motivoConsulta;
 	
 	@JsonIgnore
@@ -72,7 +72,7 @@ public class InformacoesPreviasConsultaRetornoDTO {
 			formaPagamentoConsulta = consulta.getFormaPagamento().getDescricao();
 		
 		numeroParcelasConsulta = consulta.getNumeroParcelas();
-		valorConsulta = consulta.getValorConsulta();
+		valorConsulta = FormatacaoUtils.substituirPontoPorVirgula(consulta.getValorConsulta());
 		motivoConsulta = consulta.getMotivoConsulta();
 	}
 	

@@ -15,4 +15,9 @@ public final class FormatacaoUtils {
 	public static final DateTimeFormatter FORMATADOR_HORA_MINUTO = DateTimeFormatter.ofPattern("HH:mm");
 
 	public static final Collator COLLATOR = Collator.getInstance(new Locale("pt", "BR"));
+	
+	
+	public static final String substituirPontoPorVirgula(Object object) {
+		return object.toString().replace(".", ",");
+	}
 }

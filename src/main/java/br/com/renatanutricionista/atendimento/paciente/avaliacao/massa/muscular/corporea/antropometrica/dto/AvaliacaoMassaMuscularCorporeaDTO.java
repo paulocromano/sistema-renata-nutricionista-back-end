@@ -1,8 +1,7 @@
 package br.com.renatanutricionista.atendimento.paciente.avaliacao.massa.muscular.corporea.antropometrica.dto;
 
-import java.math.BigDecimal;
-
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.massa.muscular.corporea.antropometrica.model.AvaliacaoMassaMuscularCorporea;
+import br.com.renatanutricionista.utils.FormatacaoUtils;
 import lombok.Getter;
 
 
@@ -10,25 +9,25 @@ import lombok.Getter;
 public class AvaliacaoMassaMuscularCorporeaDTO {
 
 	private Long id;
-	private BigDecimal circunferenciaCinturaCentimetros;
-	private BigDecimal circunferenciaBracoCentimentros;
-	private BigDecimal circunferenciaCoxaCentimetros;
-	private BigDecimal circunferenciaPanturrilhaCentimetros;
-	private BigDecimal circunferenciaPunhoCentrimetros;
-	private BigDecimal massaMuscularKg;
-	private BigDecimal massaMuscularPorcentagem;
-	private BigDecimal indiceMassaMuscularKgMetroQuadrado;
+	private String circunferenciaCinturaCentimetros;
+	private String circunferenciaBracoCentimentros;
+	private String circunferenciaCoxaCentimetros;
+	private String circunferenciaPanturrilhaCentimetros;
+	private String circunferenciaPunhoCentrimetros;
+	private String massaMuscularKg;
+	private String massaMuscularPorcentagem;
+	private String indiceMassaMuscularKgMetroQuadrado;
 	
 	
 	public AvaliacaoMassaMuscularCorporeaDTO(AvaliacaoMassaMuscularCorporea avaliacaoMassaMuscularCorporea) {
 		id = avaliacaoMassaMuscularCorporea.getId();
-		circunferenciaCinturaCentimetros = avaliacaoMassaMuscularCorporea.getCircunferenciaCinturaCentimetros();
-		circunferenciaBracoCentimentros = avaliacaoMassaMuscularCorporea.getCircunferenciaBracoCentimentros();
-		circunferenciaCoxaCentimetros = avaliacaoMassaMuscularCorporea.getCircunferenciaCoxaCentimetros();
-		circunferenciaPanturrilhaCentimetros = avaliacaoMassaMuscularCorporea.getCircunferenciaPanturrilhaCentimetros();
-		circunferenciaPunhoCentrimetros = avaliacaoMassaMuscularCorporea.getCircunferenciaPunhoCentrimetros();
-		massaMuscularKg = avaliacaoMassaMuscularCorporea.getMassaMuscularKg();
-		massaMuscularPorcentagem = avaliacaoMassaMuscularCorporea.getMassaMuscularPorcentagem();
-		indiceMassaMuscularKgMetroQuadrado = avaliacaoMassaMuscularCorporea.getIndiceMassaMuscularKgMetroQuadrado();
+		circunferenciaCinturaCentimetros = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoMassaMuscularCorporea.getCircunferenciaCinturaCentimetros());
+		circunferenciaBracoCentimentros = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoMassaMuscularCorporea.getCircunferenciaBracoCentimentros());
+		circunferenciaCoxaCentimetros = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoMassaMuscularCorporea.getCircunferenciaCoxaCentimetros());
+		circunferenciaPanturrilhaCentimetros = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoMassaMuscularCorporea.getCircunferenciaPanturrilhaCentimetros());
+		circunferenciaPunhoCentrimetros = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoMassaMuscularCorporea.getCircunferenciaPunhoCentrimetros());
+		massaMuscularKg = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoMassaMuscularCorporea.getMassaMuscularKg());
+		massaMuscularPorcentagem = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoMassaMuscularCorporea.getMassaMuscularPorcentagem());
+		indiceMassaMuscularKgMetroQuadrado = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoMassaMuscularCorporea.getIndiceMassaMuscularKgMetroQuadrado());
 	}
 }

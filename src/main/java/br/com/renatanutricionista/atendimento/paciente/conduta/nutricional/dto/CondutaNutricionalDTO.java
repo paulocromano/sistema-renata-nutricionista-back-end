@@ -1,8 +1,7 @@
 package br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.dto;
 
-import java.math.BigDecimal;
-
 import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.model.CondutaNutricional;
+import br.com.renatanutricionista.utils.FormatacaoUtils;
 import lombok.Getter;
 
 
@@ -10,33 +9,33 @@ import lombok.Getter;
 public class CondutaNutricionalDTO {
 
 	private Long id;
-	private BigDecimal energiaKcalTotal;
-	private BigDecimal carboidratroTotalGramas;
-	private BigDecimal carboidratoGramasKgPeso;
-	private BigDecimal carboidratoGramasKgMassaMagra;
-	private BigDecimal proteinaTotalGramas;
-	private BigDecimal proteinaAVBGramas;
-	private BigDecimal proteinaAVBGramasKgPeso;
-	private BigDecimal lipideoTotal;
-	private BigDecimal lipideoSaturado;
-	private BigDecimal lipideoPoiinsaturado;
-	private BigDecimal lipideoMonoinsaturado;
-	private BigDecimal relacaoLipideoInsaturadoSaturado;
+	private String energiaKcalTotal;
+	private String carboidratroTotalGramas;
+	private String carboidratoGramasKgPeso;
+	private String carboidratoGramasKgMassaMagra;
+	private String proteinaTotalGramas;
+	private String proteinaAVBGramas;
+	private String proteinaAVBGramasKgPeso;
+	private String lipideoTotal;
+	private String lipideoSaturado;
+	private String lipideoPoiinsaturado;
+	private String lipideoMonoinsaturado;
+	private String relacaoLipideoInsaturadoSaturado;
 	
 	
 	public CondutaNutricionalDTO(CondutaNutricional condutaNutricional) {
 		id = condutaNutricional.getId();
-		energiaKcalTotal = condutaNutricional.getEnergiaKcalTotal();
-		carboidratroTotalGramas = condutaNutricional.getCarboidratroTotalGramas();
-		carboidratoGramasKgPeso = condutaNutricional.getCarboidratoGramasKgPeso();
-		carboidratoGramasKgMassaMagra = condutaNutricional.getCarboidratoGramasKgMassaMagra();
-		proteinaTotalGramas = condutaNutricional.getProteinaTotalGramas();
-		proteinaAVBGramas = condutaNutricional.getProteinaAVBGramas();
-		proteinaAVBGramasKgPeso = condutaNutricional.getProteinaAVBGramasKgPeso();
-		lipideoTotal = condutaNutricional.getLipideoTotal();
-		lipideoSaturado = condutaNutricional.getLipideoSaturado();
-		lipideoPoiinsaturado = condutaNutricional.getLipideoPoiinsaturado();
-		lipideoMonoinsaturado = condutaNutricional.getLipideoMonoinsaturado();
-		relacaoLipideoInsaturadoSaturado = condutaNutricional.getRelacaoLipideoInsaturadoSaturado();
+		energiaKcalTotal = FormatacaoUtils.substituirPontoPorVirgula(condutaNutricional.getEnergiaKcalTotal());
+		carboidratroTotalGramas = FormatacaoUtils.substituirPontoPorVirgula(condutaNutricional.getCarboidratroTotalGramas());
+		carboidratoGramasKgPeso = FormatacaoUtils.substituirPontoPorVirgula(condutaNutricional.getCarboidratoGramasKgPeso());
+		carboidratoGramasKgMassaMagra = FormatacaoUtils.substituirPontoPorVirgula(condutaNutricional.getCarboidratoGramasKgMassaMagra());
+		proteinaTotalGramas = FormatacaoUtils.substituirPontoPorVirgula(condutaNutricional.getProteinaTotalGramas());
+		proteinaAVBGramas = FormatacaoUtils.substituirPontoPorVirgula(condutaNutricional.getProteinaAVBGramas());
+		proteinaAVBGramasKgPeso = FormatacaoUtils.substituirPontoPorVirgula(condutaNutricional.getProteinaAVBGramasKgPeso());
+		lipideoTotal = FormatacaoUtils.substituirPontoPorVirgula(condutaNutricional.getLipideoTotal());
+		lipideoSaturado = FormatacaoUtils.substituirPontoPorVirgula(condutaNutricional.getLipideoSaturado());
+		lipideoPoiinsaturado = FormatacaoUtils.substituirPontoPorVirgula(condutaNutricional.getLipideoPoiinsaturado());
+		lipideoMonoinsaturado = FormatacaoUtils.substituirPontoPorVirgula(condutaNutricional.getLipideoMonoinsaturado());
+		relacaoLipideoInsaturadoSaturado = FormatacaoUtils.substituirPontoPorVirgula(condutaNutricional.getRelacaoLipideoInsaturadoSaturado());
 	}
 }
