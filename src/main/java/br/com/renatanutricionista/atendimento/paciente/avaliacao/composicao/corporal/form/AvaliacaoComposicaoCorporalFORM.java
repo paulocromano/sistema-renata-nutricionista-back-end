@@ -3,7 +3,6 @@ package br.com.renatanutricionista.atendimento.paciente.avaliacao.composicao.cor
 import java.math.BigDecimal;
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
@@ -54,11 +53,9 @@ public class AvaliacaoComposicaoCorporalFORM {
 	@NotNull(message = "O campo Dobra Cutânea Panturrilha mm não pode estar nulo!")
 	private BigDecimal dobraCutaneaPanturrilhaMilimetros;
 	
-	@Column(name = "dobra_cutanea_peitoral_homem_mm")
 	@Digits(integer = 7, fraction = 2)
 	private BigDecimal dobraCutaneaPeitoralHomemMilimetros;
 	
-	@Column(name = "dobra_cutanea_abdominal_homem_mm")
 	@Digits(integer = 7, fraction = 2)
 	private BigDecimal dobraCutaneaAbdominalHomemMilimetros;
 	

@@ -9,7 +9,6 @@ import br.com.renatanutricionista.atendimento.paciente.avaliacao.massa.muscular.
 import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.dto.CondutaNutricionalDTO;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.registro.dieta.dto.RegistroDietaDTO;
-import br.com.renatanutricionista.atendimento.paciente.retorno.dto.RetornoConsultaDTO;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
 
@@ -30,7 +29,6 @@ public class ConsultaDTO {
 	private AvaliacaoMassaMuscularCorporeaDTO avaliacaoMassaMuscularCorporea;
 	private CondutaNutricionalDTO condutaNutricional;
 	private RegistroDietaDTO registroDietaHabitual;
-	private RetornoConsultaDTO retornoConsulta;
 	
 	
 	public ConsultaDTO(Consulta consulta) {
@@ -61,8 +59,5 @@ public class ConsultaDTO {
 		
 		if (Objects.nonNull(consulta.getRegistroDietaHabitual()))
 			registroDietaHabitual = new RegistroDietaDTO(consulta.getRegistroDietaHabitual());
-		
-		if (Objects.nonNull(consulta.getRetornoConsulta()))
-			retornoConsulta = new RetornoConsultaDTO(consulta.getRetornoConsulta());
 	}
 }

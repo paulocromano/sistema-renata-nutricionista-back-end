@@ -55,6 +55,12 @@ public class ConsultaResource {
 	}
 	
 	
+	@GetMapping("/proximo-tipo-atendimento/{idPaciente}")
+	public ResponseEntity<Integer> verificarProximoTipoDeAtendimentoDoPaciente(@PathVariable Long idPaciente) {
+		return consultaService.verificarProximoTipoDeAtendimentoDoPaciente(idPaciente);
+	}
+	
+	
 	@GetMapping("/buscar/{tipoAtendimento}/{idConsulta}")
 	public ResponseEntity<ConsultaDTO> buscarConsultaDoPaciente(@PathVariable Integer tipoAtendimento, @PathVariable Long idConsulta) {
 		return consultaService.buscarConsultaDoPaciente(tipoAtendimento, idConsulta);

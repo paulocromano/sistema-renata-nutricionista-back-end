@@ -86,6 +86,17 @@ public class ConsultaService {
 	}
 	
 	
+	public ResponseEntity<Integer> verificarProximoTipoDeAtendimentoDoPaciente(Long idPaciente) {
+		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);
+		Optional<Consulta> consulta = consultaRepository.findFirstByPacienteOrderByDataDesc(paciente);
+		
+		Integer ordinalTipoAtendimento = consulta.isEmpty() || Objects.nonNull(consulta.get().getRetornoConsulta()) 
+				? TipoAtendimento.CONSULTA.ordinal() : TipoAtendimento.RETORNO_CONSULTA.ordinal();
+		
+		return ResponseEntity.ok().body(ordinalTipoAtendimento);
+	}
+	
+	
 	public ResponseEntity<ConsultaDTO> buscarConsultaDoPaciente(Integer tipoAtendimento, Long idConsulta) {
 		if (!TipoAtendimento.converterParaEnum(tipoAtendimento).equals(TipoAtendimento.CONSULTA)) 
 			throw new IllegalArgumentException("O Tipo de Atendimento deve ser uma consulta!");

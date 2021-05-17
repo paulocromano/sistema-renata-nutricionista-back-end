@@ -29,6 +29,12 @@ public class CalendarioAtendimentoPacienteResource {
 	private CalendarioAtendimentoPacienteService calendarioAtendimentoPacienteService;
 	
 	
+	@GetMapping("/horarios-disponiveis")
+	public ResponseEntity<List<CalendarioAtendimentoPacienteDTO>> buscarHorariosDisponiveisParaDiaDoAgendamentoDeAtendimento(@RequestParam String data) {
+		return calendarioAtendimentoPacienteService.buscarHorariosDisponiveisParaDiaDoAgendamentoDeAtendimento(data);
+	}
+	
+	
 	@GetMapping
 	public ResponseEntity<List<CalendarioAtendimentoPacienteDTO>> listarHorariosAPartirDoDiaAtual() {
 		return calendarioAtendimentoPacienteService.listarHorariosAPartirDoDiaAtual();

@@ -1,5 +1,7 @@
 package br.com.renatanutricionista.paciente.resource;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.renatanutricionista.paciente.dto.ListagemCadastroPacienteDTO;
+import br.com.renatanutricionista.paciente.dto.PacienteAgendamentoAtendimentoDTO;
 import br.com.renatanutricionista.paciente.dto.PacientePreviaHistoricosDTO;
 import br.com.renatanutricionista.paciente.form.AtualizacaoPacienteFORM;
 import br.com.renatanutricionista.paciente.form.PacienteFORM;
@@ -35,6 +38,11 @@ public class PacienteResource {
 		return pacienteService.buscarInformacoesListagemCadastroPaciente();
 	}
 	
+	
+	@GetMapping("/agendamento-atendimento")
+	public ResponseEntity<List<PacienteAgendamentoAtendimentoDTO>> buscarPacientesParaAgendarAtendimento() {
+		return pacienteService.buscarPacientesParaAgendarAtendimento();
+	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping("/informacoes-previas-historicos/{idPaciente}")

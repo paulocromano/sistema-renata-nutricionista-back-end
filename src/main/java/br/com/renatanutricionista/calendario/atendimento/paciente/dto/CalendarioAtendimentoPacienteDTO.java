@@ -33,4 +33,8 @@ public class CalendarioAtendimentoPacienteDTO {
 				.thenComparing(CalendarioAtendimentoPaciente::getHorario))
 				.map(CalendarioAtendimentoPacienteDTO::new).collect(Collectors.toList());
 	}
+	
+	public static List<CalendarioAtendimentoPacienteDTO> converterParaListaCalendarioAtendimentoPacienteDTO(List<CalendarioAtendimentoPaciente> calendarioAtendimento) {
+		return calendarioAtendimento.stream().map(CalendarioAtendimentoPacienteDTO::new).collect(Collectors.toList());
+	}
 }

@@ -55,7 +55,7 @@ public class Consulta {
 	@NotNull(message = "O campo Situação da Consulta não pode estar nulo!")
 	private SituacaoConsulta situacaoConsulta;
 	
-	@NotNull(message = "O campo Data da Consulta nçao pode estar nulo!")
+	@NotNull(message = "O campo Data da Consulta não pode estar nulo!")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate data;
 	

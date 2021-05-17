@@ -22,6 +22,7 @@ import lombok.Getter;
 public class InformacoesPreviasConsultaRetornoDTO {
 	
 	private Long idAtendimento;
+	private Long idPaciente;
 	private String nomePaciente;
 	private String situacaoAtendimento;
 	private Integer codigoTipoAtendimento;
@@ -39,6 +40,7 @@ public class InformacoesPreviasConsultaRetornoDTO {
 
 	private InformacoesPreviasConsultaRetornoDTO(Consulta consulta) {
 		idAtendimento = consulta.getId();
+		idPaciente = consulta.getPaciente().getId();
 		nomePaciente = consulta.getPaciente().getNome();
 		informacoesTipoAtendimento(TipoAtendimento.CONSULTA);
 		situacaoAtendimento = consulta.getSituacaoConsulta().getDescricao();
@@ -51,6 +53,7 @@ public class InformacoesPreviasConsultaRetornoDTO {
 	
 	private InformacoesPreviasConsultaRetornoDTO(RetornoConsulta retornoConsulta) {
 		idAtendimento = retornoConsulta.getId();
+		idPaciente = retornoConsulta.getConsulta().getPaciente().getId();		
 		nomePaciente = retornoConsulta.getConsulta().getPaciente().getNome();
 		informacoesTipoAtendimento(TipoAtendimento.RETORNO_CONSULTA);
 		situacaoAtendimento = retornoConsulta.getSituacaoRetorno().getDescricao();

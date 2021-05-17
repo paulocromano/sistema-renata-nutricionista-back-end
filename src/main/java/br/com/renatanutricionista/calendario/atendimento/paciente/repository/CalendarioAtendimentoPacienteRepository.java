@@ -23,4 +23,8 @@ public interface CalendarioAtendimentoPacienteRepository extends JpaRepository<C
 	void deleteByDataLessThan(LocalDate data);
 
 	List<CalendarioAtendimentoPaciente> findByDataBetweenAndPeriodoDisponivel(LocalDate dataInicial, LocalDate dataFinal, RespostaUtils disponibilidadePeriodo);
+
+	List<CalendarioAtendimentoPaciente> findByDataOrderByHorarioAsc(LocalDate data);
+
+	List<CalendarioAtendimentoPaciente> findByDataAndPeriodoDisponivelOrderByHorarioAsc(LocalDate dataConvertida, RespostaUtils disponibilidadePeriodo);
 }

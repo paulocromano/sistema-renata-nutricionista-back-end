@@ -46,6 +46,16 @@ public class CalendarioAtendimentoPacienteService {
 	
 	@Autowired
 	private AtendimentoPacienteParametroService atendimentoPacienteParametroService;
+	
+	
+	public ResponseEntity<List<CalendarioAtendimentoPacienteDTO>> buscarHorariosDisponiveisParaDiaDoAgendamentoDeAtendimento(String data) {
+		LocalDate dataConvertida = ConversaoUtils.converterStringParaLocalDate(data);
+		
+		List<CalendarioAtendimentoPaciente> horariosDisponiveisDaData = calendarioAgendamentoRepository
+				.findByDataAndPeriodoDisponivelOrderByHorarioAsc(dataConvertida, RespostaUtils.SIM);
+		
+		return ResponseEntity.ok().body(CalendarioAtendimentoPacienteDTO.converterParaListaCalendarioAtendimentoPacienteDTO(horariosDisponiveisDaData));
+	}
 
 	
 	public ResponseEntity<List<CalendarioAtendimentoPacienteDTO>> listarHorariosAPartirDoDiaAtual() {
