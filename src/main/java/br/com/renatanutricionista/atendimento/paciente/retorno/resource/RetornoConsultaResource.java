@@ -35,12 +35,10 @@ public class RetornoConsultaResource {
 	}
 	
 	
-	@PostMapping("/agendar/{idPaciente}/{idConsulta}")
+	@PostMapping("/agendar/{idPaciente}")
 	@Transactional
-	public ResponseEntity<Void> agendarRetorno(@PathVariable Long idPaciente, @PathVariable Long idConsulta, 
-			@RequestBody @Valid AgendamentoRetornoFORM agendamentoRetorno) {
-		
-		return retornoConsultaService.agendarRetorno(idPaciente, idConsulta, agendamentoRetorno);
+	public ResponseEntity<Void> agendarRetorno(@PathVariable Long idPaciente, @RequestBody @Valid AgendamentoRetornoFORM agendamentoRetorno) {
+		return retornoConsultaService.agendarRetorno(idPaciente, agendamentoRetorno);
 	}
 	
 	

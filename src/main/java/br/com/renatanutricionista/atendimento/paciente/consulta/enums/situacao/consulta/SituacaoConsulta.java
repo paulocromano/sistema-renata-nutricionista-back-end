@@ -11,8 +11,8 @@ public enum SituacaoConsulta {
 
 	AGUARDANDO_CONFIRMACAO("0", "Aguardando confirmação"),
 	AGUARDANDO_ATENDIMENTO("1", "Aguardando atendimento"),
-	CONSULTA_INICIADA("2", "Consulta iniciada"),
-	CONSULTA_FINALIZADA("3", "Consulta finalizada");
+	CONSULTA_INICIADA("2", "Iniciada"),
+	CONSULTA_FINALIZADA("3", "Finalizada");
 	
 	
 	private String codigo;

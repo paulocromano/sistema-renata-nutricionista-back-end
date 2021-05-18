@@ -1,5 +1,9 @@
 package br.com.renatanutricionista.atendimento.paciente.retorno.service;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -10,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.renatanutricionista.atendimento.paciente.consulta.enums.situacao.consulta.SituacaoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
-import br.com.renatanutricionista.atendimento.paciente.consulta.service.ConsultaService;
 import br.com.renatanutricionista.atendimento.paciente.retorno.dto.RetornoConsultaDTO;
 import br.com.renatanutricionista.atendimento.paciente.retorno.enums.SituacaoRetorno;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.AgendamentoRetornoFORM;
@@ -25,6 +28,9 @@ import br.com.renatanutricionista.exception.custom.AtendimentoException;
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.service.PacienteService;
+import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
+import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.service.AtendimentoPacienteParametroService;
+import br.com.renatanutricionista.utils.ConversaoUtils;
 
 
 @Service
@@ -37,7 +43,7 @@ public class RetornoConsultaService {
 	private PacienteService pacienteService;
 	
 	@Autowired
-	private ConsultaService consultaService;
+	private AtendimentoPacienteParametroService atendimentoPacienteParametroService;
 	
 	@Autowired
 	private CalendarioAtendimentoPacienteService calendarioAtendimentoService;
@@ -53,14 +59,13 @@ public class RetornoConsultaService {
 	}
 
 	
-	public ResponseEntity<Void> agendarRetorno(Long idPaciente, Long idConsulta, AgendamentoRetornoFORM agendamentoRetorno) {
-		Consulta consulta = consultaService.verificarPacienteConsulta(idPaciente, idConsulta);
-		verificarSeConsultaEstaFinalizada(consulta);
+	public ResponseEntity<Void> agendarRetorno(Long idPaciente, AgendamentoRetornoFORM agendamentoRetorno) {
+		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);
+		Consulta consulta = buscarConsultaFinalizadaMaisRecenteDoPaciente(paciente);
+		validarIntervaloDeTempoMinimoEntreConsultaParaAgendamentoDoRetorno(paciente, consulta, agendamentoRetorno.getData());
 		
 		CalendarioAtendimentoPaciente periodoAgendamento = calendarioAtendimentoService
 				.verificarPossibilidadeDeAgendarConsultaRetorno(agendamentoRetorno.getData(), agendamentoRetorno.getHorario());
-		
-		verificarSePeriodoRetornoConsultaProcedePeriodoConsulta(consulta, periodoAgendamento);
 		
 		consulta.setRetornoConsulta(agendamentoRetorno.converterParaRetornoConsulta(periodoAgendamento));
 		
@@ -69,13 +74,13 @@ public class RetornoConsultaService {
 	
 	
 	public ResponseEntity<Void> reagendarRetorno(Long idPaciente, Long idRetornoConsulta, ReagendamentoRetornoFORM reagendamentoRetorno) {
+		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);
 		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaPertenceAoPaciente(idPaciente, idRetornoConsulta);
 		verificarSeRetornoConsultaEstaAguardandoConfirmacao(retornoConsulta);
+		validarIntervaloDeTempoMinimoEntreConsultaParaAgendamentoDoRetorno(paciente, retornoConsulta.getConsulta(), reagendamentoRetorno.getData());
 		
-		CalendarioAtendimentoPaciente periodoRetornoRemarcado = calendarioAtendimentoService
-				.verificarPossibilidadeDeAgendarConsultaRetorno(reagendamentoRetorno.getData(), reagendamentoRetorno.getHorario());
-		
-		verificarSePeriodoRetornoConsultaProcedePeriodoConsulta(retornoConsulta.getConsulta(), periodoRetornoRemarcado);
+		calendarioAtendimentoService.verificarPossibilidadeDeAgendarConsultaRetorno(reagendamentoRetorno.getData(), reagendamentoRetorno.getHorario());
+
 		reagendamentoRetorno.atualizarInformacoesRetornoPaciente(retornoConsulta);
 		
 		return ResponseEntity.ok().build();
@@ -129,15 +134,6 @@ public class RetornoConsultaService {
 		
 		return ResponseEntity.ok().build();
 	}
-
-	
-	private void verificarSePeriodoRetornoConsultaProcedePeriodoConsulta(Consulta consulta,
-			CalendarioAtendimentoPaciente periodoAgendamento) {
-			
-		if (!periodoAgendamento.getData().isAfter(consulta.getData()))
-			throw new AtendimentoException("A data do Retorno deve ser marcada pelo menos "
-					+ "um dia após a Consulta!");
-	}
 	
 	
 	private void verificarSeRetornoConsultaEstaAguardandoConfirmacao(RetornoConsulta retornoConsulta) {
@@ -161,17 +157,24 @@ public class RetornoConsultaService {
 	
 	
 	private RetornoConsulta verificarSeRetornoConsultaPertenceAoPaciente(Long idPaciente, Long idRetornoConsulta) {
-		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);	
 		RetornoConsulta retornoConsultaPaciente = verificarSeRetornoConsultaExiste(idRetornoConsulta);
 		
-		if (!retornoConsultaPaciente.getConsulta().getPaciente().getId().equals(paciente.getId()))
+		if (!retornoConsultaPaciente.getConsulta().getPaciente().getId().equals(idPaciente))
 			throw new IllegalArgumentException("Retorno de Consulta não pertence ao Paciente!");
 		
 		return retornoConsultaPaciente;
 	}
 	
 	
-	private void verificarSeConsultaEstaFinalizada(Consulta consulta) {
+	private Consulta buscarConsultaFinalizadaMaisRecenteDoPaciente(Paciente paciente) {
+		List<Consulta> consultas = paciente.getConsultas();
+		
+		if (consultas.isEmpty()) 
+			throw new AtendimentoException("Não foi possível agendar o retorno pois não existe uma "
+					+ "consulta previamente finalizada!");
+		
+		Consulta consulta = consultas.stream().sorted(Comparator.comparing(Consulta::getData).reversed()).findFirst().get();	
+		
 		if (Objects.nonNull(consulta.getRetornoConsulta()))
 			throw new AtendimentoException("Não é possível agendar o Retorno pois "
 					+ "já existe um cadastrado!");
@@ -179,5 +182,27 @@ public class RetornoConsultaService {
 		if (!consulta.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_FINALIZADA))
 			throw new AtendimentoException("É necessário finalizar a Consulta para realizar "
 					+ "o agendamento do Retorno!");
+		
+		return consulta;
+	}
+	
+	
+	private void validarIntervaloDeTempoMinimoEntreConsultaParaAgendamentoDoRetorno(Paciente paciente, Consulta consulta, String data) {
+		LocalDate dataRetornoConsulta = ConversaoUtils.converterStringParaLocalDate(data);
+		AtendimentoPacienteParametro  atendimentoPacienteParametro = atendimentoPacienteParametroService.buscarAtendimentoPacienteParametro();
+		Period intervaloEntreConsultaEPeriodoAgendado = Period.between(consulta.getData(), dataRetornoConsulta);
+		
+		if (paciente.getConsultas().size() == 1) {
+			if (Math.abs(intervaloEntreConsultaEPeriodoAgendado.getDays()) < atendimentoPacienteParametro.getIntervaloDiasEntrePrimeiraConsultaRetorno()) {
+				throw new AtendimentoException("O intervalo mínimo entre a primeira consulta e o retorno é de " 
+						+ atendimentoPacienteParametro.getIntervaloDiasEntrePrimeiraConsultaRetorno() + " dias!");
+			}
+		}
+		else {
+			if (Math.abs(intervaloEntreConsultaEPeriodoAgendado.getDays()) < atendimentoPacienteParametro.getIntervaloDiasEntreConsultaRetorno()) {
+				throw new AtendimentoException("O intervalo mínimo entre a consulta e o retorno é de " 
+						+ atendimentoPacienteParametro.getIntervaloDiasEntreConsultaRetorno() + " dias!");
+			}
+		}
 	}
 }

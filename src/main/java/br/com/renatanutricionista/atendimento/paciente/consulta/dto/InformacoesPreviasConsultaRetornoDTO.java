@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -71,25 +70,34 @@ public class InformacoesPreviasConsultaRetornoDTO {
 	
 	
 	private void informacoesParaConsulta(Consulta consulta) {
-		if (Objects.nonNull(consulta.getFormaPagamento()))
+		if (Objects.nonNull(consulta.getFormaPagamento())) {
 			formaPagamentoConsulta = consulta.getFormaPagamento().getDescricao();
-		
-		numeroParcelasConsulta = consulta.getNumeroParcelas();
-		valorConsulta = FormatacaoUtils.substituirPontoPorVirgula(consulta.getValorConsulta());
+			numeroParcelasConsulta = consulta.getNumeroParcelas();
+			valorConsulta = FormatacaoUtils.substituirPontoPorVirgula(consulta.getValorConsulta());
+		}
+
 		motivoConsulta = consulta.getMotivoConsulta();
 	}
 	
 	
-	public static List<InformacoesPreviasConsultaRetornoDTO> converterParaListaInformacoesPreviasConsultaRetornoDTO(List<Consulta> atendimentos,
-			LocalDate dataInicial, LocalDate dataFinal) {
+	public static List<InformacoesPreviasConsultaRetornoDTO> converterParaListaInformacoesPreviasConsultaRetornoDTO(List<Consulta> consultas,
+			List<RetornoConsulta> retornos, LocalDate dataInicial, LocalDate dataFinal) {
 		
-		Predicate<Consulta> predicateConsulta = consulta -> !consulta.getData().isBefore(dataInicial) && !consulta.getData().isAfter(dataFinal);
+		List<InformacoesPreviasConsultaRetornoDTO> atendimentos = converterListaConsultas(consultas);
+		atendimentos.addAll(converterListaRetornos(retornos));
 		
 		return atendimentos.stream()
-				.map(atendimento -> (predicateConsulta.test(atendimento)) 
-						? new InformacoesPreviasConsultaRetornoDTO(atendimento) 
-						: new InformacoesPreviasConsultaRetornoDTO(atendimento.getRetornoConsulta()))
 				.sorted(Comparator.comparing(InformacoesPreviasConsultaRetornoDTO::getDataHorarioAtendimento))
 				.collect(Collectors.toList());
+	}
+	
+	
+	private static List<InformacoesPreviasConsultaRetornoDTO> converterListaConsultas(List<Consulta> consultas) {
+		return consultas.stream().map(InformacoesPreviasConsultaRetornoDTO::new).collect(Collectors.toList());
+	}
+	
+	
+	private static List<InformacoesPreviasConsultaRetornoDTO> converterListaRetornos(List<RetornoConsulta> retornos) {
+		return retornos.stream().map(InformacoesPreviasConsultaRetornoDTO::new).collect(Collectors.toList());
 	}
 }

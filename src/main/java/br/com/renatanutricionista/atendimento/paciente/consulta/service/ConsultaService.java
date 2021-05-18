@@ -1,6 +1,7 @@
 package br.com.renatanutricionista.atendimento.paciente.consulta.service;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +22,9 @@ import br.com.renatanutricionista.atendimento.paciente.consulta.form.ConsultaFOR
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.ReagendamentoConsultaFORM;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.respository.ConsultaRepository;
+import br.com.renatanutricionista.atendimento.paciente.retorno.enums.SituacaoRetorno;
+import br.com.renatanutricionista.atendimento.paciente.retorno.model.RetornoConsulta;
+import br.com.renatanutricionista.atendimento.paciente.retorno.repository.RetornoConsultaRepository;
 import br.com.renatanutricionista.atendimento.paciente.utils.TipoAtendimento;
 import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import br.com.renatanutricionista.calendario.atendimento.paciente.service.CalendarioAtendimentoPacienteService;
@@ -30,6 +34,8 @@ import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alime
 import br.com.renatanutricionista.paciente.dto.PacientePreviaHistoricosDTO;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.service.PacienteService;
+import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
+import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.service.AtendimentoPacienteParametroService;
 import br.com.renatanutricionista.tabelas.parametro.paciente.model.PacienteParametro;
 import br.com.renatanutricionista.tabelas.parametro.paciente.service.PacienteParametroService;
 import br.com.renatanutricionista.utils.ConversaoUtils;
@@ -43,6 +49,9 @@ public class ConsultaService {
 	private ConsultaRepository consultaRepository;
 	
 	@Autowired
+	private RetornoConsultaRepository retornoConsultaRepository;
+	
+	@Autowired
 	private AlimentoFrequenciaAlimentarRepository alimentoFrequenciaAlimentarRepository;
 	
 	@Autowired
@@ -53,6 +62,9 @@ public class ConsultaService {
 	
 	@Autowired
 	private PacienteParametroService pacienteParametroService;
+	
+	@Autowired
+	private AtendimentoPacienteParametroService atendimentoPacienteParametroService;
 	
 	
 	public ResponseEntity<byte[]> gerarRelatorioDosPagamentosPendentes() {
@@ -65,10 +77,11 @@ public class ConsultaService {
 		LocalDate periodoAtual = LocalDate.now();
 		LocalDate periodoFinal = periodoAtual.plusDays(3);
 		
-		List<Consulta> atendimentos = consultaRepository.findByDataBetween(periodoAtual, periodoAtual.plusDays(3));
+		List<Consulta> consultas = consultaRepository.findByDataBetween(periodoAtual, periodoFinal);
+		List<RetornoConsulta> retornos = retornoConsultaRepository.findByDataBetween(periodoAtual, periodoFinal);
 		
 		return ResponseEntity.ok().body(InformacoesPreviasConsultaRetornoDTO.converterParaListaInformacoesPreviasConsultaRetornoDTO(
-				atendimentos, periodoAtual, periodoFinal));
+				consultas, retornos, periodoAtual, periodoFinal));
 	}
 	
 	
@@ -79,10 +92,11 @@ public class ConsultaService {
 		if (periodoInicial.isAfter(periodoFinal))
 			throw new IllegalArgumentException("A data inicial não pode ser posterior à data final!");
 		
-		List<Consulta> atendimentos = consultaRepository.findByDataBetween(periodoInicial, periodoFinal);
+		List<Consulta> consultas = consultaRepository.findByDataBetween(periodoInicial, periodoFinal);
+		List<RetornoConsulta> retornos = retornoConsultaRepository.findByDataBetween(periodoInicial, periodoFinal);
 		
 		return ResponseEntity.ok().body(InformacoesPreviasConsultaRetornoDTO.converterParaListaInformacoesPreviasConsultaRetornoDTO(
-				atendimentos, periodoInicial, periodoFinal));
+				consultas, retornos, periodoInicial, periodoFinal));
 	}
 	
 	
@@ -109,7 +123,8 @@ public class ConsultaService {
 	
 	public ResponseEntity<Void> agendarConsulta(Long idPaciente, AgendamentoConsultaFORM agendamentoConsulta) {
 		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);
-		verificarSeExisteConsultaEmAberto(paciente);
+		verificarSeExisteConsultaOuRetornoEmAberto(paciente);
+		validarIntervaloDeTempoMinimoEntreRetornoEConsultaParaAgendamento(paciente, agendamentoConsulta.getData());
 		
 		CalendarioAtendimentoPaciente periodoAgendamento = calendarioAtendimentoService
 				.verificarPossibilidadeDeAgendarConsultaRetorno(agendamentoConsulta.getData(), agendamentoConsulta.getHorario());
@@ -122,13 +137,13 @@ public class ConsultaService {
 	
 	public ResponseEntity<Void> reagendarConsulta(Long idPaciente, Long idConsulta, ReagendamentoConsultaFORM reagendamentoConsulta) {
 		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);
-		
 		Consulta consultaPaciente = verificarSeConsultaExiste(idConsulta);
 		
 		verificarSeConsultaPertenceAoPaciente(paciente, consultaPaciente);
 		verificarSeConsultaParaRemarcarEstaAguardandoConfirmacao(consultaPaciente);
-		calendarioAtendimentoService.verificarPossibilidadeDeAgendarConsultaRetorno(reagendamentoConsulta.getData(), reagendamentoConsulta.getHorario());
+		validarIntervaloDeTempoMinimoEntreRetornoEConsultaParaAgendamento(paciente, reagendamentoConsulta.getData());
 		
+		calendarioAtendimentoService.verificarPossibilidadeDeAgendarConsultaRetorno(reagendamentoConsulta.getData(), reagendamentoConsulta.getHorario());
 		reagendamentoConsulta.atualizarInformacoesDaConsulta(consultaPaciente);
 		
 		return ResponseEntity.ok().build();
@@ -219,13 +234,20 @@ public class ConsultaService {
 	}
 	
 	
-	private void verificarSeExisteConsultaEmAberto(Paciente paciente) {
+	private void verificarSeExisteConsultaOuRetornoEmAberto(Paciente paciente) {
 		Optional<Consulta> consulta = consultaRepository.findByPacienteAndSituacaoConsultaNot(
 				paciente, SituacaoConsulta.CONSULTA_FINALIZADA);
 		
 		if (consulta.isPresent())
-			throw new AtendimentoException("Não é possível Agendar Consulta quando existe "
-					+ "outra Consulta em aberto!");
+			throw new AtendimentoException("Não é possível agendar uma consulta quando existe "
+					+ "outra consulta em aberto!");
+		
+		Optional<RetornoConsulta> retorno = retornoConsultaRepository.findByConsulta_PacienteAndSituacaoRetornoNot(paciente, SituacaoRetorno.RETORNO_FINALIZADO);
+		
+		if (retorno.isPresent()) {
+			throw new AtendimentoException("Não é possível agendar uma onsulta quando existe "
+					+ "outra um retorno de consulta em aberto!");
+		}
 	}
 	
 	
@@ -250,6 +272,21 @@ public class ConsultaService {
 			throw new IllegalArgumentException("A Consulta selecionada não pertence ao Paciente!");
 	}
 	
+	
+	private void validarIntervaloDeTempoMinimoEntreRetornoEConsultaParaAgendamento(Paciente paciente, String data) {
+		LocalDate dataRetornoConsulta = ConversaoUtils.converterStringParaLocalDate(data);
+		Optional<Consulta> consulta = consultaRepository.findFirstByPacienteOrderByDataDesc(paciente);
+		
+		if (consulta.isPresent() && Objects.nonNull(consulta.get().getRetornoConsulta())) {
+			AtendimentoPacienteParametro  atendimentoPacienteParametro = atendimentoPacienteParametroService.buscarAtendimentoPacienteParametro();
+			Period intervaloEntreRetornoEPeriodoAgendado = Period.between(consulta.get().getRetornoConsulta().getData(), dataRetornoConsulta);
+			
+			if (Math.abs(intervaloEntreRetornoEPeriodoAgendado.getDays()) < atendimentoPacienteParametro.getIntervaloDiasEntreRetornoConsulta()) {
+				throw new AtendimentoException("O intervalo mínimo entre o último retorno e a consulta é de " 
+						+ atendimentoPacienteParametro.getIntervaloDiasEntreRetornoConsulta() + " dias!");
+			}
+		}
+	}
 	
 	public Consulta verificarSeConsultaExiste(Long idConsulta) {
 		if (Objects.isNull(idConsulta))
