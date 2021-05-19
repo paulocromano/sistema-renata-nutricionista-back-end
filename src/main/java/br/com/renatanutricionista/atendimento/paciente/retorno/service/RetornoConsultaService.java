@@ -102,9 +102,9 @@ public class RetornoConsultaService {
 		
 		if (retornoConsulta.getSituacaoRetorno().equals(SituacaoRetorno.RETORNO_FINALIZADO))
 			throw new AtendimentoException("Não é possível cancelar um Retorno Finalizado!");
-		
+
 		calendarioAtendimentoService.alterarPeriodoDoCalendarioParaDisponivel(retornoConsulta.getData(), retornoConsulta.getHorario());
-		retornoConsultaRepository.delete(retornoConsulta);
+		retornoConsulta.getConsulta().setRetornoConsulta(null);
 		
 		return ResponseEntity.noContent().build();
 	}

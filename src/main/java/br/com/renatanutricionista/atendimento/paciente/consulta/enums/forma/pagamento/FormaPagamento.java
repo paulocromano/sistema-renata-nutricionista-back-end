@@ -3,6 +3,7 @@ package br.com.renatanutricionista.atendimento.paciente.consulta.enums.forma.pag
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import br.com.renatanutricionista.utils.DesserializacaoEnum;
+import br.com.renatanutricionista.utils.conversao.enums.GettersEnum;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @JsonDeserialize(using = DesserializacaoEnum.class)
-public enum FormaPagamento {
+public enum FormaPagamento implements GettersEnum<FormaPagamento> {
 
 	DINHEIRO("0", "Dinheiro"),
 	DEBITO("1", "Débito"),

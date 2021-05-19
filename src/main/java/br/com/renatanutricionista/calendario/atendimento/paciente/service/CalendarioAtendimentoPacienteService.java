@@ -268,9 +268,8 @@ public class CalendarioAtendimentoPacienteService {
 	public ResponseEntity<Void> excluirPeriodo(Long idPeriodo) {
 		CalendarioAtendimentoPaciente horarioAtendimento = verificarSeExistePeriodoNoCalendarioAtendimento(idPeriodo);
 		
-		if (horarioAtendimento.getPeriodoDisponivel().equals(RespostaUtils.NAO) && !horarioAtendimento.getData().isBefore(LocalDate.now()))
-			throw new AtendimentoException("Não é possível remover um período que não está disponível e que seja "
-					+ "igual ou posterior ao dia atual!");
+		if (horarioAtendimento.getPeriodoDisponivel().equals(RespostaUtils.NAO))
+			throw new AtendimentoException("Não é possível remover um período que não está disponível!");
 		
 		calendarioAgendamentoRepository.delete(horarioAtendimento);
 		

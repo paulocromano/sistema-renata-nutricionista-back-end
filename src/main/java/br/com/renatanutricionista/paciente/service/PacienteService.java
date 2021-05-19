@@ -43,7 +43,7 @@ public class PacienteService {
 	
 	public ResponseEntity<List<PacienteAgendamentoAtendimentoDTO>> buscarPacientesParaAgendarAtendimento() {
 		Predicate<Consulta> predicateConsulta = consulta -> consulta.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_FINALIZADA)
-				|| (Objects.nonNull(consulta.getRetornoConsulta()) && consulta.getRetornoConsulta().getSituacaoRetorno().equals(SituacaoRetorno.RETORNO_FINALIZADO));
+				&& (Objects.isNull(consulta.getRetornoConsulta()) || consulta.getRetornoConsulta().getSituacaoRetorno().equals(SituacaoRetorno.RETORNO_FINALIZADO));
 						
 		List<Paciente> pacientes = pacienteRepository.findAll().stream().filter(paciente -> 
 			paciente.getConsultas().isEmpty() || paciente.getConsultas().stream().filter(predicateConsulta).findFirst().isPresent()).collect(Collectors.toList());
