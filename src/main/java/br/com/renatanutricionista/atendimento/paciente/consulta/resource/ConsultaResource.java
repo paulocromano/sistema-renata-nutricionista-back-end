@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.renatanutricionista.atendimento.paciente.consulta.dto.ConfirmacaoAtendimentoDTO;
 import br.com.renatanutricionista.atendimento.paciente.consulta.dto.ConsultaDTO;
 import br.com.renatanutricionista.atendimento.paciente.consulta.dto.InformacoesConsultaHistoricoParaCadastroDTO;
 import br.com.renatanutricionista.atendimento.paciente.consulta.dto.InformacoesPreviasConsultaRetornoDTO;
@@ -58,6 +59,12 @@ public class ConsultaResource {
 	@GetMapping("/proximo-tipo-atendimento/{idPaciente}")
 	public ResponseEntity<Integer> verificarProximoTipoDeAtendimentoDoPaciente(@PathVariable Long idPaciente) {
 		return consultaService.verificarProximoTipoDeAtendimentoDoPaciente(idPaciente);
+	}
+	
+	
+	@GetMapping("/informacoes-confirmacao-atendimento")
+	public ResponseEntity<ConfirmacaoAtendimentoDTO> informacoesParaConfirmacaoDeAtendimento() {
+		return consultaService.informacoesParaConfirmacaoDeAtendimento();
 	}
 	
 	

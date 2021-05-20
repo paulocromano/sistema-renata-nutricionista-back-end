@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import br.com.renatanutricionista.atendimento.paciente.consulta.dto.ConfirmacaoAtendimentoDTO;
 import br.com.renatanutricionista.atendimento.paciente.consulta.dto.ConsultaDTO;
 import br.com.renatanutricionista.atendimento.paciente.consulta.dto.InformacoesConsultaHistoricoParaCadastroDTO;
 import br.com.renatanutricionista.atendimento.paciente.consulta.dto.InformacoesPreviasConsultaRetornoDTO;
@@ -108,6 +109,13 @@ public class ConsultaService {
 				? TipoAtendimento.CONSULTA.ordinal() : TipoAtendimento.RETORNO_CONSULTA.ordinal();
 		
 		return ResponseEntity.ok().body(ordinalTipoAtendimento);
+	}
+	
+	
+	public ResponseEntity<ConfirmacaoAtendimentoDTO> informacoesParaConfirmacaoDeAtendimento() {
+		AtendimentoPacienteParametro atendimentoPacienteParametro = atendimentoPacienteParametroService.buscarAtendimentoPacienteParametro();
+		
+		return ResponseEntity.ok().body(new ConfirmacaoAtendimentoDTO(atendimentoPacienteParametro));
 	}
 	
 	

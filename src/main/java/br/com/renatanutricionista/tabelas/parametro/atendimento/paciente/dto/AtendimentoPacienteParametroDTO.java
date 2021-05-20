@@ -1,6 +1,7 @@
 package br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.dto;
 
 import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
+import br.com.renatanutricionista.utils.FormatacaoUtils;
 import lombok.Getter;
 
 
@@ -14,6 +15,7 @@ public class AtendimentoPacienteParametroDTO {
 	private Integer intervaloDiasEntrePrimeiraConsultaRetorno;
 	private Integer intervaloDiasEntreConsultaRetorno;
 	private Integer intervaloDiasEntreRetornoConsulta;
+	private String precoConsulta;
 	
 	
 	public AtendimentoPacienteParametroDTO(AtendimentoPacienteParametro atendimento) {
@@ -24,5 +26,6 @@ public class AtendimentoPacienteParametroDTO {
 		intervaloDiasEntrePrimeiraConsultaRetorno = atendimento.getIntervaloDiasEntrePrimeiraConsultaRetorno();
 		intervaloDiasEntreConsultaRetorno = atendimento.getIntervaloDiasEntreConsultaRetorno();
 		intervaloDiasEntreRetornoConsulta = atendimento.getIntervaloDiasEntreRetornoConsulta();
+		precoConsulta = FormatacaoUtils.substituirPontoPorVirgula(atendimento.getPrecoConsulta());
 	}
 }

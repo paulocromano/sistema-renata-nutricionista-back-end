@@ -1,11 +1,15 @@
 package br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
@@ -47,4 +51,10 @@ public class AtendimentoPacienteParametro {
 	@Column(name = "intervalo_dias_retorno_consulta")
 	@NotNull(message = "O campo Intervalo de Dias entre Retorno/Consulta não pode ser nulo!")
 	private Integer intervaloDiasEntreRetornoConsulta;
+	
+	@Column(name = "preco_consulta")
+	@Digits(integer = 7, fraction = 2)
+	@DecimalMin(value = "0.0", message = "O campo Preço da Consulta deve ser no mínimo R$ {value}")
+	@NotNull(message = "O campo Preco da Consulta não pode estar nulo!")
+	private BigDecimal precoConsulta;
 }

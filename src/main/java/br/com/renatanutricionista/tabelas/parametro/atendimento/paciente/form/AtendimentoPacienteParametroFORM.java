@@ -1,5 +1,9 @@
 package br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.form;
 
+import java.math.BigDecimal;
+
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
@@ -30,6 +34,11 @@ public class AtendimentoPacienteParametroFORM {
 	@NotNull(message = "O campo Intervalo de Dias entre Retorno/Consulta não pode ser nulo!")
 	private Integer intervaloDiasEntreRetornoConsulta;
 	
+	@Digits(integer = 7, fraction = 2)
+	@DecimalMin(value = "0.0", message = "O campo Preço da Consulta deve ser no mínimo R$ {value}")
+	@NotNull(message = "O campo Preco da Consulta não pode estar nulo!")
+	private BigDecimal precoConsulta;
+	
 	
 	public void atualizarInformacoesDosParametrosParaAtendimentoDePaciente(AtendimentoPacienteParametro atendimentoPacienteParametro,
 			Integer quantidadeMaximaParcelas, Integer tempoMaximoEmMesesGeracaoAutomaticaHorariosAtendimento) {
@@ -41,6 +50,7 @@ public class AtendimentoPacienteParametroFORM {
 		atendimentoPacienteParametro.setIntervaloDiasEntrePrimeiraConsultaRetorno(intervaloDiasEntrePrimeiraConsultaRetorno);
 		atendimentoPacienteParametro.setIntervaloDiasEntreConsultaRetorno(intervaloDiasEntreConsultaRetorno);
 		atendimentoPacienteParametro.setIntervaloDiasEntreRetornoConsulta(intervaloDiasEntreRetornoConsulta);
+		atendimentoPacienteParametro.setPrecoConsulta(precoConsulta);
 	}
 	
 	
