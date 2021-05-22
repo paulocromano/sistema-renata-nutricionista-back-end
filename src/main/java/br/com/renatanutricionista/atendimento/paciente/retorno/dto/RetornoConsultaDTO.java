@@ -1,12 +1,13 @@
 package br.com.renatanutricionista.atendimento.paciente.retorno.dto;
 
+import java.util.List;
 import java.util.Objects;
 
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.composicao.corporal.dto.AvaliacaoComposicaoCorporalDTO;
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.consumo.habitual.dto.AvaliacaoConsumoHabitualDTO;
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.massa.muscular.corporea.antropometrica.dto.AvaliacaoMassaMuscularCorporeaDTO;
 import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.dto.CondutaNutricionalDTO;
-import br.com.renatanutricionista.atendimento.paciente.registro.dieta.dto.RegistroDietaDTO;
+import br.com.renatanutricionista.atendimento.paciente.registro.dieta.dto.RefeicaoDietaDTO;
 import br.com.renatanutricionista.atendimento.paciente.retorno.model.RetornoConsulta;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
@@ -27,8 +28,8 @@ public class RetornoConsultaDTO {
 	private AvaliacaoComposicaoCorporalDTO avaliacaoComposicaoCorporal;
 	private AvaliacaoMassaMuscularCorporeaDTO avaliacaoMassaMuscularCorporea;
 	private CondutaNutricionalDTO condutaNutricional;
-	private RegistroDietaDTO registroDietaHabitual;
-	private RegistroDietaDTO registroDieta24Horas;
+	private List<RefeicaoDietaDTO> refeicoesRegistroDietaHabitual;
+	private List<RefeicaoDietaDTO> refeicoesRegistroDieta24Horas;
 	
 	
 	public RetornoConsultaDTO(RetornoConsulta retornoConsulta) {
@@ -55,9 +56,9 @@ public class RetornoConsultaDTO {
 			condutaNutricional = new CondutaNutricionalDTO(retornoConsulta.getCondutaNutricional());
 		
 		if (Objects.nonNull(retornoConsulta.getRegistroDietaHabitual()))
-			registroDietaHabitual = new RegistroDietaDTO(retornoConsulta.getRegistroDietaHabitual());
+			refeicoesRegistroDietaHabitual = RefeicaoDietaDTO.gerarListaComAsRefeicoesDoRegistroDaDieta(retornoConsulta.getRegistroDietaHabitual());
 		
 		if (Objects.nonNull(retornoConsulta.getRegistroDieta24Horas()))
-			registroDieta24Horas = new RegistroDietaDTO(retornoConsulta.getRegistroDieta24Horas());
+			refeicoesRegistroDieta24Horas = RefeicaoDietaDTO.gerarListaComAsRefeicoesDoRegistroDaDieta(retornoConsulta.getRegistroDieta24Horas());
 	}
 }

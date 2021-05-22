@@ -1,7 +1,6 @@
 package br.com.renatanutricionista.atendimento.paciente.avaliacao.consumo.habitual.dto;
 
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.consumo.habitual.model.AvaliacaoConsumoHabitual;
-import br.com.renatanutricionista.utils.FormatacaoUtils;
 import lombok.Getter;
 
 
@@ -32,24 +31,24 @@ public class AvaliacaoConsumoHabitualDTO {
 	
 	public AvaliacaoConsumoHabitualDTO(AvaliacaoConsumoHabitual avaliacaoConsumoHabitual) {
 		id = avaliacaoConsumoHabitual.getId();
-		energiaKcal = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getEnergiaKcal());
-		proteinaTotalGramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getProteinaTotalGramas());
-		proteinaAVBGramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getProteinaAVBGramas());
-		carboidratoGramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getCarboidratoGramas());
-		lipideoTotalGramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getLipideoTotalGramas());
-		lipideoSaturadoGramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getLipideoSaturadoGramas());
-		lipideoPoliinsaturadoGramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getLipideoPoliinsaturadoGramas());
-		lipideoMonoinsaturadoGramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getLipideoMonoinsaturadoGramas());
-		colesterolMiligramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getColesterolMiligramas());
-		fibraGramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getFibraGramas());
-		calcioGramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getCalcioGramas());
-		fosforoGramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getFosforoGramas());
-		ferroMiligramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getFerroMiligramas());
-		zincoMiligramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getZincoMiligramas());
-		magnesioMiligramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getMagnesioMiligramas());
-		potassioMiligramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getPotassioMiligramas());
-		vitaminaB6Miligramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getVitaminaB6Miligramas());
-		vitaminaCMiligramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getVitaminaCMiligramas());
-		leucinaMiligramas = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoConsumoHabitual.getLeucinaMiligramas());
+		energiaKcal = avaliacaoConsumoHabitual.getEnergiaKcal().toString();
+		proteinaTotalGramas = avaliacaoConsumoHabitual.getProteinaTotalGramas().toString();
+		proteinaAVBGramas = avaliacaoConsumoHabitual.getProteinaAVBGramas().toString();
+		carboidratoGramas = avaliacaoConsumoHabitual.getCarboidratoGramas().toString();
+		lipideoTotalGramas = avaliacaoConsumoHabitual.getLipideoTotalGramas().toString();
+		lipideoSaturadoGramas = avaliacaoConsumoHabitual.getLipideoSaturadoGramas().toString();
+		lipideoPoliinsaturadoGramas = avaliacaoConsumoHabitual.getLipideoPoliinsaturadoGramas().toString();
+		lipideoMonoinsaturadoGramas = avaliacaoConsumoHabitual.getLipideoMonoinsaturadoGramas().toString();
+		colesterolMiligramas = avaliacaoConsumoHabitual.getColesterolMiligramas().toString();
+		fibraGramas = avaliacaoConsumoHabitual.getFibraGramas().toString();
+		calcioGramas = avaliacaoConsumoHabitual.getCalcioGramas().toString();
+		fosforoGramas = avaliacaoConsumoHabitual.getFosforoGramas().toString();
+		ferroMiligramas = avaliacaoConsumoHabitual.getFerroMiligramas().toString();
+		zincoMiligramas = avaliacaoConsumoHabitual.getZincoMiligramas().toString();
+		magnesioMiligramas = avaliacaoConsumoHabitual.getMagnesioMiligramas().toString();
+		potassioMiligramas = avaliacaoConsumoHabitual.getPotassioMiligramas().toString();
+		vitaminaB6Miligramas = avaliacaoConsumoHabitual.getVitaminaB6Miligramas().toString();
+		vitaminaCMiligramas = avaliacaoConsumoHabitual.getVitaminaCMiligramas().toString();
+		leucinaMiligramas = avaliacaoConsumoHabitual.getLeucinaMiligramas().toString();
 	}
 }

@@ -11,7 +11,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -33,6 +35,11 @@ public class CondutaNutricional {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name = "prescricao_dietetica")
+	@NotEmpty(message = "O campo Prescrição Dietética não pode ser nulo/vazio!")
+	@Size(max = 250, message = "O campo Prescrição Dietéica deve ter no máximo {max} caracteres!")
+	private String prescricaoDietetica;
 	
 	@Column(name = "energia_kcal_total")
 	@Digits(integer = 10, fraction = 2)
@@ -113,11 +120,12 @@ public class CondutaNutricional {
 	private RetornoConsulta retornoConsulta;
 	
 	
-	private CondutaNutricional(BigDecimal energiaKcalTotal, BigDecimal carboidratroTotalGramas, BigDecimal carboidratoGramasKgPeso,
+	private CondutaNutricional(String prescricaoDietetica, BigDecimal energiaKcalTotal, BigDecimal carboidratroTotalGramas, BigDecimal carboidratoGramasKgPeso,
 			BigDecimal carboidratoGramasKgMassaMagra, BigDecimal proteinaTotalGramas, BigDecimal proteinaAVBGramas,
 			BigDecimal proteinaAVBGramasKgPeso, BigDecimal lipideoTotal, BigDecimal lipideoSaturado, BigDecimal lipideoPoiinsaturado,
 			BigDecimal lipideoMonoinsaturado, BigDecimal relacaoLipideoInsaturadoSaturado) {
 		
+		this.prescricaoDietetica = prescricaoDietetica;
 		this.energiaKcalTotal = energiaKcalTotal;
 		this.carboidratroTotalGramas = carboidratroTotalGramas;
 		this.carboidratoGramasKgPeso = carboidratoGramasKgPeso;
@@ -135,6 +143,7 @@ public class CondutaNutricional {
 
 	public static class Builder {
 		
+		private String prescricaoDietetica;
 		private BigDecimal energiaKcalTotal;
 		private BigDecimal carboidratroTotalGramas;
 		private BigDecimal carboidratoGramasKgPeso;
@@ -148,6 +157,11 @@ public class CondutaNutricional {
 		private BigDecimal lipideoMonoinsaturado;
 		private BigDecimal relacaoLipideoInsaturadoSaturado;
 		
+		
+		public Builder prescricaoDietetica(String prescricaoDietetica) {
+			this.prescricaoDietetica = prescricaoDietetica;
+			return this;
+		}
 		
 		public Builder energiaKcalTotal(BigDecimal energiaKcalTotal) {
 			this.energiaKcalTotal = energiaKcalTotal;
@@ -211,7 +225,7 @@ public class CondutaNutricional {
 		
 		
 		public CondutaNutricional build() {
-			return new CondutaNutricional(energiaKcalTotal, carboidratroTotalGramas, carboidratoGramasKgPeso, 
+			return new CondutaNutricional(prescricaoDietetica, energiaKcalTotal, carboidratroTotalGramas, carboidratoGramasKgPeso, 
 					carboidratoGramasKgMassaMagra, proteinaTotalGramas, proteinaAVBGramas, proteinaAVBGramasKgPeso, 
 					lipideoTotal, lipideoSaturado, lipideoPoiinsaturado, lipideoMonoinsaturado, 
 					relacaoLipideoInsaturadoSaturado);

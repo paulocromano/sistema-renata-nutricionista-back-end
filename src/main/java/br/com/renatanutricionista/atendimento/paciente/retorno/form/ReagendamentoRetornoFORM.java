@@ -7,8 +7,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 import br.com.renatanutricionista.atendimento.paciente.retorno.model.RetornoConsulta;
+import br.com.renatanutricionista.calendario.atendimento.paciente.model.CalendarioAtendimentoPaciente;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import br.com.renatanutricionista.utils.RegexUtils;
+import br.com.renatanutricionista.utils.enums.resposta.RespostaUtils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,11 +28,13 @@ public class ReagendamentoRetornoFORM {
 	private String horario;
 	
 	
-	public void atualizarInformacoesRetornoPaciente(RetornoConsulta retornoPaciente) {
+	public void atualizarInformacoesRetornoPaciente(RetornoConsulta retornoPaciente, CalendarioAtendimentoPaciente periodoReagendamento) {
 		LocalDate data = ConversaoUtils.converterStringParaLocalDate(this.data);
 		LocalTime horario = ConversaoUtils.converterStringParaLocalTimeHoraMinuto(this.horario);
 		
 		retornoPaciente.setData(data);
 		retornoPaciente.setHorario(horario);
+		
+		periodoReagendamento.setPeriodoDisponivel(RespostaUtils.NAO);
 	}
 }

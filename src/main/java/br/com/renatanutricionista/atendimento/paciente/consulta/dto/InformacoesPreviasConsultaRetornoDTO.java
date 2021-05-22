@@ -23,6 +23,7 @@ public class InformacoesPreviasConsultaRetornoDTO {
 	private Long idAtendimento;
 	private Long idPaciente;
 	private String nomePaciente;
+	private String sexoPaciente;
 	private String situacaoAtendimento;
 	private Integer codigoTipoAtendimento;
 	private String descricaoTipoAtendimento;
@@ -41,6 +42,7 @@ public class InformacoesPreviasConsultaRetornoDTO {
 		idAtendimento = consulta.getId();
 		idPaciente = consulta.getPaciente().getId();
 		nomePaciente = consulta.getPaciente().getNome();
+		sexoPaciente = consulta.getPaciente().getSexo().getDescricao();	
 		informacoesTipoAtendimento(TipoAtendimento.CONSULTA);
 		situacaoAtendimento = consulta.getSituacaoConsulta().getDescricao();
 		dataAtendimento = ConversaoUtils.converterLocalDateParaString(consulta.getData());
@@ -54,6 +56,7 @@ public class InformacoesPreviasConsultaRetornoDTO {
 		idAtendimento = retornoConsulta.getId();
 		idPaciente = retornoConsulta.getConsulta().getPaciente().getId();		
 		nomePaciente = retornoConsulta.getConsulta().getPaciente().getNome();
+		sexoPaciente = retornoConsulta.getConsulta().getPaciente().getSexo().getDescricao();	
 		informacoesTipoAtendimento(TipoAtendimento.RETORNO_CONSULTA);
 		situacaoAtendimento = retornoConsulta.getSituacaoRetorno().getDescricao();
 		dataAtendimento = ConversaoUtils.converterLocalDateParaString(retornoConsulta.getData());

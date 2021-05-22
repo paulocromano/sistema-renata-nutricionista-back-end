@@ -1,7 +1,9 @@
 package br.com.renatanutricionista.atendimento.paciente.avaliacao.composicao.corporal.dto;
 
+import java.math.BigDecimal;
+import java.util.Objects;
+
 import br.com.renatanutricionista.atendimento.paciente.avaliacao.composicao.corporal.model.AvaliacaoComposicaoCorporal;
-import br.com.renatanutricionista.utils.FormatacaoUtils;
 import lombok.Getter;
 
 
@@ -24,16 +26,23 @@ public class AvaliacaoComposicaoCorporalDTO {
 	
 	public AvaliacaoComposicaoCorporalDTO(AvaliacaoComposicaoCorporal avaliacaoComposicaoCorporal) {
 		id = avaliacaoComposicaoCorporal.getId();
-		pesoAtualKg = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoComposicaoCorporal.getPesoAtualKg());
-		estaturaMetros = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoComposicaoCorporal.getEstaturaMetros());
-		indiceMassaCorporalKgMetrosQuadrado = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoComposicaoCorporal.getIndiceMassaCorporalKgMetrosQuadrado());
-		porcentagemGorduraDensidadeCorporal = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoComposicaoCorporal.getPorcentagemGorduraDensidadeCorporal());
-		dobraCutaneaTricipitalMilimetros = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoComposicaoCorporal.getDobraCutaneaTricipitalMilimetros());
-		dobraCutaneaCoxaMilimetros = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoComposicaoCorporal.getDobraCutaneaCoxaMilimetros());
-		dobraCutaneaPanturrilhaMilimetros = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoComposicaoCorporal.getDobraCutaneaPanturrilhaMilimetros());
-		dobraCutaneaPeitoralHomemMilimetros = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoComposicaoCorporal.getDobraCutaneaPeitoralHomemMilimetros());
-		dobraCutaneaAbdominalHomemMilimetros = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoComposicaoCorporal.getDobraCutaneaAbdominalHomemMilimetros());
-		dobraCutaneaSupraIliacaMulherMilimetros = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoComposicaoCorporal.getDobraCutaneaSupraIliacaMulherMilimetros());
-		resultadoCalculoDensidadeCorporal = FormatacaoUtils.substituirPontoPorVirgula(avaliacaoComposicaoCorporal.getResultadoCalculoDensidadeCorporal());
+		pesoAtualKg = avaliacaoComposicaoCorporal.getPesoAtualKg().toString();
+		estaturaMetros = avaliacaoComposicaoCorporal.getEstaturaMetros().toString();
+		indiceMassaCorporalKgMetrosQuadrado = avaliacaoComposicaoCorporal.getIndiceMassaCorporalKgMetrosQuadrado().toString();
+		porcentagemGorduraDensidadeCorporal = avaliacaoComposicaoCorporal.getPorcentagemGorduraDensidadeCorporal().toString();
+		dobraCutaneaTricipitalMilimetros = avaliacaoComposicaoCorporal.getDobraCutaneaTricipitalMilimetros().toString();
+		dobraCutaneaCoxaMilimetros = avaliacaoComposicaoCorporal.getDobraCutaneaCoxaMilimetros().toString();
+		dobraCutaneaPanturrilhaMilimetros = avaliacaoComposicaoCorporal.getDobraCutaneaPanturrilhaMilimetros().toString();
+		
+		dobraCutaneaPeitoralHomemMilimetros = verificarSeValorEstaNulo(avaliacaoComposicaoCorporal.getDobraCutaneaPeitoralHomemMilimetros());
+		dobraCutaneaAbdominalHomemMilimetros = verificarSeValorEstaNulo(avaliacaoComposicaoCorporal.getDobraCutaneaAbdominalHomemMilimetros());
+		dobraCutaneaSupraIliacaMulherMilimetros = verificarSeValorEstaNulo(avaliacaoComposicaoCorporal.getDobraCutaneaSupraIliacaMulherMilimetros());
+		
+		resultadoCalculoDensidadeCorporal = avaliacaoComposicaoCorporal.getResultadoCalculoDensidadeCorporal().toString();
+	}
+	
+	
+	private String verificarSeValorEstaNulo(BigDecimal valor) {
+		return (Objects.nonNull(valor)) ? valor.toString() : null;
 	}
 }

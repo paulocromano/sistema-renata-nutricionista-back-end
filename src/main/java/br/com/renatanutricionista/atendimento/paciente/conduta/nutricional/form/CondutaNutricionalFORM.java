@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import br.com.renatanutricionista.atendimento.paciente.conduta.nutricional.model.CondutaNutricional;
 import lombok.Getter;
@@ -14,6 +16,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CondutaNutricionalFORM {
+	
+	@NotEmpty(message = "O campo Prescrição Dietética não pode ser nulo/vazio!")
+	@Size(max = 250, message = "O campo Prescrição Dietéica deve ter no máximo {max} caracteres!")
+	private String prescricaoDietetica;
 
 	@Digits(integer = 10, fraction = 2)
 	@DecimalMin(value = "0.0", message = "O campo Energia Kcal Total deve ter o valor mínimo {value}")
@@ -78,6 +84,7 @@ public class CondutaNutricionalFORM {
 	
 	public CondutaNutricional converterParaCondutaNutricional() {
 		return new CondutaNutricional.Builder()
+				.prescricaoDietetica(prescricaoDietetica)
 				.energiaKcalTotal(energiaKcalTotal)
 				.carboidratroTotalGramas(carboidratroTotalGramas)
 				.carboidratoGramasKgPeso(carboidratoGramasKgPeso)

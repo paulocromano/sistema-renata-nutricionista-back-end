@@ -78,10 +78,12 @@ public class RetornoConsultaService {
 		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaPertenceAoPaciente(idPaciente, idRetornoConsulta);
 		verificarSeRetornoConsultaEstaAguardandoConfirmacao(retornoConsulta);
 		validarIntervaloDeTempoMinimoEntreConsultaParaAgendamentoDoRetorno(paciente, retornoConsulta.getConsulta(), reagendamentoRetorno.getData());
+		calendarioAtendimentoService.alterarPeriodoDoCalendarioParaDisponivel(retornoConsulta.getData(), retornoConsulta.getHorario());
 		
-		calendarioAtendimentoService.verificarPossibilidadeDeAgendarConsultaRetorno(reagendamentoRetorno.getData(), reagendamentoRetorno.getHorario());
-
-		reagendamentoRetorno.atualizarInformacoesRetornoPaciente(retornoConsulta);
+		CalendarioAtendimentoPaciente periodoReagendamento = calendarioAtendimentoService.verificarPossibilidadeDeAgendarConsultaRetorno(
+				reagendamentoRetorno.getData(), reagendamentoRetorno.getHorario());
+		
+		reagendamentoRetorno.atualizarInformacoesRetornoPaciente(retornoConsulta, periodoReagendamento);
 		
 		return ResponseEntity.ok().build();
 	}

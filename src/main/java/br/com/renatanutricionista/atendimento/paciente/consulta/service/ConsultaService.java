@@ -76,7 +76,7 @@ public class ConsultaService {
 	
 	public ResponseEntity<List<InformacoesPreviasConsultaRetornoDTO>> listarAtendimentosPorPeriodoPadrao() {
 		LocalDate periodoAtual = LocalDate.now();
-		LocalDate periodoFinal = periodoAtual.plusDays(3);
+		LocalDate periodoFinal = periodoAtual.plusDays(30);
 		
 		List<Consulta> consultas = consultaRepository.findByDataBetween(periodoAtual, periodoFinal);
 		List<RetornoConsulta> retornos = retornoConsultaRepository.findByDataBetween(periodoAtual, periodoFinal);
@@ -136,7 +136,7 @@ public class ConsultaService {
 		
 		CalendarioAtendimentoPaciente periodoAgendamento = calendarioAtendimentoService
 				.verificarPossibilidadeDeAgendarConsultaRetorno(agendamentoConsulta.getData(), agendamentoConsulta.getHorario());
-		
+		;
 		consultaRepository.save(agendamentoConsulta.converterParaConsulta(paciente, periodoAgendamento));
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -150,9 +150,12 @@ public class ConsultaService {
 		verificarSeConsultaPertenceAoPaciente(paciente, consultaPaciente);
 		verificarSeConsultaParaRemarcarEstaAguardandoConfirmacao(consultaPaciente);
 		validarIntervaloDeTempoMinimoEntreRetornoEConsultaParaAgendamento(paciente, reagendamentoConsulta.getData());
+		calendarioAtendimentoService.alterarPeriodoDoCalendarioParaDisponivel(consultaPaciente.getData(), consultaPaciente.getHorario());
 		
-		calendarioAtendimentoService.verificarPossibilidadeDeAgendarConsultaRetorno(reagendamentoConsulta.getData(), reagendamentoConsulta.getHorario());
-		reagendamentoConsulta.atualizarInformacoesDaConsulta(consultaPaciente);
+		CalendarioAtendimentoPaciente periodoReagendamento = calendarioAtendimentoService.verificarPossibilidadeDeAgendarConsultaRetorno(
+				reagendamentoConsulta.getData(), reagendamentoConsulta.getHorario());
+
+		reagendamentoConsulta.atualizarInformacoesDaConsulta(consultaPaciente, periodoReagendamento);
 		
 		return ResponseEntity.ok().build();
 	}
