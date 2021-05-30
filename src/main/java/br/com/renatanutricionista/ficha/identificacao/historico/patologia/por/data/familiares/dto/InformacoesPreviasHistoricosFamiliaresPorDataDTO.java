@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import br.com.renatanutricionista.paciente.model.Paciente;
-import br.com.renatanutricionista.tabelas.parametro.paciente.model.PacienteParametro;
+import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
 
@@ -18,22 +18,22 @@ public class InformacoesPreviasHistoricosFamiliaresPorDataDTO {
 	private String dataProximaAtualizacaoHistoricoPatologiasFamiliares;
 	
 	
-	public InformacoesPreviasHistoricosFamiliaresPorDataDTO(Paciente paciente, PacienteParametro pacienteParametro) {
+	public InformacoesPreviasHistoricosFamiliaresPorDataDTO(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
 		previaHistoricosPatologiaFamiliaresPorData = PreviaHistoricoPatologiaFamiliaresPorDataDTO
 				.converterParaSetPreviaHistoricoPatologiaFamiliaresPorDataDTO(paciente.getHistoricosPatologiaFamiliaresPorData());
 		
-		calcularDataProximaAtualizacaoHistoricoPatologiasFamiliares(paciente, pacienteParametro);
+		calcularDataProximaAtualizacaoHistoricoPatologiasFamiliares(paciente, atendimentoPacienteParametro);
 	}
 	
 	
-	private void calcularDataProximaAtualizacaoHistoricoPatologiasFamiliares(Paciente paciente, PacienteParametro pacienteParametro) {
+	private void calcularDataProximaAtualizacaoHistoricoPatologiasFamiliares(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
 		Optional<LocalDate> dataHistoricoPatologiaFamiliaresMaisRecente = paciente.getHistoricosPatologiaFamiliaresPorData()
 				.stream().map(patologiaFamiliares -> patologiaFamiliares.getDataHoraCadastroPatologiasFamiliares().toLocalDate())
 				.max(Comparator.comparing(LocalDate::toEpochDay));
 		
 		if (dataHistoricoPatologiaFamiliaresMaisRecente.isPresent()) {
 			LocalDate dataHistoricoPatologiaFamiliares = dataHistoricoPatologiaFamiliaresMaisRecente.get()
-					.plusMonths(pacienteParametro.getTempoMesesAtualizarHistoricoPatologiaFamiliares());
+					.plusMonths(atendimentoPacienteParametro.getTempoMesesAtualizarHistoricoPatologiaFamiliares());
 			
 			if (LocalDate.now().isAfter(dataHistoricoPatologiaFamiliares)) {
 				dataProximaAtualizacaoHistoricoPatologiasFamiliares = "O Histórico de Patologias dos Familiares "

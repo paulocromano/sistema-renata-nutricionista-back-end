@@ -6,7 +6,7 @@ import br.com.renatanutricionista.ficha.identificacao.historico.atividade.fisica
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.dto.InformacoesPreviasHistoricosFamiliaresPorDataDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.dto.InformacoesPreviasHistoricosSociaisDTO;
 import br.com.renatanutricionista.paciente.model.Paciente;
-import br.com.renatanutricionista.tabelas.parametro.paciente.model.PacienteParametro;
+import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
 import lombok.Getter;
 
 
@@ -21,12 +21,12 @@ public class PacientePreviaHistoricosDTO {
 	private InformacoesPreviasQuestionariosDTO informacoesPreviasQuestionariosFrequenciaAlimentar;
 	
 	
-	public PacientePreviaHistoricosDTO(Paciente paciente, PacienteParametro pacienteParametro) {
+	public PacientePreviaHistoricosDTO(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
 		this.paciente = new PacienteDTO(paciente);
-		informacoesPreviasHistoricosSociais = new InformacoesPreviasHistoricosSociaisDTO(paciente, pacienteParametro);
-		informacoesPreviasHistoricosAlimentares = new InformacoesPreviasHistoricosAlimentaresDTO(paciente, pacienteParametro);
-		informacoesHistoricosAtividadeFisica = new InformacoesHistoricosAtividadeFisicaDTO(paciente, pacienteParametro);
-		informacoesPreviasHistoricosPatologiaFamiliaresPorData = new InformacoesPreviasHistoricosFamiliaresPorDataDTO(paciente, pacienteParametro);
-		informacoesPreviasQuestionariosFrequenciaAlimentar = new InformacoesPreviasQuestionariosDTO(paciente, pacienteParametro);
+		informacoesPreviasHistoricosSociais = new InformacoesPreviasHistoricosSociaisDTO(paciente, atendimentoPacienteParametro);
+		informacoesPreviasHistoricosAlimentares = new InformacoesPreviasHistoricosAlimentaresDTO(paciente, atendimentoPacienteParametro);
+		informacoesHistoricosAtividadeFisica = new InformacoesHistoricosAtividadeFisicaDTO(paciente, atendimentoPacienteParametro);
+		informacoesPreviasHistoricosPatologiaFamiliaresPorData = new InformacoesPreviasHistoricosFamiliaresPorDataDTO(paciente, atendimentoPacienteParametro);
+		informacoesPreviasQuestionariosFrequenciaAlimentar = new InformacoesPreviasQuestionariosDTO(paciente, atendimentoPacienteParametro);
 	}
 }

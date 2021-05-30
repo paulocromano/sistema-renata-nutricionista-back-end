@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import br.com.renatanutricionista.paciente.model.Paciente;
-import br.com.renatanutricionista.tabelas.parametro.paciente.model.PacienteParametro;
+import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
 
@@ -18,20 +18,20 @@ public class InformacoesHistoricosAtividadeFisicaDTO {
 	private String dataProximaAtualizacaoHistoricoAtividadeFisica;
 	
 	
-	public InformacoesHistoricosAtividadeFisicaDTO(Paciente paciente, PacienteParametro pacienteParametro) {
+	public InformacoesHistoricosAtividadeFisicaDTO(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
 		historicosAtividadesFisicas = HistoricoAtividadeFisicaDTO.converterParaListaAtividadeFisicaDTO(paciente.getHistoricosAtividadeFisica());
-		calcularDataProximaAtualizacaoHistoricoAtividadeFisica(paciente, pacienteParametro);
+		calcularDataProximaAtualizacaoHistoricoAtividadeFisica(paciente, atendimentoPacienteParametro);
 	}
 	
 	
-	private void calcularDataProximaAtualizacaoHistoricoAtividadeFisica(Paciente paciente, PacienteParametro pacienteParametro) {
+	private void calcularDataProximaAtualizacaoHistoricoAtividadeFisica(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
 		Optional<LocalDate> dataHistoricoAtividadeFisicaMaisRecente = paciente.getHistoricosAtividadeFisica()
 				.stream().map(atividadeFisica -> atividadeFisica.getDataHoraCadastroAtividadeFisica().toLocalDate())
 				.max(Comparator.comparing(LocalDate::toEpochDay));
 		
 		if (dataHistoricoAtividadeFisicaMaisRecente.isPresent()) {
 			LocalDate dataHistoricoAtividadeFisica = dataHistoricoAtividadeFisicaMaisRecente.get()
-					.plusMonths(pacienteParametro.getTempoMesesAtualizarHistoricoAtividadeFisica());
+					.plusMonths(atendimentoPacienteParametro.getTempoMesesAtualizarHistoricoAtividadeFisica());
 			
 			if (LocalDate.now().isAfter(dataHistoricoAtividadeFisica)) {
 				dataProximaAtualizacaoHistoricoAtividadeFisica = "O Histórico de Atividade Física do paciente está desatualizado!";

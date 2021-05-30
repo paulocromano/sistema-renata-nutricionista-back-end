@@ -30,7 +30,7 @@ public class AtendimentoPacienteParametroResource {
 	
 	
 	@PutMapping
-	public ResponseEntity<AtendimentoPacienteParametroDTO> atualizarParametrosAtendimentoDoPaciente(
+	public ResponseEntity<Void> atualizarParametrosAtendimentoDoPaciente(
 			@RequestBody @Valid AtendimentoPacienteParametroFORM atendimentoPacienteParametro) {
 		
 		return atendimentoPacienteParametroService.atualizarParametrosAtendimentoDoPaciente(atendimentoPacienteParametro);

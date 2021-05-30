@@ -22,8 +22,8 @@ import br.com.renatanutricionista.ficha.identificacao.historico.social.model.His
 import br.com.renatanutricionista.ficha.identificacao.historico.social.repository.HistoricoSocialRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.service.PacienteService;
-import br.com.renatanutricionista.tabelas.parametro.paciente.model.PacienteParametro;
-import br.com.renatanutricionista.tabelas.parametro.paciente.service.PacienteParametroService;
+import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
+import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.service.AtendimentoPacienteParametroService;
 
 
 @Service
@@ -39,15 +39,15 @@ public class HistoricoSocialService {
 	private PacienteService pacienteService;
 	
 	@Autowired
-	private PacienteParametroService pacienteParametroService;
+	private AtendimentoPacienteParametroService atendimentoPacienteParametroService;
 	
 	
 	
 	public ResponseEntity<InformacoesPreviasHistoricosSociaisDTO> buscarInformacoesPreviasHistoricosSociaisDoPaciente(Long idPaciente) {
 		Paciente paciente = pacienteService.verificarSePacienteExiste(idPaciente);
-		PacienteParametro pacienteParametro = pacienteParametroService.buscarPacienteParametro();
+		AtendimentoPacienteParametro atendimentoPacienteParametro = atendimentoPacienteParametroService.buscarAtendimentoPacienteParametro();
 
-		return ResponseEntity.ok().body(new InformacoesPreviasHistoricosSociaisDTO(paciente, pacienteParametro));
+		return ResponseEntity.ok().body(new InformacoesPreviasHistoricosSociaisDTO(paciente, atendimentoPacienteParametro));
 	}
 	
 	

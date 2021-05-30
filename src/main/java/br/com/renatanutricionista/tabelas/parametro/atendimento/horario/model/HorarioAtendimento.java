@@ -35,22 +35,18 @@ public class HorarioAtendimento {
 
 	@Column(name = "horario_entrada_antes_almoco")
 	@DateTimeFormat(pattern = "HH:mm")
-	@NotNull(message = "O campo Horário de Entrada antes do Almoço não pode ser nulo!")
 	private LocalTime horarioEntradaAntesAlmoco;
 	
 	@Column(name = "horario_saida_antes_almoco")
 	@DateTimeFormat(pattern = "HH:mm")
-	@NotNull(message = "O campo Horário de Saída antes do Almoço não pode ser nulo!")
 	private LocalTime horarioSaidaAntesAlmoco;
 	
 	@Column(name = "horario_entrada_depois_almoco")
 	@DateTimeFormat(pattern = "HH:mm")
-	@NotNull(message = "O campo Horário de Entrada depois do Almoço não pode ser nulo!")
 	private LocalTime horarioEntradaDepoisAlmoco;
 	
 	@Column(name = "horario_saida_depois_almoco")
 	@DateTimeFormat(pattern = "HH:mm")
-	@NotNull(message = "O campo Horário de Saída depois do Almoço não pode ser nulo!")
 	private LocalTime horarioSaidaDepoisAlmoco;
 
 	

@@ -16,6 +16,12 @@ public class AtendimentoPacienteParametroDTO {
 	private Integer intervaloDiasEntreConsultaRetorno;
 	private Integer intervaloDiasEntreRetornoConsulta;
 	private String precoConsulta;
+	private Integer tempoMesesAtualizarQuestionarioFrequenciaAlimentar;
+	private Integer tempoMesesAtualizarHistoricoSocial;
+	private Integer tempoMesesAtualizarHistoricoPatologiaFamiliares;
+	private Integer tempoMesesAtualizarHistoricoAtividadeFisica;
+	private Integer tempoMesesAtualizarHistoricoAlimentar;
+	private Integer tempoMesesAtualizarHistoricoFrequenciaAlimentar;
 	
 	
 	public AtendimentoPacienteParametroDTO(AtendimentoPacienteParametro atendimento) {
@@ -27,5 +33,12 @@ public class AtendimentoPacienteParametroDTO {
 		intervaloDiasEntreConsultaRetorno = atendimento.getIntervaloDiasEntreConsultaRetorno();
 		intervaloDiasEntreRetornoConsulta = atendimento.getIntervaloDiasEntreRetornoConsulta();
 		precoConsulta = FormatacaoUtils.substituirPontoPorVirgula(atendimento.getPrecoConsulta());
+		
+		tempoMesesAtualizarQuestionarioFrequenciaAlimentar = atendimento.getTempoMesesAtualizarQuestionarioFrequenciaAlimentar();
+		tempoMesesAtualizarHistoricoSocial = atendimento.getTempoMesesAtualizarHistoricoSocial();
+		tempoMesesAtualizarHistoricoPatologiaFamiliares = atendimento.getTempoMesesAtualizarHistoricoPatologiaFamiliares();
+		tempoMesesAtualizarHistoricoAtividadeFisica = atendimento.getTempoMesesAtualizarHistoricoAtividadeFisica();
+		tempoMesesAtualizarHistoricoAlimentar = atendimento.getTempoMesesAtualizarHistoricoAlimentar();
+		tempoMesesAtualizarHistoricoFrequenciaAlimentar = atendimento.getTempoMesesAtualizarHistoricoFrequenciaAlimentar();
 	}
 }

@@ -57,4 +57,28 @@ public class AtendimentoPacienteParametro {
 	@DecimalMin(value = "0.0", message = "O campo Preço da Consulta deve ser no mínimo R$ {value}")
 	@NotNull(message = "O campo Preco da Consulta não pode estar nulo!")
 	private BigDecimal precoConsulta;
+	
+	@Column(name = "tempo_meses_atualizar_questionario_frequencia_alimentar")
+	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Questionário de Frequência Alimentar não pode ser nulo!")
+	private Integer tempoMesesAtualizarQuestionarioFrequenciaAlimentar;
+	
+	@Column(name = "tempo_meses_atualizar_historico_social")
+	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico Social não pode ser nulo!")
+	private Integer tempoMesesAtualizarHistoricoSocial;
+	
+	@Column(name = "tempo_meses_atualizar_historico_patologia_familiares")
+	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico de patologia dos Familiares não pode ser nulo!")
+	private Integer tempoMesesAtualizarHistoricoPatologiaFamiliares;
+	
+	@Column(name = "tempo_meses_atualizar_historico_atividade_fisica")
+	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico de Atividade Física não pode ser nulo!")
+	private Integer tempoMesesAtualizarHistoricoAtividadeFisica;
+	
+	@Column(name = "tempo_meses_atualizar_historico_alimentar")
+	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico Alimentar não pode ser nulo!")
+	private Integer tempoMesesAtualizarHistoricoAlimentar;
+	
+	@Column(name = "tempo_meses_atualizar_historico_frequencia_alimentar")
+	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico da Frequência Alimentar não pode ser nulo!")
+	private Integer tempoMesesAtualizarHistoricoFrequenciaAlimentar;
 }

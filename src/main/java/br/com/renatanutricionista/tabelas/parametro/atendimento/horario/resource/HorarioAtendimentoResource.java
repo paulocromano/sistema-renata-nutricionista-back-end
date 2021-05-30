@@ -20,6 +20,7 @@ import br.com.renatanutricionista.tabelas.parametro.atendimento.horario.dto.Hora
 import br.com.renatanutricionista.tabelas.parametro.atendimento.horario.form.EdicaoHorarioAtendimentoFORM;
 import br.com.renatanutricionista.tabelas.parametro.atendimento.horario.form.HorarioAtendimentoFORM;
 import br.com.renatanutricionista.tabelas.parametro.atendimento.horario.service.HorarioAtendimentoService;
+import br.com.renatanutricionista.utils.conversao.enums.DadosEnum;
 
 
 @RestController
@@ -36,11 +37,14 @@ public class HorarioAtendimentoResource {
 	}
 	
 	
+	@GetMapping("/dias-semana-para-cadastro")
+	public ResponseEntity<List<DadosEnum>> listarDiasDaSemanaDisponiveisParaCadastro() {
+		return horarioAtendimentoService.listarDiasDaSemanaDisponiveisParaCadastro();
+	}
+	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<Void> cadastrarDiaDeAtendimento(
-			@RequestBody @Valid HorarioAtendimentoFORM horarioAtendimento) {
-		
+	public ResponseEntity<Void> cadastrarDiaDeAtendimento(@RequestBody @Valid HorarioAtendimentoFORM horarioAtendimento) {
 		return horarioAtendimentoService.cadastrarDiaDeAtendimento(horarioAtendimento);
 	}
 	
@@ -56,7 +60,7 @@ public class HorarioAtendimentoResource {
 	
 	@DeleteMapping("/{idHorarioAtendimento}")
 	@Transactional
-	public ResponseEntity<Void> excluirUmDiaDeAtendimento(Integer idHorarioAtendimento) {
+	public ResponseEntity<Void> excluirUmDiaDeAtendimento(@PathVariable Integer idHorarioAtendimento) {
 		return horarioAtendimentoService.excluirUmDiaDeAtendimento(idHorarioAtendimento);
 	}
 }

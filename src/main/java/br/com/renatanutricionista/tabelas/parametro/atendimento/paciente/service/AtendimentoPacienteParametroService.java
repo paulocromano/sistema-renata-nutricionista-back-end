@@ -43,30 +43,14 @@ public class AtendimentoPacienteParametroService {
 	}
 	
 	
-	public ResponseEntity<AtendimentoPacienteParametroDTO> atualizarParametrosAtendimentoDoPaciente(
+	public ResponseEntity<Void> atualizarParametrosAtendimentoDoPaciente(
 			AtendimentoPacienteParametroFORM atendimentoPacienteParametro) {
-		
-		validarQuantidadeMaximaParcelas();
-		validarTempoMaximoEmMesesGeracaoAutomaticaHorariosAtendimento();
 		
 		AtendimentoPacienteParametro atendimento = buscarAtendimentoPacienteParametro();
 		atendimentoPacienteParametro.atualizarInformacoesDosParametrosParaAtendimentoDePaciente(atendimento, 
 				quantidadeMaximaParcelas, tempoMaximoEmMesesGeracaoAutomaticaHorariosAtendimento);
 		
-		return ResponseEntity.ok().body(new AtendimentoPacienteParametroDTO(atendimento));
-	}
-	
-	
-	private void validarQuantidadeMaximaParcelas() {
-		if (Objects.isNull(quantidadeMaximaParcelas))
-			throw new NullPointerException("A Quantidade Máxima de Parcelas não pode estar nula!");
-	}
-	
-	
-	private void validarTempoMaximoEmMesesGeracaoAutomaticaHorariosAtendimento() {
-		if (Objects.isNull(tempoMaximoEmMesesGeracaoAutomaticaHorariosAtendimento))
-			throw new NullPointerException("O Tempo Máximo em Meses para Geração Automática "
-					+ "de Horários de Atendimento não pode estar nulo!");
+		return ResponseEntity.ok().build();				
 	}
 	
 	

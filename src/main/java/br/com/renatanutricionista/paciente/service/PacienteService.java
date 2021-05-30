@@ -22,8 +22,8 @@ import br.com.renatanutricionista.paciente.form.AtualizacaoPacienteFORM;
 import br.com.renatanutricionista.paciente.form.PacienteFORM;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.repository.PacienteRepository;
-import br.com.renatanutricionista.tabelas.parametro.paciente.model.PacienteParametro;
-import br.com.renatanutricionista.tabelas.parametro.paciente.service.PacienteParametroService;
+import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
+import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.service.AtendimentoPacienteParametroService;
 
 
 @Service
@@ -33,7 +33,7 @@ public class PacienteService {
 	private PacienteRepository pacienteRepository;
 
 	@Autowired
-	private PacienteParametroService pacienteParametroService;
+	private AtendimentoPacienteParametroService atendimentoPacienteParametroService;
 	
 	
 	public ResponseEntity<ListagemCadastroPacienteDTO> buscarInformacoesListagemCadastroPaciente() {	
@@ -54,9 +54,9 @@ public class PacienteService {
 	
 	public ResponseEntity<PacientePreviaHistoricosDTO> buscarInformacoesPreviasHistoricosDoPaciente(Long idPaciente) {
 		Paciente paciente = verificarSePacienteExiste(idPaciente);
-		PacienteParametro pacienteParametro = pacienteParametroService.buscarPacienteParametro();
+		AtendimentoPacienteParametro atendimentoPacienteParametro = atendimentoPacienteParametroService.buscarAtendimentoPacienteParametro();
 		
-		return ResponseEntity.ok().body(new PacientePreviaHistoricosDTO(paciente, pacienteParametro));
+		return ResponseEntity.ok().body(new PacientePreviaHistoricosDTO(paciente, atendimentoPacienteParametro));
 	}
 	
 	

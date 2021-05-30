@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import br.com.renatanutricionista.paciente.model.Paciente;
-import br.com.renatanutricionista.tabelas.parametro.paciente.model.PacienteParametro;
+import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
 
@@ -18,19 +18,19 @@ public class InformacoesPreviasHistoricosSociaisDTO {
 	private String dataProximaAtualizacaoHistoricoSocial;
 	
 	
-	public InformacoesPreviasHistoricosSociaisDTO(Paciente paciente, PacienteParametro pacienteParametro) {
+	public InformacoesPreviasHistoricosSociaisDTO(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
 		previaHistoricosSociais = PreviaHistoricoSocialDTO.converterParaListaPreviasHistoricoSocialDTO(paciente.getHistoricosSociais());
-		calcularDataProximaAtualizacaoHistoricoSocial(paciente, pacienteParametro);
+		calcularDataProximaAtualizacaoHistoricoSocial(paciente, atendimentoPacienteParametro);
 	}
 	
 	
-	private void calcularDataProximaAtualizacaoHistoricoSocial(Paciente paciente, PacienteParametro pacienteParametro) {
+	private void calcularDataProximaAtualizacaoHistoricoSocial(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
 		Optional<LocalDate> dataHistoricoSocialMaisRecente = paciente.getHistoricosSociais()
 				.stream().map(historicoSocial -> historicoSocial.getDataHoraCadastroHistoricoSocial().toLocalDate())
 				.max(Comparator.comparing(LocalDate::toEpochDay));
 		
 		if (dataHistoricoSocialMaisRecente.isPresent()) {
-			LocalDate dataHistoricoSocial = dataHistoricoSocialMaisRecente.get().plusMonths(pacienteParametro.getTempoMesesAtualizarHistoricoSocial());
+			LocalDate dataHistoricoSocial = dataHistoricoSocialMaisRecente.get().plusMonths(atendimentoPacienteParametro.getTempoMesesAtualizarHistoricoSocial());
 			
 			if (LocalDate.now().isAfter(dataHistoricoSocial)) {
 				dataProximaAtualizacaoHistoricoSocial = "O Histórico Social do paciente está desatualizado!";

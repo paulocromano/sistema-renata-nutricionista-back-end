@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import br.com.renatanutricionista.paciente.model.Paciente;
-import br.com.renatanutricionista.tabelas.parametro.paciente.model.PacienteParametro;
+import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
 
@@ -18,15 +18,15 @@ public class InformacoesPreviasQuestionariosDTO {
 	private String dataProximaAtualizacaoQuestionario;
 	
 	
-	public InformacoesPreviasQuestionariosDTO(Paciente paciente, PacienteParametro pacienteParametro) {
+	public InformacoesPreviasQuestionariosDTO(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
 		previaQuestionariosFrequenciaAlimentar = PreviaQuestionarioFrequenciaAlimentarDTO.converterParaListaInformacoesPreviasQuestionarioDTO(
 				paciente.getQuestionariosFrequenciaAlimentar());
 		
-		calcularDataProximaAtualizacaoQuestionarioFrequenciaAlimentar(paciente, pacienteParametro);
+		calcularDataProximaAtualizacaoQuestionarioFrequenciaAlimentar(paciente, atendimentoPacienteParametro);
 	}
 	
 	
-	private void calcularDataProximaAtualizacaoQuestionarioFrequenciaAlimentar(Paciente paciente, PacienteParametro pacienteParametro) {
+	private void calcularDataProximaAtualizacaoQuestionarioFrequenciaAlimentar(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
 		
 		Optional<LocalDate> dataQuestionarioMaisRecente = paciente.getQuestionariosFrequenciaAlimentar()
 				.stream().map(questionario -> questionario.getDataHoraCadastroQuestionario().toLocalDate())
@@ -34,7 +34,7 @@ public class InformacoesPreviasQuestionariosDTO {
 		
 		if (dataQuestionarioMaisRecente.isPresent()) {
 			LocalDate dataQuestionarioFrequenciaAlimentar = dataQuestionarioMaisRecente.get()
-					.plusMonths(pacienteParametro.getTempoMesesAtualizarQuestionarioFrequenciaAlimentar());
+					.plusMonths(atendimentoPacienteParametro.getTempoMesesAtualizarQuestionarioFrequenciaAlimentar());
 			
 			if (LocalDate.now().isAfter(dataQuestionarioFrequenciaAlimentar)) {
 				dataProximaAtualizacaoQuestionario = "O Questionário de Frequência Alimentar do paciente "

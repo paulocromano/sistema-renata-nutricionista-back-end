@@ -39,6 +39,24 @@ public class AtendimentoPacienteParametroFORM {
 	@NotNull(message = "O campo Preco da Consulta não pode estar nulo!")
 	private BigDecimal precoConsulta;
 	
+	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Questionário de Frequência Alimentar não pode ser nulo!")
+	private Integer tempoMesesAtualizarQuestionarioFrequenciaAlimentar;
+
+	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico Social não pode ser nulo!")
+	private Integer tempoMesesAtualizarHistoricoSocial;
+
+	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico de patologia dos Familiares não pode ser nulo!")
+	private Integer tempoMesesAtualizarHistoricoPatologiaFamiliares;
+
+	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico de Atividade Física não pode ser nulo!")
+	private Integer tempoMesesAtualizarHistoricoAtividadeFisica;
+
+	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico Alimentar não pode ser nulo!")
+	private Integer tempoMesesAtualizarHistoricoAlimentar;
+
+	@NotNull(message = "O campo do Tempo em Meses para Atualizar o Histórico da Frequência Alimentar não pode ser nulo!")
+	private Integer tempoMesesAtualizarHistoricoFrequenciaAlimentar;
+	
 	
 	public void atualizarInformacoesDosParametrosParaAtendimentoDePaciente(AtendimentoPacienteParametro atendimentoPacienteParametro,
 			Integer quantidadeMaximaParcelas, Integer tempoMaximoEmMesesGeracaoAutomaticaHorariosAtendimento) {
@@ -51,6 +69,13 @@ public class AtendimentoPacienteParametroFORM {
 		atendimentoPacienteParametro.setIntervaloDiasEntreConsultaRetorno(intervaloDiasEntreConsultaRetorno);
 		atendimentoPacienteParametro.setIntervaloDiasEntreRetornoConsulta(intervaloDiasEntreRetornoConsulta);
 		atendimentoPacienteParametro.setPrecoConsulta(precoConsulta);
+		
+		atendimentoPacienteParametro.setTempoMesesAtualizarQuestionarioFrequenciaAlimentar(tempoMesesAtualizarQuestionarioFrequenciaAlimentar);
+		atendimentoPacienteParametro.setTempoMesesAtualizarHistoricoSocial(tempoMesesAtualizarHistoricoSocial);
+		atendimentoPacienteParametro.setTempoMesesAtualizarHistoricoPatologiaFamiliares(tempoMesesAtualizarHistoricoPatologiaFamiliares);
+		atendimentoPacienteParametro.setTempoMesesAtualizarHistoricoAtividadeFisica(tempoMesesAtualizarHistoricoAtividadeFisica);
+		atendimentoPacienteParametro.setTempoMesesAtualizarHistoricoAlimentar(tempoMesesAtualizarHistoricoAlimentar);
+		atendimentoPacienteParametro.setTempoMesesAtualizarHistoricoFrequenciaAlimentar(tempoMesesAtualizarHistoricoFrequenciaAlimentar);
 	}
 	
 	
