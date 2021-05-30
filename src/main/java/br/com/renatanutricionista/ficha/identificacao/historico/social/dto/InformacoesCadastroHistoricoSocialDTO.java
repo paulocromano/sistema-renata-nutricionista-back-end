@@ -15,7 +15,7 @@ import lombok.Getter;
 
 
 @Getter
-public class InformacoesHistoricoSocialParaCadastroDTO {
+public class InformacoesCadastroHistoricoSocialDTO {
 
 	private List<DadosEnum> estadoCivil;
 	private List<DadosEnum> consumoBebidasAlcoolicas;
@@ -26,7 +26,7 @@ public class InformacoesHistoricoSocialParaCadastroDTO {
 	private List<DadosEnum> coloracaoDiurese;
 	
 	
-	public InformacoesHistoricoSocialParaCadastroDTO() {
+	public InformacoesCadastroHistoricoSocialDTO() {
 		estadoCivil = ConversaoDadosEnum.converterDadosEnum(EstadoCivil.values());
 		consumoBebidasAlcoolicas = ConversaoDadosEnum.converterDadosEnum(ConsumoBebidasAlcoolicas.values());
 		consumoCigarro = ConversaoDadosEnum.converterDadosEnum(ConsumoCigarro.values());

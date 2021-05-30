@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.renatanutricionista.atendimento.paciente.consulta.dto.ConfirmacaoAtendimentoDTO;
 import br.com.renatanutricionista.atendimento.paciente.consulta.dto.ConsultaDTO;
-import br.com.renatanutricionista.atendimento.paciente.consulta.dto.InformacoesConsultaHistoricoParaCadastroDTO;
+import br.com.renatanutricionista.atendimento.paciente.consulta.dto.InformacoesCadastroConsultaDTO;
 import br.com.renatanutricionista.atendimento.paciente.consulta.dto.InformacoesPreviasConsultaRetornoDTO;
 import br.com.renatanutricionista.atendimento.paciente.consulta.enums.situacao.consulta.SituacaoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.form.AgendamentoConsultaFORM;
@@ -32,7 +32,6 @@ import br.com.renatanutricionista.calendario.atendimento.paciente.service.Calend
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alimentos.repository.AlimentoFrequenciaAlimentarRepository;
-import br.com.renatanutricionista.paciente.dto.PacientePreviaHistoricosDTO;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.service.PacienteService;
 import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
@@ -195,14 +194,10 @@ public class ConsultaService {
 	}
 	
 	
-	public ResponseEntity<InformacoesConsultaHistoricoParaCadastroDTO> informacoesPacienteHistoricosParaCadastroNaConsulta(Long idPaciente, Long idConsulta) {
+	public ResponseEntity<InformacoesCadastroConsultaDTO> informacoesParaCadastrarConsulta(Long idPaciente, Long idConsulta) {
 		Consulta consulta = verificarPacienteConsulta(idPaciente, idConsulta);	
-		AtendimentoPacienteParametro atendimentoPacienteParametro = atendimentoPacienteParametroService.buscarAtendimentoPacienteParametro();
-		
-		PacientePreviaHistoricosDTO pacientePreviaHistoricos = new PacientePreviaHistoricosDTO(consulta.getPaciente(), atendimentoPacienteParametro);
-		
-		return ResponseEntity.ok().body(new InformacoesConsultaHistoricoParaCadastroDTO(pacientePreviaHistoricos,
-				alimentoFrequenciaAlimentarRepository.findAll()));
+
+		return ResponseEntity.ok().body(new InformacoesCadastroConsultaDTO(consulta, alimentoFrequenciaAlimentarRepository.findAll()));
 	}
 	
 	

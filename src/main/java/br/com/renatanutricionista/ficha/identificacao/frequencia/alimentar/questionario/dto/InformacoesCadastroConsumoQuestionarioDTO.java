@@ -16,7 +16,7 @@ import lombok.Getter;
 
 
 @Getter
-public class InformacoesConsumoQuestionarioParaCadastroDTO {
+public class InformacoesCadastroConsumoQuestionarioDTO {
 	
 	private List<AlimentoFrequenciaAlimentarDTO> alimentosFrequenciaAlimentar;
 	private List<DadosEnum> consumoCarneVermelha;
@@ -27,7 +27,7 @@ public class InformacoesConsumoQuestionarioParaCadastroDTO {
 	private List<DadosEnum> frequenciaConsumoAlimento;
 	
 	
-	public InformacoesConsumoQuestionarioParaCadastroDTO(List<AlimentoFrequenciaAlimentar> alimentosFrequenciaAlimentar) {
+	public InformacoesCadastroConsumoQuestionarioDTO(List<AlimentoFrequenciaAlimentar> alimentosFrequenciaAlimentar) {
 		this.alimentosFrequenciaAlimentar = AlimentoFrequenciaAlimentarDTO.converterParaListaAlimentoFrequenciaAlimentarDTO(alimentosFrequenciaAlimentar);
 
 		consumoCarneVermelha = ConversaoDadosEnum.converterDadosEnum(ConsumoCarneVermelha.values());
