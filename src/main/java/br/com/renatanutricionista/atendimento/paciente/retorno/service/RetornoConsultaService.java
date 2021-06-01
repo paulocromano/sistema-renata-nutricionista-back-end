@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.renatanutricionista.atendimento.paciente.consulta.enums.situacao.consulta.SituacaoConsulta;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
+import br.com.renatanutricionista.atendimento.paciente.retorno.dto.InformacoesCadastroRetornoConsultaDTO;
 import br.com.renatanutricionista.atendimento.paciente.retorno.dto.RetornoConsultaDTO;
 import br.com.renatanutricionista.atendimento.paciente.retorno.enums.SituacaoRetorno;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.AgendamentoRetornoFORM;
@@ -26,6 +27,7 @@ import br.com.renatanutricionista.calendario.atendimento.paciente.model.Calendar
 import br.com.renatanutricionista.calendario.atendimento.paciente.service.CalendarioAtendimentoPacienteService;
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
+import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alimentos.repository.AlimentoFrequenciaAlimentarRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.service.PacienteService;
 import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
@@ -38,6 +40,9 @@ public class RetornoConsultaService {
 	
 	@Autowired
 	private RetornoConsultaRepository retornoConsultaRepository;
+	
+	@Autowired
+	private AlimentoFrequenciaAlimentarRepository alimentoFrequenciaAlimentarRepository;
 
 	@Autowired
 	private PacienteService pacienteService;
@@ -122,6 +127,13 @@ public class RetornoConsultaService {
 		retornoConsulta.setSituacaoRetorno(SituacaoRetorno.RETORNO_INICIADO);
 		
 		return ResponseEntity.ok().build();
+	}
+	
+	
+	public ResponseEntity<InformacoesCadastroRetornoConsultaDTO> informacoesParaCadastrarRetornoConsulta(Long idPaciente, Long idRetornoConsulta) {
+		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaPertenceAoPaciente(idPaciente, idRetornoConsulta);
+
+		return ResponseEntity.ok().body(new InformacoesCadastroRetornoConsultaDTO(retornoConsulta.getConsulta(), alimentoFrequenciaAlimentarRepository.findAll()));
 	}
 	
 	

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.renatanutricionista.atendimento.paciente.retorno.dto.InformacoesCadastroRetornoConsultaDTO;
 import br.com.renatanutricionista.atendimento.paciente.retorno.dto.RetornoConsultaDTO;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.AgendamentoRetornoFORM;
 import br.com.renatanutricionista.atendimento.paciente.retorno.form.ReagendamentoRetornoFORM;
@@ -69,6 +70,14 @@ public class RetornoConsultaResource {
 	@Transactional
 	public ResponseEntity<Void> iniciarRetornoConsulta(@PathVariable Long idPaciente, @PathVariable Long idRetornoConsulta) {
 		return retornoConsultaService.iniciarRetornoConsulta(idPaciente, idRetornoConsulta);
+	}
+	
+	
+	@GetMapping("/informacoes-cadastro-retorno-consulta/{idPaciente}/{idRetornoConsulta}")
+	public ResponseEntity<InformacoesCadastroRetornoConsultaDTO> informacoesParaCadastrarRetornoConsulta(
+			@PathVariable Long idPaciente, @PathVariable Long idRetornoConsulta) {
+		
+		return retornoConsultaService.informacoesParaCadastrarRetornoConsulta(idPaciente, idRetornoConsulta);
 	}
 	
 	

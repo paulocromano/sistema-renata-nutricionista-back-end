@@ -63,7 +63,7 @@ public class AvaliacaoMassaMuscularCorporeaFORM {
 				.circunferenciaCoxaCentimetros(circunferenciaCoxaCentimetros)
 				.circunferenciaPanturrilhaCentimetros(circunferenciaPanturrilhaCentimetros)
 				.circunferenciaPunhoCentrimetros(circunferenciaPunhoCentrimetros)
-				.massaMuscularKg(indiceMassaMuscularKgMetroQuadrado)
+				.massaMuscularKg(massaMuscularKg)
 				.massaMuscularPorcentagem(massaMuscularPorcentagem)
 				.indiceMassaMuscularKgMetroQuadrado(indiceMassaMuscularKgMetroQuadrado)
 				.build();

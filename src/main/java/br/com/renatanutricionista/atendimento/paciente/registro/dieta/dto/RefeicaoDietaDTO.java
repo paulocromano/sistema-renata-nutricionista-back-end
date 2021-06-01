@@ -32,7 +32,7 @@ public class RefeicaoDietaDTO {
 				registroDieta.getQuantidadeMedidaCaseiraAlimentosLancheTarde()));
 		
 		refeicoesRegistroDieta.add(new RefeicaoDietaDTO("Jantar", registroDieta.getAlimentosJanta(), registroDieta.getQuantidadeMedidaCaseiraAlimentosJanta()));
-		refeicoesRegistroDieta.add(new RefeicaoDietaDTO("Ceia", registroDieta.getAlimentosDesjejum(), registroDieta.getQuantidadeMedidaCaseiraAlimentosDesjejum()));
+		refeicoesRegistroDieta.add(new RefeicaoDietaDTO("Ceia", registroDieta.getAlimentosCeia(), registroDieta.getQuantidadeMedidaCaseiraAlimentosCeia()));
 		
 		refeicoesRegistroDieta.add(new RefeicaoDietaDTO("Final de semana", registroDieta.getAlimentosFinalDeSemana(), 
 				registroDieta.getQuantidadeMedidaCaseiraAlimentosFinalDeSemana()));

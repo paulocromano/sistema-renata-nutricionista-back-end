@@ -116,7 +116,6 @@ public class ConsultaResource {
 	
 	
 	@GetMapping("/informacoes-cadastro-consulta/{idPaciente}/{idConsulta}")
-	@Transactional
 	public ResponseEntity<InformacoesCadastroConsultaDTO> informacoesParaCadastrarConsulta(@PathVariable Long idPaciente, @PathVariable Long idConsulta) {
 		return consultaService.informacoesParaCadastrarConsulta(idPaciente, idConsulta);
 	}
