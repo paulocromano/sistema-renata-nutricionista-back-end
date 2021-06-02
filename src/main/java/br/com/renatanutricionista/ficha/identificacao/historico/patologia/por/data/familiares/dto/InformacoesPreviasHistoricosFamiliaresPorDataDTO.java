@@ -16,6 +16,7 @@ public class InformacoesPreviasHistoricosFamiliaresPorDataDTO {
 
 	private Set<PreviaHistoricoPatologiaFamiliaresPorDataDTO> previaHistoricosPatologiaFamiliaresPorData;
 	private String dataProximaAtualizacaoHistoricoPatologiasFamiliares;
+	private Boolean historicoEstaDesatualizado;
 	
 	
 	public InformacoesPreviasHistoricosFamiliaresPorDataDTO(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
@@ -36,10 +37,12 @@ public class InformacoesPreviasHistoricosFamiliaresPorDataDTO {
 					.plusMonths(atendimentoPacienteParametro.getTempoMesesAtualizarHistoricoPatologiaFamiliares());
 			
 			if (LocalDate.now().isAfter(dataHistoricoPatologiaFamiliares)) {
+				historicoEstaDesatualizado = true;
 				dataProximaAtualizacaoHistoricoPatologiasFamiliares = "O Histórico de Patologias dos Familiares "
 						+ "do paciente está desatualizado!";
 			}
 			else {
+				historicoEstaDesatualizado = false;
 				dataProximaAtualizacaoHistoricoPatologiasFamiliares = ConversaoUtils.converterLocalDateParaString(dataHistoricoPatologiaFamiliares);
 			}
 		}

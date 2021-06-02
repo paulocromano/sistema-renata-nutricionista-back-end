@@ -16,6 +16,7 @@ public class InformacoesPreviasHistoricosSociaisDTO {
 
 	private List<PreviaHistoricoSocialDTO> previaHistoricosSociais;
 	private String dataProximaAtualizacaoHistoricoSocial;
+	private Boolean historicoEstaDesatualizado;
 	
 	
 	public InformacoesPreviasHistoricosSociaisDTO(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
@@ -33,9 +34,11 @@ public class InformacoesPreviasHistoricosSociaisDTO {
 			LocalDate dataHistoricoSocial = dataHistoricoSocialMaisRecente.get().plusMonths(atendimentoPacienteParametro.getTempoMesesAtualizarHistoricoSocial());
 			
 			if (LocalDate.now().isAfter(dataHistoricoSocial)) {
+				historicoEstaDesatualizado = true;
 				dataProximaAtualizacaoHistoricoSocial = "O Histórico Social do paciente está desatualizado!";
 			}
 			else {
+				historicoEstaDesatualizado = false;
 				dataProximaAtualizacaoHistoricoSocial = ConversaoUtils.converterLocalDateParaString(dataHistoricoSocial);
 			}
 		}

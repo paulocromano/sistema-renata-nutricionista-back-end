@@ -16,6 +16,7 @@ public class InformacoesPreviasHistoricosAlimentaresDTO {
 
 	private List<PreviaHistoricoAlimentarDTO> previaHistoricosAlimentares;
 	private String dataProximaAtualizacaoHistoricoAlimentar;
+	private Boolean historicoEstaDesatualizado;
 	
 	
 	public InformacoesPreviasHistoricosAlimentaresDTO(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
@@ -35,9 +36,11 @@ public class InformacoesPreviasHistoricosAlimentaresDTO {
 			LocalDate dataHistoricoAlimentar = dataHistoricoAlimentarMaisRecente.get().plusMonths(atendimentoPacienteParametro.getTempoMesesAtualizarHistoricoAlimentar());
 			
 			if (LocalDate.now().isAfter(dataHistoricoAlimentar)) {
+				historicoEstaDesatualizado = true;
 				dataProximaAtualizacaoHistoricoAlimentar = "O Histórico Alimentar do paciente está desatualizado!";
 			}
 			else {
+				historicoEstaDesatualizado = false;
 				dataProximaAtualizacaoHistoricoAlimentar = ConversaoUtils.converterLocalDateParaString(dataHistoricoAlimentar);
 			}
 		}

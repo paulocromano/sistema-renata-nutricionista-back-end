@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.utils.InformacoesCadastroAtendimentoDTO;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alimentos.model.AlimentoFrequenciaAlimentar;
+import br.com.renatanutricionista.patologia.model.Patologia;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import lombok.Getter;
 
@@ -15,8 +16,10 @@ public class InformacoesCadastroRetornoConsultaDTO extends InformacoesCadastroAt
 	private String dataHorarioConsultaDoRetorno;
 	private String motivoConsultaDoRetorno;
 
-	public InformacoesCadastroRetornoConsultaDTO(Consulta consulta, List<AlimentoFrequenciaAlimentar> alimentosFrequenciaAlimentar) {
-		super(consulta.getPaciente(), alimentosFrequenciaAlimentar);
+	public InformacoesCadastroRetornoConsultaDTO(Consulta consulta, List<AlimentoFrequenciaAlimentar> alimentosFrequenciaAlimentar,
+			List<Patologia> patologias) {
+		
+		super(consulta.getPaciente(), alimentosFrequenciaAlimentar, patologias);
 
 		dataHorarioConsultaDoRetorno = "Consulta realizada na data de " + ConversaoUtils.converterLocalDateParaString(consulta.getData())
 			+ " às " + consulta.getHorario() + "h";

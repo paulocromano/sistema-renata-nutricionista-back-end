@@ -1,7 +1,7 @@
 package br.com.renatanutricionista.atendimento.paciente.retorno.service;
 
 import java.time.LocalDate;
-import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -30,6 +30,7 @@ import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alimentos.repository.AlimentoFrequenciaAlimentarRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.service.PacienteService;
+import br.com.renatanutricionista.patologia.repository.PatologiaRepository;
 import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
 import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.service.AtendimentoPacienteParametroService;
 import br.com.renatanutricionista.utils.ConversaoUtils;
@@ -43,6 +44,9 @@ public class RetornoConsultaService {
 	
 	@Autowired
 	private AlimentoFrequenciaAlimentarRepository alimentoFrequenciaAlimentarRepository;
+	
+	@Autowired
+	private PatologiaRepository patologiaRepository;
 
 	@Autowired
 	private PacienteService pacienteService;
@@ -133,7 +137,8 @@ public class RetornoConsultaService {
 	public ResponseEntity<InformacoesCadastroRetornoConsultaDTO> informacoesParaCadastrarRetornoConsulta(Long idPaciente, Long idRetornoConsulta) {
 		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaPertenceAoPaciente(idPaciente, idRetornoConsulta);
 
-		return ResponseEntity.ok().body(new InformacoesCadastroRetornoConsultaDTO(retornoConsulta.getConsulta(), alimentoFrequenciaAlimentarRepository.findAll()));
+		return ResponseEntity.ok().body(new InformacoesCadastroRetornoConsultaDTO(retornoConsulta.getConsulta(), alimentoFrequenciaAlimentarRepository.findAll(),
+				patologiaRepository.findAll()));
 	}
 	
 	
@@ -204,16 +209,16 @@ public class RetornoConsultaService {
 	private void validarIntervaloDeTempoMinimoEntreConsultaParaAgendamentoDoRetorno(Paciente paciente, Consulta consulta, String data) {
 		LocalDate dataRetornoConsulta = ConversaoUtils.converterStringParaLocalDate(data);
 		AtendimentoPacienteParametro  atendimentoPacienteParametro = atendimentoPacienteParametroService.buscarAtendimentoPacienteParametro();
-		Period intervaloEntreConsultaEPeriodoAgendado = Period.between(consulta.getData(), dataRetornoConsulta);
+		long intervaloEntreConsultaEPeriodoAgendado = ChronoUnit.DAYS.between(consulta.getData(), dataRetornoConsulta);
 		
 		if (paciente.getConsultas().size() == 1) {
-			if (Math.abs(intervaloEntreConsultaEPeriodoAgendado.getDays()) < atendimentoPacienteParametro.getIntervaloDiasEntrePrimeiraConsultaRetorno()) {
+			if (intervaloEntreConsultaEPeriodoAgendado < atendimentoPacienteParametro.getIntervaloDiasEntrePrimeiraConsultaRetorno()) {
 				throw new AtendimentoException("O intervalo mínimo entre a primeira consulta e o retorno é de " 
 						+ atendimentoPacienteParametro.getIntervaloDiasEntrePrimeiraConsultaRetorno() + " dias!");
 			}
 		}
 		else {
-			if (Math.abs(intervaloEntreConsultaEPeriodoAgendado.getDays()) < atendimentoPacienteParametro.getIntervaloDiasEntreConsultaRetorno()) {
+			if (intervaloEntreConsultaEPeriodoAgendado < atendimentoPacienteParametro.getIntervaloDiasEntreConsultaRetorno()) {
 				throw new AtendimentoException("O intervalo mínimo entre a consulta e o retorno é de " 
 						+ atendimentoPacienteParametro.getIntervaloDiasEntreConsultaRetorno() + " dias!");
 			}

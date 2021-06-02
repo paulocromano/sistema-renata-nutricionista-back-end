@@ -16,6 +16,7 @@ public class InformacoesPreviasQuestionariosDTO {
 
 	private List<PreviaQuestionarioFrequenciaAlimentarDTO> previaQuestionariosFrequenciaAlimentar;
 	private String dataProximaAtualizacaoQuestionario;
+	private Boolean historicoEstaDesatualizado;
 	
 	
 	public InformacoesPreviasQuestionariosDTO(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
@@ -37,10 +38,12 @@ public class InformacoesPreviasQuestionariosDTO {
 					.plusMonths(atendimentoPacienteParametro.getTempoMesesAtualizarQuestionarioFrequenciaAlimentar());
 			
 			if (LocalDate.now().isAfter(dataQuestionarioFrequenciaAlimentar)) {
+				historicoEstaDesatualizado = true;
 				dataProximaAtualizacaoQuestionario = "O Questionário de Frequência Alimentar do paciente "
 						+ "está desatualizado!";
 			}
 			else {
+				historicoEstaDesatualizado = false;
 				dataProximaAtualizacaoQuestionario = ConversaoUtils.converterLocalDateParaString(dataQuestionarioFrequenciaAlimentar);
 			}
 		}

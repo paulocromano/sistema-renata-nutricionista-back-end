@@ -1,7 +1,7 @@
 package br.com.renatanutricionista.atendimento.paciente.consulta.service;
 
 import java.time.LocalDate;
-import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -34,6 +34,7 @@ import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alimentos.repository.AlimentoFrequenciaAlimentarRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.service.PacienteService;
+import br.com.renatanutricionista.patologia.repository.PatologiaRepository;
 import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
 import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.service.AtendimentoPacienteParametroService;
 import br.com.renatanutricionista.utils.ConversaoUtils;
@@ -51,6 +52,9 @@ public class ConsultaService {
 	
 	@Autowired
 	private AlimentoFrequenciaAlimentarRepository alimentoFrequenciaAlimentarRepository;
+	
+	@Autowired
+	private PatologiaRepository patologiaRepository;
 	
 	@Autowired
 	private PacienteService pacienteService;
@@ -130,7 +134,7 @@ public class ConsultaService {
 		
 		CalendarioAtendimentoPaciente periodoAgendamento = calendarioAtendimentoService
 				.verificarPossibilidadeDeAgendarConsultaRetorno(agendamentoConsulta.getData(), agendamentoConsulta.getHorario());
-		;
+		
 		consultaRepository.save(agendamentoConsulta.converterParaConsulta(paciente, periodoAgendamento));
 		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -197,7 +201,8 @@ public class ConsultaService {
 	public ResponseEntity<InformacoesCadastroConsultaDTO> informacoesParaCadastrarConsulta(Long idPaciente, Long idConsulta) {
 		Consulta consulta = verificarPacienteConsulta(idPaciente, idConsulta);	
 
-		return ResponseEntity.ok().body(new InformacoesCadastroConsultaDTO(consulta, alimentoFrequenciaAlimentarRepository.findAll()));
+		return ResponseEntity.ok().body(new InformacoesCadastroConsultaDTO(consulta, alimentoFrequenciaAlimentarRepository.findAll(),
+				patologiaRepository.findAll()));
 	}
 	
 	
@@ -277,12 +282,12 @@ public class ConsultaService {
 	private void validarIntervaloDeTempoMinimoEntreRetornoEConsultaParaAgendamento(Paciente paciente, String data) {
 		LocalDate dataRetornoConsulta = ConversaoUtils.converterStringParaLocalDate(data);
 		Optional<Consulta> consulta = consultaRepository.findFirstByPacienteOrderByDataDesc(paciente);
-		
+
 		if (consulta.isPresent() && Objects.nonNull(consulta.get().getRetornoConsulta())) {
 			AtendimentoPacienteParametro  atendimentoPacienteParametro = atendimentoPacienteParametroService.buscarAtendimentoPacienteParametro();
-			Period intervaloEntreRetornoEPeriodoAgendado = Period.between(consulta.get().getRetornoConsulta().getData(), dataRetornoConsulta);
-			
-			if (Math.abs(intervaloEntreRetornoEPeriodoAgendado.getDays()) < atendimentoPacienteParametro.getIntervaloDiasEntreRetornoConsulta()) {
+			long intervaloEntreRetornoEPeriodoAgendado = ChronoUnit.DAYS.between(consulta.get().getRetornoConsulta().getData(), dataRetornoConsulta);
+
+			if (intervaloEntreRetornoEPeriodoAgendado < atendimentoPacienteParametro.getIntervaloDiasEntreRetornoConsulta()) {
 				throw new AtendimentoException("O intervalo mínimo entre o último retorno e a consulta é de " 
 						+ atendimentoPacienteParametro.getIntervaloDiasEntreRetornoConsulta() + " dias!");
 			}

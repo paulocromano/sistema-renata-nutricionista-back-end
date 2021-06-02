@@ -12,6 +12,7 @@ import br.com.renatanutricionista.ficha.identificacao.historico.patologia.famili
 import br.com.renatanutricionista.ficha.identificacao.historico.social.dto.InformacoesCadastroHistoricoSocialDTO;
 import br.com.renatanutricionista.paciente.dto.PacienteDTO;
 import br.com.renatanutricionista.paciente.model.Paciente;
+import br.com.renatanutricionista.patologia.model.Patologia;
 import br.com.renatanutricionista.utils.ConversaoUtils;
 import br.com.renatanutricionista.utils.conversao.enums.ConversaoDadosEnum;
 import br.com.renatanutricionista.utils.conversao.enums.DadosEnum;
@@ -32,10 +33,12 @@ public abstract class InformacoesCadastroAtendimentoDTO {
 	protected final List<DadosEnum> frequenciaAtividadeFisica;
 	
 	
-	public InformacoesCadastroAtendimentoDTO(Paciente paciente, List<AlimentoFrequenciaAlimentar> alimentosFrequenciaAlimentar) {
+	public InformacoesCadastroAtendimentoDTO(Paciente paciente, List<AlimentoFrequenciaAlimentar> alimentosFrequenciaAlimentar,
+			List<Patologia> patologias) {
+		
 		this.paciente = new PacienteDTO(paciente);
 		dataAtendimento = ConversaoUtils.converterLocalDateParaString(LocalDate.now());
-		historicoSocial = new InformacoesCadastroHistoricoSocialDTO();
+		historicoSocial = new InformacoesCadastroHistoricoSocialDTO(patologias);
 		questionarioFrequenciaAlimentar = new InformacoesCadastroQuestionarioDTO(alimentosFrequenciaAlimentar);
 
 		gerarListaComAsRefeicoesDoDiaParaRegistroDeDieta();

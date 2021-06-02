@@ -16,6 +16,7 @@ public class InformacoesHistoricosAtividadeFisicaDTO {
 
 	private List<HistoricoAtividadeFisicaDTO> historicosAtividadesFisicas;
 	private String dataProximaAtualizacaoHistoricoAtividadeFisica;
+	private Boolean historicoEstaDesatualizado;
 	
 	
 	public InformacoesHistoricosAtividadeFisicaDTO(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
@@ -34,9 +35,11 @@ public class InformacoesHistoricosAtividadeFisicaDTO {
 					.plusMonths(atendimentoPacienteParametro.getTempoMesesAtualizarHistoricoAtividadeFisica());
 			
 			if (LocalDate.now().isAfter(dataHistoricoAtividadeFisica)) {
+				historicoEstaDesatualizado = true;
 				dataProximaAtualizacaoHistoricoAtividadeFisica = "O Histórico de Atividade Física do paciente está desatualizado!";
 			}
 			else {
+				historicoEstaDesatualizado = false;
 				dataProximaAtualizacaoHistoricoAtividadeFisica = ConversaoUtils.converterLocalDateParaString(dataHistoricoAtividadeFisica);
 			}
 		}
