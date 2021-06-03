@@ -125,6 +125,7 @@ public class HistoricoSocialFORM {
 		validarQuantidadeConsumoCigarrosPorDia();
 		
 		if (paciente.getSexo().equals(Sexo.FEMININO)) {
+			validarMenstruacaoMenopausa();
 			validarMotivoMenstruacaoAnormal();
 			validarTempoPacienteEstaNaMenopausa();
 		}
@@ -136,20 +137,30 @@ public class HistoricoSocialFORM {
 			throw new PacienteException("A quantidade de Cigarros consumidos por dia não pode estar nula!");
 	}
 	
-	private void validarMotivoMenstruacaoAnormal() {
-		if (Objects.isNull(menstruacaoNormal))
-			throw new NullPointerException("O campo da Menstruação não pode estar nulo!");
+	private void validarMenstruacaoMenopausa() {
+		if (!(Objects.nonNull(menstruacaoNormal) ^ Objects.nonNull(menopausa)))
+			throw new PacienteException("A paciente deve estar ou menstruando ou na menopausa!");
 		
-		if (menstruacaoNormal.equals(RespostaUtils.NAO) && Objects.isNull(motivoAnormalidadeMenstruacao))
-			throw new PacienteException("O Motivo da Anormalidade da Menstruação não pode estar nula!");
+		if (Objects.isNull(menstruacaoNormal)) {
+			motivoAnormalidadeMenstruacao = null;
+		}
+		else if (Objects.isNull(menopausa)) {
+			quantosAnosEstaNaMenopausa = null;
+		}
+	}
+	
+	private void validarMotivoMenstruacaoAnormal() {
+		if (Objects.nonNull(menstruacaoNormal)) {
+			if (menstruacaoNormal.equals(RespostaUtils.NAO) && Objects.isNull(motivoAnormalidadeMenstruacao))
+				throw new PacienteException("O Motivo da Anormalidade da Menstruação não pode estar nula!");
+		}
 	}
 	
 	private void validarTempoPacienteEstaNaMenopausa() {
-		if (Objects.isNull(menopausa))
-			throw new NullPointerException("O campo da Menopausa não pode estar nulo!");
-		
-		if (menopausa.equals(RespostaUtils.SIM) && Objects.isNull(quantosAnosEstaNaMenopausa))
-			throw new PacienteException("O campo de Quantos Anos a Paciente está na Menopausa não "
-					+ "não pode estar nulo!");
+		if (Objects.nonNull(menopausa)) {
+			if (menopausa.equals(RespostaUtils.SIM) && Objects.isNull(quantosAnosEstaNaMenopausa))
+				throw new PacienteException("O campo de Quantos Anos a Paciente está na Menopausa não "
+						+ "não pode estar nulo!");
+		}
 	}
 }

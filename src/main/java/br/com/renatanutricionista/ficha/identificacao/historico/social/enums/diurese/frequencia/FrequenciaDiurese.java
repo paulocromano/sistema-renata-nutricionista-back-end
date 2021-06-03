@@ -15,8 +15,8 @@ import lombok.Getter;
 public enum FrequenciaDiurese implements GettersEnum<FrequenciaDiurese> {
  
 	ATE_3_VEZES("A", "Até 3 vezes"),
-	DE_4_A_6_VEZES("B", "De 4 à 6 vezes"),
-	DE_7_A_10_VEZES("C", "De 7 à 10 vezes"),
+	DE_4_A_6_VEZES("B", "De 4 a 6 vezes"),
+	DE_7_A_10_VEZES("C", "De 7 a 10 vezes"),
 	ACIMA_10_VEZES("D", "Acima de 10 vezes");
 	
 	
