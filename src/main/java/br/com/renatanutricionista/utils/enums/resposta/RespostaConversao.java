@@ -11,7 +11,7 @@ public class RespostaConversao implements AttributeConverter<RespostaUtils, Stri
 
 	@Override
 	public String convertToDatabaseColumn(RespostaUtils resposta) {
-		return resposta.getCodigo();
+		return Objects.nonNull(resposta) ? resposta.getCodigo() : null;
 	}
 
 	

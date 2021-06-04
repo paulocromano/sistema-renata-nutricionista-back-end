@@ -1,5 +1,6 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.social.dto;
 
+import java.util.Objects;
 import java.util.Set;
 
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.paciente.dto.PatologiaPacienteDTO;
@@ -50,10 +51,14 @@ public class HistoricoSocialDTO {
 		horasSono = historicoSocial.getHorasSono();
 		
 		if (historicoSocial.getPaciente().getSexo().equals(Sexo.FEMININO)) {
-			menstruacaoNormal = historicoSocial.getMenstruacaoNormal().getDescricao();
-			motivoAnormalidadeMenstruacao = historicoSocial.getMotivoAnormalidadeMenstruacao();
-			menopausa = historicoSocial.getMenopausa().getDescricao();
-			quantosAnosEstaNaMenopausa = historicoSocial.getQuantosAnosEstaNaMenopausa();
+			if (Objects.nonNull(historicoSocial.getMenstruacaoNormal())) {
+				menstruacaoNormal = historicoSocial.getMenstruacaoNormal().getDescricao();
+				motivoAnormalidadeMenstruacao = historicoSocial.getMotivoAnormalidadeMenstruacao();
+			}
+			else if (Objects.nonNull(historicoSocial.getMenopausa())) {
+				menopausa = historicoSocial.getMenopausa().getDescricao();
+				quantosAnosEstaNaMenopausa = historicoSocial.getQuantosAnosEstaNaMenopausa();
+			}
 		}
 		
 		dataHoraCadastroHistoricoSocial = ConversaoUtils.converterLocalDateTimeParaFrontEndEmString(historicoSocial.getDataHoraCadastroHistoricoSocial());
