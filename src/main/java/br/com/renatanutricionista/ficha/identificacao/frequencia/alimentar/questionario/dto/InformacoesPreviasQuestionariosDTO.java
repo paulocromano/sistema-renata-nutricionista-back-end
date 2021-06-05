@@ -39,8 +39,7 @@ public class InformacoesPreviasQuestionariosDTO {
 			
 			if (LocalDate.now().isAfter(dataQuestionarioFrequenciaAlimentar)) {
 				historicoEstaDesatualizado = true;
-				dataProximaAtualizacaoQuestionario = "O Questionário de Frequência Alimentar do paciente "
-						+ "está desatualizado!";
+				dataProximaAtualizacaoQuestionario = "O Questionário de Frequência Alimentar está desatualizado!";
 			}
 			else {
 				historicoEstaDesatualizado = false;

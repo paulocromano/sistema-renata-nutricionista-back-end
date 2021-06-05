@@ -35,7 +35,7 @@ public class InformacoesPreviasHistoricosSociaisDTO {
 			
 			if (LocalDate.now().isAfter(dataHistoricoSocial)) {
 				historicoEstaDesatualizado = true;
-				dataProximaAtualizacaoHistoricoSocial = "O Histórico Social do paciente está desatualizado!";
+				dataProximaAtualizacaoHistoricoSocial = "O Histórico Social está desatualizado!";
 			}
 			else {
 				historicoEstaDesatualizado = false;

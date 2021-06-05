@@ -48,7 +48,15 @@ public class HistoricoAtividadeFisicaFORM {
 			throw new PacienteException("O campo Duração não pode estar nulo/vazio!");
 		
 		if (Objects.isNull(atividadePraticada) && Objects.nonNull(duracao))
-			throw new PacienteException("O campo da  Atividade Praticada não pode estar nulo/vazio!");
+			throw new PacienteException("O campo da Atividade Praticada não pode estar nulo/vazio!");
+		
+		if (!frequenciaAtividadeFisica.equals(FrequenciaAtividadeFisica.NAO_PRATICA)) {
+			if (Objects.isNull(atividadePraticada) || atividadePraticada.trim().isEmpty())
+				throw new PacienteException("O campo Atividade Praticada não pode ser nulo/vazio!");
+			
+			if (Objects.isNull(duracao) || duracao.trim().isEmpty())
+				throw new PacienteException("O campo Duração não pode ser nulo/vazio!");
+		}
 			
 		if (Objects.nonNull(duracao))
 			ConversaoUtils.converterStringParaLocalTimeHoraMinuto(duracao);

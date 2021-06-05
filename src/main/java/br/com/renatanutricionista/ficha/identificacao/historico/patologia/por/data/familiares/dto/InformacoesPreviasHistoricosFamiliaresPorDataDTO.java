@@ -39,7 +39,7 @@ public class InformacoesPreviasHistoricosFamiliaresPorDataDTO {
 			if (LocalDate.now().isAfter(dataHistoricoPatologiaFamiliares)) {
 				historicoEstaDesatualizado = true;
 				dataProximaAtualizacaoHistoricoPatologiasFamiliares = "O Histórico de Patologias dos Familiares "
-						+ "do paciente está desatualizado!";
+						+ "está desatualizado!";
 			}
 			else {
 				historicoEstaDesatualizado = false;

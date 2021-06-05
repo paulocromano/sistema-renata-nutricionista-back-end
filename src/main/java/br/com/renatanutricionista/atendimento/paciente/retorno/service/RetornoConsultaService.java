@@ -28,9 +28,11 @@ import br.com.renatanutricionista.calendario.atendimento.paciente.service.Calend
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alimentos.repository.AlimentoFrequenciaAlimentarRepository;
+import br.com.renatanutricionista.medicamento.repository.MedicamentoRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.service.PacienteService;
 import br.com.renatanutricionista.patologia.repository.PatologiaRepository;
+import br.com.renatanutricionista.suplemento.repository.SuplementoRepository;
 import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
 import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.service.AtendimentoPacienteParametroService;
 import br.com.renatanutricionista.utils.ConversaoUtils;
@@ -47,6 +49,12 @@ public class RetornoConsultaService {
 	
 	@Autowired
 	private PatologiaRepository patologiaRepository;
+	
+	@Autowired
+	private MedicamentoRepository medicamentoRepository;
+	
+	@Autowired
+	private SuplementoRepository suplementoRepository;
 
 	@Autowired
 	private PacienteService pacienteService;
@@ -138,7 +146,7 @@ public class RetornoConsultaService {
 		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaPertenceAoPaciente(idPaciente, idRetornoConsulta);
 
 		return ResponseEntity.ok().body(new InformacoesCadastroRetornoConsultaDTO(retornoConsulta.getConsulta(), alimentoFrequenciaAlimentarRepository.findAll(),
-				patologiaRepository.findAll()));
+				patologiaRepository.findAll(), medicamentoRepository.findAll(), suplementoRepository.findAll()));
 	}
 	
 	

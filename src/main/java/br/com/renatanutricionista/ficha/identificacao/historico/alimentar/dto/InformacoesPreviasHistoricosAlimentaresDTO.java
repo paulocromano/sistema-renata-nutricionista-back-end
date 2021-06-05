@@ -37,7 +37,7 @@ public class InformacoesPreviasHistoricosAlimentaresDTO {
 			
 			if (LocalDate.now().isAfter(dataHistoricoAlimentar)) {
 				historicoEstaDesatualizado = true;
-				dataProximaAtualizacaoHistoricoAlimentar = "O Histórico Alimentar do paciente está desatualizado!";
+				dataProximaAtualizacaoHistoricoAlimentar = "O Histórico Alimentar está desatualizado!";
 			}
 			else {
 				historicoEstaDesatualizado = false;

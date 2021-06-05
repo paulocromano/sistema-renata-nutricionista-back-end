@@ -36,7 +36,7 @@ public class InformacoesHistoricosAtividadeFisicaDTO {
 			
 			if (LocalDate.now().isAfter(dataHistoricoAtividadeFisica)) {
 				historicoEstaDesatualizado = true;
-				dataProximaAtualizacaoHistoricoAtividadeFisica = "O Histórico de Atividade Física do paciente está desatualizado!";
+				dataProximaAtualizacaoHistoricoAtividadeFisica = "O Histórico de Atividade Física está desatualizado!";
 			}
 			else {
 				historicoEstaDesatualizado = false;

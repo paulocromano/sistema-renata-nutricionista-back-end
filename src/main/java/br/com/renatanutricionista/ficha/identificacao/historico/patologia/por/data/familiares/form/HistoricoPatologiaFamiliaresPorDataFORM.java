@@ -1,6 +1,7 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.patologia.por.data.familiares.form;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,7 @@ public class HistoricoPatologiaFamiliaresPorDataFORM {
 		validarSetPatologiasDosFamiliares();
 		
 		return new HistoricoPatologiaFamiliaresPorData.Builder()
-				.observacao(observacao)
+				.observacao(Objects.nonNull(observacao) ? observacao.trim() : null)
 				.dataHoraCadastroPatologiasFamiliares(LocalDateTime.now())
 				.paciente(paciente)
 				.build();
