@@ -15,10 +15,10 @@ import lombok.Getter;
 public enum FrequenciaConsumoAlimento implements GettersEnum<FrequenciaConsumoAlimento> {
 
 	NUNCA("N", "Nunca"),
-	DIA("D", "Dia"),
-	SEMANA("S", "Semana"),
-	MES("M", "Mês"),
-	ANO("A", "Ano");
+	DIARIO("D", "Diário"),
+	SEMANAL("S", "Semanal"),
+	MENSAL("M", "Mensal"),
+	ANUAL("A", "Anual");
 	
 	
 	private String codigo;
