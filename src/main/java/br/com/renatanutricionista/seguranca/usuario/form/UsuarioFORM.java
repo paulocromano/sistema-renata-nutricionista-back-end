@@ -35,4 +35,11 @@ public class UsuarioFORM {
 	public Usuario converterParaUsuario(BCryptPasswordEncoder bCryptPasswordEncoder) {
 		return new Usuario(nome, email, bCryptPasswordEncoder.encode(senha));
 	}
+	
+	
+	public void atualizarInformacoesUsuario(Usuario usuario, BCryptPasswordEncoder bCryptPasswordEncoder) {
+		usuario.setNome(nome);
+		usuario.setEmail(email);
+		usuario.setSenha(bCryptPasswordEncoder.encode(senha));
+	}
 }

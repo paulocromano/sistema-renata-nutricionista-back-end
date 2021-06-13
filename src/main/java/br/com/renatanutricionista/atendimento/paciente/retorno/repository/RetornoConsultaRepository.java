@@ -13,8 +13,10 @@ import br.com.renatanutricionista.paciente.model.Paciente;
 
 public interface RetornoConsultaRepository extends JpaRepository<RetornoConsulta, Long> {
 
-	List<RetornoConsulta> findByDataBetween(LocalDate periodoAtual, LocalDate periodoFinal);
-
 	Optional<RetornoConsulta> findByConsulta_PacienteAndSituacaoRetornoNot(Paciente paciente, SituacaoRetorno retornoFinalizado);
+
+	List<RetornoConsulta> findByDataBetween(LocalDate periodoInicial, LocalDate periodoFinal);
+
+	List<RetornoConsulta> findByDataGreaterThanEqual(LocalDate periodoAtual);
 
 }

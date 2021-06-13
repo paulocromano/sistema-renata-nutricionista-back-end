@@ -80,12 +80,12 @@ public class ConsultaService {
 	}
 	
 	
-	public ResponseEntity<List<InformacoesPreviasConsultaRetornoDTO>> listarAtendimentosPorPeriodoPadrao() {
+	public ResponseEntity<List<InformacoesPreviasConsultaRetornoDTO>> listarAtendimentosAPartirDaDataAtual() {
 		LocalDate periodoAtual = LocalDate.now();
 		LocalDate periodoFinal = periodoAtual.plusDays(30);
 		
-		List<Consulta> consultas = consultaRepository.findByDataBetween(periodoAtual, periodoFinal);
-		List<RetornoConsulta> retornos = retornoConsultaRepository.findByDataBetween(periodoAtual, periodoFinal);
+		List<Consulta> consultas = consultaRepository.findByDataGreaterThanEqual(periodoAtual);
+		List<RetornoConsulta> retornos = retornoConsultaRepository.findByDataGreaterThanEqual(periodoAtual);
 		
 		return ResponseEntity.ok().body(InformacoesPreviasConsultaRetornoDTO.converterParaListaInformacoesPreviasConsultaRetornoDTO(
 				consultas, retornos, periodoAtual, periodoFinal));

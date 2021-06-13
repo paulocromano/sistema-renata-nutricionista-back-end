@@ -42,9 +42,9 @@ public class ConsultaResource {
 	}
 	
 	
-	@GetMapping("/listar-atendimentos-periodo-padrao")
-	public ResponseEntity<List<InformacoesPreviasConsultaRetornoDTO>> listarAtendimentosPorPeriodoPadrao() {
-		return consultaService.listarAtendimentosPorPeriodoPadrao();
+	@GetMapping("/listar-atendimentos")
+	public ResponseEntity<List<InformacoesPreviasConsultaRetornoDTO>> listarAtendimentosAPartirDaDataAtual() {
+		return consultaService.listarAtendimentosAPartirDaDataAtual();
 	}
 	
 	

@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "usuario", catalog = "sistema_nutricionista_acesso")
 @NoArgsConstructor
-@JsonIgnoreProperties(value = { "senha" })
+@JsonIgnoreProperties(value = { "email", "senha", "perfis" })
 public class Usuario {
 
 	@Id
