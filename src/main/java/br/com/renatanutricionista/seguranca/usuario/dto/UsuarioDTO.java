@@ -14,12 +14,14 @@ public class UsuarioDTO implements Comparable<UsuarioDTO> {
 
 	private Integer id;
 	private String nome;
+	private String email;
 	private String dataCadastro;
 	
 	
-	private UsuarioDTO(Usuario usuario) {
+	public UsuarioDTO(Usuario usuario) {
 		id = usuario.getId();
 		nome = usuario.getNome();
+		email = usuario.getEmail();
 		dataCadastro = ConversaoUtils.converterLocalDateParaString(usuario.getDataCadastro());
 	}
 	

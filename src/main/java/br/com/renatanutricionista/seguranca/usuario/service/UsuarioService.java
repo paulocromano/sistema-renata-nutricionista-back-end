@@ -3,6 +3,8 @@ package br.com.renatanutricionista.seguranca.usuario.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +15,11 @@ import br.com.renatanutricionista.exception.custom.IntegrityConstraintViolationE
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.seguranca.usuario.dto.UsuarioDTO;
 import br.com.renatanutricionista.seguranca.usuario.enums.Perfil;
+import br.com.renatanutricionista.seguranca.usuario.form.AlteracaoSenhaFORM;
+import br.com.renatanutricionista.seguranca.usuario.form.AtualizacaoUsuarioFORM;
 import br.com.renatanutricionista.seguranca.usuario.form.UsuarioFORM;
 import br.com.renatanutricionista.seguranca.usuario.model.Usuario;
+import br.com.renatanutricionista.seguranca.usuario.model.UsuarioToken;
 import br.com.renatanutricionista.seguranca.usuario.repository.UsuarioRepository;
 
 
@@ -34,6 +39,13 @@ public class UsuarioService {
 	}
 	
 	
+	public ResponseEntity<UsuarioDTO> buscarInformacoesUsuario(HttpServletRequest request) {
+		Usuario usuario = verificarSeUsuarioExiste(new UsuarioToken(request).getId());
+		
+		return ResponseEntity.ok().body(new UsuarioDTO(usuario));
+	}
+	
+	
 	public ResponseEntity<Void> cadastrarUsuario(UsuarioFORM usuario) {
 		verificarSeEmailJaExiste(usuario.getEmail());
 		usuarioRepository.save(usuario.converterParaUsuario(bCryptPasswordEncoder));
@@ -42,14 +54,22 @@ public class UsuarioService {
 	}
 	
 	
-	public ResponseEntity<Void> atualizarUsuario(Integer id, UsuarioFORM usuarioFORM) {
-		Usuario usuario = verificarSeUsuarioExiste(id);
+	public ResponseEntity<Void> atualizarUsuario(HttpServletRequest request, AtualizacaoUsuarioFORM usuarioFORM) {
+		Usuario usuario = verificarSeUsuarioExiste(new UsuarioToken(request).getId());
 		
 		if (!usuario.getEmail().equals(usuarioFORM.getEmail())) {
 			verificarSeEmailJaExiste(usuarioFORM.getEmail());
 		}
 		
-		usuarioFORM.atualizarInformacoesUsuario(usuario, bCryptPasswordEncoder);
+		usuarioFORM.atualizarInformacoesUsuario(usuario);
+		
+		return ResponseEntity.ok().build();
+	}
+	
+	
+	public ResponseEntity<Void> alterarSenha(HttpServletRequest request, AlteracaoSenhaFORM usuarioFORM) {
+		Usuario usuario = verificarSeUsuarioExiste(new UsuarioToken(request).getId());
+		usuarioFORM.atualizarSenha(usuario, bCryptPasswordEncoder);
 		
 		return ResponseEntity.ok().build();
 	}

@@ -25,6 +25,7 @@ public class JWTUtil {
 	public String gerarToken(UserSpringSecurity usuario) {
 		return Jwts.builder()
 				.setSubject(usuario.getUsername())
+				.claim("id", usuario.getId())			
 				.claim("nome", usuario.getNome())
 				.claim("permissoes", usuario.getAuthorities())
 				.setExpiration(new Date(System.currentTimeMillis() + expiration))

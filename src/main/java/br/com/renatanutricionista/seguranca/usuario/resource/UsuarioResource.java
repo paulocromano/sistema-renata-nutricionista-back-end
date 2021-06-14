@@ -2,6 +2,7 @@ package br.com.renatanutricionista.seguranca.usuario.resource;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.renatanutricionista.seguranca.usuario.dto.UsuarioDTO;
+import br.com.renatanutricionista.seguranca.usuario.form.AlteracaoSenhaFORM;
+import br.com.renatanutricionista.seguranca.usuario.form.AtualizacaoUsuarioFORM;
 import br.com.renatanutricionista.seguranca.usuario.form.UsuarioFORM;
 import br.com.renatanutricionista.seguranca.usuario.service.UsuarioService;
 
@@ -37,6 +40,12 @@ public class UsuarioResource {
 	}
 	
 	
+	@GetMapping("/informacoes-usuario-logado")
+	public ResponseEntity<UsuarioDTO> buscarInformacoesUsuario(HttpServletRequest request) {
+		return usuarioService.buscarInformacoesUsuario(request);
+	}
+	
+	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	@Transactional
@@ -45,10 +54,17 @@ public class UsuarioResource {
 	}
 	
 	
-	@PutMapping("/{id}")
+	@PutMapping
 	@Transactional
-	public ResponseEntity<Void> atualizarUsuario(@PathVariable Integer id, @RequestBody @Valid UsuarioFORM usuarioFORM) {
-		return usuarioService.atualizarUsuario(id, usuarioFORM);
+	public ResponseEntity<Void> atualizarUsuario(HttpServletRequest request, @RequestBody @Valid AtualizacaoUsuarioFORM usuarioFORM) {
+		return usuarioService.atualizarUsuario(request, usuarioFORM);
+	}
+	
+	
+	@PutMapping("/alterar-senha")
+	@Transactional
+	public ResponseEntity<Void> alterarSenha(HttpServletRequest request, @RequestBody @Valid AlteracaoSenhaFORM usuarioFORM) {
+		return usuarioService.alterarSenha(request, usuarioFORM);
 	}
 	
 	
