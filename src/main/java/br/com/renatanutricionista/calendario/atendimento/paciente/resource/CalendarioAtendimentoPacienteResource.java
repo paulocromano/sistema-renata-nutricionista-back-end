@@ -7,8 +7,10 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +43,7 @@ public class CalendarioAtendimentoPacienteResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping("/cadastrar-periodo")
 	@Transactional
 	public ResponseEntity<Void> cadastrarUmPeriodoNoCalendario(@RequestBody @Valid PeriodoAtendimentoFORM periodoAtendimento) {
@@ -48,6 +51,7 @@ public class CalendarioAtendimentoPacienteResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping("/cadastrar-periodos-automaticamente")
 	@Transactional
 	public ResponseEntity<Void> cadastrarPeriodosAutomaticamenteNoCalendarioParaAtendimentoPaciente() {
@@ -55,6 +59,7 @@ public class CalendarioAtendimentoPacienteResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping("/cadastrar-periodos-manualmente")
 	@Transactional
 	public ResponseEntity<Void> cadastrarPeriodosManualmenteNoCalendarioParaAtendimentoPaciente(
@@ -63,9 +68,18 @@ public class CalendarioAtendimentoPacienteResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping("/excluir-periodos")
 	@Transactional
 	public ResponseEntity<Void> excluirPeriodosConformeDataInicialFinal(@RequestParam String dataInicio, @RequestParam String dataFim) {
 		return calendarioAtendimentoPacienteService.excluirPeriodosConformeDataInicialFinal(dataInicio, dataFim);
+	}
+	
+	
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@DeleteMapping("/excluir-periodo/{idPeriodo}")
+	@Transactional
+	public ResponseEntity<Void> excluirPeriodo(@PathVariable Long idPeriodo) {
+		return calendarioAtendimentoPacienteService.excluirPeriodo(idPeriodo);
 	}
 }

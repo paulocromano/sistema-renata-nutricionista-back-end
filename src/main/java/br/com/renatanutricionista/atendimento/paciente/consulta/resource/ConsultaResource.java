@@ -2,11 +2,13 @@ package br.com.renatanutricionista.atendimento.paciente.consulta.resource;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,6 +70,7 @@ public class ConsultaResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping("/buscar/{tipoAtendimento}/{idConsulta}")
 	public ResponseEntity<ConsultaDTO> buscarConsultaDoPaciente(@PathVariable Integer tipoAtendimento, @PathVariable Long idConsulta) {
 		return consultaService.buscarConsultaDoPaciente(tipoAtendimento, idConsulta);
@@ -103,11 +106,12 @@ public class ConsultaResource {
 	
 	@DeleteMapping("/cancelar/{idPaciente}/{idConsulta}")
 	@Transactional
-	public ResponseEntity<Void> cancelarConsulta(@PathVariable Long idPaciente, @PathVariable Long idConsulta) {
-		return consultaService.cancelarConsulta(idPaciente, idConsulta);
+	public ResponseEntity<Void> cancelarConsulta(HttpServletRequest request, @PathVariable Long idPaciente, @PathVariable Long idConsulta) {
+		return consultaService.cancelarConsulta(request, idPaciente, idConsulta);
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/iniciar/{idPaciente}/{idConsulta}")
 	@Transactional
 	public ResponseEntity<Void> iniciarConsulta(@PathVariable Long idPaciente, @PathVariable Long idConsulta) { 
@@ -115,12 +119,14 @@ public class ConsultaResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping("/informacoes-cadastro-consulta/{idPaciente}/{idConsulta}")
 	public ResponseEntity<InformacoesCadastroConsultaDTO> informacoesParaCadastrarConsulta(@PathVariable Long idPaciente, @PathVariable Long idConsulta) {
 		return consultaService.informacoesParaCadastrarConsulta(idPaciente, idConsulta);
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/finalizar/{idPaciente}/{idConsulta}")
 	@Transactional
 	public ResponseEntity<Void> finalizarConsulta(@PathVariable Long idPaciente, @PathVariable Long idConsulta,

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
 import br.com.renatanutricionista.exception.custom.EmptyResultDataAccessException;
 import br.com.renatanutricionista.exception.custom.FileException;
+import br.com.renatanutricionista.exception.custom.ForbiddenException;
 import br.com.renatanutricionista.exception.custom.IntegrityConstraintViolationException;
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.exception.custom.PacienteException;
@@ -69,6 +70,12 @@ public class ExceptionHandle {
 	@ExceptionHandler(FileException.class)
 	public ResponseEntity<PadraoErro> file(FileException exception, HttpServletRequest request) {
 		return erroPadronizado(HttpStatus.BAD_REQUEST, "Erro de arquivo!", exception, request);
+	}
+	
+	
+	@ExceptionHandler(ForbiddenException.class)
+	public ResponseEntity<PadraoErro> forbidden(ForbiddenException exception, HttpServletRequest request) {
+		return erroPadronizado(HttpStatus.FORBIDDEN, "Acesso negado!", exception, request);
 	}
 
 	

@@ -5,6 +5,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class RetornoConsultaResource {
 	private RetornoConsultaService retornoConsultaService;
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping("/buscar/{tipoAtendimento}/{idRetornoConsulta}")
 	public ResponseEntity<RetornoConsultaDTO> buscarRetornoConsultaDoPaciente(@PathVariable Integer tipoAtendimento, @PathVariable Long idRetornoConsulta) {
 		return retornoConsultaService.buscarRetornoConsultaDoPaciente(tipoAtendimento, idRetornoConsulta);
@@ -66,6 +68,7 @@ public class RetornoConsultaResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/iniciar/{idPaciente}/{idRetornoConsulta}")
 	@Transactional
 	public ResponseEntity<Void> iniciarRetornoConsulta(@PathVariable Long idPaciente, @PathVariable Long idRetornoConsulta) {
@@ -73,6 +76,7 @@ public class RetornoConsultaResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping("/informacoes-cadastro-retorno-consulta/{idPaciente}/{idRetornoConsulta}")
 	public ResponseEntity<InformacoesCadastroRetornoConsultaDTO> informacoesParaCadastrarRetornoConsulta(
 			@PathVariable Long idPaciente, @PathVariable Long idRetornoConsulta) {
@@ -81,6 +85,7 @@ public class RetornoConsultaResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/finalizar/{idPaciente}/{idRetornoConsulta}")
 	@Transactional
 	public ResponseEntity<Void> finalizarRetornoConsulta(@PathVariable Long idPaciente, @PathVariable Long idRetornoConsulta,

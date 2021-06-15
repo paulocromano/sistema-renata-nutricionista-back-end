@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,7 @@ import br.com.renatanutricionista.medicamento.repository.MedicamentoRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.service.PacienteService;
 import br.com.renatanutricionista.patologia.repository.PatologiaRepository;
+import br.com.renatanutricionista.seguranca.usuario.service.UsuarioTokenService;
 import br.com.renatanutricionista.suplemento.repository.SuplementoRepository;
 import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
 import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.service.AtendimentoPacienteParametroService;
@@ -76,6 +79,9 @@ public class ConsultaService {
 	
 	@Autowired
 	private AtendimentoPacienteParametroService atendimentoPacienteParametroService;
+	
+	@Autowired
+	private UsuarioTokenService usuarioTokenService;
 	
 	
 	public ResponseEntity<byte[]> gerarRelatorioDosPagamentosPendentes() {
@@ -184,11 +190,9 @@ public class ConsultaService {
 	}
 	
 	
-	public ResponseEntity<Void> cancelarConsulta(Long idPaciente, Long idConsulta) {
+	public ResponseEntity<Void> cancelarConsulta(HttpServletRequest request, Long idPaciente, Long idConsulta) {
 		Consulta consulta = verificarPacienteConsulta(idPaciente, idConsulta);
-
-		if (consulta.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_FINALIZADA))
-			throw new AtendimentoException("Não é possível cancelar uma Consulta Finalizada!");
+		validarSituacaoConsultaParaCancelamento(request, consulta);
 		
 		consultaRepository.delete(consulta);
 		calendarioAtendimentoService.alterarPeriodoDoCalendarioParaDisponivel(consulta.getData(), consulta.getHorario());
@@ -283,6 +287,16 @@ public class ConsultaService {
 		verificarSeConsultaPertenceAoPaciente(paciente, consulta);
 		
 		return consulta;
+	}
+	
+	
+	private void validarSituacaoConsultaParaCancelamento(HttpServletRequest request, Consulta consulta) {
+		if (consulta.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_FINALIZADA))
+			throw new AtendimentoException("Não é possível cancelar uma Consulta Finalizada!");
+		
+		if (consulta.getSituacaoConsulta().equals(SituacaoConsulta.CONSULTA_INICIADA)) {
+			usuarioTokenService.usuarioTemPermissaoDeAdmin(request);
+		}
 	}
 	
 	

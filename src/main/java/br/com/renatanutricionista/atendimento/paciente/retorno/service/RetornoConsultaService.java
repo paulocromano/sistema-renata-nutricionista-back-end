@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,7 @@ import br.com.renatanutricionista.medicamento.repository.MedicamentoRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.service.PacienteService;
 import br.com.renatanutricionista.patologia.repository.PatologiaRepository;
+import br.com.renatanutricionista.seguranca.usuario.service.UsuarioTokenService;
 import br.com.renatanutricionista.suplemento.repository.SuplementoRepository;
 import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.model.AtendimentoPacienteParametro;
 import br.com.renatanutricionista.tabelas.parametro.atendimento.paciente.service.AtendimentoPacienteParametroService;
@@ -68,6 +71,9 @@ public class RetornoConsultaService {
 	
 	@Autowired
 	private CalendarioAtendimentoPacienteService calendarioAtendimentoService;
+	
+	@Autowired
+	private UsuarioTokenService usuarioTokenService;
 	
 	
 	public ResponseEntity<RetornoConsultaDTO> buscarRetornoConsultaDoPaciente(Integer tipoAtendimento, Long idRetornoConsulta) {
@@ -120,11 +126,9 @@ public class RetornoConsultaService {
 	}
 	
 	
-	public ResponseEntity<Void> cancelarRetornoConsulta(Long idPaciente, Long idRetornoConsulta) {
+	public ResponseEntity<Void> cancelarRetornoConsulta(HttpServletRequest reqeust, Long idPaciente, Long idRetornoConsulta) {
 		RetornoConsulta retornoConsulta = verificarSeRetornoConsultaPertenceAoPaciente(idPaciente, idRetornoConsulta);
-		
-		if (retornoConsulta.getSituacaoRetorno().equals(SituacaoRetorno.RETORNO_FINALIZADO))
-			throw new AtendimentoException("Não é possível cancelar um Retorno Finalizado!");
+		verificarSituacaoRetornoParaCancelamento(reqeust, retornoConsulta);
 
 		calendarioAtendimentoService.alterarPeriodoDoCalendarioParaDisponivel(retornoConsulta.getData(), retornoConsulta.getHorario());
 		retornoConsulta.getConsulta().setRetornoConsulta(null);
@@ -216,6 +220,16 @@ public class RetornoConsultaService {
 					+ "o agendamento do Retorno!");
 		
 		return consulta;
+	}
+	
+	
+	private void verificarSituacaoRetornoParaCancelamento(HttpServletRequest request, RetornoConsulta retornoConsulta) {
+		if (retornoConsulta.getSituacaoRetorno().equals(SituacaoRetorno.RETORNO_FINALIZADO))
+			throw new AtendimentoException("Não é possível cancelar um Retorno Finalizado!");
+		
+		if (retornoConsulta.getSituacaoRetorno().equals(SituacaoRetorno.RETORNO_INICIADO)) {
+			usuarioTokenService.usuarioTemPermissaoDeAdmin(request);
+		}
 	}
 	
 	

@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,11 +38,14 @@ public class HorarioAtendimentoResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping("/dias-semana-para-cadastro")
 	public ResponseEntity<List<DadosEnum>> listarDiasDaSemanaDisponiveisParaCadastro() {
 		return horarioAtendimentoService.listarDiasDaSemanaDisponiveisParaCadastro();
 	}
 	
+
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	@Transactional
 	public ResponseEntity<Void> cadastrarDiaDeAtendimento(@RequestBody @Valid HorarioAtendimentoFORM horarioAtendimento) {
@@ -49,6 +53,7 @@ public class HorarioAtendimentoResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/{idHorarioAtendimento}")
 	@Transactional
 	public ResponseEntity<Void> atualizarHorariosDeUmDiaDaSamana(@PathVariable Integer idHorarioAtendimento,
@@ -58,6 +63,7 @@ public class HorarioAtendimentoResource {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping("/{idHorarioAtendimento}")
 	@Transactional
 	public ResponseEntity<Void> excluirUmDiaDeAtendimento(@PathVariable Integer idHorarioAtendimento) {
