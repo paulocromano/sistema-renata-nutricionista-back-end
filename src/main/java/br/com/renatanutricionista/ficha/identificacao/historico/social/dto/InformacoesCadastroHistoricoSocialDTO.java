@@ -5,7 +5,6 @@ import java.util.List;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consistencia.fezes.ConsistenciaFezes;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.bebidas.alcoolicas.ConsumoBebidasAlcoolicas;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.cigarro.ConsumoCigarro;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.diurese.coloracao.ColoracaoDiurese;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.diurese.frequencia.FrequenciaDiurese;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.estado.civil.EstadoCivil;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.habito.intestinal.HabitoIntestinal;
@@ -26,10 +25,10 @@ public class InformacoesCadastroHistoricoSocialDTO {
 	private List<DadosEnum> habitoIntestinal;
 	private List<DadosEnum> consistenciaFezes;
 	private List<DadosEnum> frequenciaDiurese;
-	private List<DadosEnum> coloracaoDiurese;
+	private List<ImagemColoracaoDiureseDTO> imagensColoracaoDiurese;
 	
 	
-	public InformacoesCadastroHistoricoSocialDTO(List<Patologia> patologias) {
+	public InformacoesCadastroHistoricoSocialDTO(List<Patologia> patologias, List<ImagemColoracaoDiureseDTO> imagensColoracaoDiurese) {
 		this.patologias = PatologiaDTO.converterParaListaPatologiaDTOEmOrdemAlfabetica(patologias);
 		estadoCivil = ConversaoDadosEnum.converterDadosEnum(EstadoCivil.values());
 		consumoBebidasAlcoolicas = ConversaoDadosEnum.converterDadosEnum(ConsumoBebidasAlcoolicas.values());
@@ -37,6 +36,6 @@ public class InformacoesCadastroHistoricoSocialDTO {
 		habitoIntestinal = ConversaoDadosEnum.converterDadosEnum(HabitoIntestinal.values());
 		consistenciaFezes = ConversaoDadosEnum.converterDadosEnum(ConsistenciaFezes.values());
 		frequenciaDiurese = ConversaoDadosEnum.converterDadosEnum(FrequenciaDiurese.values());
-		coloracaoDiurese = ConversaoDadosEnum.converterDadosEnum(ColoracaoDiurese.values());
+		this.imagensColoracaoDiurese = imagensColoracaoDiurese;
 	}
 }

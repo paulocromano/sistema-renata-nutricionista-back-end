@@ -10,6 +10,7 @@ import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.quest
 import br.com.renatanutricionista.ficha.identificacao.historico.alimentar.dto.InformacoesCadastroHistoricoAlimentarDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.atividade.fisica.enums.FrequenciaAtividadeFisica;
 import br.com.renatanutricionista.ficha.identificacao.historico.patologia.familiares.enums.PatologiaFamiliares;
+import br.com.renatanutricionista.ficha.identificacao.historico.social.dto.ImagemColoracaoDiureseDTO;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.dto.InformacoesCadastroHistoricoSocialDTO;
 import br.com.renatanutricionista.medicamento.model.Medicamento;
 import br.com.renatanutricionista.paciente.dto.PacienteDTO;
@@ -38,11 +39,11 @@ public abstract class InformacoesCadastroAtendimentoDTO {
 	
 	
 	public InformacoesCadastroAtendimentoDTO(Paciente paciente, List<AlimentoFrequenciaAlimentar> alimentosFrequenciaAlimentar,
-			List<Patologia> patologias, List<Medicamento> medicamentos, List<Suplemento> suplementos) {
+			List<Patologia> patologias, List<Medicamento> medicamentos, List<Suplemento> suplementos, List<ImagemColoracaoDiureseDTO> imagensColoracaoDiurese) {
 		
 		this.paciente = new PacienteDTO(paciente);
 		dataAtendimento = ConversaoUtils.converterLocalDateParaString(LocalDate.now());
-		historicoSocial = new InformacoesCadastroHistoricoSocialDTO(patologias);
+		historicoSocial = new InformacoesCadastroHistoricoSocialDTO(patologias, imagensColoracaoDiurese);
 		questionarioFrequenciaAlimentar = new InformacoesCadastroQuestionarioDTO(alimentosFrequenciaAlimentar);
 		historicoAlimentar = new InformacoesCadastroHistoricoAlimentarDTO(medicamentos, suplementos);
 
@@ -56,6 +57,54 @@ public abstract class InformacoesCadastroAtendimentoDTO {
 	private void gerarListaComAsRefeicoesDoDiaParaRegistroDeDieta() {
 		tiposDeRefeicoesParaCadastroRegistroDieta.addAll(Arrays.asList("Desjejum", "Lanche da manhã", "Almoço", "Lanche da tarde", 
 				"Jantar", "Ceia", "Final de semana"));
+	}
+	
+	
+	public static class InformacoesCadastroAtendimentoDTOBuilder {
+		
+		private Paciente paciente;
+		private List<AlimentoFrequenciaAlimentar> alimentosFrequenciaAlimentar;
+		private List<Patologia> patologias;
+		private List<Medicamento> medicamentos;
+		private List<Suplemento> suplementos;
+		private List<ImagemColoracaoDiureseDTO> imagensColoracaoDiurese;
+		
+		
+		public InformacoesCadastroAtendimentoDTOBuilder paciente(Paciente paciente) {
+			this.paciente = paciente;
+			return this;
+		}
+		
+		public InformacoesCadastroAtendimentoDTOBuilder alimentosFrequenciaAlimentar(List<AlimentoFrequenciaAlimentar> alimentosFrequenciaAlimentar) {
+			this.alimentosFrequenciaAlimentar = alimentosFrequenciaAlimentar;
+			return this;
+		}
+		
+		public InformacoesCadastroAtendimentoDTOBuilder patologias(List<Patologia> patologias) {
+			this.patologias = patologias;
+			return this;
+		}
+		
+		public InformacoesCadastroAtendimentoDTOBuilder medicamentos(List<Medicamento> medicamentos) {
+			this.medicamentos = medicamentos;
+			return this;
+		}
+		
+		public InformacoesCadastroAtendimentoDTOBuilder suplementos(List<Suplemento> suplementos) {
+			this.suplementos = suplementos;
+			return this;
+		}
+		
+		public InformacoesCadastroAtendimentoDTOBuilder imagensColoracaoDiurese(List<ImagemColoracaoDiureseDTO> imagensColoracaoDiurese) {
+			this.imagensColoracaoDiurese = imagensColoracaoDiurese;
+			return this;
+		}
+		
+		
+//		public InformacoesCadastroAtendimentoDTO build() {
+//			return new InformacoesCadastroAtendimentoDTO(paciente, alimentosFrequenciaAlimentar, patologias, medicamentos, 
+//					suplementos, imagensColoracaoDiurese);
+//		}
 	}
 }
  

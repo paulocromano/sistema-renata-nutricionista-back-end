@@ -38,7 +38,7 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name = "historico_social_paciente", schema = "sistema_patologia")
+@Table(name = "historico_social_paciente", schema = "sistema_nutricionista")
 @Getter
 @Setter
 @NoArgsConstructor

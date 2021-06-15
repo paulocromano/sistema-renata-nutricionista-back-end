@@ -32,6 +32,7 @@ import br.com.renatanutricionista.calendario.atendimento.paciente.service.Calend
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alimentos.repository.AlimentoFrequenciaAlimentarRepository;
+import br.com.renatanutricionista.ficha.identificacao.historico.social.service.ImagemColoracaoDiureseService;
 import br.com.renatanutricionista.medicamento.repository.MedicamentoRepository;
 import br.com.renatanutricionista.paciente.model.Paciente;
 import br.com.renatanutricionista.paciente.service.PacienteService;
@@ -66,6 +67,9 @@ public class ConsultaService {
 	
 	@Autowired
 	private PacienteService pacienteService;
+	
+	@Autowired
+	private ImagemColoracaoDiureseService imagemColoracaoDiureseService;
 	
 	@Autowired
 	private CalendarioAtendimentoPacienteService calendarioAtendimentoService;
@@ -210,7 +214,8 @@ public class ConsultaService {
 		Consulta consulta = verificarPacienteConsulta(idPaciente, idConsulta);	
 
 		return ResponseEntity.ok().body(new InformacoesCadastroConsultaDTO(consulta, alimentoFrequenciaAlimentarRepository.findAll(),
-				patologiaRepository.findAll(), medicamentoRepository.findAll(), suplementoRepository.findAll()));
+				patologiaRepository.findAll(), medicamentoRepository.findAll(), suplementoRepository.findAll(),
+				imagemColoracaoDiureseService.buscarImagensCoresDiurese().getBody()));
 	}
 	
 	

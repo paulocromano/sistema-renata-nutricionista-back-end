@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import br.com.renatanutricionista.exception.custom.AtendimentoException;
 import br.com.renatanutricionista.exception.custom.EmptyResultDataAccessException;
+import br.com.renatanutricionista.exception.custom.FileException;
 import br.com.renatanutricionista.exception.custom.IntegrityConstraintViolationException;
 import br.com.renatanutricionista.exception.custom.ObjectNotFoundException;
 import br.com.renatanutricionista.exception.custom.PacienteException;
@@ -62,6 +63,12 @@ public class ExceptionHandle {
 	@ExceptionHandler(IntegrityConstraintViolationException.class)
 	public ResponseEntity<PadraoErro> integrityConstraintViolation(IntegrityConstraintViolationException exception, HttpServletRequest request) {
 		return erroPadronizado(HttpStatus.BAD_REQUEST, "Erro de Integridade dos Dados!", exception, request);
+	}
+
+	
+	@ExceptionHandler(FileException.class)
+	public ResponseEntity<PadraoErro> file(FileException exception, HttpServletRequest request) {
+		return erroPadronizado(HttpStatus.BAD_REQUEST, "Erro de arquivo!", exception, request);
 	}
 
 	

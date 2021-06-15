@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.renatanutricionista.atendimento.paciente.consulta.model.Consulta;
 import br.com.renatanutricionista.atendimento.paciente.utils.InformacoesCadastroAtendimentoDTO;
 import br.com.renatanutricionista.ficha.identificacao.frequencia.alimentar.alimentos.model.AlimentoFrequenciaAlimentar;
+import br.com.renatanutricionista.ficha.identificacao.historico.social.dto.ImagemColoracaoDiureseDTO;
 import br.com.renatanutricionista.medicamento.model.Medicamento;
 import br.com.renatanutricionista.patologia.model.Patologia;
 import br.com.renatanutricionista.suplemento.model.Suplemento;
@@ -17,9 +18,10 @@ public class InformacoesCadastroConsultaDTO extends InformacoesCadastroAtendimen
 	private String motivoConsulta;
 	
 	public InformacoesCadastroConsultaDTO(Consulta consulta, List<AlimentoFrequenciaAlimentar> alimentosFrequenciaAlimentar,
-			List<Patologia> patologias, List<Medicamento> medicamentos, List<Suplemento> suplementos) {
+			List<Patologia> patologias, List<Medicamento> medicamentos, List<Suplemento> suplementos,
+			List<ImagemColoracaoDiureseDTO> imagensColoracaoDiurese) {
 		
-		super(consulta.getPaciente(), alimentosFrequenciaAlimentar, patologias, medicamentos, suplementos);
+		super(consulta.getPaciente(), alimentosFrequenciaAlimentar, patologias, medicamentos, suplementos, imagensColoracaoDiurese);
 		
 		motivoConsulta = consulta.getMotivoConsulta();	
 	}
