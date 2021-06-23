@@ -41,7 +41,7 @@ public class ImagemColoracaoDiureseResource {
 	@Transactional
 	@PostMapping("/upload")
 	public ResponseEntity<Void> uploadImagemProduto(@RequestParam MultipartFile imagem) {
-		return imagemColoracaoDiureseService.uploadImagemCorDiurese(ColoracaoDiurese.AMBAR, imagem);
+		return imagemColoracaoDiureseService.uploadImagemCorDiurese(ColoracaoDiurese.AMARELO_ESCURO, imagem);
 	}
 	
 	

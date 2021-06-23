@@ -1,6 +1,5 @@
 package br.com.renatanutricionista.atendimento.paciente.consulta.dto;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -84,7 +83,7 @@ public class InformacoesPreviasConsultaRetornoDTO {
 	
 	
 	public static List<InformacoesPreviasConsultaRetornoDTO> converterParaListaInformacoesPreviasConsultaRetornoDTO(List<Consulta> consultas,
-			List<RetornoConsulta> retornos, LocalDate dataInicial, LocalDate dataFinal) {
+			List<RetornoConsulta> retornos) {
 		
 		List<InformacoesPreviasConsultaRetornoDTO> atendimentos = converterListaConsultas(consultas);
 		atendimentos.addAll(converterListaRetornos(retornos));

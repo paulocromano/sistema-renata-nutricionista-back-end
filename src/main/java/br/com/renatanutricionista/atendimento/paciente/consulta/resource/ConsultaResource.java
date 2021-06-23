@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.renatanutricionista.atendimento.paciente.consulta.dto.ConfirmacaoAtendimentoDTO;
@@ -44,17 +43,15 @@ public class ConsultaResource {
 	}
 	
 	
-	@GetMapping("/listar-atendimentos")
+	@GetMapping("/listar-atendimentos-data-atual-posteriores")
 	public ResponseEntity<List<InformacoesPreviasConsultaRetornoDTO>> listarAtendimentosAPartirDaDataAtual() {
 		return consultaService.listarAtendimentosAPartirDaDataAtual();
 	}
 	
 	
-	@GetMapping("/listar-atendimentos-por-periodo")
-	public ResponseEntity<List<InformacoesPreviasConsultaRetornoDTO>> listarAtendimentosPorPeriodo(@RequestParam String dataInicial, 
-			@RequestParam String dataFinal) {
-		
-		return consultaService.listarAtendimentosPorPeriodo(dataInicial, dataFinal);
+	@GetMapping("/listar-atendimentos-anteriores-data-atual")
+	public ResponseEntity<List<InformacoesPreviasConsultaRetornoDTO>> listarAtendimentosAnterioresAoDiaAtual() {
+		return consultaService.listarAtendimentosAnterioresAoDiaAtual();
 	}
 	
 	

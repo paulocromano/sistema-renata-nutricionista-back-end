@@ -15,8 +15,8 @@ public interface RetornoConsultaRepository extends JpaRepository<RetornoConsulta
 
 	Optional<RetornoConsulta> findByConsulta_PacienteAndSituacaoRetornoNot(Paciente paciente, SituacaoRetorno retornoFinalizado);
 
-	List<RetornoConsulta> findByDataBetween(LocalDate periodoInicial, LocalDate periodoFinal);
-
 	List<RetornoConsulta> findByDataGreaterThanEqual(LocalDate periodoAtual);
+
+	List<RetornoConsulta> findByDataLessThan(LocalDate periodoAtual);
 
 }

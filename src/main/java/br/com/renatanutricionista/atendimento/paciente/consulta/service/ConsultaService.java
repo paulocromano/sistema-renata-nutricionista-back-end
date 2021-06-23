@@ -92,28 +92,21 @@ public class ConsultaService {
 	
 	public ResponseEntity<List<InformacoesPreviasConsultaRetornoDTO>> listarAtendimentosAPartirDaDataAtual() {
 		LocalDate periodoAtual = LocalDate.now();
-		LocalDate periodoFinal = periodoAtual.plusDays(30);
 		
 		List<Consulta> consultas = consultaRepository.findByDataGreaterThanEqual(periodoAtual);
 		List<RetornoConsulta> retornos = retornoConsultaRepository.findByDataGreaterThanEqual(periodoAtual);
 		
-		return ResponseEntity.ok().body(InformacoesPreviasConsultaRetornoDTO.converterParaListaInformacoesPreviasConsultaRetornoDTO(
-				consultas, retornos, periodoAtual, periodoFinal));
+		return ResponseEntity.ok().body(InformacoesPreviasConsultaRetornoDTO.converterParaListaInformacoesPreviasConsultaRetornoDTO(consultas, retornos));
 	}
 	
 	
-	public ResponseEntity<List<InformacoesPreviasConsultaRetornoDTO>> listarAtendimentosPorPeriodo(String dataInicial, String dataFinal) {
-		LocalDate periodoInicial = ConversaoUtils.converterStringParaLocalDate(dataInicial);
-		LocalDate periodoFinal = ConversaoUtils.converterStringParaLocalDate(dataFinal);
+	public ResponseEntity<List<InformacoesPreviasConsultaRetornoDTO>> listarAtendimentosAnterioresAoDiaAtual() {
+		LocalDate periodoAtual = LocalDate.now();
 		
-		if (periodoInicial.isAfter(periodoFinal))
-			throw new IllegalArgumentException("A data inicial não pode ser posterior à data final!");
+		List<Consulta> consultas = consultaRepository.findByDataLessThan(periodoAtual);
+		List<RetornoConsulta> retornos = retornoConsultaRepository.findByDataLessThan(periodoAtual);
 		
-		List<Consulta> consultas = consultaRepository.findByDataBetween(periodoInicial, periodoFinal);
-		List<RetornoConsulta> retornos = retornoConsultaRepository.findByDataBetween(periodoInicial, periodoFinal);
-		
-		return ResponseEntity.ok().body(InformacoesPreviasConsultaRetornoDTO.converterParaListaInformacoesPreviasConsultaRetornoDTO(
-				consultas, retornos, periodoInicial, periodoFinal));
+		return ResponseEntity.ok().body(InformacoesPreviasConsultaRetornoDTO.converterParaListaInformacoesPreviasConsultaRetornoDTO(consultas, retornos));
 	}
 	
 	

@@ -17,7 +17,7 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
 
 	Optional<Consulta> findFirstByPacienteOrderByDataDesc(Paciente paciente);
 
-	List<Consulta> findByDataBetween(LocalDate periodoInicial, LocalDate periodoFinal);
-
 	List<Consulta> findByDataGreaterThanEqual(LocalDate periodoAtual);
+
+	List<Consulta> findByDataLessThan(LocalDate periodoAtual);
 }

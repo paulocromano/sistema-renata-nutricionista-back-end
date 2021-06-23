@@ -1,5 +1,6 @@
 package br.com.renatanutricionista.atendimento.paciente.retorno.resource;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -63,8 +64,8 @@ public class RetornoConsultaResource {
 	
 	@DeleteMapping("/cancelar/{idPaciente}/{idRetornoConsulta}")
 	@Transactional
-	public ResponseEntity<Void> cancelarRetornoConsulta(@PathVariable Long idPaciente, @PathVariable Long idRetornoConsulta) {
-		return retornoConsultaService.cancelarRetornoConsulta(idPaciente, idRetornoConsulta);
+	public ResponseEntity<Void> cancelarRetornoConsulta(HttpServletRequest request, @PathVariable Long idPaciente, @PathVariable Long idRetornoConsulta) {
+		return retornoConsultaService.cancelarRetornoConsulta(request, idPaciente, idRetornoConsulta);
 	}
 	
 	
