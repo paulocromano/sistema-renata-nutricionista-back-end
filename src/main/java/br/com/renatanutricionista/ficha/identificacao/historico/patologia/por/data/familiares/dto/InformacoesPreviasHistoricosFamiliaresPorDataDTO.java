@@ -17,6 +17,7 @@ public class InformacoesPreviasHistoricosFamiliaresPorDataDTO {
 	private Set<PreviaHistoricoPatologiaFamiliaresPorDataDTO> previaHistoricosPatologiaFamiliaresPorData;
 	private String dataProximaAtualizacaoHistoricoPatologiasFamiliares;
 	private Boolean historicoEstaDesatualizado;
+	private Boolean possuiHistorico;
 	
 	
 	public InformacoesPreviasHistoricosFamiliaresPorDataDTO(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
@@ -33,6 +34,7 @@ public class InformacoesPreviasHistoricosFamiliaresPorDataDTO {
 				.max(Comparator.comparing(LocalDate::toEpochDay));
 		
 		if (dataHistoricoPatologiaFamiliaresMaisRecente.isPresent()) {
+			possuiHistorico = true;
 			LocalDate dataHistoricoPatologiaFamiliares = dataHistoricoPatologiaFamiliaresMaisRecente.get()
 					.plusMonths(atendimentoPacienteParametro.getTempoMesesAtualizarHistoricoPatologiaFamiliares());
 			
@@ -45,6 +47,11 @@ public class InformacoesPreviasHistoricosFamiliaresPorDataDTO {
 				historicoEstaDesatualizado = false;
 				dataProximaAtualizacaoHistoricoPatologiasFamiliares = ConversaoUtils.converterLocalDateParaString(dataHistoricoPatologiaFamiliares);
 			}
+		}
+		else {
+			possuiHistorico = false;
+			dataProximaAtualizacaoHistoricoPatologiasFamiliares = "Não possui Histórico "
+					+ "de Patologias dos Familiares!";
 		}
 	}
 }

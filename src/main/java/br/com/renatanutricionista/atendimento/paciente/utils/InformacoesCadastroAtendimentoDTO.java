@@ -58,53 +58,5 @@ public abstract class InformacoesCadastroAtendimentoDTO {
 		tiposDeRefeicoesParaCadastroRegistroDieta.addAll(Arrays.asList("Desjejum", "Lanche da manhã", "Almoço", "Lanche da tarde", 
 				"Jantar", "Ceia", "Final de semana"));
 	}
-	
-	
-	public static class InformacoesCadastroAtendimentoDTOBuilder {
-		
-		private Paciente paciente;
-		private List<AlimentoFrequenciaAlimentar> alimentosFrequenciaAlimentar;
-		private List<Patologia> patologias;
-		private List<Medicamento> medicamentos;
-		private List<Suplemento> suplementos;
-		private List<ImagemColoracaoDiureseDTO> imagensColoracaoDiurese;
-		
-		
-		public InformacoesCadastroAtendimentoDTOBuilder paciente(Paciente paciente) {
-			this.paciente = paciente;
-			return this;
-		}
-		
-		public InformacoesCadastroAtendimentoDTOBuilder alimentosFrequenciaAlimentar(List<AlimentoFrequenciaAlimentar> alimentosFrequenciaAlimentar) {
-			this.alimentosFrequenciaAlimentar = alimentosFrequenciaAlimentar;
-			return this;
-		}
-		
-		public InformacoesCadastroAtendimentoDTOBuilder patologias(List<Patologia> patologias) {
-			this.patologias = patologias;
-			return this;
-		}
-		
-		public InformacoesCadastroAtendimentoDTOBuilder medicamentos(List<Medicamento> medicamentos) {
-			this.medicamentos = medicamentos;
-			return this;
-		}
-		
-		public InformacoesCadastroAtendimentoDTOBuilder suplementos(List<Suplemento> suplementos) {
-			this.suplementos = suplementos;
-			return this;
-		}
-		
-		public InformacoesCadastroAtendimentoDTOBuilder imagensColoracaoDiurese(List<ImagemColoracaoDiureseDTO> imagensColoracaoDiurese) {
-			this.imagensColoracaoDiurese = imagensColoracaoDiurese;
-			return this;
-		}
-		
-		
-//		public InformacoesCadastroAtendimentoDTO build() {
-//			return new InformacoesCadastroAtendimentoDTO(paciente, alimentosFrequenciaAlimentar, patologias, medicamentos, 
-//					suplementos, imagensColoracaoDiurese);
-//		}
-	}
 }
  

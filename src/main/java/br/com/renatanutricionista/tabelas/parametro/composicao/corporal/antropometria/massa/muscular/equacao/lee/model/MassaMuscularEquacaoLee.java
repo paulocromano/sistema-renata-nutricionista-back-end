@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import br.com.renatanutricionista.tabelas.parametro.composicao.corporal.antropometria.massa.muscular.equacao.lee.enums.ClassificacaoMassaMuscularPelaIdade;
+import br.com.renatanutricionista.tabelas.parametro.composicao.corporal.antropometria.massa.muscular.equacao.lee.enums.MassaMuscularPelaIdade;
 import lombok.Getter;
 
 
@@ -21,7 +21,7 @@ public class MassaMuscularEquacaoLee {
 	private Integer id;
 	
 	@Column(name = "classificacao_pela_idade")
-	private ClassificacaoMassaMuscularPelaIdade classificacaoPelaIdade;
+	private MassaMuscularPelaIdade classificacaoPelaIdade;
 	
 	@Column(name = "mulheres_porcentagem_maior")
 	private Integer mulheresPorcentagemMaior;

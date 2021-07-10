@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public enum ClassificacaoMassaMuscularPelaIdade {
+public enum MassaMuscularPelaIdade {
 
 	IDADE_MENOR_40("0", "menor 40 anos"),
 	IDADE_MAIOR_IGUAL_40("1", "maior ou igual 40 anos");

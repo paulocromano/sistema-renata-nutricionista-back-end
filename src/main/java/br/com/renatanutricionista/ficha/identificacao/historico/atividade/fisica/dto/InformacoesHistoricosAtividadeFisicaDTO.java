@@ -17,6 +17,7 @@ public class InformacoesHistoricosAtividadeFisicaDTO {
 	private List<HistoricoAtividadeFisicaDTO> historicosAtividadesFisicas;
 	private String dataProximaAtualizacaoHistoricoAtividadeFisica;
 	private Boolean historicoEstaDesatualizado;
+	private Boolean possuiHistorico;
 	
 	
 	public InformacoesHistoricosAtividadeFisicaDTO(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
@@ -31,6 +32,7 @@ public class InformacoesHistoricosAtividadeFisicaDTO {
 				.max(Comparator.comparing(LocalDate::toEpochDay));
 		
 		if (dataHistoricoAtividadeFisicaMaisRecente.isPresent()) {
+			possuiHistorico = true;
 			LocalDate dataHistoricoAtividadeFisica = dataHistoricoAtividadeFisicaMaisRecente.get()
 					.plusMonths(atendimentoPacienteParametro.getTempoMesesAtualizarHistoricoAtividadeFisica());
 			
@@ -42,6 +44,10 @@ public class InformacoesHistoricosAtividadeFisicaDTO {
 				historicoEstaDesatualizado = false;
 				dataProximaAtualizacaoHistoricoAtividadeFisica = ConversaoUtils.converterLocalDateParaString(dataHistoricoAtividadeFisica);
 			}
+		}
+		else {
+			possuiHistorico = false;
+			dataProximaAtualizacaoHistoricoAtividadeFisica = "Não possui Histórico de Atividade Física!";
 		}
 	}
 }

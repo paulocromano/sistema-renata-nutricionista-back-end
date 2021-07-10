@@ -17,6 +17,7 @@ public class InformacoesPreviasQuestionariosDTO {
 	private List<PreviaQuestionarioFrequenciaAlimentarDTO> previaQuestionariosFrequenciaAlimentar;
 	private String dataProximaAtualizacaoQuestionario;
 	private Boolean historicoEstaDesatualizado;
+	private Boolean possuiHistorico;
 	
 	
 	public InformacoesPreviasQuestionariosDTO(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
@@ -34,6 +35,7 @@ public class InformacoesPreviasQuestionariosDTO {
 				.max(Comparator.comparing(LocalDate::toEpochDay));
 		
 		if (dataQuestionarioMaisRecente.isPresent()) {
+			possuiHistorico = true;
 			LocalDate dataQuestionarioFrequenciaAlimentar = dataQuestionarioMaisRecente.get()
 					.plusMonths(atendimentoPacienteParametro.getTempoMesesAtualizarQuestionarioFrequenciaAlimentar());
 			
@@ -46,6 +48,9 @@ public class InformacoesPreviasQuestionariosDTO {
 				dataProximaAtualizacaoQuestionario = ConversaoUtils.converterLocalDateParaString(dataQuestionarioFrequenciaAlimentar);
 			}
 		}
+		else {
+			possuiHistorico = false;
+			dataProximaAtualizacaoQuestionario = "Não possui Questionário de Frequência Alimentar!";
+		}
 	}
-
 }

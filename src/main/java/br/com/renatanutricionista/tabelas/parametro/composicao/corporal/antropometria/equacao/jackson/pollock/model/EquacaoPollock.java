@@ -1,4 +1,4 @@
-package br.com.renatanutricionista.tabelas.parametro.composicao.corporal.antropometria.equacao.generalizada.jackson.pollock.model;
+package br.com.renatanutricionista.tabelas.parametro.composicao.corporal.antropometria.equacao.jackson.pollock.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

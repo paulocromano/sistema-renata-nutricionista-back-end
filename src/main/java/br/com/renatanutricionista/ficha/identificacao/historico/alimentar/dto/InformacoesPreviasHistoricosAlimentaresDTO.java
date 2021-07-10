@@ -17,6 +17,7 @@ public class InformacoesPreviasHistoricosAlimentaresDTO {
 	private List<PreviaHistoricoAlimentarDTO> previaHistoricosAlimentares;
 	private String dataProximaAtualizacaoHistoricoAlimentar;
 	private Boolean historicoEstaDesatualizado;
+	private Boolean possuiHistorico;
 	
 	
 	public InformacoesPreviasHistoricosAlimentaresDTO(Paciente paciente, AtendimentoPacienteParametro atendimentoPacienteParametro) {
@@ -33,6 +34,7 @@ public class InformacoesPreviasHistoricosAlimentaresDTO {
 				.max(Comparator.comparing(LocalDate::toEpochDay));
 		
 		if (dataHistoricoAlimentarMaisRecente.isPresent()) {
+			possuiHistorico = true;
 			LocalDate dataHistoricoAlimentar = dataHistoricoAlimentarMaisRecente.get().plusMonths(atendimentoPacienteParametro.getTempoMesesAtualizarHistoricoAlimentar());
 			
 			if (LocalDate.now().isAfter(dataHistoricoAlimentar)) {
@@ -43,6 +45,10 @@ public class InformacoesPreviasHistoricosAlimentaresDTO {
 				historicoEstaDesatualizado = false;
 				dataProximaAtualizacaoHistoricoAlimentar = ConversaoUtils.converterLocalDateParaString(dataHistoricoAlimentar);
 			}
+		}
+		else {
+			possuiHistorico = false;
+			dataProximaAtualizacaoHistoricoAlimentar = "Não possui Histórico Alimentar!";
 		}
 	}
 }

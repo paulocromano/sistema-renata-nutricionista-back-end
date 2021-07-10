@@ -1,6 +1,6 @@
-package br.com.renatanutricionista.tabelas.parametro.composicao.corporal.antropometria.equacao.generalizada.jackson.pollock.dto;
+package br.com.renatanutricionista.tabelas.parametro.composicao.corporal.antropometria.equacao.jackson.pollock.dto;
 
-import br.com.renatanutricionista.tabelas.parametro.composicao.corporal.antropometria.equacao.generalizada.jackson.pollock.model.EquacaoPollock;
+import br.com.renatanutricionista.tabelas.parametro.composicao.corporal.antropometria.equacao.jackson.pollock.model.EquacaoPollock;
 import lombok.Getter;
 
 

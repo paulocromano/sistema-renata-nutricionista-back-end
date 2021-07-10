@@ -7,19 +7,19 @@ import javax.persistence.Converter;
 
 
 @Converter(autoApply = true)
-public class ClassificacaoMassaMuscularPelaIdadeConversao implements AttributeConverter<ClassificacaoMassaMuscularPelaIdade, String> {
+public class MassaMuscularPelaIdadeConversao implements AttributeConverter<MassaMuscularPelaIdade, String> {
 
 	@Override
-	public String convertToDatabaseColumn(ClassificacaoMassaMuscularPelaIdade classificacaoMassaMuscularPelaIdade) {
+	public String convertToDatabaseColumn(MassaMuscularPelaIdade classificacaoMassaMuscularPelaIdade) {
 		return classificacaoMassaMuscularPelaIdade.getCodigo();
 	}
 
 	@Override
-	public ClassificacaoMassaMuscularPelaIdade convertToEntityAttribute(String dbData) {
+	public MassaMuscularPelaIdade convertToEntityAttribute(String dbData) {
 		if (Objects.isNull(dbData)) 
 			throw new NullPointerException("O código de Classificação pela Idade não pode estar nulo!");
 		
-		for (ClassificacaoMassaMuscularPelaIdade classificacao : ClassificacaoMassaMuscularPelaIdade.values()) 
+		for (MassaMuscularPelaIdade classificacao : MassaMuscularPelaIdade.values()) 
 			if (dbData.equals(classificacao.getCodigo())) 
 				return classificacao;
 
