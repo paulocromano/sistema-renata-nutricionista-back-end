@@ -7,6 +7,7 @@ import br.com.renatanutricionista.ficha.identificacao.historico.patologia.pacien
 import br.com.renatanutricionista.ficha.identificacao.historico.social.model.HistoricoSocial;
 import br.com.renatanutricionista.paciente.enums.sexo.Sexo;
 import br.com.renatanutricionista.utils.ConversaoUtils;
+import br.com.renatanutricionista.utils.ConverterToDTOCollection;
 import lombok.Getter;
 
 
@@ -24,7 +25,7 @@ public class HistoricoSocialDTO {
 	private String habitoIntestinal;
 	private String consistenciaFezes;
 	private String frequenciaDiurese;
-	private String coloracaoDiurese;
+	private Set<ColoracaoDiuresePacienteDTO> coloracoesDiurese;
 	private Set<PatologiaPacienteDTO> patologiasPaciente;
 	private Integer horasSono;
 	private String menstruacaoNormal;
@@ -46,7 +47,8 @@ public class HistoricoSocialDTO {
 		habitoIntestinal = historicoSocial.getHabitoIntestinal().getDescricao();
 		consistenciaFezes = historicoSocial.getConsistenciaFezes().getDescricao();
 		frequenciaDiurese = historicoSocial.getFrequenciaDiurese().getDescricao();
-		coloracaoDiurese = historicoSocial.getColoracaoDiurese().getDescricao();
+		coloracoesDiurese = ConverterToDTOCollection.convertToSet(
+				historicoSocial.getColoracoesDiuresePaciente(), ColoracaoDiuresePacienteDTO::new);
 		patologiasPaciente = PatologiaPacienteDTO.converterParaSetPatologiaPacienteDTO(historicoSocial.getPatologiasPaciente());
 		horasSono = historicoSocial.getHorasSono();
 		

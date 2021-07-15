@@ -16,7 +16,6 @@ import br.com.renatanutricionista.ficha.identificacao.historico.patologia.pacien
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consistencia.fezes.ConsistenciaFezes;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.bebidas.alcoolicas.ConsumoBebidasAlcoolicas;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.cigarro.ConsumoCigarro;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.diurese.coloracao.ColoracaoDiurese;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.diurese.frequencia.FrequenciaDiurese;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.estado.civil.EstadoCivil;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.habito.intestinal.HabitoIntestinal;
@@ -65,8 +64,8 @@ public class HistoricoSocialFORM {
 	@NotNull(message = "O campo da Frequência da Diurese não pode ser nulo!")
 	private FrequenciaDiurese frequenciaDiurese;
 	
-	@NotNull(message = "O campo da Coloração da Diurese não pode ser nulo!")
-	private ColoracaoDiurese coloracaoDiurese;
+	@NotNull(message = "O campo das Colorações da Diurese não pode ser nulo!")
+	private Set<Integer> coloracoesDiurese;
 	
 	@Valid
 	private Set<PatologiaPacienteFORM> patologiasPaciente;
@@ -98,7 +97,7 @@ public class HistoricoSocialFORM {
 				.habitoIntestinal(habitoIntestinal)
 				.consistenciaFezes(consistenciaFezes)
 				.frequenciaDiurese(frequenciaDiurese)
-				.coloracaoDiurese(coloracaoDiurese)
+				//.coloracoesDiuresePaciente(coloracaoDiurese)
 				.horasSono(horasSono)
 				.dataHoraCadastroHistoricoSocial(LocalDateTime.now())
 				.paciente(paciente);
@@ -129,7 +128,6 @@ public class HistoricoSocialFORM {
 			validarMotivoMenstruacaoAnormal();
 			validarTempoPacienteEstaNaMenopausa();
 		}
-		
 	}
 	
 	private void validarQuantidadeConsumoCigarrosPorDia() {

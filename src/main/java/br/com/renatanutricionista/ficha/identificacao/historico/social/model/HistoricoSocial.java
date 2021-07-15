@@ -26,7 +26,6 @@ import br.com.renatanutricionista.ficha.identificacao.historico.patologia.pacien
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consistencia.fezes.ConsistenciaFezes;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.bebidas.alcoolicas.ConsumoBebidasAlcoolicas;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.consumo.cigarro.ConsumoCigarro;
-import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.diurese.coloracao.ColoracaoDiurese;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.diurese.frequencia.FrequenciaDiurese;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.estado.civil.EstadoCivil;
 import br.com.renatanutricionista.ficha.identificacao.historico.social.enums.habito.intestinal.HabitoIntestinal;
@@ -90,9 +89,8 @@ public class HistoricoSocial {
 	@NotNull(message = "O campo Frequência da Diurese não pode ser nulo!")
 	private FrequenciaDiurese frequenciaDiurese;
 	
-	@Column(name = "coloracao_diurese")
-	@NotNull(message = "O campo Coloração da Diurese não pode ser nulo!")
-	private ColoracaoDiurese coloracaoDiurese;
+	@OneToMany(mappedBy = "historicoSocial", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	private Set<ColoracaoDiuresePaciente> coloracoesDiuresePaciente;
 	
 	@OneToMany(mappedBy = "historicoSocial", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private Set<PatologiaPaciente> patologiasPaciente;
@@ -127,7 +125,7 @@ public class HistoricoSocial {
 	private HistoricoSocial(String profissao, EstadoCivil estadoCivil, String composicaoFamiliar, String localRefeicoes,
 			ConsumoBebidasAlcoolicas frequenciaConsumoBebidasAlcoolicas,ConsumoCigarro consumoCigarro, Integer quantidadeCigarrosPorDia,
 			HabitoIntestinal habitoIntestinal, ConsistenciaFezes consistenciaFezes, FrequenciaDiurese frequenciaDiurese,
-			ColoracaoDiurese coloracaoDiurese, Integer horasSono, RespostaUtils menstruacaoNormal, 
+			Set<ColoracaoDiuresePaciente> coloracoesDiuresePaciente, Integer horasSono, RespostaUtils menstruacaoNormal, 
 			String motivoAnormalidadeMenstruacao, RespostaUtils menopausa, Integer quantosAnosEstaNaMenopausa, 
 			LocalDateTime dataHoraCadastroHistoricoSocial, Paciente paciente) {
 		
@@ -141,7 +139,7 @@ public class HistoricoSocial {
 		this.habitoIntestinal = habitoIntestinal;
 		this.consistenciaFezes = consistenciaFezes;
 		this.frequenciaDiurese = frequenciaDiurese;
-		this.coloracaoDiurese = coloracaoDiurese;
+		this.coloracoesDiuresePaciente = coloracoesDiuresePaciente;
 		this.horasSono = horasSono;
 		this.menstruacaoNormal = menstruacaoNormal;
 		this.motivoAnormalidadeMenstruacao = motivoAnormalidadeMenstruacao;
@@ -164,7 +162,7 @@ public class HistoricoSocial {
 		private HabitoIntestinal habitoIntestinal;
 		private ConsistenciaFezes consistenciaFezes;
 		private FrequenciaDiurese frequenciaDiurese;
-		private ColoracaoDiurese coloracaoDiurese;
+		private Set<ColoracaoDiuresePaciente> coloracoesDiuresePaciente;
 		private Integer horasSono;
 		private RespostaUtils menstruacaoNormal;
 		private String motivoAnormalidadeMenstruacao;
@@ -224,8 +222,8 @@ public class HistoricoSocial {
 			return this;
 		}
 		
-		public Builder coloracaoDiurese(ColoracaoDiurese coloracaoDiurese) {
-			this.coloracaoDiurese = coloracaoDiurese;
+		public Builder coloracoesDiuresePaciente(Set<ColoracaoDiuresePaciente> coloracoesDiuresePaciente) {
+			this.coloracoesDiuresePaciente = coloracoesDiuresePaciente;
 			return this;
 		}
 		
@@ -268,7 +266,7 @@ public class HistoricoSocial {
 		public HistoricoSocial build() {
 			return new HistoricoSocial(profissao, estadoCivil, composicaoFamiliar, localRefeicoes, 
 					frequenciaConsumoBebidasAlcoolicas, consumoCigarro, quantidadeCigarrosPorDia, habitoIntestinal, 
-					consistenciaFezes, frequenciaDiurese, coloracaoDiurese, horasSono, menstruacaoNormal, 
+					consistenciaFezes, frequenciaDiurese, coloracoesDiuresePaciente, horasSono, menstruacaoNormal, 
 					motivoAnormalidadeMenstruacao, menopausa, quantosAnosEstaNaMenopausa, 
 					dataHoraCadastroHistoricoSocial, paciente);
 		}
