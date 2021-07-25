@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -20,6 +21,7 @@ import lombok.Setter;
 @Table(name = "coloracao_diurese_paciente", schema = "sistema_nutricionista")
 @Getter
 @Setter
+@NoArgsConstructor
 @JsonIgnoreProperties(value = "historicoSocial")
 public class ColoracaoDiuresePaciente {
 
@@ -36,4 +38,12 @@ public class ColoracaoDiuresePaciente {
 	@JoinColumn(name = "historico_social_id", referencedColumnName = "id")
 	@NotNull(message = "O objeto Histórico Social não pode ser nulo!")
 	private HistoricoSocial historicoSocial;
+
+	
+	public ColoracaoDiuresePaciente(ImagemColoracaoDiurese coloracaoDiurese,
+			HistoricoSocial historicoSocial) {
+		
+		this.coloracaoDiurese = coloracaoDiurese;
+		this.historicoSocial = historicoSocial;
+	}
 }

@@ -97,7 +97,6 @@ public class HistoricoSocialFORM {
 				.habitoIntestinal(habitoIntestinal)
 				.consistenciaFezes(consistenciaFezes)
 				.frequenciaDiurese(frequenciaDiurese)
-				//.coloracoesDiuresePaciente(coloracaoDiurese)
 				.horasSono(horasSono)
 				.dataHoraCadastroHistoricoSocial(LocalDateTime.now())
 				.paciente(paciente);

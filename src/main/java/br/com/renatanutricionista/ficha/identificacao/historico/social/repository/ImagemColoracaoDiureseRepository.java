@@ -1,6 +1,7 @@
 package br.com.renatanutricionista.ficha.identificacao.historico.social.repository;
 
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,4 +13,5 @@ public interface ImagemColoracaoDiureseRepository extends JpaRepository<ImagemCo
 
 	Optional<ImagemColoracaoDiurese> findByColoracaoDiurese(ColoracaoDiurese coloracaoDiurese);
 
+	Set<ImagemColoracaoDiurese> findByIdIn(Set<Integer> coloracoesDiurese);
 }

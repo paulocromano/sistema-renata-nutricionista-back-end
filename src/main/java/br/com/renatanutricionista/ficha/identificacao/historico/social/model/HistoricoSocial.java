@@ -123,10 +123,10 @@ public class HistoricoSocial {
 	
 	
 	private HistoricoSocial(String profissao, EstadoCivil estadoCivil, String composicaoFamiliar, String localRefeicoes,
-			ConsumoBebidasAlcoolicas frequenciaConsumoBebidasAlcoolicas,ConsumoCigarro consumoCigarro, Integer quantidadeCigarrosPorDia,
+			ConsumoBebidasAlcoolicas frequenciaConsumoBebidasAlcoolicas, ConsumoCigarro consumoCigarro, Integer quantidadeCigarrosPorDia,
 			HabitoIntestinal habitoIntestinal, ConsistenciaFezes consistenciaFezes, FrequenciaDiurese frequenciaDiurese,
-			Set<ColoracaoDiuresePaciente> coloracoesDiuresePaciente, Integer horasSono, RespostaUtils menstruacaoNormal, 
-			String motivoAnormalidadeMenstruacao, RespostaUtils menopausa, Integer quantosAnosEstaNaMenopausa, 
+			Integer horasSono, RespostaUtils menstruacaoNormal, String motivoAnormalidadeMenstruacao, 
+			RespostaUtils menopausa, Integer quantosAnosEstaNaMenopausa, 
 			LocalDateTime dataHoraCadastroHistoricoSocial, Paciente paciente) {
 		
 		this.profissao = profissao;
@@ -139,7 +139,6 @@ public class HistoricoSocial {
 		this.habitoIntestinal = habitoIntestinal;
 		this.consistenciaFezes = consistenciaFezes;
 		this.frequenciaDiurese = frequenciaDiurese;
-		this.coloracoesDiuresePaciente = coloracoesDiuresePaciente;
 		this.horasSono = horasSono;
 		this.menstruacaoNormal = menstruacaoNormal;
 		this.motivoAnormalidadeMenstruacao = motivoAnormalidadeMenstruacao;
@@ -162,7 +161,6 @@ public class HistoricoSocial {
 		private HabitoIntestinal habitoIntestinal;
 		private ConsistenciaFezes consistenciaFezes;
 		private FrequenciaDiurese frequenciaDiurese;
-		private Set<ColoracaoDiuresePaciente> coloracoesDiuresePaciente;
 		private Integer horasSono;
 		private RespostaUtils menstruacaoNormal;
 		private String motivoAnormalidadeMenstruacao;
@@ -222,11 +220,6 @@ public class HistoricoSocial {
 			return this;
 		}
 		
-		public Builder coloracoesDiuresePaciente(Set<ColoracaoDiuresePaciente> coloracoesDiuresePaciente) {
-			this.coloracoesDiuresePaciente = coloracoesDiuresePaciente;
-			return this;
-		}
-		
 		public Builder horasSono(Integer horasSono) {
 			this.horasSono = horasSono;
 			return this;
@@ -266,7 +259,7 @@ public class HistoricoSocial {
 		public HistoricoSocial build() {
 			return new HistoricoSocial(profissao, estadoCivil, composicaoFamiliar, localRefeicoes, 
 					frequenciaConsumoBebidasAlcoolicas, consumoCigarro, quantidadeCigarrosPorDia, habitoIntestinal, 
-					consistenciaFezes, frequenciaDiurese, coloracoesDiuresePaciente, horasSono, menstruacaoNormal, 
+					consistenciaFezes, frequenciaDiurese, horasSono, menstruacaoNormal, 
 					motivoAnormalidadeMenstruacao, menopausa, quantosAnosEstaNaMenopausa, 
 					dataHoraCadastroHistoricoSocial, paciente);
 		}
